@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
+import {NavComponent} from './Administrador/nav/nav.component';
 
 
 
 export let rutas: Routes;
-rutas = [ {path: '', component: LoginComponent}];
+rutas = [ {path: '', component: LoginComponent},
+  { path: 'administrador', component: NavComponent}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(rutas)],

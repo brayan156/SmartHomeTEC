@@ -1,0 +1,18 @@
+<nav class="navbar navbar-light bg-light">
+  <button class="navbar-brand btn" (click)="activeNavVertical()">
+    <img src="assets/Asset_4.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    <b>Smart Home TEC</b>
+  </button>
+</nav>
+
+<div class="navVertical" *ngIf="navVerticalActive">
+  <ul>
+    <div>Informacion del Administrador</div>
+    <li><a>Agregar informacion de dispositivos</a></li>
+    <li><a>Gestion de tipos de dispositivos</a></li>
+    <li><a>Gestion de Distribuidores</a></li>
+    <li><a>Gestion de Tienda en linea y Distribuidores</a></li>
+    <li><a>Visualizar Dashboard</a></li>
+
+  </ul>
+</div>
