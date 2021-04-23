@@ -7,12 +7,23 @@
 
 <div class="navVertical" *ngIf="navVerticalActive">
   <ul>
-    <div>Informacion del Administrador</div>
-    <li><a>Agregar informacion de dispositivos</a></li>
-    <li><a>Gestion de tipos de dispositivos</a></li>
-    <li><a>Gestion de Distribuidores</a></li>
-    <li><a>Gestion de Tienda en linea y Distribuidores</a></li>
-    <li><a>Visualizar Dashboard</a></li>
+    <div class="Margnes">Informacion del Administrador</div>
+    <li>
+      <a class="Margnes" (click)="navegation('informacionDispositivos')">Agregar Informacion de los dispositivos</a>
+    </li>
+    <li>
+      <a class="Margnes" (click)="navegation('gestionDeTiposDeDispositivos')">Gestion de tipos de dispositivos</a>
+    </li>
+    <li>
+      <a class="Margnes" (click)="navegation('gestionDeDistribuidores')">Gestion de Distribuidores</a>
+    </li>
+    <li>
+      <a class="Margnes" (click)="navegation('gestionDeTiendaEnLineaYDistribuidores')">Gestion de Tienda en linea y Distribuidores</a>
+    </li>
+    <li>
+      <a class="Margnes" (click)="navegation('Dashboard')">Dashboard</a>
+    </li>
 
   </ul>
 </div>
+<router-outlet></router-outlet>

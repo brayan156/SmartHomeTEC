@@ -18,15 +18,15 @@
       <div class="row">
         <label>Correo Electronico:</label>
         <input type="email" name="email" class="email_From" id="InputEmail1" placeholder="Correo Electronico"
-               aria-label="CorreoElectronico" required="">
+               aria-label="CorreoElectronico">
       </div>
       <label>Password:</label>
       <div class="row">
         <input type="password" name="password" class="pasword_Emanil" id="InputPassword" placeholder="Contraseña"
-               aria-label="contraseña" required="">
+               aria-label="contraseña">
       </div>
       <div class="row" class="button">
-        <button type="submit" class="btn btn-primary">Ingresar</button>
+        <button type="submit" class="btn btn-primary" (click)="navegation()">Ingresar</button>
       </div>
     </form>
   </div>

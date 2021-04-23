@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -7,11 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
   public navVerticalActive = false ;
-  constructor() { }
+  route: any;
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
-
+  // tslint:disable-next-line:typedef
   activeNavVertical(): boolean {
     if (this.navVerticalActive === false){
       this.navVerticalActive = true;
@@ -21,5 +23,8 @@ export class NavComponent implements OnInit {
       this.navVerticalActive = false;
       return this.navVerticalActive;
     }
+  }
+  navegation(router): void{
+    this.router.navigateByUrl('/administrador/'.concat(router));
   }
 }

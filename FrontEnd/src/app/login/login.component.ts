@@ -1,13 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
   public typeLogin = 0;
-  constructor() { }
+
+  constructor(
+    private router: Router) {
+
+  }
 
   ngOnInit(): void {
   }
@@ -26,6 +32,13 @@ export class LoginComponent implements OnInit {
     else {
       return false;
     }
-}
-
+  }
+  navegation(): void{
+    if (this.typeLogin === 0){
+      this.router.navigate(['/administrador']);
+    }
+    else {
+      this.router.navigate(['/usuario']);
+    }
+  }
 }

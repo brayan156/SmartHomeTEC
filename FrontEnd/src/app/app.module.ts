@@ -6,12 +6,20 @@ import {RouterModule} from '@angular/router';
 import {rutas} from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { NavComponent } from './Administrador/nav/nav.component';
+import { AgreInfoDispositivoComponent } from './Administrador/agre-info-dispositivo/agre-info-dispositivo.component';
+import { GestionDeTiposDisComponent } from './Administrador/gestion-de-tipos-dis/gestion-de-tipos-dis.component';
+import { DashboardComponent } from './Administrador/dashboard/dashboard.component';
+import { TiendaEnLineaComponent } from './Administrador/tienda-en-linea/tienda-en-linea.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    NavComponent
+    NavComponent,
+    AgreInfoDispositivoComponent,
+    GestionDeTiposDisComponent,
+    DashboardComponent,
+    TiendaEnLineaComponent
   ],
   imports: [
     BrowserModule,
