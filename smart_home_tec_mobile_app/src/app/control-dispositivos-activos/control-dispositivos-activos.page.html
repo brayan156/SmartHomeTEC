@@ -1,0 +1,37 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Mi casa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
+    <ion-slide *ngFor="let card of [0,1,2,3,4,5,6]">
+      <div id='mySlide'>
+        <img id='icon' src='\assets\rooms\SVG\living_room.svg'>
+        <p>Sala</p>
+      </div>
+    </ion-slide>
+  </ion-slides>
+
+  <ion-title>Mis dispositivos</ion-title>
+  <ion-grid>
+    <ion-col>
+      <ion-row>
+        <ion-card *ngFor="let card of [0,1,2,3,4,5,6]" appBlurMenu="5">
+          
+          <img src='https://cdn.shopify.com/s/files/1/2393/8647/products/5AT1S3-WEN0.jpg?v=1606809887'>
+          <ion-card-content>
+            <p class='name'>Bombillo</p>
+            <p class='spec'>20mW</p>
+            <p class='spec'>#Serie 2129312</p>
+            <p class='room'>Sala 1</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
+</ion-content>

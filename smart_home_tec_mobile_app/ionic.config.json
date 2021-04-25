@@ -1,0 +1,7 @@
+{
+  "name": "smart_home_tec_mobile_app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
