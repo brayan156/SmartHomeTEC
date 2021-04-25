@@ -1,0 +1,135 @@
+<nav class="navbar navbar-light bg-light">
+  <button class="navbar-brand btn" (click)="activeNavVertical()">
+    <img src="assets/Asset_4.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    <b>Smart Home TEC</b>
+  </button>
+  <button class="btn btn-dark tamano"  data-bs-toggle="modal" data-bs-target="#agregarDispositivo" >Agregar Dispositivo</button>
+</nav>
+
+<div class="navVertical" *ngIf="activeNavVertical()">
+  <ul>
+    <div class="Margnes">Informacion del Administrador</div>
+    <li>
+      <a class="Margnes" (click)="navegation('informacionDispositivos')"
+      >Agregar Informacion de los dispositivos</a>
+    </li>
+    <li>
+      <a class="Margnes" (click)="navegation('gestionDeTiposDeDispositivos')">Gestion de tipos de dispositivos</a>
+    </li>
+    <li>
+      <a class="Margnes" (click)="navegation('gestionDeDistribuidores')">Gestion de Distribuidores</a>
+    </li>
+    <li>
+      <a class="Margnes" (click)="navegation('gestionDeTiendaEnLineaYDistribuidores')">Gestion de Tienda en linea y Distribuidores</a>
+    </li>
+    <li>
+      <a class="Margnes" (click)="navegation('Dashboard')">Dashboard</a>
+    </li>
+  </ul>
+</div>
+<div class="row">
+
+<div class="card posicion" style="width: 18rem;">
+  <img src="https://d500.epimg.net/cincodias/imagenes/2018/12/21/smartphones/1545388381_924715_1545389337_noticia_normal.jpg"
+       class="card-img-top" width="100" height="100">
+  <div class="card-body">
+    <h5 class="card-title">Numero de serie</h5>
+    <label class="card-text">Estado del Dispositivo</label>
+    <label class="card-text">Tipo de Dispositivo</label>
+    <label class="card-text">Marca del Dispositivo</label>
+    <label class="card-text">Consumo Electrico</label>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-dark margen" data-bs-toggle="modal" data-bs-target="#editarDispositivo">Editar</button>
+    <button class="btn btn-danger margen" data-bs-toggle="modal" data-bs-target="#eliminarDispositivo">Eliminar</button>
+  </div>
+</div>
+
+</div>
+
+
+<div class="modal fade" id="agregarDispositivo" tabindex="-1" aria-labelledby="agregarDispositivoDispositivoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Nuevo Dispositvo:</h4>
+      </div>
+      <div class="modal-body">
+
+        <label>URL-DE-IMAGEN</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+        <label>Tipo de dipositvo:</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+        <label>Marca del Dispositivo</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+        <label>Cosumo Electrico: </label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">Kw</span>
+          <input type="number" class="form-control" required="">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ACEPTAR</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editarDispositivo" tabindex="-1" aria-labelledby="editarDispositivoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <label>Numero de Serie:</label>
+      </div>
+      <div class="modal-body">
+
+        <label>Tipo de dipositvo:</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+        <label>Marca del Dispositivo</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+        <label>Cosumo Electrico: </label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">Kw</span>
+          <input type="number" class="form-control" required="">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ACEPTAR</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="eliminarDispositivo" tabindex="-1" aria-labelledby="agregarDispositivoDispositivoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Esta seguro que desea eliminar el dispositivo ,#de Serie</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ACEPTAR</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+      </div>
+    </div>
+  </div>
+</div>

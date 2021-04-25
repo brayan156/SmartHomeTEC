@@ -8,7 +8,6 @@ import {Router} from '@angular/router';
 })
 export class NavComponent implements OnInit {
   public navVerticalActive = false ;
-  route: any;
   constructor(private router: Router) { }
 
   ngOnInit(): void {

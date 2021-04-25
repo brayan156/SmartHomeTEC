@@ -10,6 +10,8 @@ import { AgreInfoDispositivoComponent } from './Administrador/agre-info-disposit
 import { GestionDeTiposDisComponent } from './Administrador/gestion-de-tipos-dis/gestion-de-tipos-dis.component';
 import { DashboardComponent } from './Administrador/dashboard/dashboard.component';
 import { TiendaEnLineaComponent } from './Administrador/tienda-en-linea/tienda-en-linea.component';
+import { VistaAdminComponent } from './Administrador/vista-admin/vista-admin.component';
+import { GestionDistribuidoresComponent } from './Administrador/gestion-distribuidores/gestion-distribuidores.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { TiendaEnLineaComponent } from './Administrador/tienda-en-linea/tienda-e
     AgreInfoDispositivoComponent,
     GestionDeTiposDisComponent,
     DashboardComponent,
-    TiendaEnLineaComponent
+    TiendaEnLineaComponent,
+    VistaAdminComponent,
+    GestionDistribuidoresComponent
   ],
   imports: [
     BrowserModule,
