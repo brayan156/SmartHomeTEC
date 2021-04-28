@@ -28,6 +28,7 @@
         <b>Descripción:</b>
         <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
         <p class="card-text"><small>Tiempo de Garantia</small></p>
+        <button class="btn btn-dark botones" data-bs-toggle="modal" data-bs-target="#editarDispositivo">Editar Dipositivo</button>
         <button class="btn btn-dark botones" data-bs-toggle="modal" data-bs-target="#asociarDispositivos">Asociar Dispositivo</button>
       </div>
     </div>
@@ -80,6 +81,8 @@
               <b>Descripción:</b>
               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
               <p class="card-text"><small>Tiempo de Garantia</small></p>
+              <button class="btn btn-dark botones" data-bs-toggle="modal" data-bs-target="#editarDispositivo">Editar Dipositivo</button>
+              <button class="btn btn-dark botones" data-bs-toggle="modal" data-bs-target="#">Desligar Dispositivo</button>
             </div>
           </div>
 
@@ -91,6 +94,8 @@
               <b>Descripción:</b>
               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
               <p class="card-text"><small>Tiempo de Garantia</small></p>
+              <button class="btn btn-dark botones" data-bs-toggle="modal" data-bs-target="#editarDispositivo">Editar Dipositivo</button>
+              <button class="btn btn-dark botones" data-bs-toggle="modal" data-bs-target="#">Desligar Dispositivo</button>
             </div>
           </div>
 
@@ -139,3 +144,37 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="editarDispositivo" tabindex="-1" aria-labelledby="agregarDispositivoDispositivoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Nuevo Dispositvo:</h4>
+      </div>
+      <div class="modal-body">
+
+
+        <label>Nombre del dispositivo:</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+        <label>Descripcion del dispositivo</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+        <label>Tiempo de Garantia: </label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">Meses</span>
+          <input type="number" class="form-control" required="">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ACEPTAR</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+      </div>
+    </div>
+  </div>
+</div>
