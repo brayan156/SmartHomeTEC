@@ -13,17 +13,4 @@ export class AgreInfoDispositivoComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  activeNavVertical(): boolean {
-    if (this.navVerticalActive === false){
-      this.navVerticalActive = true;
-      return this.navVerticalActive;
-    }
-    else {
-      this.navVerticalActive = false;
-      return this.navVerticalActive;
-    }
-  }
-  navegation(router): void{
-    this.router.navigateByUrl('/administrador/'.concat(router));
-  }
 }
