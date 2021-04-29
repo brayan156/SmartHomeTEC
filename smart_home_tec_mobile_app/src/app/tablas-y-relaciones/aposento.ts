@@ -4,4 +4,5 @@ export class Aposento {
   N_aposento: number;
   dispositivos: Dispositivo[];
   nombre: string;
+  img: string;
 }
