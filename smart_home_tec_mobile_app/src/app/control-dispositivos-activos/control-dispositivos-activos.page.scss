@@ -89,4 +89,11 @@ ion-card{
 ion-card:hover{
     background: linear-gradient(65deg, #0E2546, #62C6CA);
     box-shadow: 1px 8px 8px 0px rgba(14, 37, 70, 0.2);
+
+    .name {
+        color: #FAEDEC;
+    }
+    .spec {
+        color: white;
+    }
 }
