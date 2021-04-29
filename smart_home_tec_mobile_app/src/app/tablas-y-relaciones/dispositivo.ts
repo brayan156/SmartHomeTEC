@@ -4,4 +4,5 @@ export class Dispositivo {
   marca : string;
   consumo_eléctrico: string;
   prendido: boolean;
+  img: string;
 }
