@@ -13,4 +13,5 @@ export class Cliente {
   pais: string;
   direcciones_entrega: ClienteEntregaEn[];
   total_dispositivos: number;
+  img: string;
 }
