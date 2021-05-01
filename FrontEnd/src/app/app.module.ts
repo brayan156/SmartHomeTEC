@@ -12,6 +12,12 @@ import { DashboardComponent } from './Administrador/dashboard/dashboard.componen
 import { TiendaEnLineaComponent } from './Administrador/tienda-en-linea/tienda-en-linea.component';
 import { VistaAdminComponent } from './Administrador/vista-admin/vista-admin.component';
 import { GestionDistribuidoresComponent } from './Administrador/gestion-distribuidores/gestion-distribuidores.component';
+import { GestionPerfilComponent } from './Cliente/gestion-perfil/gestion-perfil.component';
+import { RepMenDisComponent } from './Cliente/rep-men-dis/rep-men-dis.component';
+import { RepDiaDispComponent } from './Cliente/rep-dia-disp/rep-dia-disp.component';
+import { RepTipDispUsoComponent } from './Cliente/rep-tip-disp-uso/rep-tip-disp-uso.component';
+import { VistaClienteComponent } from './Cliente/vista-cliente/vista-cliente.component';
+import { NavUComponent } from './Cliente/nav-u/nav-u.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +29,13 @@ import { GestionDistribuidoresComponent } from './Administrador/gestion-distribu
     DashboardComponent,
     TiendaEnLineaComponent,
     VistaAdminComponent,
-    GestionDistribuidoresComponent
+    GestionDistribuidoresComponent,
+    GestionPerfilComponent,
+    RepMenDisComponent,
+    RepDiaDispComponent,
+    RepTipDispUsoComponent,
+    VistaClienteComponent,
+    NavUComponent
   ],
   imports: [
     BrowserModule,

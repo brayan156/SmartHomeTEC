@@ -1,2 +1,129 @@
 <app-nav></app-nav>
 
+
+<div class="posicion ">
+
+  <button class="btn btn-dark tamano"  data-bs-toggle="modal" data-bs-target="#agregarDistribuidor" >Agregar Distribuidor</button>
+
+  <div class="card cardPosicion" style="width: 18rem;">
+    <img src="data:image/jpeg;base64,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"
+         class="card-img-top" width="100%" height="100%">
+    <div class="card-body">
+      <h5 class="card-title">Cedular Juridica</h5>
+      <p class="card-text">Nombre del distribuidor</p>
+      <p class="card-text">Continente del</p>
+      <p class="card-text">Pais</p>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-dark margen" data-bs-toggle="modal" data-bs-target="#editarDistribuidor">Editar</button>
+      <button class="btn btn-danger margen" data-bs-toggle="modal" data-bs-target="#eliminarDispositivo">Eliminar</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal fade" id="agregarDistribuidor" tabindex="-1" aria-labelledby="agregarDispositivoDistribuidorLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Nuevo Dispositvo:</h4>
+      </div>
+      <div class="modal-body">
+
+        <label>URL-DE-IMAGEN</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+        <label>Cedula Juridica:</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+        <label>Nombre del distribuidor</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+        <div class="col-md-3">
+          <label>Continente</label>
+          <select class="form-select" id="validationCustom04" required>
+            <option>America</option>
+            <option>Africa</option>
+            <option>Asia</option>
+            <option>Europa</option>
+            <option>Oceania</option>
+          </select>
+        </div>
+
+        <label>Pais</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ACEPTAR</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editarDistribuidor" tabindex="-1" aria-labelledby="editarDispositivoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <label>Cedula Juridica:</label>
+      </div>
+      <div class="modal-body">
+
+        <label>URL-IMAGEN:</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+        <label>Nombre</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+        <div class="col-md-3">
+          <label>Continente</label>
+          <select class="form-select" id="validationCustom05" required>
+            <option>America</option>
+            <option>Africa</option>
+            <option>Asia</option>
+            <option>Europa</option>
+            <option>Oceania</option>
+          </select>
+        </div>
+
+        <label>Pais</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ACEPTAR</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="eliminarDispositivo" tabindex="-1" aria-labelledby="agregarDispositivoDispositivoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Esta seguro que desea eliminar el Distribuidor,Nombre, Cedula Juridica</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ACEPTAR</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
+      </div>
+    </div>
+  </div>
+</div>
