@@ -109,7 +109,6 @@ namespace smarthometec_API.Modelos
 
                 entity.HasOne(d => d.NFacturaNavigation)
                     .WithOne(p => p.CertificadoGarantia)
-                    .HasPrincipalKey<Factura>(p => p.NFactura)
                     .HasForeignKey<CertificadoGarantia>(d => d.NFactura)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("certificado_garantia_n_factura_fkey");
@@ -334,13 +333,12 @@ namespace smarthometec_API.Modelos
 
             modelBuilder.Entity<Factura>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.NFactura)
+                    .HasName("factura_pkey");
 
                 entity.ToTable("factura");
 
-                entity.HasIndex(e => e.NFactura)
-                    .HasName("factura_n_factura_key")
-                    .IsUnique();
+                entity.Property(e => e.NFactura).HasColumnName("n_factura");
 
                 entity.Property(e => e.Ano)
                     .HasColumnName("ano")
@@ -353,10 +351,6 @@ namespace smarthometec_API.Modelos
                 entity.Property(e => e.Mes)
                     .HasColumnName("mes")
                     .HasDefaultValueSql("date_part('month'::text, CURRENT_DATE)");
-
-                entity.Property(e => e.NFactura)
-                    .HasColumnName("n_factura")
-                    .ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<Historial>(entity =>
@@ -447,7 +441,6 @@ namespace smarthometec_API.Modelos
 
                 entity.HasOne(d => d.NFacturaNavigation)
                     .WithOne(p => p.PedidoFactura)
-                    .HasPrincipalKey<Factura>(p => p.NFactura)
                     .HasForeignKey<PedidoFactura>(d => d.NFactura)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("pedido_factura_n_factura_fkey");

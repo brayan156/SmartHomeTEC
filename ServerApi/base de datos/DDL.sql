@@ -126,7 +126,8 @@ create table Factura(
     n_factura serial unique not null,
      dia int  default extract( day from current_date ),
      mes int  default extract( month from current_date ),
-     ano int default extract( year from current_date )
+     ano int default extract( year from current_date ),
+    PRIMARY KEY (n_factura)
 );
 
 create table Pedido_Factura(
