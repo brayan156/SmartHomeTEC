@@ -18,6 +18,7 @@ import { RepDiaDispComponent } from './Cliente/rep-dia-disp/rep-dia-disp.compone
 import { RepTipDispUsoComponent } from './Cliente/rep-tip-disp-uso/rep-tip-disp-uso.component';
 import { VistaClienteComponent } from './Cliente/vista-cliente/vista-cliente.component';
 import { NavUComponent } from './Cliente/nav-u/nav-u.component';
+import { TiendaEnLineaUsuarioComponent } from './Cliente/tienda-en-linea-usuario/tienda-en-linea-usuario.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { NavUComponent } from './Cliente/nav-u/nav-u.component';
     RepDiaDispComponent,
     RepTipDispUsoComponent,
     VistaClienteComponent,
-    NavUComponent
+    NavUComponent,
+    TiendaEnLineaUsuarioComponent
   ],
   imports: [
     BrowserModule,

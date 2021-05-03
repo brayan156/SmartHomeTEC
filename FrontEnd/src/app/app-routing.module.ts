@@ -14,6 +14,7 @@ import {GestionPerfilComponent} from './Cliente/gestion-perfil/gestion-perfil.co
 import {RepDiaDispComponent} from './Cliente/rep-dia-disp/rep-dia-disp.component';
 import {RepMenDisComponent} from './Cliente/rep-men-dis/rep-men-dis.component';
 import {RepTipDispUsoComponent} from './Cliente/rep-tip-disp-uso/rep-tip-disp-uso.component';
+import {TiendaEnLineaUsuarioComponent} from './Cliente/tienda-en-linea-usuario/tienda-en-linea-usuario.component';
 
 
 
@@ -33,7 +34,7 @@ rutas = [ {path: '', component: LoginComponent},
     children: [
       {path: '' , component: NavUComponent},
       {path: 'gestionPerfil' , component: GestionPerfilComponent},
-      {path: 'tiendaEnLinea' , component: TiendaEnLineaComponent},
+      {path: 'tiendaEnLinea' , component: TiendaEnLineaUsuarioComponent},
       {path: 'reportesDiaDisp' , component: RepDiaDispComponent},
       {path: 'reportesMensDisp', component: RepMenDisComponent},
       {path: 'reportesTipoDisUso' , component:  RepTipDispUsoComponent},
