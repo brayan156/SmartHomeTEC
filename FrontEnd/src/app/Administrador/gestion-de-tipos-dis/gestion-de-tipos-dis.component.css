@@ -1,0 +1,33 @@
+
+.tamano{
+  width: 100%;
+  margin-right: 40px;
+  margin-top: 10px;
+
+}
+
+.posicion{
+  margin-left: 15%;
+  margin-right:5% ;
+  z-index: -1;
+}
+
+.cardPosicion{
+  margin-left: 4%;
+  margin-top: 10px;
+}
+
+.cardPosicion2{
+  margin-left: 4%;
+  margin-top: 40px;
+}
+
+
+.margen{
+  margin: 5%;
+}
+.botones{
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5%;
+}
