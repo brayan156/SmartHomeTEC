@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { MenuController, ModalController } from '@ionic/angular';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -7,8 +9,12 @@ import { Component } from '@angular/core';
 export class AppComponent {
   public appPages = [
     { title: 'Dispositivos', url: 'control-dispositivos-activos', icon: 'heart' },
-    { title: 'Aposentos', url: 'gestion-aposentos', icon: 'heart' },
-    { title: 'Agregar dispositivo', url: 'gestion-dispositivos', icon: 'heart' },
+    { title: 'Agregar dispositivo', url: 'agregar-nuevo', icon: 'heart' },
   ];
-  constructor() {}
+  constructor(public router: Router, public menu: MenuController) { }
+  
+  goToLogin() {
+    this.router.navigateByUrl('login');
+    this.menu.close();
+  }
 }

@@ -9,10 +9,16 @@
 
 <ion-content>
   <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
-    <ion-slide *ngFor="let card of [0,1,2,3,4,5,6]">
+    <ion-slide *ngFor="let card of [0,1,2,3,4,5,6]" (click)=presentModal()>
       <div id='mySlide'>
         <img id='icon' src='\assets\rooms\SVG\living_room.svg'>
-        <p>Sala</p>
+        <p>Sala {{card}}</p>
+      </div>
+    </ion-slide>
+    <ion-slide (click)=presentActionSheet()>
+      <div id='mySlide'>
+        <img id='icon' src='\assets\rooms\SVG\other_room.svg'>
+        <p>Nuevo</p>
       </div>
     </ion-slide>
   </ion-slides>
@@ -21,7 +27,7 @@
   <ion-grid>
     <ion-col>
       <ion-row>
-        <ion-card *ngFor="let card of [0,1,2,3,4,5,6]" appBlurMenu="5">
+        <ion-card *ngFor="let card of [0,1,2,3,4,5,6]" appBlurMenu="5" >
           
           <img src='https://cdn.shopify.com/s/files/1/2393/8647/products/5AT1S3-WEN0.jpg?v=1606809887'>
           <ion-card-content>
@@ -29,6 +35,7 @@
             <p class='spec'>20mW</p>
             <p class='spec'>#Serie 2129312</p>
             <p class='room'>Sala 1</p>
+            <ion-toggle></ion-toggle>
           </ion-card-content>
         </ion-card>
       </ion-row>

@@ -30,6 +30,10 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'agregar-nuevo',
+    loadChildren: () => import('./agregar-nuevo/agregar-nuevo.module').then( m => m.AgregarNuevoPageModule)
   }
 ];
 

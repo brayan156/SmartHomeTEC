@@ -1,0 +1,43 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Nuevo dispositivo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" id='ourForm' (ngSubmit)="nuevoDispositivo(form)">
+    <ion-item>
+      <ion-label>Nombre</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Descripción</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Tipo</ion-label>
+      <ion-select  interface="action-sheet"></ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Marca</ion-label>
+      <ion-select  interface="action-sheet"></ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Número de serie</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Consumo</ion-label>
+      <ion-input></ion-input>
+      <ion-label> mW</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Aposento</ion-label>
+      <ion-select  interface="action-sheet"></ion-select>
+    </ion-item>
+      <ion-button shape='round' size='full'type="submit" [disabled]="form.invalid" >Agregar</ion-button>
+  </form>
+</ion-content>
