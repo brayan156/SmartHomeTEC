@@ -52,6 +52,13 @@ namespace smarthometec_API.Controllers
                 return BadRequest();
             }
 
+            // if (_context.Tipo.Join(_context.DispositivoModelo, tp => tp.Nombre, dm => dm.Tipo,
+            //     (tp, dm) => new {tp, dm}).Join(_context.DispositivoAdquirido, td => td.dm.Modelo, da => da.Modelo,
+            //     (td, dm) => new { td, dm }).Any())
+            // {
+            //     return BadRequest("Comprado");
+            // }
+
             _context.Entry(tipo).State = EntityState.Modified;
 
             try
@@ -107,6 +114,12 @@ namespace smarthometec_API.Controllers
             if (tipo == null)
             {
                 return NotFound();
+            }
+
+            if (_context.Tipo.Join(_context.DispositivoModelo, tp => tp.Nombre, dm => dm.Tipo,
+                (tp, dm) => new { tp, dm }).Any())
+            {
+                return BadRequest("Usado");
             }
 
             _context.Tipo.Remove(tipo);

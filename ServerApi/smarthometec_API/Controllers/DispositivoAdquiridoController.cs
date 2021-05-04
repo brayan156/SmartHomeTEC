@@ -53,7 +53,7 @@ namespace smarthometec_API.Controllers
             }
 
             _context.Entry(dispositivoAdquirido).State = EntityState.Modified;
-
+            
             try
             {
                 await _context.SaveChangesAsync();

@@ -62,6 +62,10 @@ namespace smarthometec_API.Controllers
             {
                 return BadRequest();
             }
+            if (_context.DispositivoModelo.Join(_context.DispositivoAdquirido, dmodel => dmodel.Modelo, dadquirido => dadquirido.Modelo, (dmodel, dadquirido) => new { dmodel, dadquirido }).Any())
+            {
+                return BadRequest("Comprado");
+            }
 
             _context.Entry(dispositivoModelo).State = EntityState.Modified;
 
@@ -118,6 +122,10 @@ namespace smarthometec_API.Controllers
             if (dispositivoModelo == null)
             {
                 return NotFound();
+            }
+            if (_context.DispositivoModelo.Join(_context.DispositivoAdquirido, dmodel => dmodel.Modelo, dadquirido => dadquirido.Modelo, (dmodel, dadquirido) => new { dmodel, dadquirido }).Any())
+            {
+                return BadRequest("Comprado");
             }
 
             _context.DispositivoModelo.Remove(dispositivoModelo);
