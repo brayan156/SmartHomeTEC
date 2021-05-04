@@ -1,1 +1,38 @@
 <app-nav></app-nav>
+
+<div class="posicion">
+
+    <div class="chart">
+        <google-chart [title]="chart.title" [type]="chart.type" [data]="chart.data" [columns]="chart.columnNames"
+            [options]="chart.options">
+        </google-chart>
+    </div>
+
+    <div class="contenedor">
+        <div class="row">
+            <input class="fecha" type="date">
+            <button type="submit" class="btn btn-primary boton">Buscar</button>
+        </div>
+        <div class="margenes">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Dispositivo</th>
+                        <th scope="col">Consumo Mensual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>DISPOSITIVO</td>
+                        <td>HORAS</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+   
+</div>

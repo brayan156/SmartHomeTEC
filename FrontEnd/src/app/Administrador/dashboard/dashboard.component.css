@@ -1,0 +1,26 @@
+.posicion{
+    margin-left: 15%;
+    margin-right:5% ;
+    z-index: -1;
+  }
+
+  .contenedor{
+    top: 0;
+    left: 50%;
+    margin-right: 10%;
+    margin-left: 50%;
+  }
+  
+  .fecha{
+    width: 40%;
+  }
+  
+  .boton{
+    margin-left: 5%;
+    width: 30%;
+  }
+  
+  .chart {
+    width: 40%;
+    background-color: beige;
+  }

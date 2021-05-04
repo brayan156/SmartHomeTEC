@@ -19,6 +19,7 @@ import { RepTipDispUsoComponent } from './Cliente/rep-tip-disp-uso/rep-tip-disp-
 import { VistaClienteComponent } from './Cliente/vista-cliente/vista-cliente.component';
 import { NavUComponent } from './Cliente/nav-u/nav-u.component';
 import { TiendaEnLineaUsuarioComponent } from './Cliente/tienda-en-linea-usuario/tienda-en-linea-usuario.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { TiendaEnLineaUsuarioComponent } from './Cliente/tienda-en-linea-usuario
   imports: [
     BrowserModule,
     RouterModule,
+    GoogleChartsModule,
     RouterModule.forRoot(rutas),
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
