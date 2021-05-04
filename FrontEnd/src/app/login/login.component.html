@@ -1,0 +1,119 @@
+<div class="card text-center">
+  <div class="card-header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand h1">SmartHome TEC</a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link btn h2" (click)="chageAdmin()">Administrador</a>
+            <a class="nav-link btn h2"  (click)="chageUser()">Usuario</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="card-body" *ngIf="loginType()">
+    <h5 class="card-title">Ingresar como Administrador</h5>
+    <form>
+      <div class="row">
+        <label>Correo Electronico:</label>
+        <input type="email" name="email" class="email_From" id="InputEmail1" placeholder="Correo Electronico"
+               aria-label="CorreoElectronico">
+      </div>
+      <label>Password:</label>
+      <div class="row">
+        <input type="password" name="password" class="pasword_Emanil" id="InputPassword" placeholder="Contraseña"
+               aria-label="contraseña">
+      </div>
+      <div class="row" class="button">
+        <button type="submit" class="btn btn-primary" (click)="navegation()">Ingresar</button>
+      </div>
+    </form>
+  </div>
+  <div class="card-body" *ngIf="!loginType()">
+    <h5 class="card-title">Ingresar como Usuario</h5>
+    <form>
+      <div class="row">
+        <label>Correo Electronico:</label>
+        <input type="email" name="email" class="email_From" id="InputEmail1Usuario" placeholder="Correo Electronico"
+               aria-label="CorreoElectronico" required="">
+      </div>
+      <label>Password:</label>
+      <div class="row">
+        <input type="password" name="password" class="pasword_Emanil" id="InputPasswordUsuario" placeholder="Contraseña"
+               aria-label="contraseña" required="">
+      </div>
+      <div class="row" class="button">
+        <button type="submit" class="btn btn-primary" (click)="navegation()">Ingresar</button>
+      </div>
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Registrase</a>
+        </li>
+      </ul>
+    </form>
+  </div>
+</div>
+<!-- Modal -->
+
+<div class="fade modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Bienvenido al equipo de SmartHome TEC</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form class="row g-4">
+
+          <div class="col-md-4">
+            <label>Nombre:</label>
+            <input type="text" class="form-control" required="">
+          </div>
+
+          <div class="col-md-4">
+            <label>Primer Apellido:</label>
+            <input type="text" class="form-control" required="">
+          </div>
+          <div class="col-md-4">
+            <label>Segundo Apellido:</label>
+            <input type="text" class="form-control" required="">
+          </div>
+
+          <div class="col-md-3">
+            <label>Continente</label>
+            <select class="form-select" id="validationCustom04" required>
+              <option>America</option>
+              <option>Africa</option>
+              <option>Asia</option>
+              <option>Europa</option>
+              <option>Oceania</option>
+            </select>
+          </div>
+
+            <div class="col-md-4">
+              <label>Pais:</label>
+              <input type="text" class="form-control" required="">
+            </div>
+
+            <div class="col-md-4">
+              <label>Ciudad</label>
+              <input type="text" class="form-control" required="">
+            </div>
+
+          <div class="col-md-5">
+            <label>Correo electronico</label>
+            <input type="email" class="form-control" required="">
+          </div>
+
+          <div class="col-md-4">
+            <label>Password</label>
+            <input type="password" class="form-control" required="">
+          </div>
+
+        </form>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+    </div>
+</div>
