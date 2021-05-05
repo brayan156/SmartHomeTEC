@@ -11,8 +11,8 @@ export class DashboardComponent implements OnInit {
   constructor() { }
 
   chart = {
-    title: 'Hola',
-    type: 'AreaChart',
+    title: '',
+    type: 'BarChart',
     data: [
       ['London', 8136000],
       ['New York', 8538000],
@@ -20,10 +20,20 @@ export class DashboardComponent implements OnInit {
       ['Berlin', 3470000],
       ['Kairo', 19500000],
     ],
-    columnNames: ['City', 'Inhabitants'],
+    columnNames: ['', ''],
     options: {
-      colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6'],
-      is3D: true
+      colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f4f5f8', '#f4f5f8'],
+      is3D: true,
+      backgroundColor: {
+        // fill: '#92949c',
+        fillOpacity: 0,
+      },
+      hAxis: {
+        textStyle:{color: '#FFF'}
+      },
+      vAxis: {
+        textStyle:{color: '#FFF'}
+      },
     }
 
   };
@@ -46,10 +56,20 @@ export class DashboardComponent implements OnInit {
     ],
     columnNames: ['Country', 'Population'],
     options: {
-      showTip: true
+      showTip: true,
+      is3D: true,
+      backgroundColor: {
+        // fill: '#92949c',
+        fillOpacity: 0,
+      },
+      hAxis: {
+        textStyle:{color: '#FFF'}
+      },
+      vAxis: {
+        textStyle:{color: '#FFF'}
+      },
     },
-    width: 550,
-    height: 400,
+    
 
   };
 
