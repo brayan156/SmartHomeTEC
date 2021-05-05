@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {GoogleChartComponent, GoogleChartsModule} from 'angular-google-charts';
 import { AppComponent } from './AppComponent/app.component';
 import {RouterModule} from '@angular/router';
 import {rutas} from './app-routing.module';
@@ -19,7 +19,6 @@ import { RepTipDispUsoComponent } from './Cliente/rep-tip-disp-uso/rep-tip-disp-
 import { VistaClienteComponent } from './Cliente/vista-cliente/vista-cliente.component';
 import { NavUComponent } from './Cliente/nav-u/nav-u.component';
 import { TiendaEnLineaUsuarioComponent } from './Cliente/tienda-en-linea-usuario/tienda-en-linea-usuario.component';
-import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [

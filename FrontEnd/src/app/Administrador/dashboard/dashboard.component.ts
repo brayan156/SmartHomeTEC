@@ -10,12 +10,9 @@ export class DashboardComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
   chart = {
     title: 'Hola',
-    type: "AreaChart",
+    type: 'AreaChart',
     data: [
       ['London', 8136000],
       ['New York', 8538000],
@@ -29,25 +26,25 @@ export class DashboardComponent implements OnInit {
       is3D: true
     }
 
-  }
+  };
 
   chart2 = {
     title: '',
     type: 'GeoChart',
     data: [
-      ["China", "China: 3k"],
-      ["India", "India: 1,242,620,000"],
-      ["Costa Rica", "Costa Rica: 2k"],
-      ["US", "US: 317,842,000"],
-      ["Indonesia", "Indonesia: 247,424,598"],
-      ["Brazil", "Brazil: 201,032,714"],
-      ["Pakistan", "Pakistan: 186,134,000"],
-      ["Nigeria", "Nigeria: 173,615,000"],
-      ["Bangladesh", "Bangladesh: 152,518,015"],
-      ["Russia", "Russia: 146,019,512"],
-      ["Japan", "Japan: 127,120,000"]
+      ['China', 'China: 3k'],
+      ['India', 'India: 1,242,620,000'],
+      ['Costa Rica', 'Costa Rica: 2k'],
+      ['US', 'US: 317,842,000'],
+      ['Indonesia', 'Indonesia: 247,424,598'],
+      ['Brazil', 'Brazil: 201,032,714'],
+      ['Pakistan', 'Pakistan: 186,134,000'],
+      ['Nigeria', 'Nigeria: 173,615,000'],
+      ['Bangladesh', 'Bangladesh: 152,518,015'],
+      ['Russia', 'Russia: 146,019,512'],
+      ['Japan', 'Japan: 127,120,000']
     ],
-    columnNames: ["Country", "Population"],
+    columnNames: ['Country', 'Population'],
     options: {
       showTip: true
     },
@@ -56,7 +53,10 @@ export class DashboardComponent implements OnInit {
 
   };
 
-  
+  ngOnInit(): void {
+  }
 
-  
+
+
+
 }

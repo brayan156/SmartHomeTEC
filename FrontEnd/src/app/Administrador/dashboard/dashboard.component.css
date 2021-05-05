@@ -4,25 +4,38 @@
   z-index: -1;
 }
 .contenedor{
-top: 0;
-left: 50%;
-margin-right: 10%;
-margin-left: 50%;
+  top: 0;
+  left: 50%;
+  margin-right: 10%;
+  margin-left: 50%;
 }
 .fecha{
-width: 40%;
+  width: 40%;
 }
 
 .boton{
-margin-left: 5%;
-width: 30%;
+  margin-left: 5%;
+  width: 30%;
 }
 
 .chart {
-width: 40%;
-background-color: beige;
+  width: 40%;
+  height: 50%;
+  margin-left: 10%;
+  margin-top: 5%;
 }
 
 .contenedor2{
 width: 40%;
+  margin-top: 5%;
+}
+
+.valores{
+  width: 40%;
+  margin-top: 5%;
+}
+
+.tamano{
+  width: 500px;
+  height: 250px;
 }
