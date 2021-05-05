@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -84,6 +85,25 @@ namespace smarthometec_API.Controllers
 
             return CreatedAtAction("GetAposento", new { id = aposento.Id }, aposento);
         }
+
+
+        [HttpPost("Default")]
+        public async Task<IActionResult> PostAposento(int idCliente)
+        {
+            string[] aposentos_nombre = {"dormitorio","cocina","sala","comedor"};
+            foreach (var aposento_nombre in aposentos_nombre)
+            {
+                Aposento aposento = new Aposento();
+                aposento.NombreCuarto = aposento_nombre;
+                aposento.IdCliente = idCliente;
+                _context.Aposento.Add(aposento);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok("creados");
+        }
+
 
         // DELETE: api/Aposento/5
         [HttpDelete("{id}")]

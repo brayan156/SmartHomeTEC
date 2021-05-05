@@ -20,6 +20,7 @@ namespace smarthometec_API.Modelos
         public bool? Prendido { get; set; }
         public string Modelo { get; set; }
         public int? IdAposento { get; set; }
+        public DateTime? FechaPrendido { get; set; }
 
         public virtual Aposento IdAposentoNavigation { get; set; }
         public virtual DispositivoModelo ModeloNavigation { get; set; }

@@ -27,6 +27,12 @@ namespace smarthometec_API.Controllers
             return await _context.Cliente.ToListAsync();
         }
 
+        [HttpGet("Cliente/{contrasena}/{correo}")]
+        public async Task<ActionResult<List<Cliente>>> Getcontrasena(string contrasena, string correo)
+        {
+            return await _context.Cliente.Where(d => d.Contrasena == contrasena & d.Email == correo).ToListAsync();
+        }
+
         // GET: api/Cliente/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(int id)
@@ -72,6 +78,10 @@ namespace smarthometec_API.Controllers
 
             return NoContent();
         }
+
+
+
+
 
         // POST: api/Cliente
         // To protect from overposting attacks, enable the specific properties you want to bind to, for

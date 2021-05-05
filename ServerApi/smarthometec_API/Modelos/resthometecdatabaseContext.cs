@@ -74,7 +74,7 @@ namespace smarthometec_API.Modelos
             {
                 entity.ToTable("aposento");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
 
@@ -212,7 +212,7 @@ namespace smarthometec_API.Modelos
 
                 entity.ToTable("dispositivo_adquirido");
 
-                entity.Property(e => e.NSerie).HasColumnName("n_serie");
+                entity.Property(e => e.NSerie).HasColumnName("n_serie").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.IdAposento).HasColumnName("id_aposento");
 
@@ -338,7 +338,7 @@ namespace smarthometec_API.Modelos
 
                 entity.ToTable("factura");
 
-                entity.Property(e => e.NFactura).HasColumnName("n_factura");
+                entity.Property(e => e.NFactura).HasColumnName("n_factura").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Ano)
                     .HasColumnName("ano")
@@ -374,7 +374,7 @@ namespace smarthometec_API.Modelos
                     .HasColumnName("dia")
                     .HasDefaultValueSql("date_part('day'::text, CURRENT_DATE)");
 
-                entity.Property(e => e.HorasDeUso)
+                entity.Property(e => e.MinutosDeUso)
                     .HasColumnName("horas_de_uso")
                     .HasDefaultValueSql("0");
 
@@ -393,7 +393,7 @@ namespace smarthometec_API.Modelos
             {
                 entity.ToTable("pedido");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
 
@@ -431,7 +431,8 @@ namespace smarthometec_API.Modelos
 
                 entity.Property(e => e.IdPedido).HasColumnName("id_pedido");
 
-                entity.Property(e => e.NFactura).HasColumnName("n_factura");
+                entity.Property(e => e.NFactura).HasColumnName("n_factura")
+                    .ValueGeneratedOnAdd();
 
                 entity.HasOne(d => d.IdPedidoNavigation)
                     .WithOne(p => p.PedidoFactura)

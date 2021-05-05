@@ -38,6 +38,14 @@ namespace smarthometec_API.Controllers
             //return await _context.Tipo.FromSqlRaw("SELECT tipo.nombre, tipo.tiempo_de_garantia, tipo.imagen, tipo.descripcion, dm.modelo, dm.marca, dm.consumo_electrico, dm.tipo from tipo inner join dispositivo_modelo dm on tipo.nombre = dm.tipo").ToListAsync();
         }
 
+        [HttpGet("region/{pais}")]
+        public async Task<ActionResult<IEnumerable<dynamic>>> getbyregion(string pais)
+        {
+            return await _context.Distribuidor.Join(_context.DispositivoSeVendeEn, dis => dis.CedulaJuridica, dsv => dsv.CjDistribuidor, 
+                (distribuidor, dispositivoSeVendeEn) => new { distribuidor, dispositivoSeVendeEn }).Where(dd=>dd.distribuidor.Pais==pais).Join(
+                _context.DispositivoModelo,dd=>dd.dispositivoSeVendeEn.ModeloDispotivo,dm=>dm.Modelo,(dd,dm)=>new {dispositivoSeVendeEn=dd.dispositivoSeVendeEn,dispositivoModelo=dm}).ToListAsync();
+        }
+
         // GET: api/DispositivoModelo/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DispositivoModelo>> GetDispositivoModelo(string id)

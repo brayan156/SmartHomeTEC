@@ -41,6 +41,121 @@ namespace smarthometec_API.Controllers
             return dispositivoAdquirido;
         }
 
+
+
+
+
+
+        [HttpPut("encender/{id}")]
+        public async Task<IActionResult> Encender(int id, DispositivoAdquirido dispositivoAdquirido)
+        {
+            if (id != dispositivoAdquirido.NSerie)
+            {
+                return BadRequest();
+            }
+
+            if (dispositivoAdquirido.Prendido != true)
+            {
+                dispositivoAdquirido.Prendido = true;
+                dispositivoAdquirido.FechaPrendido = DateTime.Now;
+            }
+
+            _context.Entry(dispositivoAdquirido).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DispositivoAdquiridoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("apagar/{id}")]
+        public async Task<IActionResult> Apagar(int id, DispositivoAdquirido dispositivoAdquirido)
+        {
+            if (id != dispositivoAdquirido.NSerie)
+            {
+                return BadRequest();
+            }
+
+            if (dispositivoAdquirido.Prendido == true)
+            {
+                int total_dias = (DateTime.Now - dispositivoAdquirido.FechaPrendido.Value).Days;
+                int total_minutos = (DateTime.Now - dispositivoAdquirido.FechaPrendido.Value).Minutes;
+                Historial historial = new Historial();
+                historial.Ano = dispositivoAdquirido.FechaPrendido.Value.Year;
+                historial.Mes = dispositivoAdquirido.FechaPrendido.Value.Month;
+                historial.Dia = dispositivoAdquirido.FechaPrendido.Value.Day;
+                historial.NSerie = dispositivoAdquirido.NSerie;
+                if (_context.Historial.Any(hist => hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes & hist.Dia == historial.Dia))
+                {
+                    Historial histo = _context.Historial.First(hist =>
+                        hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes &
+                        hist.Dia == historial.Dia);
+                    if (dispositivoAdquirido.FechaPrendido.Value.Date == DateTime.Today) histo.MinutosDeUso += total_minutos;
+                    else histo.MinutosDeUso += 24 * 60 - dispositivoAdquirido.FechaPrendido.Value.TimeOfDay.Minutes;
+                    _context.Entry(histo).State = EntityState.Modified;
+                }
+                else
+                {
+                    if (dispositivoAdquirido.FechaPrendido.Value.Date == DateTime.Today) historial.MinutosDeUso = total_minutos;
+                    else historial.MinutosDeUso = 24 * 60 - dispositivoAdquirido.FechaPrendido.Value.TimeOfDay.Minutes;
+                    _context.Historial.Add(historial);
+
+
+                }
+
+                DateTime time = dispositivoAdquirido.FechaPrendido.Value;
+                time = time.AddDays(1);
+
+                for (int i = total_dias; i > 0; i--)
+                {
+                    Historial h = new Historial();
+                    h.Dia = time.Day;
+                    h.Mes = time.Month;
+                    h.Ano = time.Year;
+                    if (time.Date == DateTime.Today) h.MinutosDeUso = (DateTime.Now - time).Minutes;
+                    else h.MinutosDeUso = 24 * 60;
+                    time = time.AddDays(1);
+                    _context.Historial.Add(h);
+                }
+                dispositivoAdquirido.Prendido = false;
+            }
+
+            _context.Entry(dispositivoAdquirido).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DispositivoAdquiridoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+
+
         // PUT: api/DispositivoAdquirido/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -84,6 +199,10 @@ namespace smarthometec_API.Controllers
 
             return CreatedAtAction("GetDispositivoAdquirido", new { id = dispositivoAdquirido.NSerie }, dispositivoAdquirido);
         }
+
+
+
+
 
         // DELETE: api/DispositivoAdquirido/5
         [HttpDelete("{id}")]

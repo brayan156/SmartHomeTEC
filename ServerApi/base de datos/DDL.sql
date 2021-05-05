@@ -65,6 +65,7 @@ create table Aposento(
 create table Dispositivo_adquirido (
     n_serie serial unique not null,
     prendido boolean  default false,
+    fecha_prendido timestamp,
     modelo varchar(15) not null,
     id_aposento int,
     primary key (n_serie),
@@ -87,7 +88,7 @@ create table Historial(
   dia int default extract( day from current_date ),
   mes int default extract( month from current_date ),
   ano int default extract( year from current_date ),
-  horas_de_uso int default 0,
+  minutos_de_uso int default 0,
   primary key (n_historial,n_serie),
   foreign key (n_serie) references Dispositivo_adquirido (n_serie)
 );
