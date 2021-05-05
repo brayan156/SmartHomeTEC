@@ -2,7 +2,7 @@
   margin-left: 15%;
   margin-right:5% ;
   z-index: -1;
-  /* background-color: #0E2546; */
+  background-color: transparent;
   
 }
 .contenedor{
@@ -22,7 +22,7 @@
 
 .chart {
   width: 65%;
-  height: 400px;
+  height: full;
   margin-left: 5%;
   margin-top: 5%;
   color: white;
@@ -30,16 +30,16 @@
 }
 
 google-chart{
-  width: 100%;
+  width: auto;
   height: 100%;
-  background: linear-gradient(65deg, #263b59, #0E2546);
-  box-shadow: 5px 8px 8px 0px rgba(255, 255, 255, 0.05);
-  padding: 20px;
+  box-shadow: 5px 8px 8px 0px rgba(255, 255, 255, 0.01);
+  padding: 3%;
+  background: #3c3c3c;
 }
 
 .contenedor2{
   width: 90%;
-  margin-bottom: 100px;
+  margin-bottom: 5%;
   margin-left: 5%;
   margin-top: 20px;
   background-color: linear-gradient(65deg, #263b59, #0E2546);
@@ -53,7 +53,7 @@ google-chart{
 }
 
 .myCard{
-  background: linear-gradient(65deg, #263b59, #0E2546);
+  background: #3c3c3c;
   border-color: transparent;
   color: white;
   box-shadow: 5px 8px 8px 0px rgba(255, 255, 255, 0.05);
@@ -73,7 +73,7 @@ google-chart{
 
 .table {
   color: white;
-  background-color: linear-gradient(65deg, #263b59, #0E2546);;
+  background-color: linear-gradient(65deg, #263b59, #0E2546);
 
 }
 
