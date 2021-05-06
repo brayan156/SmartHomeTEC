@@ -29,10 +29,10 @@ export class DashboardComponent implements OnInit {
         fillOpacity: 0,
       },
       hAxis: {
-        textStyle:{color: '#FFF'}
+        textStyle: {color: '#FFF'}
       },
       vAxis: {
-        textStyle:{color: '#FFF'}
+        textStyle: {color: '#FFF'}
       },
     }
 
@@ -42,8 +42,8 @@ export class DashboardComponent implements OnInit {
     title: '',
     type: 'GeoChart',
     data: [
-      ['China', 'China: 3k'],
-      ['India', 'India: 1,242,620,000'],
+      ['China', '3000'],
+      ['India', '1,242,620,000'],
       ['Costa Rica', 'Costa Rica: 2k'],
       ['US', 'US: 317,842,000'],
       ['Indonesia', 'Indonesia: 247,424,598'],
@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit {
         textStyle:{color: '#FFF'}
       },
     },
-    
+
 
   };
 
