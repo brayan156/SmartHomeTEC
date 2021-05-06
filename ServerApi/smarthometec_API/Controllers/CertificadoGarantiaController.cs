@@ -41,6 +41,25 @@ namespace smarthometec_API.Controllers
             return certificadoGarantia;
         }
 
+        [HttpGet("tiempo_restante/{nserie}")]
+        public   int gettiempo(int nserie)
+        {
+            var pedido =  _context.Pedido.First(p=>p.NSerieDispositivo==nserie);
+            var pfactura = _context.PedidoFactura.First(pf => pf.IdPedido == pedido.Id);
+            var factura= _context.Factura.First(f => f.NFactura == pfactura.NFactura);
+            var garantia= _context.CertificadoGarantia.First(f => f.NFactura == factura.NFactura);
+            var fechafinal = new DateTime(garantia.AnoFinGarantia,garantia.MesFinGarantia,factura.Dia.Value);
+            var mesesrestantes = ((fechafinal.Year - DateTime.Now.Year) * 12) + fechafinal.Month - DateTime.Now.Month;
+
+            if (mesesrestantes < 0)
+            {
+                return 0;
+            }
+
+            return mesesrestantes;
+        }
+
+
         // PUT: api/CertificadoGarantia/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

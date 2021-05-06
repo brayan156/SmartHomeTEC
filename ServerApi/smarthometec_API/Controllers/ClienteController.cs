@@ -47,6 +47,21 @@ namespace smarthometec_API.Controllers
             return cliente;
         }
 
+
+        [HttpGet("dispositivosDueno/{id}")]
+        public async Task<ActionResult<IEnumerable<DispositivoAdquirido>>> Getdispositvos(int id)
+        {
+            var dipositivos = await _context.ClienteHaUsado.Where(cu=>cu.IdCliente==id & cu.PropietarioActual==true).Join(_context.DispositivoAdquirido,cu=>cu.NSerieDispositivo,da=>da.NSerie,(cu,da)=>da).ToListAsync();
+
+            if (dipositivos == null)
+            {
+                return NotFound();
+            }
+
+            return dipositivos;
+        }
+
+
         // PUT: api/Cliente/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

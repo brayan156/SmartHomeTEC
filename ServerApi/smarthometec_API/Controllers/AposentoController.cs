@@ -42,6 +42,35 @@ namespace smarthometec_API.Controllers
             return aposento;
         }
 
+
+        [HttpGet("dispositivos/{id}")]
+        public async Task<ActionResult<IEnumerable<DispositivoAdquirido>>> Getdispositivos(int id)
+        {
+            var dipositivos = await _context.DispositivoAdquirido.Where(dis=>dis.IdAposento==id).ToListAsync();
+
+            if (dipositivos == null)
+            {
+                return NotFound();
+            }
+
+            return dipositivos;
+        }
+
+
+        [HttpGet("aposentoscliente/{idcliente}")]
+        public async Task<ActionResult<IEnumerable<Aposento>>> GetAposentocliente(int idcliente)
+        {
+            var aposento = await _context.Aposento.Where(a=>a.IdCliente==idcliente).ToListAsync();
+
+            if (aposento == null)
+            {
+                return NotFound();
+            }
+
+            return aposento;
+        }
+
+
         // PUT: api/Aposento/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -51,6 +80,11 @@ namespace smarthometec_API.Controllers
             if (id != aposento.Id)
             {
                 return BadRequest();
+            }
+
+            if (_context.Aposento.Any(a => a.IdCliente == aposento.IdCliente & a.NombreCuarto == aposento.NombreCuarto))
+            {
+                return BadRequest("cliente ya tiene ese aposento");
             }
 
             _context.Entry(aposento).State = EntityState.Modified;
@@ -74,12 +108,20 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
+
+
         // POST: api/Aposento
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Aposento>> PostAposento(Aposento aposento)
         {
+
+            if (_context.Aposento.Any(a => a.IdCliente == aposento.IdCliente & a.NombreCuarto == aposento.NombreCuarto))
+            {
+                return BadRequest("cliente ya tiene ese aposento");
+            }
+
             _context.Aposento.Add(aposento);
             await _context.SaveChangesAsync();
 

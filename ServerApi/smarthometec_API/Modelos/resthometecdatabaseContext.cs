@@ -214,6 +214,8 @@ namespace smarthometec_API.Modelos
 
                 entity.Property(e => e.NSerie).HasColumnName("n_serie").ValueGeneratedOnAdd();
 
+                entity.Property(e => e.FechaPrendido).HasColumnName("fecha_prendido");
+
                 entity.Property(e => e.IdAposento).HasColumnName("id_aposento");
 
                 entity.Property(e => e.Modelo)
