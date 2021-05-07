@@ -11,5 +11,4 @@ export class TiendaEnLineaComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
