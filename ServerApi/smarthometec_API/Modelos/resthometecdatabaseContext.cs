@@ -212,7 +212,7 @@ namespace smarthometec_API.Modelos
 
                 entity.ToTable("dispositivo_adquirido");
 
-                entity.Property(e => e.NSerie).HasColumnName("n_serie").ValueGeneratedOnAdd();
+                entity.Property(e => e.NSerie).HasColumnName("n_serie").UseSerialColumn();
 
                 entity.Property(e => e.FechaPrendido).HasColumnName("fecha_prendido");
 
@@ -340,7 +340,7 @@ namespace smarthometec_API.Modelos
 
                 entity.ToTable("factura");
 
-                entity.Property(e => e.NFactura).HasColumnName("n_factura").ValueGeneratedOnAdd();
+                entity.Property(e => e.NFactura).HasColumnName("n_factura").UseSerialColumn();
 
                 entity.Property(e => e.Ano)
                     .HasColumnName("ano")
@@ -395,7 +395,7 @@ namespace smarthometec_API.Modelos
             {
                 entity.ToTable("pedido");
 
-                entity.Property(e => e.Id).HasColumnName("id").ValueGeneratedOnAdd();
+                entity.Property(e => e.Id).HasColumnName("id").UseSerialColumn();
 
                 entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
 
