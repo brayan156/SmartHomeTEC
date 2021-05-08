@@ -1,0 +1,49 @@
+.color{
+  background: #F0BB6F;
+}
+.container{
+  margin-top: 10%;
+}
+.centrar{
+  margin-left: 10%;
+}
+
+.bordes {
+  border-radius: 10px;
+  width: 40%;
+  margin-top: 240px;
+}
+
+.tamano{
+  margin-left: 15%;
+  width: 70%;
+}
+.tamano2{
+  width: 25%;
+  margin-top: 10px;
+  margin-left: 10%;
+}
+
+.tamano3{
+  margin-left: 10%;
+  width: 80%;
+  margin-top: 10px;
+}
+
+.tamano4{
+  width: 25%;
+  margin-top: 10px;
+  margin-left: 2.5%;
+}
+
+.tamano5{
+  margin-left: 10%;
+  width: 35%;
+  margin-top: 10px;
+}
+
+.tamano6{
+  margin-left: 5%;
+  width: 35%;
+  margin-top: 10px;
+}

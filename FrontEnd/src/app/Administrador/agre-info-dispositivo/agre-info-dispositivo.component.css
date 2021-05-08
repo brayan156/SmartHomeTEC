@@ -1,0 +1,52 @@
+
+
+.tamano{
+  width: 20%;
+  margin-left: 90%;
+  margin-top: 1%;
+  background: #62C6CA;
+  border-color: transparent;
+
+}
+
+.tamano:hover {
+  background: #FAB04A;
+}
+
+
+
+.posicion{
+  margin-left: 15%;
+  margin-right:10% ;
+  z-index: -1;
+}
+
+.cardPosicion{
+  margin-left: 2%;
+  margin-top: 10px;
+  background: white;
+  color: black;
+}
+
+.margen{
+  margin-left: 25%;
+  margin-top: 5px;
+  width: 50%;
+  background: #62C6CA;
+  border-color: transparent;
+  color: black;
+}
+
+.margen:hover {
+  background: #FAB04A;
+}
+
+.centrar{
+  margin-left: 10%;
+}
+
+.modal{
+  background: linear-gradient(65deg, #212121, #212121);
+  border-color: transparent;
+}
+
