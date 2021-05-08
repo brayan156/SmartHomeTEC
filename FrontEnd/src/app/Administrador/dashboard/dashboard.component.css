@@ -1,0 +1,82 @@
+.posicion{
+  margin-left: 15%;
+  margin-right:5% ;
+  z-index: -1;
+  background-color: transparent;
+  
+}
+.contenedor{
+  top: 0;
+  left: 50%;
+  margin-right: 10%;
+  margin-left: 50%;
+}
+.fecha{
+  width: 40%;
+}
+
+.boton{
+  margin-left: 5%;
+  width: 30%;
+}
+
+.chart {
+  width: 65%;
+  height: full;
+  margin-left: 5%;
+  margin-top: 5%;
+  color: white;
+  
+}
+
+google-chart{
+  width: auto;
+  height: 100%;
+  box-shadow: 5px 8px 8px 0px rgba(255, 255, 255, 0.01);
+  padding: 3%;
+  background: #3c3c3c;
+}
+
+.contenedor2{
+  width: 90%;
+  margin-bottom: 5%;
+  margin-left: 5%;
+  margin-top: 20px;
+  background-color: linear-gradient(65deg, #263b59, #0E2546);
+}
+
+.valores{
+  width: 30%;
+  margin-top: 5%;
+  background: transparent;
+  border-color: transparent;
+}
+
+.myCard{
+  background: #3c3c3c;
+  border-color: transparent;
+  color: white;
+  box-shadow: 5px 8px 8px 0px rgba(255, 255, 255, 0.05);
+  margin-top: 10%;
+}
+
+
+
+.map{
+  width: 90%;
+  height: 500px;
+  margin-bottom: 100px;
+  margin-left: 5%;
+  margin-top: 5%;
+
+}
+
+.table {
+  color: white;
+  background-color: linear-gradient(65deg, #263b59, #0E2546);
+
+}
+
+h5 {
+  color: white;
+}

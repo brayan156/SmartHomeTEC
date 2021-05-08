@@ -20,10 +20,16 @@
     "@angular/platform-browser-dynamic": "~11.2.4",
     "@angular/router": "~11.2.4",
     "@popperjs/core": "^2.9.2",
+    "@types/xlsx": "0.0.36",
+    "angular-google-charts": "^2.2.1",
     "bootstrap": "^5.0.0-beta3",
+    "bootstrap-icons": "^1.4.1",
+    "faker": "^5.5.3",
     "jquery": "^3.6.0",
     "rxjs": "~6.6.0",
+    "ts-xlsx": "0.0.11",
     "tslib": "^2.0.0",
+    "xlsx": "^0.16.9",
     "zone.js": "~0.11.3"
   },
   "devDependencies": {

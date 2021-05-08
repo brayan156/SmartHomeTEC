@@ -1,0 +1,59 @@
+<app-nav></app-nav>
+
+<div class="posicion">
+
+  <div class="row">
+
+    <div class="chart">
+      <h5>Cantidad promedio de dispositivos por usuario</h5>
+        <google-chart [title]="chart.title" [type]="chart.type" [data]="chart.data" [columns]="chart.columnNames"
+            [options]="chart.options">
+        </google-chart>
+    </div>
+
+    <div class='valores'>
+      <div class="card myCard" style="width: 18rem;">
+        <img src="https://media.istockphoto.com/vectors/silhouettes-of-people-in-full-growth-crowd-cheerful-people-vector-vector-id1005228146?b=1&k=6&m=1005228146&s=170667a&w=0&h=_ieo3DijqvaTkwnCYG1McCbJRyJ9jlqfomh-A0KYgSA="
+             width="=100%" height="100%" class="d-inline-block align-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title">Cantidad total de dispositivos gestionados por el sistema</h5>
+          <p class="card-text">Numero </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="map">
+      <h5>Cantidad promedio de dispositivos por región</h5>
+        <google-chart [title]="chart2.title" [type]="chart2.type" [data]="chart2.data"
+            [options]="chart2.options">
+        </google-chart>
+    </div>
+
+
+    <div class="contenedor2">
+      <h5>Listado de dispositivos registrados en el sistema</h5>
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Dispositivo</th>
+            <th scope="col">Consumo Mensual</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>DISPOSITIVO</td>
+            <td>HORAS</td>
+          </tr>
+          </tbody>
+        </table>
+    </div>
+
+
+
+    </div>
+
+
+
+</div>

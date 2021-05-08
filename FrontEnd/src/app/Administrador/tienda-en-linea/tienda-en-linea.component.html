@@ -1,0 +1,28 @@
+<app-nav></app-nav>
+<div class="posicion ">
+
+  <input id="my-file-selector" type="file" (change)="uploadData($event)" name="uploadExcel">
+
+  <div class="tamano">
+    <input class="form-control form-control-lg" id="formFileLg"  type="file" accept=".xlsx">
+  </div>
+  <div class="container">
+    <label class="color">Nombre del Distribuidor</label>
+    <table class="table table-light">
+      <thead>
+      <tr>
+        <th scope="col">Dipositivo</th>
+        <th scope="col">Cantidad de Dispositivos</th>
+        <th scope="col">Precio</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Nombre del dispositivo</td>
+        <td>12</td>
+        <td>12213</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

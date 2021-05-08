@@ -1,0 +1,13 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "smart_home_tec_mobile_app",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}
