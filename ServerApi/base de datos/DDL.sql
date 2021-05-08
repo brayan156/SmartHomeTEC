@@ -88,6 +88,7 @@ create table Historial(
   dia int default extract( day from current_date ),
   mes int default extract( month from current_date ),
   ano int default extract( year from current_date ),
+  hora int,
   minutos_de_uso int default 0,
   primary key (n_historial,n_serie),
   foreign key (n_serie) references Dispositivo_adquirido (n_serie)
