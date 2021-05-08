@@ -15,6 +15,7 @@ namespace smarthometec_API.Modelos
         public int? Mes { get; set; }
         public int? Ano { get; set; }
         public int? MinutosDeUso { get; set; }
+        public int? Hora { get; set; }
 
         public virtual DispositivoAdquirido NSerieNavigation { get; set; }
     }
