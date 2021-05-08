@@ -97,20 +97,21 @@ namespace smarthometec_API.Controllers
                 historial.Ano = dispositivoAdquirido.FechaPrendido.Value.Year;
                 historial.Mes = dispositivoAdquirido.FechaPrendido.Value.Month;
                 historial.Dia = dispositivoAdquirido.FechaPrendido.Value.Day;
+                historial.Hora = dispositivoAdquirido.FechaPrendido.Value.Hour;
                 historial.NSerie = dispositivoAdquirido.NSerie;
-                if (_context.Historial.Any(hist => hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes & hist.Dia == historial.Dia))
+                if (_context.Historial.Any(hist => hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes & hist.Dia == historial.Dia & hist.Hora == historial.Hora))
                 {
                     Historial histo = _context.Historial.First(hist =>
                         hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes &
-                        hist.Dia == historial.Dia);
-                    if (dispositivoAdquirido.FechaPrendido.Value.Date == DateTime.Today) histo.MinutosDeUso += total_minutos;
-                    else histo.MinutosDeUso += 24 * 60 - dispositivoAdquirido.FechaPrendido.Value.TimeOfDay.Minutes;
+                        hist.Dia == historial.Dia & hist.Hora == historial.Hora);
+                    if (total_minutos+dispositivoAdquirido.FechaPrendido.Value.Minute <= 60 ) histo.MinutosDeUso += total_minutos;
+                    else histo.MinutosDeUso += 60-dispositivoAdquirido.FechaPrendido.Value.Minute;
                     _context.Entry(histo).State = EntityState.Modified;
                 }
                 else
                 {
-                    if (dispositivoAdquirido.FechaPrendido.Value.Date == DateTime.Today) historial.MinutosDeUso = total_minutos;
-                    else historial.MinutosDeUso = 24 * 60 - dispositivoAdquirido.FechaPrendido.Value.TimeOfDay.Minutes;
+                    if (dispositivoAdquirido.FechaPrendido.Value.Hour == DateTime.Now.Hour) historial.MinutosDeUso = total_minutos;
+                    else historial.MinutosDeUso = 60 - dispositivoAdquirido.FechaPrendido.Value.Minute;
                     _context.Historial.Add(historial);
 
 
@@ -118,17 +119,23 @@ namespace smarthometec_API.Controllers
 
                 DateTime time = dispositivoAdquirido.FechaPrendido.Value;
                 time = time.AddDays(1);
-
-                for (int i = total_dias; i > 0; i--)
+                var hora_dia = dispositivoAdquirido.FechaPrendido.Value.Hour+1;
+                for (int i = total_dias; i >= 0; i--)
                 {
-                    Historial h = new Historial();
-                    h.Dia = time.Day;
-                    h.Mes = time.Month;
-                    h.Ano = time.Year;
-                    if (time.Date == DateTime.Today) h.MinutosDeUso = (DateTime.Now - time).Minutes;
-                    else h.MinutosDeUso = 24 * 60;
-                    time = time.AddDays(1);
-                    _context.Historial.Add(h);
+                    while (hora_dia < 24)
+                    {
+                        Historial h = new Historial();
+                        h.Dia = time.Day;
+                        h.Mes = time.Month;
+                        h.Ano = time.Year;
+                        h.Hora = hora_dia;
+                        if (time.Date == DateTime.Today) h.MinutosDeUso = (DateTime.Now - time).Minutes;
+                        else h.MinutosDeUso = 24 * 60;
+                        time = time.AddDays(1);
+                        _context.Historial.Add(h);
+                        hora_dia++;
+                    }
+                    hora_dia = 0;
                 }
                 dispositivoAdquirido.Prendido = false;
             }
