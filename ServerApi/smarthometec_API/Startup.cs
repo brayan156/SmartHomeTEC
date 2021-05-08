@@ -27,6 +27,7 @@ namespace smarthometec_API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors();
             services.AddEntityFrameworkNpgsql().AddDbContext<resthometecdatabaseContext>();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -44,6 +45,16 @@ namespace smarthometec_API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseRouting();
+
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
+
 
             app.UseAuthorization();
 

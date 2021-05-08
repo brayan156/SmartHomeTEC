@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import { DispositivoModelo } from '../../Comunicacion/dispositivo-modelo';
+import { ServiciosService } from '../../servicios.service';
 
 @Component({
   selector: 'app-agre-info-dispositivo',
@@ -9,8 +11,15 @@ import {Router} from '@angular/router';
 export class AgreInfoDispositivoComponent implements OnInit {
   public navVerticalActive = false ;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private service: ServiciosService) { }
+
+  dispositivocreado: DispositivoModelo = new DispositivoModelo;
+  modeloscreados: DispositivoModelo[]= [];
 
   ngOnInit(): void {
+    this.service.obtenerDispositivosModelo().subscribe(lista => {
+      this.modeloscreados = lista;
+      console.log(this.modeloscreados);
+    });
   }
 }

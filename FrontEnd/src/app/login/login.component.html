@@ -19,12 +19,12 @@
     <form>
       <div class="row">
         <label>Correo Electronico:</label>
-        <input type="email" name="email" class="email_From tamano" id="InputEmail1" placeholder="Correo Electronico"
+        <input type="email" name="email" class="email_From tamano" id="InputEmail1" #Correo="ngModel" [(ngModel)]="administrador.correo" placeholder="Correo Electronico"
                aria-label="CorreoElectronico">
       </div>
       <label>Password:</label>
       <div class="row">
-        <input type="password" name="password" class="pasword_Emanil tamano" id="InputPassword" placeholder="Contraseña"
+        <input type="password" name="password" class="pasword_Emanil tamano" id="InputPassword" #contrasena="ngModel" [(ngModel)]="administrador.contrasena" placeholder="Contraseña"
                aria-label="contraseña">
       </div>
       <div class="row" class="button">

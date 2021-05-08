@@ -41,9 +41,9 @@ namespace smarthometec_API.Controllers
         [HttpGet("region/{pais}")]
         public async Task<ActionResult<IEnumerable<dynamic>>> getbyregion(string pais)
         {
-            return await _context.Distribuidor.Join(_context.DispositivoSeVendeEn, dis => dis.CedulaJuridica, dsv => dsv.CjDistribuidor, 
-                (distribuidor, dispositivoSeVendeEn) => new { distribuidor, dispositivoSeVendeEn }).Where(dd=>dd.distribuidor.Pais==pais).Join(
-                _context.DispositivoModelo,dd=>dd.dispositivoSeVendeEn.ModeloDispotivo,dm=>dm.Modelo,(dd,dm)=>new {dispositivoSeVendeEn=dd.dispositivoSeVendeEn,dispositivoModelo=dm}).ToListAsync();
+            return await _context.Distribuidor.Join(_context.DispositivoSeVendeEn, dis => dis.CedulaJuridica, dsv => dsv.CjDistribuidor,
+                (distribuidor, dispositivoSeVendeEn) => new { distribuidor, dispositivoSeVendeEn }).Where(dd => dd.distribuidor.Pais == pais).Join(
+                _context.DispositivoModelo, dd => dd.dispositivoSeVendeEn.ModeloDispotivo, dm => dm.Modelo, (dd, dm) => new { dispositivoSeVendeEn = dd.dispositivoSeVendeEn, dispositivoModelo = dm }).ToListAsync();
         }
 
         // GET: api/DispositivoModelo/5
@@ -99,7 +99,7 @@ namespace smarthometec_API.Controllers
         // POST: api/DispositivoModelo
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpPost("crear")]
         public async Task<ActionResult<DispositivoModelo>> PostDispositivoModelo(DispositivoModelo dispositivoModelo)
         {
             _context.DispositivoModelo.Add(dispositivoModelo);

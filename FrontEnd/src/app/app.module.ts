@@ -19,6 +19,9 @@ import { RepTipDispUsoComponent } from './Cliente/rep-tip-disp-uso/rep-tip-disp-
 import { VistaClienteComponent } from './Cliente/vista-cliente/vista-cliente.component';
 import { NavUComponent } from './Cliente/nav-u/nav-u.component';
 import { TiendaEnLineaUsuarioComponent } from './Cliente/tienda-en-linea-usuario/tienda-en-linea-usuario.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -44,6 +47,8 @@ import { TiendaEnLineaUsuarioComponent } from './Cliente/tienda-en-linea-usuario
     RouterModule,
     GoogleChartsModule,
     RouterModule.forRoot(rutas),
+    HttpClientModule,
+    FormsModule,
     
   ],
   providers: [],
