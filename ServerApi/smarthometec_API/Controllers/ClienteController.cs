@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -104,6 +105,7 @@ namespace smarthometec_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
+            Debug.WriteLine(cliente);
             _context.Cliente.Add(cliente);
             try
             {

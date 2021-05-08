@@ -20,7 +20,7 @@ import {BehaviorSubject} from 'rxjs';
   providedIn: 'root'
 })
 export class ServiciosService {
-  Url = 'https://localhost:5001/api/';
+  Url = 'https://localhost:44341/api/';
   private valores = new BehaviorSubject('');
   public valoresActuales = this.valores.asObservable();
   constructor(private http: HttpClient) { }

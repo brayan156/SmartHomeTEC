@@ -376,7 +376,7 @@ namespace smarthometec_API.Modelos
                     .HasColumnName("dia")
                     .HasDefaultValueSql("date_part('day'::text, CURRENT_DATE)");
 
-                entity.Property(e => e.Hora).HasColumnName("hora");
+                                entity.Property(e => e.Hora).HasColumnName("hora");
 
                 entity.Property(e => e.MinutosDeUso)
                     .HasColumnName("horas_de_uso")

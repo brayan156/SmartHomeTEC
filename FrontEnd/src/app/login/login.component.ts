@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
       });
     }
     else {
-      this.service.validarLogin2(this.cliente.email, this.cliente.contrasena).subscribe(lista => {
+      this.service.validarLogin2(this.cliente.Email, this.cliente.Contrasena).subscribe(lista => {
         // tslint:disable-next-line:triple-equals
         if (lista.length == 0) {
           console.log('datos incorrectos');
@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
     }
   }
   // tslint:disable-next-line:typedef
-  crearCliente(cliente: Cliente){
-    this.service.crearCliente(this.cliente);
+  crearCliente(cliente: Cliente) {
+    this.service.crearCliente(this.cliente).subscribe(c => console.log(c));
   }
 }

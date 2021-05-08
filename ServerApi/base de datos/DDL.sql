@@ -42,8 +42,8 @@ create table Dispositivo_se_vende_en (
 
 create table Cliente(
     id int unique not null,
-    email varchar(20) not null,
-    contrasena varchar(15) not null,
+    email varchar(50) not null,
+    contrasena varchar(20) not null,
     primer_apellido varchar (15),
     segundo_apellido varchar(15),
     nombre varchar(15) not null ,
@@ -96,8 +96,8 @@ create table Historial(
 
 create table Administrador(
   id int unique not null,
-  contrasena varchar(15) not null,
-  email varchar(20) unique not null ,
+  contrasena varchar(20) not null,
+  email varchar(50) unique not null ,
   PRIMARY KEY (id)
 );
 
@@ -106,7 +106,7 @@ create table Administrador(
 
 
 create table direccion_entrega (
-    direccion_entrega varchar(20) not null,
+    direccion_entrega varchar(50) not null,
     id_cliente int not null,
     primary key (direccion_entrega,id_cliente),
     foreign key (id_cliente) references Cliente(id)
