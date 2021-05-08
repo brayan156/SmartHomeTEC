@@ -24,8 +24,8 @@ export class ServiciosService {
   private valores = new BehaviorSubject('');
   public valoresActuales = this.valores.asObservable();
   constructor(private http: HttpClient) { }
-  public administrador: Administrador;
-  public cliente: Cliente;
+  public administrador: Administrador = new Administrador;
+  public cliente: Cliente = new Cliente;
 
   // tslint:disable-next-line:typedef
   public obtenerDispositivosModelo() {

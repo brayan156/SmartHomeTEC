@@ -38,12 +38,12 @@
       <div class="row">
         <label>Correo Electronico:</label>
         <input type="email" name="email" class="email_From tamano" id="InputEmail1Usuario" placeholder="Correo Electronico"
-               #Correo="ngModel" [(ngModel)]="cliente.Email" aria-label="CorreoElectronico" required="">
+               #Correo="ngModel" [(ngModel)]="cliente.email" aria-label="CorreoElectronico" required="">
       </div>
       <label>Password:</label>
       <div class="row">
         <input type="password" name="password" class="pasword_Emanil tamano" id="InputPasswordUsuario" placeholder="Contraseña"
-               #contrasena="ngModel" [(ngModel)]="cliente.Contrasena" aria-label="contraseña" required="">
+               #contrasena="ngModel" [(ngModel)]="cliente.contrasena" aria-label="contraseña" required="">
       </div>
       <div class="row" class="button">
         <button type="submit" class="btn btn-primary" (click)="navegation()">Ingresar</button>
@@ -69,31 +69,36 @@
 
         <div class="tamano3">
           <label>Correo electronico:</label>
-          <input type="email" class="form-control" name="1"  required="" #correo="ngModel" [(ngModel)]="cliente.Email">
+          <input type="email" class="form-control" name="1"  required="" #correo="ngModel" [(ngModel)]="cliente.email">
         </div>
 
         <div class="tamano3">
           <label>Password</label>
-          <input type="password" class="form-control"  name="2"  required="" #password="ngModel" [(ngModel)]="cliente.Contrasena">
+          <input type="password" class="form-control"  name="2"  required="" #password="ngModel" [(ngModel)]="cliente.contrasena">
         </div>
 
         <div class="tamano2">
           <label>Nombre:</label>
-          <input type="text" class="form-control" name="3"  required="" #nombre="ngModel" [(ngModel)]="cliente.Nombre">
+          <input type="text" class="form-control" name="3"  required="" #nombre="ngModel" [(ngModel)]="cliente.nombre">
         </div>
 
         <div class="tamano4">
           <label>Primer Apellido:</label>
-          <input type="text" class="form-control" name="4" required="" #primerApellido="ngModel" [(ngModel)]="cliente.PrimerApellido">
+          <input type="text" class="form-control" name="4" required="" #primerApellido="ngModel" [(ngModel)]="cliente.primerApellido">
         </div>
         <div class="tamano4">
           <label>Segundo Apellido:</label>
-          <input type="text" class="form-control" name="5" required="" #segundoApellido="ngModel" [(ngModel)]="cliente.SegundoApellido">
+          <input type="text" class="form-control" name="5" required="" #segundoApellido="ngModel" [(ngModel)]="cliente.segundoApellido">
+        </div>
+
+        <div class="tamano3">
+          <label>Cedula:</label>
+          <input type="email" class="form-control" name="8"  required="" #cedula="ngModel" [(ngModel)]="cliente.id">
         </div>
 
         <div class="tamano3">
           <label>Continente</label>
-          <select class="form-select" id="validationCustom04" name="6" required #pais="ngModel" [(ngModel)]="cliente.Pais">
+          <select class="form-select" id="validationCustom04" name="6" required #pais="ngModel" [(ngModel)]="cliente.pais">
             <optgroup label="América">
               <option>Costa Rica</option>
               <option>Panamá</option>

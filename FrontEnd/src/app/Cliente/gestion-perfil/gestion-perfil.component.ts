@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Cliente} from '../../Comunicacion/cliente';
+import {ServiciosService} from '../../servicios.service';
 
 @Component({
   selector: 'app-gestion-perfil',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GestionPerfilComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: ServiciosService ) { }
 
+  // tslint:disable-next-line:new-parens
+  cliente: Cliente = new Cliente;
   ngOnInit(): void {
-  }
+    this.cliente = this.service.cliente;
+    console.log(this.cliente);
 
+  }
 }
