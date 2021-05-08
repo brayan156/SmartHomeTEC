@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import {ExcelAux} from '../../Comunicacion/excel-aux';
+import * as faker from 'faker';
 @Component({
   selector: 'app-tienda-en-linea',
   templateUrl: './tienda-en-linea.component.html',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TiendaEnLineaComponent implements OnInit {
 
-  constructor() { }
+
+  importContacts: ExcelAux[] = [];
+  exportContacts: ExcelAux[] = [];
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

@@ -19,13 +19,13 @@
     <form>
       <div class="row">
         <label>Correo Electronico:</label>
-        <input type="email" name="email" class="email_From tamano" id="InputEmail1" #Correo="ngModel" [(ngModel)]="administrador.correo" placeholder="Correo Electronico"
-               aria-label="CorreoElectronico">
+        <input type="email" name="email" class="email_From tamano" id="InputEmail1" #Correo="ngModel"
+               [(ngModel)]="administrador.correo" placeholder="Correo Electronico" aria-label="CorreoElectronico">
       </div>
       <label>Password:</label>
       <div class="row">
-        <input type="password" name="password" class="pasword_Emanil tamano" id="InputPassword" #contrasena="ngModel" [(ngModel)]="administrador.contrasena" placeholder="Contraseña"
-               aria-label="contraseña">
+        <input type="password" name="password" class="pasword_Emanil tamano" id="InputPassword" #contrasena="ngModel"
+               [(ngModel)]="administrador.contrasena" placeholder="Contraseña" aria-label="contraseña">
       </div>
       <div class="row" class="button">
         <button type="submit" class="btn btn-primary" (click)="navegation()">Ingresar</button>
@@ -38,12 +38,12 @@
       <div class="row">
         <label>Correo Electronico:</label>
         <input type="email" name="email" class="email_From tamano" id="InputEmail1Usuario" placeholder="Correo Electronico"
-               aria-label="CorreoElectronico" required="">
+               #Correo="ngModel" [(ngModel)]="cliente.email" aria-label="CorreoElectronico" required="">
       </div>
       <label>Password:</label>
       <div class="row">
         <input type="password" name="password" class="pasword_Emanil tamano" id="InputPasswordUsuario" placeholder="Contraseña"
-               aria-label="contraseña" required="">
+               #contrasena="ngModel" [(ngModel)]="cliente.contrasena" aria-label="contraseña" required="">
       </div>
       <div class="row" class="button">
         <button type="submit" class="btn btn-primary" (click)="navegation()">Ingresar</button>
@@ -69,31 +69,31 @@
 
           <div class="tamano3">
             <label>Correo electronico:</label>
-            <input type="email" class="form-control" required="">
+            <input type="email" class="form-control" required="" #correo="ngModel" [(ngModel)]="cliente.email">
           </div>
 
           <div class="tamano3">
             <label>Password</label>
-            <input type="password" class="form-control" required="">
+            <input type="password" class="form-control" required="" #password="ngModel" [(ngModel)]="cliente.continente">
           </div>
 
           <div class="tamano2">
             <label>Nombre:</label>
-            <input type="text" class="form-control" required="">
+            <input type="text" class="form-control" required="" #nombre="ngModel" [(ngModel)]="cliente.nombre">
           </div>
 
           <div class="tamano4">
             <label>Primer Apellido:</label>
-            <input type="text" class="form-control" required="">
+            <input type="text" class="form-control" required="" #primerApellido="ngModel" [(ngModel)]="cliente.primer_apellido">
           </div>
           <div class="tamano4">
             <label>Segundo Apellido:</label>
-            <input type="text" class="form-control" required="">
+            <input type="text" class="form-control" required="" #segundoApellido="ngModel" [(ngModel)]="cliente.segundo_apellido">
           </div>
 
           <div class="tamano3">
             <label>Continente</label>
-            <select class="form-select" id="validationCustom04" required>
+            <select class="form-select" id="validationCustom04" required  #pais="ngModel" [(ngModel)]="cliente.pais">
               <optgroup label="América">
                 <option>Costa Rica</option>
                 <option>Panamá</option>
@@ -114,7 +114,7 @@
 
         </form>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="crearCliente(cliente)">Aceptar</button>
         </div>
       </div>
     </div>

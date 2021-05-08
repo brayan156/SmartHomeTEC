@@ -3,6 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import { Administrador } from '../Comunicacion/administrador';
 import { ServiciosService } from '../servicios.service';
+import {Cliente} from '../Comunicacion/cliente';
 
 @Component({
   selector: 'app-login',
@@ -18,8 +19,10 @@ export class LoginComponent implements OnInit {
 
   }
 
+  // tslint:disable-next-line:new-parens
   administrador: Administrador = new Administrador;
-
+  // tslint:disable-next-line:new-parens
+  cliente: Cliente = new Cliente;
   ngOnInit(): void {
   }
 
@@ -41,19 +44,33 @@ export class LoginComponent implements OnInit {
   navegation(): void{
     if (this.typeLogin === 0) {
       this.service.ValidarLogin(this.administrador.correo, this.administrador.contrasena).subscribe(lista => {
+        // tslint:disable-next-line:triple-equals
         if (lista.length == 0) {
-          console.log("datos incorrectos");
-          //mensaje administrador invalido
+          console.log('datos incorrectos');
+          // mensaje administrador invalido
         } else {
-          console.log("datos correctos");
+          console.log('datos correctos');
           this.service.administrador = lista[0];
           this.router.navigate(['/administrador']);
         }
       });
-      
     }
     else {
-      this.router.navigate(['/usuario']);
+      this.service.validarLogin2(this.cliente.email, this.cliente.contrasena).subscribe(lista => {
+        // tslint:disable-next-line:triple-equals
+        if (lista.length == 0) {
+          console.log('datos incorrectos');
+          // mensaje administrador invalido
+        } else {
+          console.log('datos correctos');
+          this.service.cliente = lista[0];
+          this.router.navigate(['/usuario']);
+        }
+      });
     }
+  }
+  // tslint:disable-next-line:typedef
+  crearCliente(cliente: Cliente){
+    this.service.crearCliente(this.cliente);
   }
 }

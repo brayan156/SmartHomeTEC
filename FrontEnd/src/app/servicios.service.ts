@@ -20,7 +20,7 @@ import {BehaviorSubject} from 'rxjs';
   providedIn: 'root'
 })
 export class ServiciosService {
-  Url = 'https://localhost:44341/api/';
+  Url = 'https://localhost:5001/api/';
   private valores = new BehaviorSubject('');
   public valoresActuales = this.valores.asObservable();
   constructor(private http: HttpClient) { }
@@ -44,8 +44,10 @@ export class ServiciosService {
   public eliminarDispositivosModelo(id: number){
     return this.http.delete(this.Url + 'algo' + id);
   }
-
-
+  // tslint:disable-next-line:typedef
+  public crearCliente(cliente: Cliente){
+    return this.http.post(this.Url + 'Cliente', cliente);
+  }
   // tslint:disable-next-line:typedef
   public obtenerTipoDispositivo(){
     return this.http.get(this.Url + 'algo');
@@ -84,8 +86,14 @@ export class ServiciosService {
   }
 
 
+  // tslint:disable-next-line:typedef
   public ValidarLogin(correo: string, contrasena: string) {
     return this.http.get<Administrador[]>(this.Url + 'Administrador/validar/' + contrasena + '/' + correo);
+  }
+
+  // tslint:disable-next-line:typedef
+  public validarLogin2(correo: string, contrasena: string){
+    return this.http.get<Cliente[]>(this.Url + 'Cliente/Cliente/' + contrasena + '/' + correo);
   }
 
 }

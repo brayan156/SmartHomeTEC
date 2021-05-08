@@ -49,7 +49,6 @@ import { FormsModule } from '@angular/forms';
     RouterModule.forRoot(rutas),
     HttpClientModule,
     FormsModule,
-    
   ],
   providers: [],
   bootstrap: [AppComponent]
