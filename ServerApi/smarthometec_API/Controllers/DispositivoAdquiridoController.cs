@@ -118,7 +118,6 @@ namespace smarthometec_API.Controllers
                 }
 
                 DateTime time = dispositivoAdquirido.FechaPrendido.Value;
-                time = time.AddDays(1);
                 var hora_dia = dispositivoAdquirido.FechaPrendido.Value.Hour+1;
                 for (int i = total_dias; i >= 0; i--)
                 {
@@ -129,12 +128,16 @@ namespace smarthometec_API.Controllers
                         h.Mes = time.Month;
                         h.Ano = time.Year;
                         h.Hora = hora_dia;
-                        if (time.Date == DateTime.Today) h.MinutosDeUso = (DateTime.Now - time).Minutes;
-                        else h.MinutosDeUso = 24 * 60;
-                        time = time.AddDays(1);
+                        if (time.Date == DateTime.Today & hora_dia == DateTime.Now.Hour)
+                        {
+                            h.MinutosDeUso = DateTime.Now.Minute;
+                            hora_dia = 24;
+                        }
+                        else h.MinutosDeUso = 60;
                         _context.Historial.Add(h);
                         hora_dia++;
-                    }
+                    } 
+                    time = time.AddDays(1);
                     hora_dia = 0;
                 }
                 dispositivoAdquirido.Prendido = false;

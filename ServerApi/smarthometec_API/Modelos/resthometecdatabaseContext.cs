@@ -62,19 +62,19 @@ namespace smarthometec_API.Modelos
                 entity.Property(e => e.Contrasena)
                     .IsRequired()
                     .HasColumnName("contrasena")
-                    .HasMaxLength(15);
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasColumnName("email")
-                    .HasMaxLength(20);
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Aposento>(entity =>
             {
                 entity.ToTable("aposento");
 
-                entity.Property(e => e.Id).HasColumnName("id").ValueGeneratedOnAdd();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
 
@@ -125,12 +125,12 @@ namespace smarthometec_API.Modelos
                 entity.Property(e => e.Contrasena)
                     .IsRequired()
                     .HasColumnName("contrasena")
-                    .HasMaxLength(15);
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasColumnName("email")
-                    .HasMaxLength(20);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()
@@ -194,7 +194,7 @@ namespace smarthometec_API.Modelos
 
                 entity.Property(e => e.DireccionEntrega1)
                     .HasColumnName("direccion_entrega")
-                    .HasMaxLength(20);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
 
@@ -366,7 +366,7 @@ namespace smarthometec_API.Modelos
                     .HasColumnName("n_historial")
                     .ValueGeneratedOnAdd();
 
-                entity.Property(e => e.NSerie).HasColumnName("n_serie");
+                entity.Property(e => e.NSerie).HasColumnName("n_serie").UseSerialColumn();
 
                 entity.Property(e => e.Ano)
                     .HasColumnName("ano")
@@ -376,15 +376,15 @@ namespace smarthometec_API.Modelos
                     .HasColumnName("dia")
                     .HasDefaultValueSql("date_part('day'::text, CURRENT_DATE)");
 
-                                entity.Property(e => e.Hora).HasColumnName("hora");
-
-                entity.Property(e => e.MinutosDeUso)
-                    .HasColumnName("horas_de_uso")
-                    .HasDefaultValueSql("0");
+                entity.Property(e => e.Hora).HasColumnName("hora");
 
                 entity.Property(e => e.Mes)
                     .HasColumnName("mes")
                     .HasDefaultValueSql("date_part('month'::text, CURRENT_DATE)");
+
+                entity.Property(e => e.MinutosDeUso)
+                    .HasColumnName("minutos_de_uso")
+                    .HasDefaultValueSql("0");
 
                 entity.HasOne(d => d.NSerieNavigation)
                     .WithMany(p => p.Historial)
@@ -435,8 +435,7 @@ namespace smarthometec_API.Modelos
 
                 entity.Property(e => e.IdPedido).HasColumnName("id_pedido");
 
-                entity.Property(e => e.NFactura).HasColumnName("n_factura")
-                    .ValueGeneratedOnAdd();
+                entity.Property(e => e.NFactura).HasColumnName("n_factura");
 
                 entity.HasOne(d => d.IdPedidoNavigation)
                     .WithOne(p => p.PedidoFactura)
