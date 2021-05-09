@@ -19,10 +19,13 @@ export class GestionPerfilComponent implements OnInit {
   newCliente: Cliente = new Cliente;
   // tslint:disable-next-line:new-parens
   direccionEntrega: ClienteEntregaEn = new ClienteEntregaEn;
+  dirrecionesEntrega: ClienteEntregaEn[] = [];
   ngOnInit(): void {
     this.cliente = this.service.cliente;
+    this.service.leerDirrecionEntrega(this.cliente.id).subscribe(lista => {this.dirrecionesEntrega = lista ;
+                                                                           console.log(this.dirrecionesEntrega); });
     console.log(this.cliente);
-
+    console.log(this.dirrecionesEntrega);
   }
   public prueba(): void{
   console.log(this.cliente.primerApellido);
@@ -30,11 +33,35 @@ export class GestionPerfilComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   anadirUbicacion(direccionEntrega: ClienteEntregaEn){
-    if (direccionEntrega.DireccionEntrega1 !== ''){
-      direccionEntrega.IdCliente = this.cliente.id;
+    if (direccionEntrega.direccionEntrega1 !== ''){
+      direccionEntrega.idCliente = this.cliente.id;
       this.service.crearDirrecionEntrega(direccionEntrega).subscribe(c => console.log(c));
     }else{
       console.log('Valor nulo');
     }
+  }
+  public editarClienteNombre(): void {
+    this.cliente.nombre = this.newCliente.nombre;
+    this.service.editarCliente(this.cliente.id, this.cliente).subscribe( a => console.log(a));
+  }
+
+  public editarClienteApellido(): void{
+    this.cliente.primerApellido = this.newCliente.primerApellido;
+    this.service.editarCliente(this.cliente.id, this.cliente).subscribe( a => console.log(a));
+  }
+
+  public editarClienteApellido2(): void{
+    this.cliente.segundoApellido = this.newCliente.segundoApellido;
+    this.service.editarCliente(this.cliente.id, this.cliente).subscribe( a => console.log(a));
+  }
+
+  public editarClienteContrasena(): void{
+    this.cliente.contrasena = this.newCliente.contrasena;
+    this.service.editarCliente(this.cliente.id, this.cliente).subscribe( a => console.log(a));
+  }
+
+  public editarClientePais(): void{
+    this.cliente.pais = this.newCliente.pais;
+    this.service.editarCliente(this.cliente.id, this.cliente).subscribe( a => console.log(a));
   }
 }

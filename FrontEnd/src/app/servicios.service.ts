@@ -33,8 +33,8 @@ export class ServiciosService {
     return this.http.get<DispositivoModelo[]>(this.Url + 'DispositivoModelo');
   }
   // tslint:disable-next-line:typedef
-  public crearDispositivosModelo(dispositivoModelo: DispositivoModelo) {
-    return this.http.post(this.Url + 'DispositivoModelo', dispositivoModelo);
+  public crearDispositivoModelo(disposivoModelo: DispositivoModelo){
+    return this.http.post(this.Url + 'DispositivoModelo/crear', disposivoModelo);
   }
 
   // tslint:disable-next-line:typedef
@@ -48,6 +48,11 @@ export class ServiciosService {
   // tslint:disable-next-line:typedef
   public crearCliente(cliente: Cliente){
     return this.http.post(this.Url + 'Cliente', cliente);
+  }
+
+  // tslint:disable-next-line:typedef
+  public editarCliente(id: number, cliente: Cliente){
+    return this.http.put(this.Url + 'Cliente/' + id, cliente);
   }
   // tslint:disable-next-line:typedef
   public obtenerTipoDispositivo(){
@@ -103,7 +108,15 @@ export class ServiciosService {
   }
 
   // tslint:disable-next-line:typedef
-  public leerDirrecionEntrega(id){
+  public leerDirrecionEntrega(id: number){
+    return this.http.get<ClienteEntregaEn[]>(this.Url + 'DireccionEntrega/' + id);
   }
+  // tslint:disable-next-line:typedef
+  public obtenerTiendaLinea(pais: string){
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<{dispositivoSeVendeEn: DispositivoSeVendeEn , dispositivoModelo: DispositivoModelo}[]>(this.Url + 'DispositivoModelo/region/' + pais);
+  }
+
+
 }
 
