@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GoogleChartsModule } from 'angular-google-charts';
+import {ServiciosService} from '../../servicios.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,7 +9,12 @@ import { GoogleChartsModule } from 'angular-google-charts';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: ServiciosService) { }
+
+  cantidadPromedio: number;
+  cantidadTotalDispositivos: number;
+  CantidadTotalDispositivosRegion = [];
+  ListaDispositivosTotales = [];
 
   chart = {
     title: '',
@@ -75,8 +81,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-
-
-
+  public getDato(): void{
+    this.service.getdispositvosasociados().subscribe( numero => this.cantidadPromedio = numero);
+  }
 }

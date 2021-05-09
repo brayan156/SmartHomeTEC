@@ -1,6 +1,6 @@
 export class Distribuidor {
-  cedulaJuridica: string;
+  cedulaJuridica: number;
   nombre: string;
-  continente: string;
   pais: string;
+  imagen: string;
 }

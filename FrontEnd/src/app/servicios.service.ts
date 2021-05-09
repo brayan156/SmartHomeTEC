@@ -14,7 +14,7 @@ import {Historial} from './Comunicacion/historial';
 import {Pedido} from './Comunicacion/pedido';
 import {PedidoFactura} from './Comunicacion/pedido-factura';
 import {Tipo} from './Comunicacion/tipo';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {ClienteEntregaEn} from './Comunicacion/cliente-entrega-en';
 
 @Injectable({
@@ -25,7 +25,9 @@ export class ServiciosService {
   private valores = new BehaviorSubject('');
   public valoresActuales = this.valores.asObservable();
   constructor(private http: HttpClient) { }
+  // tslint:disable-next-line:new-parens
   public administrador: Administrador = new Administrador;
+  // tslint:disable-next-line:new-parens
   public cliente: Cliente = new Cliente;
 
   // tslint:disable-next-line:typedef
@@ -36,14 +38,13 @@ export class ServiciosService {
   public crearDispositivoModelo(disposivoModelo: DispositivoModelo){
     return this.http.post(this.Url + 'DispositivoModelo/crear', disposivoModelo);
   }
-
   // tslint:disable-next-line:typedef
-  public editarDispositivosModelo(dispositivoModelo: DispositivoModelo){
-    return this.http.put(this.Url + 'algo', dispositivoModelo);
+  public eliminarDispositivosModelo(id: string){
+    return this.http.delete(this.Url + 'DispositivoModelo/' + id);
   }
   // tslint:disable-next-line:typedef
-  public eliminarDispositivosModelo(id: number){
-    return this.http.delete(this.Url + 'algo' + id);
+  public editarDipositivoModelo(id: string, dispositivoModelo: DispositivoModelo){
+    return this.http.put(this.Url + 'DispositivoModelo/' + id, dispositivoModelo);
   }
   // tslint:disable-next-line:typedef
   public crearCliente(cliente: Cliente){
@@ -54,41 +55,27 @@ export class ServiciosService {
   public editarCliente(id: number, cliente: Cliente){
     return this.http.put(this.Url + 'Cliente/' + id, cliente);
   }
-  // tslint:disable-next-line:typedef
-  public obtenerTipoDispositivo(){
-    return this.http.get(this.Url + 'algo');
-  }
-  // tslint:disable-next-line:typedef
-  public crearTipoDispositivo(tipoDispositivo: Tipo){
-    return this.http.put(this.Url + 'algo', tipoDispositivo);
-  }
 
-  // tslint:disable-next-line:typedef
-  public editarTipoDispositivo(tipoDispositivo: Tipo){
-    return this.http.put(this.Url + 'algo', tipoDispositivo);
+  public getdispositvosasociados(): Observable<number>{
+    return this.http.get<number>(this.Url + ' Dashboard/dispositivos_asociados');
   }
-  // tslint:disable-next-line:typedef
-  public eliminarTipoDispositivo(id: number){
-    return this.http.delete(this.Url + 'algo' + id);
-  }
-
 
   // tslint:disable-next-line:typedef
   public obtenerDistribuidores(){
-    return this.http.get(this.Url + 'algo');
+    return this.http.get<Distribuidor[]>(this.Url + 'Distribuidor');
   }
   // tslint:disable-next-line:typedef
-  public editarDistribuidores(distribudor: Distribuidor){
-    return this.http.put(this.Url + 'algo', distribudor);
+  public editarDistribuidores(id: number , distribudor: Distribuidor){
+    return this.http.put(this.Url + 'Distribuidor/' + id, distribudor);
   }
 
   // tslint:disable-next-line:typedef
   public crearDistribuidord(distribudor: Distribuidor){
-    return this.http.post(this.Url + 'algo', distribudor);
+    return this.http.post(this.Url + 'Distribuidor', distribudor);
   }
   // tslint:disable-next-line:typedef
   public eliminarDistribuidor(id: number){
-    return this.http.delete(this.Url + 'algo' + id);
+    return this.http.delete(this.Url + 'Distribuidor/' + id);
   }
 
 

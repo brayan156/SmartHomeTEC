@@ -52,5 +52,7 @@
 }
 
 .card{
-  width: 30%;
+  height: 525px;
+  width: 400px;
+  margin-bottom: 50px;
 }

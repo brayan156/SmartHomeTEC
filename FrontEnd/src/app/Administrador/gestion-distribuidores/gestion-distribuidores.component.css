@@ -4,7 +4,7 @@
   margin-top: 1%;
   background: #62C6CA;
   border-color: transparent;
-  
+
 }
 
 .tamano:hover {
@@ -29,11 +29,16 @@
 .margen{
   margin-left: 5%;
   width: full;
-  background: #62C6CA; 
+  background: #62C6CA;
   border-color: transparent;
   color: black;
 }
 
 .margen:hover {
   background: #FAB04A;
+}
+.card{
+  height: 420px;
+  width: 300px;
+  margin-bottom: 50px;
 }

@@ -16,8 +16,10 @@
           <label class="card-text centrar"><b>Consumo Electrico :</b>{{item.consumoElectrico}}</label>
         </div>
         <div class="card-footer">
-          <button class="btn btn-dark margen" data-bs-toggle="modal" data-bs-target="#editarDispositivo">Editar</button>
-          <button class="btn  margen" data-bs-toggle="modal" data-bs-target="#eliminarDispositivo">Eliminar</button>
+          <button class="btn btn-dark margen" data-bs-toggle="modal" data-bs-target="#editarDispositivo"
+                  (click)="obtenerInformacionItem(item)">Editar</button>
+          <button class="btn  margen" data-bs-toggle="modal" data-bs-target="#eliminarDispositivo"
+                  (click)="obtenerInformacionItem(item)">Eliminar</button>
         </div>
       </div>
   </div>
@@ -66,25 +68,28 @@
 <div class="modal fade" id="editarDispositivo" tabindex="-1" aria-labelledby="editarDispositivoLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header"></div>
+      <div class="modal-header">{{oldDispositivocreado.modelo}}</div>
       <div class="modal-body">
 
-
+        <label>URL-DE-IMAGEN</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control"required="" name="imagen1" #imagen="ngModel" [(ngModel)]="oldDispositivocreado.imagen">
+        </div>
 
         <label>Marca del Dispositivo</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control"required="">
+          <input type="text" class="form-control"required="" name="marca1" #marca="ngModel" [(ngModel)]="oldDispositivocreado.marca">
         </div>
 
         <label>Cosumo Electrico: </label>
         <div class="input-group mb-3">
           <span class="input-group-text">Kw</span>
-          <input type="number" class="form-control" required="">
+          <input type="number" class="form-control" required="" name="consumo1" #consumo="ngModel" [(ngModel)]="oldDispositivocreado.consumoElectrico">
         </div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ACEPTAR</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="editarDispositivo(oldDispositivocreado)">ACEPTAR</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
       </div>
     </div>
@@ -95,10 +100,10 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h4>Esta seguro que desea eliminar el dispositivo ,#de Serie</h4>
+        <h4>Esta seguro que desea eliminar el dispositivo {{oldDispositivocreado.modelo}}</h4>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ACEPTAR</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="eliminarDispositivo(oldDispositivocreado)">ACEPTAR</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
       </div>
     </div>
