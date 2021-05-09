@@ -6,65 +6,184 @@
   <tr>
     <th scope="row">Nombre</th>
     <td>{{cliente.nombre}}</td>
-    <td><button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#cambiarNombre">Editar</button></td>
+    <td><button class="btn " data-bs-toggle="modal" data-bs-target="#cambiarNombre">Editar</button></td>
   </tr>
   <tr>
     <th scope="row">Primer Apellido</th>
     <td>{{cliente.primerApellido}}</td>
-    <td><button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#cambiarApellido">Editar</button></td>
+    <td><button class="btn " data-bs-toggle="modal" data-bs-target="#cambiarApellido">Editar</button></td>
   </tr>
   <tr>
     <th scope="row">Segundo Apellido</th>
     <td>{{cliente.segundoApellido}}</td>
-    <td><button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#cambiarApellido2">Editar</button></td>
+    <td><button class="btn " data-bs-toggle="modal" data-bs-target="#cambiarApellido2">Editar</button></td>
   </tr>
 
   <tr>
     <th scope="row">Password</th>
     <td>{{cliente.contrasena}}</td>
-    <td><button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#cambiarPassword">Editar</button></td>
-  </tr>
-
-  <tr>
-    <th scope="row">Continente</th>
-    <td>Continente Actual</td>
-    <td><button class="btn btn-dark">Editar</button></td>
+    <td><button class="btn " data-bs-toggle="modal" data-bs-target="#cambiarPassword">Editar</button></td>
   </tr>
 
   <tr>
     <th scope="row">Pais</th>
     <td>{{cliente.pais}}</td>
-    <td><button class="btn btn-dark">Editar</button></td>
+    <td><button class="btn "  data-bs-toggle="modal" data-bs-target="#cambiarPais">Editar</button></td>
   </tr>
 
   <tr>
     <th scope="row">Dirrecion de entrega</th>
-    <td>Dirrecion Actual</td>
-    <td><button class="btn btn-dark">Editar</button></td>
+    <td></td>
+    <td><button class="btn " data-bs-toggle="modal" data-bs-target="#agregarUbicacion">
+      <b>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+        </svg>
+      </b>
+    </button></td>
   </tr>
-
   </tbody>
 </table>
 </div>
 
 <div class="modal fade" id="cambiarNombre" tabindex="-1" aria-labelledby="cambiarNombreLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog  modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="cambiarNombreLabel">Configuraciones</h5>
+        <h5 class="modal-title" id="cambiarNombreLabel">Gestion de usuario:</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form class="row g-3">
           <div class="col-auto">
             <label for="staticVal" class="visually-hidden"></label>
-            <input type="text" readonly class="form-control-plaintext" id="staticVal" value="Nombre Actual">
+            <input type="text" readonly class="form-control-plaintext" id="staticVal" value= "{{cliente.nombre}}">
           </div>
           <div class="col-auto">
             <label for="inputPassword2" class="visually-hidden">Password</label>
-            <input type="text" class="form-control" id="inputPassword2" placeholder="Cambiar Nombre">
+            <input type="text" class="form-control" id="inputPassword2" name="cambiarNombre" placeholder="Cambiar Nombre"
+                   #nuevoNombre="ngModel" [(ngModel)]="newCliente.nombre">
           </div>
         </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn2" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn2">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="cambiarApellido" tabindex="-1" aria-labelledby="cambiarApellidoLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cambiarApellidoLabel">Gestion de usuario:</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-auto">
+            <label for="staticVal1" class="visually-hidden"></label>
+            <input type="text" readonly class="form-control-plaintext" id="staticVal1" value= "{{cliente.primerApellido}}">
+          </div>
+          <div class="col-auto">
+            <label for="inputPassword3" class="visually-hidden">Password</label>
+            <input type="text" class="form-control" id="inputPassword3" name="cambiarApellido" placeholder="Cambiar Apellido"
+                   #nuevoNombre="ngModel" [(ngModel)]="newCliente.primerApellido">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn2" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn2">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="cambiarApellido2" tabindex="-1" aria-labelledby="cambiarApellido2Label" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cambiarApellido2Label">Gestion de usuario:</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-auto">
+            <label for="staticVal3" class="visually-hidden"></label>
+            <input type="text" readonly class="form-control-plaintext" id="staticVal3" value="{{cliente.segundoApellido}}">
+          </div>
+          <div class="col-auto">
+            <label for="cambiarApellido3" class="visually-hidden"></label>
+            <input type="text" class="form-control" id="cambiarApellido3" name="cambiarApellido2" placeholder="Cambiar Apellido"
+                   #nuevoApellido2="ngModel" [(ngModel)]="newCliente.segundoApellido">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn2" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn2">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="cambiarPassword" tabindex="-1" aria-labelledby="cambiarPasswordLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cambiarPasswordLabel">Gestion de usuario:</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-auto">
+            <label for="staticVal" class="visually-hidden"></label>
+            <input type="password" readonly class="form-control-plaintext" id="4" value="{{cliente.contrasena}}">
+          </div>
+          <div class="col-auto">
+            <label for="inputPassword4" class="visually-hidden">Password</label>
+            <input type="password" class="form-control" id="inputPassword4" name="cambiarContrasena" placeholder="Cambiar Password"
+                   #nuevaContrasena="ngModel" [(ngModel)]="newCliente.contrasena">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn2" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn2">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="cambiarPais" tabindex="-1" aria-labelledby="cambiarPaisLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cambiarPaisLabel">Gestion de usuario:</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="tamano3">
+          <label>Pais</label>
+          <select class="form-select" id="validationCustom04" name="6" required >
+            <optgroup label="América">
+              <option>Costa Rica</option>
+              <option>Panamá</option>
+              <option>Colombia</option>
+              <option>Argentina</option>
+            </optgroup>
+            <optgroup label="Europa">
+              <option>España</option>
+              <option>Italia</option>
+            </optgroup>
+          </select>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -74,138 +193,20 @@
   </div>
 </div>
 
-<div class="modal fade" id="cambiarApellido" tabindex="-1" aria-labelledby="cambiarApellidoLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade" id="agregarUbicacion" tabindex="-1" aria-labelledby="agregarUbicacionLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="cambiarApellidoLabel">Configraciones</h5>
+        <h5 class="modal-title" id="agregarUbicacionLabel">Configraciones</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-auto">
-            <label for="staticVal" class="visually-hidden"></label>
-            <input type="text" readonly class="form-control-plaintext" id="staticVal2" value="Apellido Actual">
-          </div>
-          <div class="col-auto">
-            <label for="inputPassword1" class="visually-hidden">Password</label>
-            <input type="text" class="form-control" id="inputPassword1" placeholder="Cambiar Apellido">
-          </div>
-        </form>
+        <label>Dirrecion:</label>
+        <textarea class="form-control" name="8"  required="" #dirrecion="ngModel" [(ngModel)]="direccionEntrega.DireccionEntrega1"></textarea>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="cambiarApellido2" tabindex="-1" aria-labelledby="cambiarApellido2Label" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cambiarApellido2Label">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-auto">
-            <label for="staticVal" class="visually-hidden"></label>
-            <input type="text" readonly class="form-control-plaintext" id="staticVal3" value="Apellido Actual">
-          </div>
-          <div class="col-auto">
-            <label for="inputPassword3" class="visually-hidden">Password</label>
-            <input type="text" class="form-control" id="inputPassword3" placeholder="Cambiar Apellido">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="cambiarPassword" tabindex="-1" aria-labelledby="cambiarPasswordLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cambiarPasswordLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form class="row g-3">
-          <div class="col-auto">
-            <label for="staticVal" class="visually-hidden"></label>
-            <input type="password" readonly class="form-control-plaintext" id="4" value="PasswordActual">
-          </div>
-          <div class="col-auto">
-            <label for="inputPassword4" class="visually-hidden">Password</label>
-            <input type="password" class="form-control" id="inputPassword4" placeholder="Cambiar Password">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="cambiarContinente" tabindex="-1" aria-labelledby="cambiarContinenteLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cambiarContinenteLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="cambiarPais" tabindex="-1" aria-labelledby="cambiarPaisLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cambiarPaisLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="cambiarDirrecionEntrega" tabindex="-1" aria-labelledby="cambiarDirrecionEntregaLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cambiarDirrecionEntregaLabel">Configraciones</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn2" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn2" data-bs-dismiss="modal" (click)="anadirUbicacion(direccionEntrega)">Aceptar</button>
       </div>
     </div>
   </div>

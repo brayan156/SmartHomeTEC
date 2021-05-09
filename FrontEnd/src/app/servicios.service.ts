@@ -15,6 +15,7 @@ import {Pedido} from './Comunicacion/pedido';
 import {PedidoFactura} from './Comunicacion/pedido-factura';
 import {Tipo} from './Comunicacion/tipo';
 import {BehaviorSubject} from 'rxjs';
+import {ClienteEntregaEn} from './Comunicacion/cliente-entrega-en';
 
 @Injectable({
   providedIn: 'root'
@@ -78,7 +79,7 @@ export class ServiciosService {
 
   // tslint:disable-next-line:typedef
   public crearDistribuidord(distribudor: Distribuidor){
-    return this.http.put(this.Url + 'algo', distribudor);
+    return this.http.post(this.Url + 'algo', distribudor);
   }
   // tslint:disable-next-line:typedef
   public eliminarDistribuidor(id: number){
@@ -96,5 +97,13 @@ export class ServiciosService {
     return this.http.get<Cliente[]>(this.Url + 'Cliente/Cliente/' + contrasena + '/' + correo);
   }
 
+  // tslint:disable-next-line:typedef
+  public crearDirrecionEntrega(direcionEntrega: ClienteEntregaEn){
+    return this.http.post(this.Url + 'DireccionEntrega', direcionEntrega);
+  }
+
+  // tslint:disable-next-line:typedef
+  public leerDirrecionEntrega(id){
+  }
 }
 
