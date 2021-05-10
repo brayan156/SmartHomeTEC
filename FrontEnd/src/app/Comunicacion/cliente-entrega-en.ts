@@ -1,4 +1,4 @@
 export class ClienteEntregaEn {
-  IDCliente: string;
-  DirrecionEntrega: string;
+  idCliente: number;
+  direccionEntrega1: string;
 }

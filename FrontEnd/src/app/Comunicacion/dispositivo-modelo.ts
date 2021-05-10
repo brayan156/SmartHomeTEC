@@ -1,7 +1,7 @@
 export class DispositivoModelo {
-  modeloDispositivo: string;
+  modelo: string;
   imagen: string;
   marca: string;
   consumoElectrico: string;
-  tipoDisp: string;
+  tipo: string;
 }

@@ -4,9 +4,31 @@
 .btn{
   color: white;
   background: black;
-  width: 25%;
+  width: 80px;
+}
+.btn2{
+  background: darkslategray;
+  border-collapse: collapse;
+
 }
 
-.container{
+.btn:hover{
+  background: grey;
+}
+
+.table{
+  width: 80%;
   margin-top: 10%;
+  border-collapse: collapse;
+}
+
+.modal{
+  background: #212121;
+}
+.color{
+  color: black;
+}
+
+.tamano7{
+  width: 110%;
 }

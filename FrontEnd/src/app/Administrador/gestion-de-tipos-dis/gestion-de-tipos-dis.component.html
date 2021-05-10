@@ -5,13 +5,21 @@
   <button class="btn  tamano"  data-bs-toggle="modal" data-bs-target="#agregarTipoDeDispositivo" >Agregar Tipo De Dispositivo</button>
 
   <div class="row">
-
-    <div class="card cardPosicion">
-      <img src="https://www.cnet.com/a/img/TP2-mWLkTScMvfIdd7PbMhxXQvM=/1200x675/2020/12/10/c962db96-83a7-436a-85ac-a3846efc9753/iphone-12-pro-max-hoyle-product-hero.jpg"
-           class="card-img-top" width="100">
+    <div class="card cardPosicion" *ngFor="let item of listaDeTipos">
+      <img src="{{item.imagen}}"
+           class="card-img-top" width="100%" height="100%">
       <div class="card-body">
-        <h5 class="card-title margen" >Celulares</h5>
+        <h5 class="card-title margen" >{{item.nombre}}</h5>
+        <div>
+          <label class="margen">Descripcion del Dispositivo: {{item.descripcion}}</label>
+        </div>
+
+        <div>
+          <label class="margen">Tiempos de Garantia {{item.tiempoDeGarantia}} meses</label>
+        </div>
+
         <button class="btn  botones" data-bs-toggle="modal" data-bs-target="#verDispositivos">Dispositivos</button>
+        <button class="btn  botones" data-bs-toggle="modal" data-bs-target="#editarTipoDispositivo">Editar</button>
         <button class="btn  botones" data-bs-toggle="modal" data-bs-target="#eliminarTipoDispositivo">Eliminar</button>
       </div>
     </div>
@@ -46,17 +54,27 @@
       <div class="modal-body">
         <label>URL-DE-IMAGEN</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control"required="">
+          <input type="text" class="form-control"required="" name="imagen" #imagen="ngModel" [(ngModel)]="tipo.imagen">
         </div>
 
         <label>Tipo de dipositvo:</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control"required="">
+          <input type="text" class="form-control" required="" name="tipo" #tipoN="ngModel" [(ngModel)]="tipo.nombre">
         </div>
-      </div>
+        <label>Descripcion:</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" required="" name="descripcion" #descripcion="ngModel" [(ngModel)]="tipo.descripcion">
+        </div>
+
+        <label>Tiempo de garantia:</label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">Meses:</span>
+          <input type="number" class="form-control" required="" name="tiempoG" #tiempoG="ngModel" [(ngModel)]="tipo.descripcion">
+        </div>
+  </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Aceptar</button>
+        <button type="button " class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="crearDipositivo(tipo)">Aceptar</button>
       </div>
     </div>
   </div>
@@ -64,9 +82,9 @@
 
 <div class="modal fade" id="verDispositivos" tabindex="-1" aria-labelledby="verDispositivosLabel" aria-hidden="true">
   <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="verDispositivosLabel">Modal title</h5>
+    <div class="modal-content color">
+      <div class="modal-header color">
+        <h5 class="modal-title" id="verDispositivosLabel">Tipo de dispositivo</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
