@@ -3,7 +3,7 @@
   margin-right:5% ;
   z-index: -1;
   background-color: transparent;
-  
+
 }
 .contenedor{
   top: 0;
@@ -26,7 +26,7 @@
   margin-left: 5%;
   margin-top: 5%;
   color: white;
-  
+
 }
 
 google-chart{
@@ -39,7 +39,7 @@ google-chart{
 
 .contenedor2{
   width: 90%;
-  margin-bottom: 5%;
+  margin-bottom:10px;
   margin-left: 5%;
   margin-top: 20px;
   background-color: linear-gradient(65deg, #263b59, #0E2546);
@@ -47,11 +47,16 @@ google-chart{
 
 .valores{
   width: 30%;
+  margin-left: 5%;
   margin-top: 5%;
   background: transparent;
   border-color: transparent;
-}
+  margin-bottom: 25px;
 
+}
+.card-text{
+  margin-left: 30%;
+}
 .myCard{
   background: #3c3c3c;
   border-color: transparent;
@@ -68,12 +73,6 @@ google-chart{
   margin-bottom: 100px;
   margin-left: 5%;
   margin-top: 5%;
-
-}
-
-.table {
-  color: white;
-  background-color: linear-gradient(65deg, #263b59, #0E2546);
 
 }
 

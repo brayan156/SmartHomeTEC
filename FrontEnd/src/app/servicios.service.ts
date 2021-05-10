@@ -57,9 +57,22 @@ export class ServiciosService {
   }
 
   public getdispositvosasociados(): Observable<number>{
-    return this.http.get<number>(this.Url + ' Dashboard/dispositivos_asociados');
+    return this.http.get<number>(this.Url + 'Dashboard/dispositivos_asociados');
   }
 
+  // tslint:disable-next-line:typedef
+  public getDispositivoRegion(){
+    return this.http.get<{pais: string , cantidad: number}[]>(this.Url + 'Dashboard/dispositivos_region');
+  }
+  // tslint:disable-next-line:typedef
+  public getDispositivoPromedio(){
+    return this.http.get<number>(this.Url + 'Dashboard/dispositivos_promedio');
+  }
+  // tslint:disable-next-line:typedef
+  public getDispositiviosRegistrados(){
+    // tslint:disable-next-line:ban-types
+    return this.http.get<{dispositivoAdquirido: DispositivoAdquirido, dueno: string}[]>(this.Url + 'Dashboard/dispositivos');
+  }
   // tslint:disable-next-line:typedef
   public obtenerDistribuidores(){
     return this.http.get<Distribuidor[]>(this.Url + 'Distribuidor');

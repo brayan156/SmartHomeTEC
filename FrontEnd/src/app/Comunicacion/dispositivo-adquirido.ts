@@ -1,6 +1,7 @@
 export class DispositivoAdquirido {
-  numSerieDisp: number;
+  nSerie: number;
   prendido: boolean;
+  fechaPrendido: Date;
   modelo: string;
-  IDAposento: string;
+  idAposento: number;
 }
