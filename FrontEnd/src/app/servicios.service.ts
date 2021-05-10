@@ -124,6 +124,14 @@ export class ServiciosService {
     return this.http.get<{dispositivoSeVendeEn: DispositivoSeVendeEn , dispositivoModelo: DispositivoModelo}[]>(this.Url + 'DispositivoModelo/region/' + pais);
   }
 
+  public obtenereportetipo() {
+    return this.http.get<{tipo: string, uso: number} [] > (this.Url + 'Reportes/consumo_tipo/' + this.cliente.id);
+  }
+
+  public obtenerPDFreportetipo(reporte) {
+    return this.http.post(this.Url + 'Pdf/consumo_tipo/' + this.cliente.nombre + "/" + this.cliente.primerApellido + "/" + this.cliente.segundoApellido, reporte, { responseType: "blob" });
+  }
+
 
 }
 

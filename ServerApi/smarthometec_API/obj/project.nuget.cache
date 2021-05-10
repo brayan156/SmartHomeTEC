@@ -2,7 +2,7 @@
   "version": 2,
   "dgSpecHash": "0wp5mD9dCDR1znVLlzYy4UeYt7KELXo6VItGZivK1s6uuk/8LR2KD7qqmJMUWOWbWuGCvDIVgfqLytCF3+xUFw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Juan Solis\\Desktop\\Proyecto_1_SmartHomeTec\\SmartHomeTEC\\ServerApi\\smarthometec_API\\smarthometec_API.csproj",
+  "projectFilePath": "C:\\Users\\braya\\Desktop\\bases\\github_proyecto1_smarthometec\\SmartHomeTEC\\ServerApi\\smarthometec_API\\smarthometec_API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\braya\\.nuget\\packages\\aspnetcore.reporting\\2.1.0\\aspnetcore.reporting.2.1.0.nupkg.sha512",
     "C:\\Users\\braya\\.nuget\\packages\\aspnetcore.reportingservices\\2.1.0\\aspnetcore.reportingservices.2.1.0.nupkg.sha512",
