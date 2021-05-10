@@ -1,7 +1,6 @@
 export class Distribuidor {
-  cedula_juridica :number;
-  nombre : string;
-  continente : string;
-  pais: string;
-  img: string;
+  CedulaJuridica  :number;
+  Pais  : string;
+  Nombre  : string;
+  Imagen : string;
 }

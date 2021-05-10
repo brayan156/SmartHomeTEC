@@ -1,8 +1,10 @@
 
 export class Historial{
-  N_dispositivo: number;
-  horas_de_uso: number;
-  dia: string;
-  mes: string;
-  year: string;
+  NHistorial : number;
+  NSerie : number;
+  Dia : number;
+  Mes : number;
+  Ano: number;
+  MinutosDeUso: number;
+  Hora: number;
 }

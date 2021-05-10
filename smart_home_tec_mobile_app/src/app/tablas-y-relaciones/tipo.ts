@@ -1,5 +1,6 @@
 export class Tipo {
-  nombre: string;
-  descripcion: string;
-  tiempo_garantia: string;
+  Nombre : string;
+  Descripcion : string;
+  TiempoDeGarantia: number;
+  Imagen: string;
 }
