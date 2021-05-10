@@ -8,10 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using smarthometec_API.Modelos;
 using smarthometec_API.reportes;
 using System.Data;
-using System.Reflection;
-using System.Text;
-using AspNetCore.Reporting;
-using System.Diagnostics;
+
 
 namespace smarthometec_API.Controllers
 {
@@ -68,8 +65,7 @@ namespace smarthometec_API.Controllers
 
 
             
-            var returnString = GenerateReportAsync("Report1",mayor_uso);
-            return File(returnString, System.Net.Mime.MediaTypeNames.Application.Octet, "Report1" + ".pdf");
+            
 
 
             return mayor_uso;
@@ -116,58 +112,7 @@ namespace smarthometec_API.Controllers
 
 
 
-            public byte[] GenerateReportAsync(string reportName,  IEnumerable<dynamic> mayor_uso)
-        {
-                string fileDirPath = Assembly.GetExecutingAssembly().Location.Replace("smarthometec_API.dll", string.Empty);
-                string rdlcFilePath = string.Format("{0}reportes\\{1}.rdlc", fileDirPath, reportName);
-                Dictionary<string, string> parameters = new Dictionary<string, string>();
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                Encoding.GetEncoding("windows-1252");
-                LocalReport report = new LocalReport(rdlcFilePath);
-            DataSet1 ds = new DataSet1(); ;
-            DataTable t = ds.Tables.Add("Items");
-            DataRow r;
 
-
-
-            t.Columns.Add("tipo_de_dispositivo", Type.GetType("System.String"));
-            t.Columns.Add("cantidad_de_uso", Type.GetType("System.String"));
-
-            foreach (var tp in mayor_uso)
-            {
-                Debug.WriteLine("otro mas");
-                r = t.NewRow();
-                r["tipo_de_dispositivo"] = tp.tipo;
-                r["cantidad_de_uso"] = tp.uso;
-                t.Rows.Add(r);
-            }
-
-            Debug.WriteLine("llego aca");
-
-            report.AddDataSource("DataSet1",t);
-                var result = report.Execute(GetRenderType("pdf"), 1, parameters);
-                return result.MainStream;
-            }
-
-            private RenderType GetRenderType(string reportType)
-            {
-                var renderType = RenderType.Pdf;
-                switch (reportType.ToLower())
-                {
-                    default:
-                    case "pdf":
-                        renderType = RenderType.Pdf;
-                        break;
-                    case "word":
-                        renderType = RenderType.Word;
-                        break;
-                    case "excel":
-                        renderType = RenderType.Excel;
-                        break;
-                }
-
-                return renderType;
-            }
         
 
 
