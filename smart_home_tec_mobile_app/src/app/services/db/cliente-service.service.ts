@@ -39,6 +39,8 @@ export class ClienteServiceService {
     });
   }
 
+  
+
   validateCliente(database: SQLiteObject, email:string, contrasena:string) {
     return database.executeSql('SELECT * FROM Cliente WHERE email = ? AND contrasena = ?', [email, contrasena]).then(data => {
 

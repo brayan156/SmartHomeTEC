@@ -3,6 +3,9 @@ import { SQLiteObject } from '@ionic-native/sqlite';
 import { BehaviorSubject } from 'rxjs';
 import { Cliente } from 'src/app/tablas-y-relaciones/cliente';
 import { ClienteHaUsado } from 'src/app/tablas-y-relaciones/cliente_ha_usado';
+import { DispositivoAdquirido } from 'src/app/tablas-y-relaciones/dispositivoAdquirido';
+import { DispositivoModelo } from 'src/app/tablas-y-relaciones/DispositivoModelo';
+import { DispositivoSeVendeEn } from 'src/app/tablas-y-relaciones/DispositivoSeVendeEn';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +38,66 @@ export class DispositivoService {
       clientes.next(clientesBD);
     });
   }
+
+  loadDispositivosModelo(database: SQLiteObject, coleccion: BehaviorSubject<any[]>) {
+    return database.executeSql('SELECT * FROM Dispositivo_modelo', []).then(data => {
+
+      let tmpList: DispositivoModelo[] = [];
+
+      if (data.rows.length > 0) {
+        for (var i = 0; i < data.rows.length; i++) {
+          tmpList.push({
+            Modelo  : data.rows.item(i).modelo,
+            Marca: data.rows.item(i).marca,
+            ConsumoElectrico: data.rows.item(i).consumo_electrico,
+            Tipo : data.rows.item(i).tipo,
+            Imagen : data.rows.item(i).imagen,
+          });
+        }
+      }
+      coleccion.next(tmpList);
+    });
+  }
+
+  loadDispositivosAdquiridos(database: SQLiteObject, coleccion: BehaviorSubject<any[]>) {
+    return database.executeSql('SELECT * FROM Dispositivo_adquirido', []).then(data => {
+
+      let tmpList: DispositivoAdquirido[] = [];
+
+      if (data.rows.length > 0) {
+        for (var i = 0; i < data.rows.length; i++) {
+          tmpList.push({
+            NSerie  :data.rows.item(i).n_serie,
+            Prendido  :data.rows.item(i).prendido,
+            Modelo  : data.rows.item(i).modelo,
+            IdAposento : data.rows.item(i).id_aposento,
+            FechaPrendido : data.rows.item(i).fecha_prendido,
+          });
+        }
+      }
+      coleccion.next(tmpList);
+    });
+  }
+
+  loadDispositivosSeVendeEn(database: SQLiteObject, coleccion: BehaviorSubject<any[]>) {
+    return database.executeSql('SELECT * FROM Dispositivo_se_vende_en', []).then(data => {
+
+      let tmpList: DispositivoSeVendeEn[] = [];
+
+      if (data.rows.length > 0) {
+        for (var i = 0; i < data.rows.length; i++) {
+          tmpList.push({
+            CjDistribuidor :data.rows.item(i).cj_distribuidor,
+            ModeloDispotivo  :data.rows.item(i).modelo_dispotivo,
+            Precio  :data.rows.item(i).precio,
+            Cantidad  :data.rows.item(i).cantidad,
+          });
+        }
+      }
+      coleccion.next(tmpList);
+    });
+  }
+
 
   loadClienteHaUsado(database: SQLiteObject, clientes: BehaviorSubject<any[]>) {
     return database.executeSql('SELECT * FROM Cliente_ha_usado', []).then(data => {
@@ -71,7 +134,7 @@ export class DispositivoService {
   }
 
   fueUsadoDispositivo(database: SQLiteObject, N_serie: number) {
-    return database.executeSql('SELECT id_cliente FROM Cliente_ha_usado WHERE n_serie = ?', [N_serie]).then(data => {
+    return database.executeSql('SELECT id_cliente FROM Cliente_ha_usado WHERE n_serie_dispositivo = ?', [N_serie]).then(data => {
       let clientes = [];
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
@@ -85,10 +148,10 @@ export class DispositivoService {
   }
 
   coincideInformacion(database: SQLiteObject, N_serie: number) {
-    return database.executeSql("SELECT n_serie, descripcion, marca, tipo FROM Dispositivo_adquirido JOIN Dispositivo_modelo on Dispositivo_adquirido.modelo = Dispositivo_modelo.modelo JOIN Tipo ON Dispositivo_modelo.tipo = Tipo.nombre where n_serie = ?"
-      , [N_serie]).then(data => {
-
-        let dispositivos = [];
+    console.log("entre a coincideInfo");
+    return database.executeSql("SELECT n_serie, descripcion, marca, tipo FROM Dispositivo_adquirido JOIN Dispositivo_modelo on Dispositivo_adquirido.modelo = Dispositivo_modelo.modelo JOIN Tipo ON Dispositivo_modelo.tipo = Tipo.nombre where n_serie = ?", [N_serie]).then(data => {
+      let dispositivos = [];
+      console.log(data);
         if (data.rows.length > 0) {
           for (var i = 0; i < data.rows.length; i++) {
             dispositivos.push({
@@ -99,6 +162,8 @@ export class DispositivoService {
             });
           }
         }
+        console.log(data);
+        console.log(dispositivos);
         this.tmpQuery.next(dispositivos);
       });
   }

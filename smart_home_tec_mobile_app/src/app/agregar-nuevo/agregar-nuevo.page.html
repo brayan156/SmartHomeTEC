@@ -15,12 +15,15 @@
     </ion-item>
     <ion-item>
       <ion-label>Tipo</ion-label>
-      <ion-select [(ngModel)]="this.Tipo" [ngModelOptions]="{standalone: true}" id='Tipo'  interface="action-sheet">
+      <ion-select  [(ngModel)]="this.Tipo" [ngModelOptions]="{standalone: true}" id='Tipo'  interface="action-sheet">
+      <ion-select-option *ngFor="let tipo of tipos">{{tipo.Nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Marca</ion-label>
-      <ion-select  [(ngModel)]="this.Marca" [ngModelOptions]="{standalone: true}" id='Marca' interface="action-sheet"></ion-select>
+      <ion-select  [(ngModel)]="this.Marca" [ngModelOptions]="{standalone: true}" id='Marca' interface="action-sheet">
+        <ion-select-option  *ngFor="let dispositivo of dispositivosModelo">{{dispositivo.Marca}}</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Número de serie</ion-label>
@@ -33,7 +36,10 @@
     </ion-item>
     <ion-item>
       <ion-label>Aposento</ion-label>
-      <ion-select [(ngModel)]="this.Aposento" [ngModelOptions]="{standalone: true}" id='Aposento' interface="action-sheet"></ion-select>
+      <ion-select  [(ngModel)]="this.Aposento" [ngModelOptions]="{standalone: true}" id='Aposento' interface="action-sheet">
+        <ion-select-option *ngFor="let aposento of aposentos">{{aposento.NombreCuarto}}</ion-select-option>
+      </ion-select>
+
     </ion-item>
       <ion-button  id='round' size='full'type="submit" [disabled]="form.invalid" >Agregar</ion-button>
   </form>

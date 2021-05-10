@@ -23,7 +23,7 @@ import { TipoService } from './tipo.service';
 })
 export class DbServiceService {
 
-  private myID: number;
+  private myID: Cliente;
   private database: SQLiteObject;
   private dbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
  
@@ -77,6 +77,9 @@ export class DbServiceService {
           // Cargamos todas las tablas
           this.clientService.loadClientes(this.database, this.clientes);
           this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
+          this.dispositivoService.loadDispositivosAdquiridos(this.database, this.dispositivosAdquiridos);
+          this.dispositivoService.loadDispositivosModelo(this.database, this.dispositivosModelo);
+          this.dispositivoService.loadDispositivosSeVendeEn(this.database, this.dispositivoSeVendeEn);
           this.aposentosService.loadAposentos(this.database, this.aposentos);
           this.garantiaService.loadGarantias(this.database, this.garantias);
           this.direccionService.loadDirecciones(this.database, this.direcciones);
@@ -94,6 +97,10 @@ export class DbServiceService {
     });
   }
  
+  resetMyId() {
+    this.myID = new Cliente();
+  }
+
   getDatabaseState() {
     return this.dbReady.asObservable();
   }
@@ -107,39 +114,43 @@ export class DbServiceService {
   }
 
   getMyID() {
-    return this.myID;
+    return this.myID.Id;
   }
 
   existeDispositivo(N_serie:number) {
     this.dispositivoService.existeDispositivo(this.database, N_serie);
-    let tmp = this.dispositivoService.tmpQuery.value;
+    let tmp = this.dispositivoService.tmpQuery;
     this.dispositivoService.cleanTmpQuery();
-    return (tmp[0].modelo != null) ? true : false;
+    return tmp.asObservable();
   }
 
   fueUsadoDispositivo(N_serie:number) {
     this.dispositivoService.fueUsadoDispositivo(this.database, N_serie);
-    let tmp = this.dispositivoService.tmpQuery.value;
+    let tmp = this.dispositivoService.tmpQuery;
     this.dispositivoService.cleanTmpQuery();
-    return (tmp[0].cliente != null) ? true : false;
+    // return (tmp[0] != null) ? true : false;
+    return tmp.asObservable();
   }
 
   coincideInformacion(N_serie: number, marca: string, descripcion: string, tipo: string) {
+    console.log("entre a coincideInfo de la base de datos");
     this.dispositivoService.coincideInformacion(this.database, N_serie);
     let tmp = this.dispositivoService.tmpQuery.value;
-    this.dispositivoService.cleanTmpQuery();
+    console.log(tmp.toString());
+    // return tmp.asObservable();
     let result = false;
     if (marca == tmp[0].marca && descripcion == tmp[0].descripcion && tipo == tmp[0].tipo) {
       result = true;
     } else {
       result = false;
     }
+    this.dispositivoService.cleanTmpQuery();
     return result;
   }
 
   addClienteHaUsado(n_serie_dispositivo:number) {
     let data: ClienteHaUsado = new ClienteHaUsado();
-    data.IdCliente = this.myID;
+    data.IdCliente = this.myID.Id;
     data.NSerieDispositivo = n_serie_dispositivo;
     data.PropietarioActual = true;
     this.dispositivoService.addClienteHaUsado(this.database, data, this.clientesHanUsado);
@@ -149,9 +160,26 @@ export class DbServiceService {
   validarCliente(email: string, contrasena: string) {
     this.clientService.validateCliente(this.database, email, contrasena);
     let tmp = this.clientService.tmpQuery.value;
+    this.myID = tmp[0];
     this.clientService.cleanTmpQuery();
     return (tmp[0] != null) ? true : false;
   }
+
+  getAposentos() {
+    this.aposentosService.loadAposentos(this.database, this.aposentos);
+    return this.aposentos.value;
+  }
+
+  getTipos() {
+    this.tiposService.loadTipos(this.database, this.tipos);
+    return this.tipos.value;
+  }
+
+  getDispositivosModelo() {
+    this.dispositivoService.loadDispositivosModelo(this.database, this.dispositivosModelo);
+    return this.dispositivosModelo.value;
+  }
+
 
 
 }

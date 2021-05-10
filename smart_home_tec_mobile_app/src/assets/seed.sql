@@ -145,41 +145,41 @@ create table  IF NOT EXISTS Certificado_garantia(
     foreign key (n_factura) references Factura(n_factura)
 );
 
-insert into Cliente VALUES (1, 'tomas@gmail', 'blupblup', 'Segura', 'Monge', 'Tomas', 'CR');
+-- insert into Cliente VALUES (1, 'tomas@gmail', 'blupblup', 'Segura', 'Monge', 'Tomas', 'CR');
 
-INSERT INTO Aposento (id, nombre_cuarto, id_cliente)
-VALUES (1, 'sala', 1);
+-- INSERT INTO Aposento (id, nombre_cuarto, id_cliente)
+-- VALUES (1, 'sala', 1);
 
-INSERT INTO Aposento (id, nombre_cuarto, id_cliente)
-VALUES (2, 'cocina', 1);
+-- INSERT INTO Aposento (id, nombre_cuarto, id_cliente)
+-- VALUES (2, 'cocina', 1);
 
-INSERT INTO Aposento (id, nombre_cuarto, id_cliente)
-VALUES (3, 'cuarto', 1);
+-- INSERT INTO Aposento (id, nombre_cuarto, id_cliente)
+-- VALUES (3, 'cuarto', 1);
 
-INSERT INTO Cliente_ha_usado (n_serie_dispositivo, id_cliente, propietario_actual)
-VALUES (1, 1, true);
+-- INSERT INTO Cliente_ha_usado (n_serie_dispositivo, id_cliente, propietario_actual)
+-- VALUES (1, 1, true);
 
-INSERT INTO Cliente_ha_usado (n_serie_dispositivo, id_cliente, propietario_actual)
-VALUES (2, 1, true);
+-- INSERT INTO Cliente_ha_usado (n_serie_dispositivo, id_cliente, propietario_actual)
+-- VALUES (2, 1, true);
 
-INSERT INTO Tipo (nombre, tiempo_de_garantia, imagen, descripcion)
-VALUES ('bombillo', 4,
-        'https://cdn.shopify.com/s/files/1/1161/3498/products/nexxt-solutions-bombillo-inteligente-wi-fi-led-w110-luz-blanca-1_large.jpg?v=1582739721',
-        'Inteligente');
+-- INSERT INTO Tipo (nombre, tiempo_de_garantia, imagen, descripcion)
+-- VALUES ('bombillo', 4,
+--         'https://cdn.shopify.com/s/files/1/1161/3498/products/nexxt-solutions-bombillo-inteligente-wi-fi-led-w110-luz-blanca-1_large.jpg?v=1582739721',
+--         'Inteligente');
 
-INSERT INTO Tipo (nombre, tiempo_de_garantia, imagen, descripcion)
-VALUES ('socket', 2, 'https://m.media-amazon.com/images/I/51Be65aDXtL._AC_.jpg', 'Inteligente');
+-- INSERT INTO Tipo (nombre, tiempo_de_garantia, imagen, descripcion)
+-- VALUES ('socket', 2, 'https://m.media-amazon.com/images/I/51Be65aDXtL._AC_.jpg', 'Inteligente');
 
-INSERT INTO Dispositivo_modelo (modelo, marca, imagen, consumo_electrico, tipo)
-VALUES ('Bombillo3000', 'GE', 'https://cdn.shopify.com/s/files/1/2393/8647/products/5AT1S3-WEN0.jpg?v=1606809887', 20,
-        'bombillo');
+-- INSERT INTO Dispositivo_modelo (modelo, marca, imagen, consumo_electrico, tipo)
+-- VALUES ('Bombillo3000', 'GE', 'https://cdn.shopify.com/s/files/1/2393/8647/products/5AT1S3-WEN0.jpg?v=1606809887', 20,
+--         'bombillo');
 
-INSERT INTO Dispositivo_modelo (modelo, marca, imagen, consumo_electrico, tipo)
-VALUES ('Socket3000', 'Xiaomi', 'https://images-na.ssl-images-amazon.com/images/I/41M5BfLYjQL._AC_SX466_.jpg', 35,
-        'socket');
+-- INSERT INTO Dispositivo_modelo (modelo, marca, imagen, consumo_electrico, tipo)
+-- VALUES ('Socket3000', 'Xiaomi', 'https://images-na.ssl-images-amazon.com/images/I/41M5BfLYjQL._AC_SX466_.jpg', 35,
+--         'socket');
         
-INSERT INTO Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento)
-VALUES (1, false, '2021-05-09 21:19:21.000', 'Bombillo3000', 1);
+-- INSERT INTO Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento)
+-- VALUES (3, false, '2021-05-09 21:19:21.000', 'Bombillo3000', null);
 
-INSERT INTO Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento)
-VALUES (2, false, '2021-05-09 21:20:06.000', 'Socket3000', 2);
+-- INSERT INTO Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento)
+-- VALUES (4, false, '2021-05-09 21:20:06.000', 'Socket3000', null);

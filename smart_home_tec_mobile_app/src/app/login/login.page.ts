@@ -20,9 +20,11 @@ export class LoginPage implements OnInit {
   private db: DbServiceService) { }
 
   ngOnInit() {
+    
     this.db.getDatabaseState().subscribe(rdy => {
       if (rdy) {
         this.db.getClientes().subscribe(devs => {
+          this.db.resetMyId();
           this.clientes = devs;
         })
         //this.products = this.db.getProducts();
