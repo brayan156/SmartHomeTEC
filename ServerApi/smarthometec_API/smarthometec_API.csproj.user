@@ -10,5 +10,17 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_DbContextTypeFullName>smarthometec_API.Modelos.resthometecdatabaseContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
+    <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
+  <ItemGroup>
+    <None Update="reportes\DataSet1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="reportes\DataSet2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="reportes\DataSet3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
 </Project>
