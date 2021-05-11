@@ -6,6 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using smarthometec_API.Modelos;
+using smarthometec_API.reportes;
+using System.Data;
+
 
 namespace smarthometec_API.Controllers
 {
@@ -52,13 +55,18 @@ namespace smarthometec_API.Controllers
         {
             var dipositivos_tipo = _context.ClienteHaUsado.Where(cu => cu.IdCliente == idcliente & cu.PropietarioActual == true).Join(_context.DispositivoAdquirido, cu => cu.NSerieDispositivo, da => da.NSerie, (cu, da) => da)
                 .Join(_context.DispositivoModelo,da=>da.Modelo,dm=>dm.Modelo,(da,dm)=>new {dispositivoAdquirido=da,tipo=dm.Tipo});
-            var mayor_uso = await dipositivos_tipo.Join(_context.Historial, d => d.dispositivoAdquirido.NSerie, h => h.NSerie, (d, h) => new { tipo = d.tipo, Historial = h })
-                .GroupBy(dh=>dh.tipo).Select(dh=>new  {tipo=dh.Key, uso=dh.Sum(x=>x.Historial.MinutosDeUso.Value) }).OrderByDescending(tu=>tu.uso).ToListAsync();
+            var mayor_uso =  dipositivos_tipo.Join(_context.Historial, d => d.dispositivoAdquirido.NSerie, h => h.NSerie, (d, h) => new { tipo = d.tipo, Historial = h })
+                .GroupBy(dh => dh.tipo).Select(dh => new { tipo = dh.Key, uso = dh.Sum(x => x.Historial.MinutosDeUso.Value) }).OrderByDescending(tu => tu.uso).ToList();
 
             if (mayor_uso == null)
             {
                 return NotFound();
             }
+
+
+            
+            
+
 
             return mayor_uso;
         }
@@ -69,15 +77,26 @@ namespace smarthometec_API.Controllers
 
             DateTime fechai = new DateTime(ai, mi, di);
             DateTime fechaf= new DateTime(af, mf, df);
-            DateTime fechac = new DateTime();
-            DateTime fechah = new DateTime();
+            List<fecha_historial> fechac = new List<fecha_historial>();
             var dipositivos = _context.ClienteHaUsado
                 .Where(cu => cu.IdCliente == idcliente & cu.PropietarioActual == true).Join(
                     _context.DispositivoAdquirido, cu => cu.NSerieDispositivo, da => da.NSerie, (cu, da) => da);
             var dispositivos_historial = dipositivos.Join(_context.Historial, d => d.NSerie, h => h.NSerie,
-                    (d, h) => new { dispositivoAdquirido = d, historial = h })
-                .Where(dh => fechac.AddDays(dh.historial.Dia.Value).AddMonths(dh.historial.Mes.Value).AddYears(dh.historial.Ano.Value)<fechai | fechah.AddDays(dh.historial.Dia.Value).AddMonths(dh.historial.Mes.Value).AddYears(dh.historial.Ano.Value) > fechaf);
-            var uso =  dispositivos_historial
+                    (d, h) => new { dispositivoAdquirido = d, historial = h });
+
+            foreach (var dh in dispositivos_historial)
+            {
+
+                fecha_historial fecha = new fecha_historial();
+                fecha.fecha = new DateTime(dh.historial.Ano.Value, dh.historial.Mes.Value, dh.historial.Dia.Value);
+                fecha.historial = dh.historial;
+                fecha.da = dh.dispositivoAdquirido;
+                fechac.Add(fecha);
+            }
+
+            var dhfiltrado = fechac.Where(dh => dh.fecha >= fechai & dh.fecha <= fechaf);
+
+            var uso = dhfiltrado
                 .GroupBy(dh => new
                 {
                     dh.historial.Hora
@@ -88,9 +107,14 @@ namespace smarthometec_API.Controllers
             {
                 return NotFound();
             }
-
             return uso;
         }
+
+
+
+
+        
+
 
     }
 }
