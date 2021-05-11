@@ -162,8 +162,9 @@ C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smart
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\smarthometec_API.exe
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Consumomensual.rdlc
+C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Factura.rdlc
+C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Garantia.rdlc
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Reporteperiodo.rdlc
-C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Usodetipos.rdlc
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\smarthometec_API.deps.json
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\smarthometec_API.runtimeconfig.json
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\smarthometec_API.runtimeconfig.dev.json

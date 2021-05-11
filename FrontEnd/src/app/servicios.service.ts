@@ -16,6 +16,8 @@ import {PedidoFactura} from './Comunicacion/pedido-factura';
 import {Tipo} from './Comunicacion/tipo';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {ClienteEntregaEn} from './Comunicacion/cliente-entrega-en';
+import {Datos} from './Comunicacion/datos';
+import {Hora} from './Comunicacion/hora';
 
 @Injectable({
   providedIn: 'root'
@@ -135,6 +137,25 @@ export class ServiciosService {
     return this.http.get<{dispositivoSeVendeEn: DispositivoSeVendeEn , dispositivoModelo: DispositivoModelo}[]>(this.Url + 'DispositivoModelo/region/' + pais);
   }
 
+  // tslint:disable-next-line:typedef
+  public getReporteMes(id: number , ano: number , mes: number){
+    return this.http.get<{consumo: number , datos: Datos}[]>(this.Url + 'Reportes/consumo_mensual/' + id + '/' + ano + '/' + mes);
+  }
+
+  // tslint:disable-next-line:typedef
+  public getReporteDias(id: number, di: number, mi: number, ai: number, df: number, mf: number , af: number){
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<{hora: Hora, promedio_dispositivos: number, cantidadTotalMinutos: number}[]>(this.Url + 'Reportes/consumo_periodo_dia/' + id + '/' + di + '/' + mi + '/' +  ai + '/' + df + '/' + mf +
+      '/' + af);
+  }
+  // tslint:disable-next-line:typedef
+  public getConsumoTipo(id: number){
+    return this.http.get<{tipo: string, uso: number} []>(this.Url + 'Reportes/consumo_tipo/' + id);
+  }
+  // tslint:disable-next-line:typedef
+  public habilitarAposentos(id: number){
+    return this.http.post(this.Url + 'Aposento/Default', id);
+  }
   public obtenereportetipo() {
     return this.http.get<{tipo: string, uso: number} [] > (this.Url + 'Reportes/consumo_tipo/' + this.cliente.id);
   }

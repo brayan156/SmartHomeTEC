@@ -1,25 +1,26 @@
 <app-nav-u></app-nav-u>
 <div class="contenedor">
   <div class="row ">
-    <input class="fecha" type="month">
-    <button type="submit" class="btn btn-primary boton">Buscar</button>
+    <input class="fecha" type="month" name="fecha" #nuevoNombre="ngModel" [(ngModel)]="mesAux">
+    <button type="submit" class="btn btn-primary boton" (click)="printAux()">Buscar</button>
   </div>
   <div class="margenes">
 
+    <button type="button" class="btn btn-secondary">Generar pdf</button>
     <table class="table table-light">
       <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Dispositivo</th>
-        <th scope="col">Consumo Mensual</th>
+        <th scope="col">Numero de serie</th>
+        <th scope="col">Modelo</th>
+        <th scope="col">Consumo Mensual en KW</th>
       </tr>
       </thead>
-      <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>DISPOSITIVO</td>
-        <td>HORAS</td>
-      </tr>
+      <tbody *ngFor="let item of listaAux">
+        <tr>
+          <td>{{item.datos.nSerie}}</td>
+          <td>{{item.datos.modelo}}</td>
+          <td>{{item.consumo}}</td>
+        </tr>
       </tbody>
     </table>
 

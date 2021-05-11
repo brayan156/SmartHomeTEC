@@ -5,11 +5,13 @@
 
 .fecha{
   width: 60%;
+  margin-top: 20px;
 }
 
 .boton{
   margin-left: 5%;
-  width: 30%;
+  width: 10%;
+  margin-top: 15px;
 }
 
 .margenes{
