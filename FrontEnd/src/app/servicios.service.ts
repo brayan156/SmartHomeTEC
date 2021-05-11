@@ -160,8 +160,21 @@ export class ServiciosService {
     return this.http.get<{tipo: string, uso: number} [] > (this.Url + 'Reportes/consumo_tipo/' + this.cliente.id);
   }
 
+  // tslint:disable-next-line:typedef
   public obtenerPDFreportetipo(reporte) {
+    // tslint:disable-next-line:max-line-length
     return this.http.post(this.Url + 'Pdf/consumo_tipo/' + this.cliente.nombre + "/" + this.cliente.primerApellido + "/" + this.cliente.segundoApellido, reporte, { responseType: "blob" });
+  }
+
+  // tslint:disable-next-line:typedef
+  public obtenerPDFMensual(reporte) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.post(this.Url + 'Pdf/consumo_mensual/' + this.cliente.nombre + "/" + this.cliente.primerApellido + "/" + this.cliente.segundoApellido, reporte, { responseType: "blob" });
+  }
+
+  public obtenerPDFDia(reporte) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.post(this.Url + 'Pdf/consumo_periodo_dia/' + this.cliente.nombre + "/" + this.cliente.primerApellido + "/" + this.cliente.segundoApellido, reporte, { responseType: "blob" });
   }
 
 

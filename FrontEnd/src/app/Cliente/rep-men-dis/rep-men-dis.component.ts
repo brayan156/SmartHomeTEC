@@ -38,4 +38,26 @@ export class RepMenDisComponent implements OnInit {
   });
   }
 
+  generarPdf(): void {
+    this.service.obtenerPDFreportetipo(this.listaAux).subscribe(res => {
+      var newBlob = new Blob([res], { type: "application/pdf" });
+
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(newBlob);
+        return;
+      }
+      const data = window.URL.createObjectURL(newBlob);
+
+      var link = document.createElement('a');
+      link.href = data;
+      link.download = "Tipos_de_dispositivos_de_mayor_uso.pdf";
+
+      link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
+      setTimeout(function() {
+        window.URL.revokeObjectURL(data);
+      }, 100);
+
+    });
+  }
 }
