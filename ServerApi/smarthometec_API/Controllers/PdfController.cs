@@ -54,6 +54,77 @@ namespace smarthometec_API.Controllers
         }
 
 
+        [HttpPost("consumo_mensual/{nombre}/{apellido1}/{apellido2}")]
+        public FileContentResult consumomes(List<dynamic> datos, string nombre, string apellido1, string apellido2)
+        {
+
+
+            DataSet1 ds = new DataSet1(); ;
+            DataTable t = ds.Tables.Add("Items");
+            DataRow r;
+
+
+
+            t.Columns.Add("nserie", Type.GetType("System.String"));
+            t.Columns.Add("modelo", Type.GetType("System.String"));
+            t.Columns.Add("mes", Type.GetType("System.String"));
+            t.Columns.Add("ano", Type.GetType("System.String"));
+            t.Columns.Add("consumo", Type.GetType("System.String"));
+            foreach (var tp in datos)
+            {
+                Debug.WriteLine("otro mas");
+                r = t.NewRow();
+                r["nserie"] = tp.datos.nSerie;
+                r["modelo"] = tp.datos.modelo;
+                r["mes"] = tp.datos.mes;
+                r["ano"] = tp.datos.ano;
+                r["consumo"] = tp.consumo;
+                t.Rows.Add(r);
+            }
+
+            string nombrereporte = "Consumomensual";
+
+
+            var returnString = GenerateReportAsync(nombrereporte, t, nombre, apellido1, apellido2);
+            return File(returnString, System.Net.Mime.MediaTypeNames.Application.Octet, nombrereporte + ".pdf");
+
+        }
+
+
+        [HttpPost("consumo_periodo_dia/{nombre}/{apellido1}/{apellido2}")]
+        public FileContentResult reporteperiodo(List<dynamic> datos, string nombre, string apellido1, string apellido2)
+        {
+
+
+            DataSet1 ds = new DataSet1(); ;
+            DataTable t = ds.Tables.Add("Items");
+            DataRow r;
+
+
+
+            t.Columns.Add("hora", Type.GetType("System.String"));
+            t.Columns.Add("promedio_dispositivos", Type.GetType("System.String"));
+            t.Columns.Add("cantidad_minutos", Type.GetType("System.String"));
+            foreach (var tp in datos)
+            {
+                Debug.WriteLine("otro mas");
+                r = t.NewRow();
+                r["hora"] = tp.hora;
+                r["promedio_dispositivos"] = tp.promedio_dispositivos;
+                r["cantidad_minutos"] = tp.cantidadTotalMinutos;
+                t.Rows.Add(r);
+            }
+
+            string nombrereporte = "Reporteperiodo";
+
+
+            var returnString = GenerateReportAsync(nombrereporte, t, nombre, apellido1, apellido2);
+            return File(returnString, System.Net.Mime.MediaTypeNames.Application.Octet, nombrereporte + ".pdf");
+
+        }
+
+
+
         public byte[] GenerateReportAsync(string reportName, DataTable datos, string nombre, string apellido1, string apellido2)
         {
             string fileDirPath = Assembly.GetExecutingAssembly().Location.Replace("smarthometec_API.dll", string.Empty);
