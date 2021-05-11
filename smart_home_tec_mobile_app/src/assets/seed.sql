@@ -1,39 +1,38 @@
-create table IF NOT EXISTS Regiones(
-    pais varchar (20) unique not null,
-    continente varchar(15) not null,
+create table if not exists Regiones(
+    pais varchar (60) unique not null,
+    continente varchar(30) not null,
     primary key (pais)
 );
 
-create table IF NOT EXISTS Tipo(
-  nombre varchar(15) unique not null,
+create table if not exists Tipo(
+  nombre varchar(50) unique not null,
   tiempo_de_garantia int not null,
-  imagen varchar(200),
-  descripcion varchar (50),
+  imagen varchar(600),
+  descripcion varchar (400),
   PRIMARY KEY (nombre)
 );
-
-create table  IF NOT EXISTS Dispositivo_modelo(
-  modelo varchar(15) unique not null,
-  marca varchar(15),
-  imagen varchar(200),
+create table if not exists Dispositivo_modelo(
+  modelo varchar(50) unique not null,
+  marca varchar(50),
+  imagen varchar(600),
   consumo_electrico int not null,
-  tipo varchar(15),
+  tipo varchar(50),
   PRIMARY KEY (modelo),
   foreign key (tipo) references Tipo(nombre)
 );
 
-create table  IF NOT EXISTS Distribuidor(
+create table if not exists Distribuidor(
   cedula_juridica int unique not null,
-  pais varchar(20) not null,
-  nombre varchar(15) not null,
+  pais varchar(60) not null,
+  nombre varchar(50) not null,
   imagen varchar(200) not null,
   PRIMARY KEY (cedula_juridica),
   foreign key (pais) references Regiones (pais)
 );
 
-create table  IF NOT EXISTS Dispositivo_se_vende_en (
+create table if not exists Dispositivo_se_vende_en (
     cj_distribuidor int not null,
-    modelo_dispotivo varchar(15) not null,
+    modelo_dispotivo varchar(50) not null,
     precio int not null,
     cantidad int not null,
     primary key (cj_distribuidor,modelo_dispotivo),
@@ -41,40 +40,37 @@ create table  IF NOT EXISTS Dispositivo_se_vende_en (
     foreign key (modelo_dispotivo) references Dispositivo_modelo(modelo)
 );
 
-create table  IF NOT EXISTS Cliente(
+create table if not exists Cliente(
     id int unique not null,
-    email varchar(50) not null,
+    email varchar(100) not null,
     contrasena varchar(20) not null,
-    primer_apellido varchar (15),
-    segundo_apellido varchar(15),
-    nombre varchar(15) not null ,
-    pais varchar(20) not null,
+    primer_apellido varchar (50),
+    segundo_apellido varchar(50),
+    nombre varchar(50) not null ,
+    pais varchar(60) not null,
     PRIMARY KEY (id),
     foreign key (pais) references Regiones (pais)
 );
 
 
-
-create table IF NOT EXISTS  Aposento(
-  id serial not null,
-  nombre_cuarto varchar(20) not null,
+create table if not exists Aposento(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nombre_cuarto varchar(50) not null,
   id_cliente int not null,
-  primary key (id),
   foreign key (id_cliente) references Cliente (id)
 );
 
-create table IF NOT EXISTS  Dispositivo_adquirido (
-    n_serie serial unique not null,
+create table if not exists Dispositivo_adquirido (
+    n_serie INTEGER PRIMARY KEY AUTOINCREMENT unique not null,
     prendido boolean  default false,
     fecha_prendido timestamp,
-    modelo varchar(15) not null,
+    modelo varchar(50) not null,
     id_aposento int,
-    primary key (n_serie),
     foreign key (modelo) references Dispositivo_modelo(modelo),
     foreign key (id_aposento) references Aposento(id)
 );
 
-create table IF NOT EXISTS  Cliente_ha_usado(
+create table  if not exists Cliente_ha_usado(
     n_serie_dispositivo int not null,
     id_cliente int not null,
     propietario_actual boolean default true,
@@ -83,11 +79,11 @@ create table IF NOT EXISTS  Cliente_ha_usado(
     foreign key (id_cliente) references Cliente(id)
 );
 
-create table IF NOT EXISTS  Historial(
-  n_historial serial not null,
+create table if not exists Historial(
+  n_historial INTEGER,
   n_serie int not null,
   dia int ,
-  mes int ,
+  mes int,
   ano int ,
   hora int,
   minutos_de_uso int default 0,
@@ -95,7 +91,7 @@ create table IF NOT EXISTS  Historial(
   foreign key (n_serie) references Dispositivo_adquirido (n_serie)
 );
 
-create table IF NOT EXISTS  Administrador(
+create table if not exists Administrador(
   id int unique not null,
   contrasena varchar(20) not null,
   email varchar(50) unique not null ,
@@ -103,41 +99,39 @@ create table IF NOT EXISTS  Administrador(
 );
 
 
-create table IF NOT EXISTS  direccion_entrega (
-    direccion_entrega varchar(50) not null,
+create table if not exists direccion_entrega (
+    direccion_entrega varchar(500) not null,
     id_cliente int not null,
     primary key (direccion_entrega,id_cliente),
     foreign key (id_cliente) references Cliente(id)
 );
 
-create table IF NOT EXISTS  Pedido(
-    id serial unique not null,
+create table if not exists Pedido(
+    id INTEGER PRIMARY KEY AUTOINCREMENT unique not null,
     monto int not null,
     id_cliente int not null,
     n_serie_dispositivo int not null,
-    primary key (id),
     foreign key (id_cliente) references Cliente(id),
     foreign key (n_serie_dispositivo) references Dispositivo_adquirido(n_serie)
+             );
+
+
+
+create table if not exists Factura(
+    n_factura INTEGER PRIMARY KEY AUTOINCREMENT unique not null,
+     dia int  ,
+     mes int   ,
+     ano int  
 );
 
-
-
-create table IF NOT EXISTS  Factura(
-    n_factura serial unique not null,
-     dia int ,
-     mes int ,
-     ano int,
-    PRIMARY KEY (n_factura)
-);
-
-create table IF NOT EXISTS  Pedido_Factura(
+create table if not exists Pedido_Factura(
   id_pedido int unique not null,
   n_factura int unique not null,
   PRIMARY KEY (id_pedido,n_factura),
   foreign key (id_pedido) references Pedido(id),
   foreign key (n_factura) references Factura(n_factura)
 );
-create table  IF NOT EXISTS Certificado_garantia(
+create table if not exists Certificado_garantia(
     n_factura int unique not null,
     mes_fin_garantia int not null,
     ano_fin_garantia int not null,
@@ -145,16 +139,24 @@ create table  IF NOT EXISTS Certificado_garantia(
     foreign key (n_factura) references Factura(n_factura)
 );
 
--- insert into Cliente VALUES (1, 'tomas@gmail', 'blupblup', 'Segura', 'Monge', 'Tomas', 'CR');
 
--- INSERT INTO Aposento (id, nombre_cuarto, id_cliente)
--- VALUES (1, 'sala', 1);
 
--- INSERT INTO Aposento (id, nombre_cuarto, id_cliente)
--- VALUES (2, 'cocina', 1);
 
--- INSERT INTO Aposento (id, nombre_cuarto, id_cliente)
--- VALUES (3, 'cuarto', 1);
+-- insert into Aposento (nombre_cuarto, id_cliente) VALUES('sala', 2);
+-- insert into Aposento (nombre_cuarto, id_cliente) values ('cuarto', 2);
+-- insert into Aposento (nombre_cuarto, id_cliente) values ('cocina', 2);
+-- insert into Aposento (nombre_cuarto, id_cliente) values ('garaje', 2);
+
+-- insert into Cliente VALUES (1, 'juan@gmail', 'blupblup', 'Solis', 'Argueyo', 'Juan', 'Argentina');
+-- insert into Cliente VALUES (2, 'brayan@gmail', 'blupblup', 'Leon', 'Urbina', 'Brayan', 'Austria');
+-- INSERT INTO Aposento (nombre_cuarto, id_cliente)
+-- VALUES ('sala', 1);
+
+-- INSERT INTO Aposento (nombre_cuarto, id_cliente)
+-- VALUES ('cocina', 1);
+
+-- INSERT INTO Aposento (nombre_cuarto, id_cliente)
+-- VALUES ('cuarto', 1);
 
 -- INSERT INTO Cliente_ha_usado (n_serie_dispositivo, id_cliente, propietario_actual)
 -- VALUES (1, 1, true);
@@ -179,7 +181,25 @@ create table  IF NOT EXISTS Certificado_garantia(
 --         'socket');
         
 -- INSERT INTO Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento)
--- VALUES (3, false, '2021-05-09 21:19:21.000', 'Bombillo3000', null);
+-- VALUES (1, false, '2021-05-09 21:19:21.000', 'Bombillo3000', null);
 
 -- INSERT INTO Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento)
--- VALUES (4, false, '2021-05-09 21:20:06.000', 'Socket3000', null);
+-- VALUES (2, false, '2021-05-09 21:20:06.000', 'Socket3000', null);
+
+
+
+-- drop TABLE Aposento;
+-- drop TABLE Certificado_garantia;
+-- drop TABLE Cliente;
+-- drop TABLE Cliente_ha_usado;
+-- drop TABLE direccion_entrega;
+-- drop TABLE Dispositivo_adquirido;
+-- drop TABLE Dispositivo_modelo;
+-- drop TABLE Dispositivo_se_vende_en;
+-- drop TABLE Distribuidor;
+-- drop TABLE Factura;
+-- drop TABLE Historial;
+-- drop TABLE Pedido;
+-- drop TABLE Pedido_Factura;
+-- drop TABLE Regiones;
+-- drop TABLE Tipo;

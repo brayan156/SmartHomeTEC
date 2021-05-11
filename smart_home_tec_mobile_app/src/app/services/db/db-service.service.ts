@@ -26,7 +26,7 @@ export class DbServiceService {
   private myID: Cliente;
   private database: SQLiteObject;
   private dbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
- 
+
   clientes = new BehaviorSubject([]);
   productos = new BehaviorSubject([]);
   clientesHanUsado = new BehaviorSubject([]);
@@ -47,7 +47,7 @@ export class DbServiceService {
   Usuario = new BehaviorSubject([]);
 
 
-  constructor(private  sqlite:  SQLite, private plt: Platform, private sqlitePorter: SQLitePorter, private http: HttpClient,
+  constructor(private sqlite: SQLite, private plt: Platform, private sqlitePorter: SQLitePorter, private http: HttpClient,
     private clientService: ClienteServiceService,
     private dispositivoService: DispositivoService,
     private aposentosService: AposentoService,
@@ -58,47 +58,47 @@ export class DbServiceService {
     private historialService: HistorialService,
     private pedidoService: PedidoService,
     private regionesService: RegionService,
-  private tiposService: TipoService) {
+    private tiposService: TipoService) {
     this.plt.ready().then(() => {
       this.sqlite.create({
-        name: 'clientes.db',
+        name: 'SmartHomeTEC.db',
         location: 'default'
       })
-      .then((db: SQLiteObject) => {
+        .then((db: SQLiteObject) => {
           this.database = db;
           this.seedDatabase();
-      });
+        });
     });
   }
- 
-  seedDatabase() {
-    this.http.get('assets/seed.sql', { responseType: 'text'})
-    .subscribe(sql => {
-      this.sqlitePorter.importSqlToDb(this.database, sql)
-        .then(_ => {
-          // Cargamos todas las tablas
-          this.clientService.loadClientes(this.database, this.clientes);
-          this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
-          this.dispositivoService.loadDispositivosAdquiridos(this.database, this.dispositivosAdquiridos);
-          this.dispositivoService.loadDispositivosModelo(this.database, this.dispositivosModelo);
-          this.dispositivoService.loadDispositivosSeVendeEn(this.database, this.dispositivoSeVendeEn);
-          this.aposentosService.loadAposentos(this.database, this.aposentos);
-          this.garantiaService.loadGarantias(this.database, this.garantias);
-          this.direccionService.loadDirecciones(this.database, this.direcciones);
-          this.distribuidorService.loadDistribuidores(this.database, this.distribuidores);
-          this.facturaService.loadFacturas(this.database, this.facturas);
-          this.historialService.loadHistoriales(this.database, this.historiales);
-          this.pedidoService.loadPedidos(this.database, this.pedidos);
-          this.pedidoService.loadPedidosFactura(this.database, this.pedidosFactura);
-          this.regionesService.loadRegiones(this.database, this.regiones);
-          this.tiposService.loadTipos(this.database, this.tipos);
 
-          this.dbReady.next(true);
-        })
-        .catch(e => console.error(e));
-    });
+  seedDatabase() {
+    this.http.get('assets/seed.sql', { responseType: 'text' })
+      .subscribe(sql => {
+        this.sqlitePorter.importSqlToDb(this.database, sql)
+          .then(_ => {
+            // Cargamos todas las tablas
+            this.clientService.loadClientes(this.database, this.clientes);
+            this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
+            this.dispositivoService.loadDispositivosAdquiridos(this.database, this.dispositivosAdquiridos);
+            this.dispositivoService.loadDispositivosModelo(this.database, this.dispositivosModelo);
+            this.dispositivoService.loadDispositivosSeVendeEn(this.database, this.dispositivoSeVendeEn);
+            this.aposentosService.loadAposentos(this.database, this.aposentos);
+            this.garantiaService.loadGarantias(this.database, this.garantias);
+            this.direccionService.loadDirecciones(this.database, this.direcciones);
+            this.distribuidorService.loadDistribuidores(this.database, this.distribuidores);
+            this.facturaService.loadFacturas(this.database, this.facturas);
+            this.historialService.loadHistoriales(this.database, this.historiales);
+            this.pedidoService.loadPedidos(this.database, this.pedidos);
+            this.pedidoService.loadPedidosFactura(this.database, this.pedidosFactura);
+            this.regionesService.loadRegiones(this.database, this.regiones);
+            this.tiposService.loadTipos(this.database, this.tipos);
+
+            this.dbReady.next(true);
+          })
+          .catch(e => console.error(e));
+      });
   }
- 
+
 
 
   resetMyId() {
@@ -108,11 +108,11 @@ export class DbServiceService {
   getDatabaseState() {
     return this.dbReady.asObservable();
   }
- 
+
   getClientes(): Observable<Cliente[]> {
     return this.clientes.asObservable();
   }
- 
+
   getProductos(): Observable<any[]> {
     return this.productos.asObservable();
   }
@@ -121,12 +121,12 @@ export class DbServiceService {
     return this.myID.Id;
   }
 
-  existeDispositivo(N_serie:number) {
+  existeDispositivo(N_serie: number) {
     this.dispositivoService.existeDispositivo(this.database, this.tmpQuery, N_serie);
     return (this.tmpQuery.value[0] != null) ? true : false;
   }
 
-  fueUsadoDispositivo(N_serie:number) {
+  fueUsadoDispositivo(N_serie: number) {
     this.dispositivoService.fueUsadoDispositivo(this.database, this.tmpQuery, N_serie);
     return (this.tmpQuery.value[0] != null) ? true : false;
   }
@@ -143,7 +143,7 @@ export class DbServiceService {
     return result;
   }
 
-  addClienteHaUsado(n_serie_dispositivo:number) {
+  addClienteHaUsado(n_serie_dispositivo: number) {
     let data: ClienteHaUsado = new ClienteHaUsado();
     data.IdCliente = this.Usuario.value[0].Id;
     data.NSerieDispositivo = n_serie_dispositivo;
@@ -152,21 +152,30 @@ export class DbServiceService {
 
   }
 
-  updateDispositivoAdquirido(idAposento:number, n_serie:number) {
+  updateDispositivoAdquirido(idAposento: number, n_serie: number) {
     this.dispositivoService.updateDispositivoAdquirido(this.database, this.dispositivosAdquiridos, idAposento, n_serie);
   }
 
+  addAposento(nuevoNombre: string) {
+    this.aposentosService.addAposento(this.database, this.aposentos, this.Usuario.value[0], nuevoNombre);
+  }
 
-  
   validarCliente(email: string, contrasena: string) {
     this.clientService.validateCliente(this.database, this.Usuario, email, contrasena);
-    return (this.Usuario.value != null) ? true : false;
   }
 
   getUsuario() {
     return this.Usuario.value;
   }
 
+  resetUsuario() {
+    this.Usuario = new BehaviorSubject([]);
+  }
+
+  getMisDispositivosPorAposento(idAposento:number) {
+    this.dispositivoService.getMisDispositivosPorAposento(this.database, this.tmpQuery, this.Usuario.value[0], idAposento);
+    return this.tmpQuery.value;
+  }
 
   getMisDispositivosModelo() {
     this.dispositivoService.getMisDispositivosModelo(this.database, this.tmpQuery, this.Usuario.value[0]);

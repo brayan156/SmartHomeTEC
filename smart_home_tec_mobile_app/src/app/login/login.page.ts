@@ -17,10 +17,12 @@ export class LoginPage implements OnInit {
 
   constructor(public alert: AlertController,
     public router: Router,
-  private db: DbServiceService) { }
+    private db: DbServiceService) {
+    this.db.seedDatabase();
+    }
 
   ngOnInit() {
-    
+
     this.db.getDatabaseState().subscribe(rdy => {
       if (rdy) {
         this.db.getClientes().subscribe(devs => {
@@ -31,23 +33,26 @@ export class LoginPage implements OnInit {
     });
   }
 
-  login(evento) {
+  login() {
+    this.db.resetUsuario();
+    let tmp;
+    this.db.validarCliente(this.correo, this.password);
     setTimeout(() => {
-      let tmp = this.db.validarCliente(this.correo, this.password);
+      tmp = (this.db.Usuario.value.length != 0 ) ? true : false;
       if (tmp) {
         this.router.navigateByUrl('control-dispositivos-activos');
       } else {
         this.presentAlert();
       }
-      evento.target.complete();
-    }, 1000)
+    }, 1500);
     
+
   }
   /**
    * En caso de que la validacion del usuario falle, 
    * se despliega una alerta.
    */
-   async presentAlert() {
+  async presentAlert() {
     const alert = await this.alert.create({
       header: 'Datos inválidos',
       subHeader: 'Por favor corrija sus datos',

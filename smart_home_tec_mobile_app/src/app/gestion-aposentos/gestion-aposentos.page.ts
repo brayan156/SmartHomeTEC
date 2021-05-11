@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
+import { DbServiceService } from '../services/db/db-service.service';
+import { Aposento } from '../tablas-y-relaciones/aposento';
 
 @Component({
   selector: 'app-gestion-aposentos',
@@ -8,10 +10,14 @@ import { ActionSheetController, AlertController, ModalController } from '@ionic/
 })
 export class GestionAposentosPage implements OnInit {
 
+  @Input() misDispositivosPorAposentos;
 
   constructor(public modalController: ModalController,
     public actionSheetController: ActionSheetController,
-    public alertController: AlertController) { }
+    public alertController: AlertController,
+    private db: DbServiceService) {
+
+  }
 
   ngOnInit() {
   }
@@ -39,37 +45,37 @@ export class GestionAposentosPage implements OnInit {
           this.presentAlertPrompt();
           console.log('Favorite clicked');
         }
-        }, {
-          text: 'Definir como cocina',
+      }, {
+        text: 'Definir como cocina',
         icon: 'assets/rooms/SVG/kitchen_room.svg',
         handler: () => {
           console.log('Favorite clicked');
         }
-        }, {
-          text: 'Definir como sala',
+      }, {
+        text: 'Definir como sala',
         icon: 'assets/rooms/SVG/living_room.svg',
         handler: () => {
           console.log('Favorite clicked');
         }
-        }, {
-          text: 'Definir como habitación',
+      }, {
+        text: 'Definir como habitación',
         icon: 'assets/rooms/SVG/bed_room.svg',
         handler: () => {
           console.log('Favorite clicked');
         }
-        }, {
-          text: 'Definir como garaje',
+      }, {
+        text: 'Definir como garaje',
         icon: 'assets/rooms/SVG/garage_room.svg',
         handler: () => {
           console.log('Favorite clicked');
         }
-        },{
-          text: 'Definir como otro',
+      }, {
+        text: 'Definir como otro',
         icon: 'assets/rooms/SVG/other_room.svg',
         handler: () => {
           console.log('Favorite clicked');
         }
-        }, {
+      }, {
         text: 'Cancelar',
         icon: 'close',
         role: 'cancel',
@@ -105,7 +111,7 @@ export class GestionAposentosPage implements OnInit {
           }
         }, {
           text: 'Listo',
-          handler:data => {
+          handler: data => {
             console.log(data);
           }
         }

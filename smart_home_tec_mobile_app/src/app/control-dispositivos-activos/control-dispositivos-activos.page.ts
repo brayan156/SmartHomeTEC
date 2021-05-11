@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { GestionAposentosPage } from '../gestion-aposentos/gestion-aposentos.page';
 import { DbServiceService } from '../services/db/db-service.service';
+import { Aposento } from '../tablas-y-relaciones/aposento';
 import { DispositivoAdquirido } from '../tablas-y-relaciones/dispositivoAdquirido';
 import { DispositivoModelo } from '../tablas-y-relaciones/DispositivoModelo';
 
@@ -13,6 +14,8 @@ import { DispositivoModelo } from '../tablas-y-relaciones/DispositivoModelo';
 export class ControlDispositivosActivosPage implements OnInit {
 
   dispositivosMios: DispositivoModelo[];
+  misAposentos: Aposento[];
+  misDispositivosPorAposentos = [];
 
   constructor(public modalController: ModalController,
     public alertController: AlertController,
@@ -24,6 +27,7 @@ export class ControlDispositivosActivosPage implements OnInit {
 
   ngOnInit() {
     this.updateMisDispositivosModelo();
+    this.misAposentos = this.db.getAposentos();
 
   }
 
@@ -42,6 +46,7 @@ export class ControlDispositivosActivosPage implements OnInit {
   doRefresh(evento) {
     setTimeout(() => {
       this.updateMisDispositivosModelo();
+      this.misAposentos = this.db.getAposentos();
 
       evento.target.complete();
     }, 1000)
@@ -49,7 +54,7 @@ export class ControlDispositivosActivosPage implements OnInit {
 
 
 
-  async nombreNuevaHabitacion() {
+  async NuevaHabitacion() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Nuevo aposento',
@@ -72,77 +77,53 @@ export class ControlDispositivosActivosPage implements OnInit {
         }, {
           text: 'Listo',
           handler: data => {
-            console.log(data);
+            console.log("Ingresaste ", data.nuevoNombre);
+            this.db.addAposento(data.nuevoNombre);
+            this.misAposentos = this.db.getAposentos();
           }
         }
       ]
     });
-
     await alert.present();
   }
 
-  async presentActionSheet() {
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Crear habitación',
+  async noHayContenidoAlert() {
+    const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      buttons: [{
-        text: 'Definir nombre',
-        icon: 'pencil',
-        handler: () => {
-          this.nombreNuevaHabitacion();
-          console.log('Favorite clicked');
+      header: 'No tienes dispositivos asociados :(',
+      buttons: [
+        {
+          text: 'Me arrepentí',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
         }
-      }, {
-        text: 'Guardar como cocina',
-        icon: 'assets/rooms/SVG/kitchen_room.svg',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Guardar como sala',
-        icon: 'assets/rooms/SVG/living_room.svg',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Guardar como habitación',
-        icon: 'assets/rooms/SVG/bed_room.svg',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Guardar como garaje',
-        icon: 'assets/rooms/SVG/garage_room.svg',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Guardar como otro',
-        icon: 'assets/rooms/SVG/other_room.svg',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      ]
     });
-    await actionSheet.present();
-
-    const { role } = await actionSheet.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
+    await alert.present();
   }
 
-  async presentModal() {
-    const modal = await this.modalController.create({
-      component: GestionAposentosPage,
-    });
-    return await modal.present();
+
+  async presentModal( aposento: Aposento) {
+    this.misDispositivosPorAposentos = this.db.getMisDispositivosPorAposento(aposento.Id);
+    setTimeout(async () => {
+      if (this.misDispositivosPorAposentos.length != 0){
+        const modal = await this.modalController.create({
+          component: GestionAposentosPage,
+          componentProps: {
+            aposento: this.misDispositivosPorAposentos
+          }
+        });
+        return await modal.present();
+      } else {
+        this.noHayContenidoAlert();
+      }
+    }, 2000)
+    
   }
+
 
 
 

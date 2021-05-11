@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { SQLiteObject } from '@ionic-native/sqlite';
 import { BehaviorSubject } from 'rxjs';
 import { Aposento } from 'src/app/tablas-y-relaciones/aposento';
+import { Cliente } from 'src/app/tablas-y-relaciones/cliente';
 import { ClienteHaUsado } from 'src/app/tablas-y-relaciones/cliente_ha_usado';
 
 @Injectable({
@@ -46,6 +47,12 @@ export class AposentoService {
         }
       }
       this.tmpQuery.next(aposentosList);
+    });
+  }
+
+  addAposento(database:SQLiteObject,  aposentos: BehaviorSubject<any[]>, cliente:Cliente, nuevoNombre:string) {
+    return database.executeSql('insert into Aposento (nombre_cuarto, id_cliente) values (?,?)', [nuevoNombre, cliente.Id]).then(data => {
+      this.loadAposentos(database, aposentos);
     });
   }
 
