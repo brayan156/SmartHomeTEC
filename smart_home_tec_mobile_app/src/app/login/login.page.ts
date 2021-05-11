@@ -24,23 +24,23 @@ export class LoginPage implements OnInit {
     this.db.getDatabaseState().subscribe(rdy => {
       if (rdy) {
         this.db.getClientes().subscribe(devs => {
-          this.db.resetMyId();
           this.clientes = devs;
         })
         //this.products = this.db.getProducts();
       }
     });
-    console.log(this.clientes.toString());
   }
 
-  login() {
-    let tmp = this.db.validarCliente(this.correo, this.password);
-    console.log(tmp);
-    if (tmp) {
-      this.router.navigateByUrl('control-dispositivos-activos');
-    } else {
-      this.presentAlert();
-    }
+  login(evento) {
+    setTimeout(() => {
+      let tmp = this.db.validarCliente(this.correo, this.password);
+      if (tmp) {
+        this.router.navigateByUrl('control-dispositivos-activos');
+      } else {
+        this.presentAlert();
+      }
+      evento.target.complete();
+    }, 1000)
     
   }
   /**

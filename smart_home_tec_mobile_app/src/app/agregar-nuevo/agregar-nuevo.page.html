@@ -8,7 +8,9 @@
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" id='form' (ngSubmit)="nuevoDispositivo()">
+  <form #form="ngForm" id='form' (ngSubmit)="nuevoDispositivo($event)">
+
+
     <ion-item>
       <ion-label>Descripción</ion-label>
       <ion-input [(ngModel)]="this.Descripcion" [ngModelOptions]="{standalone: true}" id='Descripcion'></ion-input>

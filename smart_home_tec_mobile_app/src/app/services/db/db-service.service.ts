@@ -43,6 +43,8 @@ export class DbServiceService {
   pedidosFactura = new BehaviorSubject([]);
   regiones = new BehaviorSubject([]);
   tipos = new BehaviorSubject([]);
+  tmpQuery = new BehaviorSubject([]);
+  Usuario = new BehaviorSubject([]);
 
 
   constructor(private  sqlite:  SQLite, private plt: Platform, private sqlitePorter: SQLitePorter, private http: HttpClient,
@@ -97,6 +99,8 @@ export class DbServiceService {
     });
   }
  
+
+
   resetMyId() {
     this.myID = new Cliente();
   }
@@ -118,33 +122,24 @@ export class DbServiceService {
   }
 
   existeDispositivo(N_serie:number) {
-    this.dispositivoService.existeDispositivo(this.database, N_serie);
-    let tmp = this.dispositivoService.tmpQuery;
-    this.dispositivoService.cleanTmpQuery();
-    return tmp.asObservable();
+    this.dispositivoService.existeDispositivo(this.database, this.tmpQuery, N_serie);
+    return (this.tmpQuery.value[0] != null) ? true : false;
   }
 
   fueUsadoDispositivo(N_serie:number) {
-    this.dispositivoService.fueUsadoDispositivo(this.database, N_serie);
-    let tmp = this.dispositivoService.tmpQuery;
-    this.dispositivoService.cleanTmpQuery();
-    // return (tmp[0] != null) ? true : false;
-    return tmp.asObservable();
+    this.dispositivoService.fueUsadoDispositivo(this.database, this.tmpQuery, N_serie);
+    return (this.tmpQuery.value[0] != null) ? true : false;
   }
 
   coincideInformacion(N_serie: number, marca: string, descripcion: string, tipo: string) {
-    console.log("entre a coincideInfo de la base de datos");
-    this.dispositivoService.coincideInformacion(this.database, N_serie);
-    let tmp = this.dispositivoService.tmpQuery.value;
-    console.log(tmp.toString());
-    // return tmp.asObservable();
+    this.dispositivoService.coincideInformacion(this.database, this.tmpQuery, N_serie);
+    let tmp = this.tmpQuery.value;
     let result = false;
     if (marca == tmp[0].marca && descripcion == tmp[0].descripcion && tipo == tmp[0].tipo) {
       result = true;
     } else {
       result = false;
     }
-    this.dispositivoService.cleanTmpQuery();
     return result;
   }
 
@@ -157,14 +152,29 @@ export class DbServiceService {
 
   }
 
-  validarCliente(email: string, contrasena: string) {
-    this.clientService.validateCliente(this.database, email, contrasena);
-    let tmp = this.clientService.tmpQuery.value;
-    this.myID = tmp[0];
-    this.clientService.cleanTmpQuery();
-    return (tmp[0] != null) ? true : false;
+  updateDispositivoAdquirido(idAposento:number, n_serie:number) {
+    this.dispositivoService.updateDispositivoAdquirido(this.database, this.dispositivosAdquiridos, idAposento, n_serie);
   }
 
+
+  
+  validarCliente(email: string, contrasena: string) {
+    this.clientService.validateCliente(this.database, this.Usuario, email, contrasena);
+    return (this.Usuario.value != null) ? true : false;
+  }
+
+  getUsuario() {
+    return this.Usuario.value;
+  }
+
+
+  getMisDispositivosModelo() {
+    this.dispositivoService.getMisDispositivosModelo(this.database, this.tmpQuery, this.Usuario.value[0]);
+    return this.tmpQuery.asObservable();
+  }
+
+  // Cambiar estos gets para asociarlos al id del usuario ya que ahora estan retornando la informacion
+  // de todos los usuarios.
   getAposentos() {
     this.aposentosService.loadAposentos(this.database, this.aposentos);
     return this.aposentos.value;
@@ -179,6 +189,7 @@ export class DbServiceService {
     this.dispositivoService.loadDispositivosModelo(this.database, this.dispositivosModelo);
     return this.dispositivosModelo.value;
   }
+
 
 
 

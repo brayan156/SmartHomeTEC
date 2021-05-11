@@ -41,7 +41,7 @@ export class ClienteServiceService {
 
   
 
-  validateCliente(database: SQLiteObject, email:string, contrasena:string) {
+  validateCliente(database: SQLiteObject, usuario: BehaviorSubject<any[]>, email: string, contrasena: string) {
     return database.executeSql('SELECT * FROM Cliente WHERE email = ? AND contrasena = ?', [email, contrasena]).then(data => {
 
       let modelo = [];
@@ -49,17 +49,17 @@ export class ClienteServiceService {
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           modelo.push({
-            Id: data.rows.item(i).ID,
-            Email: data.rows.item(i).Email,
-            Contrasena: data.rows.item(i).Contrasena,
-            PrimerApellido: data.rows.item(i).PrimerApellido,
-            SegundoApellido: data.rows.item(i).SegundoApellido,
-            Nombre: data.rows.item(i).Nombre,
-            Pais: data.rows.item(i).Pais,
+            Id: data.rows.item(i).id,
+            Email: data.rows.item(i).email,
+            Contrasena: data.rows.item(i).contrasena,
+            PrimerApellido: data.rows.item(i).primer_apellido,
+            SegundoApellido: data.rows.item(i).segundo_apellido,
+            Nombre: data.rows.item(i).nombre,
+            Pais: data.rows.item(i).pais,
           });
         }
       }
-      this.tmpQuery.next(modelo);
+      usuario.next(modelo);
     });
   }
 
@@ -67,6 +67,8 @@ export class ClienteServiceService {
     this.tmpQuery = new BehaviorSubject([]);
   }
   
-
+  getTmpQuery() {
+    return this.tmpQuery.asObservable();
+  }
 
 }

@@ -13,7 +13,6 @@ import { DispositivoSeVendeEn } from 'src/app/tablas-y-relaciones/DispositivoSeV
 export class DispositivoService {
 
   clientes = new BehaviorSubject([]);
-  tmpQuery = new BehaviorSubject([]);
 
   constructor() { }
 
@@ -117,7 +116,7 @@ export class DispositivoService {
     });
   }
 
-  existeDispositivo(database: SQLiteObject, N_serie: number) {
+  existeDispositivo(database: SQLiteObject, tmpQuery: BehaviorSubject<any[]>, N_serie: number) {
     return database.executeSql('SELECT modelo FROM Dispositivo_adquirido WHERE n_serie = ?', [N_serie]).then(data => {
 
       let modelo = [];
@@ -129,11 +128,11 @@ export class DispositivoService {
           });
         }
       }
-      this.tmpQuery.next(modelo);
+      tmpQuery.next(modelo);
     });
   }
 
-  fueUsadoDispositivo(database: SQLiteObject, N_serie: number) {
+  fueUsadoDispositivo(database: SQLiteObject,tmpQuery: BehaviorSubject<any[]>, N_serie: number) {
     return database.executeSql('SELECT id_cliente FROM Cliente_ha_usado WHERE n_serie_dispositivo = ?', [N_serie]).then(data => {
       let clientes = [];
       if (data.rows.length > 0) {
@@ -143,11 +142,11 @@ export class DispositivoService {
           });
         }
       }
-      this.tmpQuery.next(clientes);
+      tmpQuery.next(clientes);
     });
   }
 
-  coincideInformacion(database: SQLiteObject, N_serie: number) {
+  coincideInformacion(database: SQLiteObject, tmpQuery: BehaviorSubject<any[]>, N_serie: number) {
     console.log("entre a coincideInfo");
     return database.executeSql("SELECT n_serie, descripcion, marca, tipo FROM Dispositivo_adquirido JOIN Dispositivo_modelo on Dispositivo_adquirido.modelo = Dispositivo_modelo.modelo JOIN Tipo ON Dispositivo_modelo.tipo = Tipo.nombre where n_serie = ?", [N_serie]).then(data => {
       let dispositivos = [];
@@ -164,7 +163,7 @@ export class DispositivoService {
         }
         console.log(data);
         console.log(dispositivos);
-        this.tmpQuery.next(dispositivos);
+        tmpQuery.next(dispositivos);
       });
   }
 
@@ -176,7 +175,32 @@ export class DispositivoService {
     });
   }
 
-  cleanTmpQuery() {
-    this.tmpQuery = new BehaviorSubject([]);
+  updateDispositivoAdquirido(database: SQLiteObject, dispositivosAdquiridos: BehaviorSubject<any[]>, idAposento: number, n_serie: number) {
+    return database.executeSql('UPDATE Dispositivo_adquirido SET id_aposento = ? WHERE n_serie = ?', [idAposento, n_serie]).then(data => {
+      this.loadDispositivosAdquiridos(database, dispositivosAdquiridos);
+    });
   }
+
+  getMisDispositivosModelo(database : SQLiteObject,  tmpQuery: BehaviorSubject<any[]>, cliente:Cliente) {
+    return database.executeSql('SELECT Dispositivo_modelo.modelo, marca, imagen, consumo_electrico, tipo FROM Dispositivo_modelo JOIN   Dispositivo_adquirido on Dispositivo_modelo.modelo = Dispositivo_adquirido.modelo JOIN Cliente_ha_usado on Dispositivo_adquirido.n_serie = Cliente_ha_usado.n_serie_dispositivo WHERE id_cliente = ? AND propietario_actual = true;',
+      [cliente.Id]).then(data => {
+      let tmpList = [];
+      if (data.rows.length > 0) {
+        for (var i = 0; i < data.rows.length; i++) {
+          tmpList.push({
+            Modelo  : data.rows.item(i).modelo,
+            Marca: data.rows.item(i).marca,
+            ConsumoElectrico: data.rows.item(i).consumo_electrico,
+            Tipo : data.rows.item(i).tipo,
+            Imagen : data.rows.item(i).imagen,
+          });
+        }
+      }
+      tmpQuery.next(tmpList);
+    });
+  }
+
+  // cleanTmpQuery() {
+  //   this.tmpQuery = new BehaviorSubject([]);
+  // }
 }
