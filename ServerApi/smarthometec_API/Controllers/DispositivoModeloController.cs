@@ -70,7 +70,7 @@ namespace smarthometec_API.Controllers
             {
                 return BadRequest();
             }
-            if (_context.DispositivoModelo.Join(_context.DispositivoAdquirido, dmodel => dmodel.Modelo, dadquirido => dadquirido.Modelo, (dmodel, dadquirido) => new { dmodel, dadquirido }).Any())
+            if (_context.DispositivoModelo.Where(t => t.Modelo == id).Join(_context.DispositivoAdquirido, dmodel => dmodel.Modelo, dadquirido => dadquirido.Modelo, (dmodel, dadquirido) => new { dmodel, dadquirido }).Any())
             {
                 return BadRequest("Comprado");
             }
@@ -131,7 +131,7 @@ namespace smarthometec_API.Controllers
             {
                 return NotFound();
             }
-            if (_context.DispositivoModelo.Join(_context.DispositivoAdquirido, dmodel => dmodel.Modelo, dadquirido => dadquirido.Modelo, (dmodel, dadquirido) => new { dmodel, dadquirido }).Any())
+            if (_context.DispositivoModelo.Where(t => t.Modelo == id).Join(_context.DispositivoAdquirido, dmodel => dmodel.Modelo, dadquirido => dadquirido.Modelo, (dmodel, dadquirido) => new { dmodel, dadquirido }).Any())
             {
                 return BadRequest("Comprado");
             }
