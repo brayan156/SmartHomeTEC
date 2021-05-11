@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-import { threadId } from 'node:worker_threads';
 import { DbServiceService } from '../services/db/db-service.service';
-import { DispositivoService } from '../services/db/dispositivo.service';
 import { Aposento } from '../tablas-y-relaciones/aposento';
-import { Cliente } from '../tablas-y-relaciones/cliente';
 import { DispositivoModelo } from '../tablas-y-relaciones/DispositivoModelo';
 import { Tipo } from '../tablas-y-relaciones/tipo';
 
@@ -40,7 +36,7 @@ export class AgregarNuevoPage implements OnInit {
   }
 
   // Recibe la informacion y la envia
-  nuevoDispositivo( evento) {
+  nuevoDispositivo() {
     console.log(this.N_serie);
     console.log(this.Descripcion, this.Marca, this.Tipo);
 

@@ -145,7 +145,7 @@ export class DbServiceService {
 
   addClienteHaUsado(n_serie_dispositivo:number) {
     let data: ClienteHaUsado = new ClienteHaUsado();
-    data.IdCliente = this.myID.Id;
+    data.IdCliente = this.Usuario.value[0].Id;
     data.NSerieDispositivo = n_serie_dispositivo;
     data.PropietarioActual = true;
     this.dispositivoService.addClienteHaUsado(this.database, data, this.clientesHanUsado);

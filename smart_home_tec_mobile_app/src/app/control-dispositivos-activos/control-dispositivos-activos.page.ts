@@ -31,6 +31,7 @@ export class ControlDispositivosActivosPage implements OnInit {
     this.db.getDatabaseState().subscribe(rdy => {
       if (rdy) {
         this.db.getMisDispositivosModelo().subscribe(data => {
+          this.dispositivosMios=[];
           this.dispositivosMios = data;
         })
         //this.products = this.db.getProducts();

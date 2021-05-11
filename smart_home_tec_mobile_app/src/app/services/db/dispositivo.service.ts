@@ -169,13 +169,15 @@ export class DispositivoService {
 
 
   addClienteHaUsado(database: SQLiteObject, clienteHaUsado: ClienteHaUsado, clientesHanUsado: BehaviorSubject<any[]>) {
-    let data = [clienteHaUsado.NSerieDispositivo, clienteHaUsado.IdCliente, clienteHaUsado.PropietarioActual];
+    let data = [clienteHaUsado.NSerieDispositivo, clienteHaUsado.IdCliente,1];
+    console.log("estoy ingresando los siguientes datos ", clienteHaUsado.IdCliente, clienteHaUsado.NSerieDispositivo, clienteHaUsado.PropietarioActual);
     return database.executeSql('INSERT INTO Cliente_ha_usado (n_serie_dispositivo, id_cliente, propietario_actual) VALUES (?, ?, ?)', data).then(data => {
       this.loadClienteHaUsado(database, clientesHanUsado);
     });
   }
 
   updateDispositivoAdquirido(database: SQLiteObject, dispositivosAdquiridos: BehaviorSubject<any[]>, idAposento: number, n_serie: number) {
+    console.log("estoy actualizando los siguientes datos ",idAposento, n_serie);
     return database.executeSql('UPDATE Dispositivo_adquirido SET id_aposento = ? WHERE n_serie = ?', [idAposento, n_serie]).then(data => {
       this.loadDispositivosAdquiridos(database, dispositivosAdquiridos);
     });
@@ -200,7 +202,4 @@ export class DispositivoService {
     });
   }
 
-  // cleanTmpQuery() {
-  //   this.tmpQuery = new BehaviorSubject([]);
-  // }
 }
