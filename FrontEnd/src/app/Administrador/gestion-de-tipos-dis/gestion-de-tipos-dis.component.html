@@ -9,7 +9,7 @@
       <img src="{{item.imagen}}"
            class="card-img-top" width="100%" height="100%">
       <div class="card-body">
-        <h5 class="card-title margen" >{{item.nombre}}</h5>
+        <h5 class="card-title margen">{{item.nombre}}</h5>
         <div>
           <label class="margen">Descripcion del Dispositivo: {{item.descripcion}}</label>
         </div>
@@ -18,29 +18,32 @@
           <label class="margen">Tiempos de Garantia {{item.tiempoDeGarantia}} meses</label>
         </div>
 
-        <button class="btn  botones" data-bs-toggle="modal" data-bs-target="#verDispositivos">Dispositivos</button>
-        <button class="btn  botones" data-bs-toggle="modal" data-bs-target="#editarTipoDispositivo">Editar</button>
-        <button class="btn  botones" data-bs-toggle="modal" data-bs-target="#eliminarTipoDispositivo">Eliminar</button>
+        <button class="btn  botones" data-bs-toggle="modal" data-bs-target="#verDispositivos" (click)="tipoActualF(item)">Dispositivos</button>
+        <button class="btn  botones" data-bs-toggle="modal" data-bs-target="#editarTipoDispositivo"
+                (click)="tipoActualF(item)">Editar</button>
+        <button class="btn  botones" data-bs-toggle="modal" data-bs-target="#eliminarTipoDispositivo"
+                (click)="tipoActualF(item)">Eliminar</button>
       </div>
     </div>
   </div>
 
 
   <div class="row">
-
-    <div class="card cardPosicion" style="width: 18rem;">
-      <img src="http://cdn2.dineroenimagen.com/media/dinero/styles/xlarge/public/images/2018/10/util-e-interesante-nokia-3310-podria-volver-n265510-624x352-344584.jpg"
-           class="card-img-top" width="100" height="100">
-      <div class="card-body">
-        <h5 class="card-title">Nombres del Dispositivo</h5>
-        <b>Descripción:</b>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        <p class="card-text"><small>Tiempo de Garantia</small></p>
-        <button class="btn btn-dark botones" data-bs-toggle="modal" data-bs-target="#editarDispositivo">Editar Dipositivo</button>
-        <button class="btn btn-dark botones" data-bs-toggle="modal" data-bs-target="#asociarDispositivos">Asociar Dispositivo</button>
+    <div class="col" *ngFor="let item of listaDeModelos">
+      <div *ngIf="item.tipo == null" class="card cardPosicion" style="width: 18rem;">
+        <img src="{{item.imagen}}"
+             class="card-img-top" width="100%" height="100%">
+        <div class="card-body">
+          <div class="card-body">
+            <h5 class="card-title centrar"><b>Modelo del dispositivo: </b> {{item.modelo}}</h5>
+            <label class="card-title centrar"><b>Tipo de dispositivo:</b> {{item.tipo}}</label>
+            <label class="card-text centrar"><b>Marca del Dispositivo:</b> {{item.marca}}</label>
+            <label class="card-text centrar"><b>Consumo Electrico :</b>{{item.consumoElectrico}}</label>
+          </div>
+          <button class="btn btn-dark botones" data-bs-toggle="modal" data-bs-target="#asociarDispositivos" (click)="obtenerInformacionItem(item)">Asociar Dispositivo</button>
+        </div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -69,12 +72,12 @@
         <label>Tiempo de garantia:</label>
         <div class="input-group mb-3">
           <span class="input-group-text">Meses:</span>
-          <input type="number" class="form-control" required="" name="tiempoG" #tiempoG="ngModel" [(ngModel)]="tipo.descripcion">
+          <input type="number" class="form-control" required="" name="tiempoG" #tiempoG="ngModel" [(ngModel)]="tipo.tiempoDeGarantia">
         </div>
-  </div>
+      </div>
       <div class="modal-footer">
-        <button type="button " class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="crearDipositivo(tipo)">Aceptar</button>
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="crearTipoDipositivo(tipo)">Aceptar</button>
       </div>
     </div>
   </div>
@@ -93,7 +96,7 @@
 
           <div class="card cardPosicion" style="width: 18rem;">
             <img src="http://cdn2.dineroenimagen.com/media/dinero/styles/xlarge/public/images/2018/10/util-e-interesante-nokia-3310-podria-volver-n265510-624x352-344584.jpg"
-               class="card-img-top" width="100" height="100">
+                 class="card-img-top" width="100" height="100">
             <div class="card-body">
               <h5 class="card-title">Nombres del Dispositivo</h5>
               <b>Descripción:</b>
@@ -132,10 +135,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        El dispositivo ha sido eliminado
+        Relamente desea eliminar el tipo {{tipoActual.nombre}}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Aceptar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="eliminarTipoDispositivo()">Aceptar</button>
       </div>
     </div>
   </div>
@@ -150,47 +153,47 @@
       </div>
       <div class="modal-body">
         <label>Tipo al que desea asciarar el dispositivo:</label>
-        <div class="input-group mb-3">
-          <input type="text" class="form-control"required="">
-        </div>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" required="" name="descripcion" #descripcion="ngModel" [(ngModel)]="oldDispositivocreado.tipo">
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Aceptar</button>
+        <button type="button" class="btn btn-primary" (click)='editarDispositivoM(oldDispositivocreado)'>Aceptar</button>
       </div>
     </div>
   </div>
 </div>
 
 
-<div class="modal fade" id="editarDispositivo" tabindex="-1" aria-labelledby="agregarDispositivoDispositivoLabel" aria-hidden="true">
+<div class="modal fade" id="editarTipoDispositivo" tabindex="-1" aria-labelledby="agregarDispositivoDispositivoLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h4>Nuevo Dispositvo:</h4>
+        <h4>Editar el tipo de dispositivo: {{tipoActual.nombre}}</h4>
       </div>
       <div class="modal-body">
 
 
-        <label>Nombre del dispositivo:</label>
+        <label>URL-DE-IMAGEN</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control"required="">
+          <input type="text" class="form-control"required="" name="imagen" #imagen="ngModel" [(ngModel)]="tipoActual.imagen">
         </div>
 
-        <label>Descripcion del dispositivo</label>
+        <label>Descripcion:</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control"required="">
+          <input type="text" class="form-control" required="" name="descripcion" #descripcion="ngModel" [(ngModel)]="tipoActual.descripcion">
         </div>
 
-        <label>Tiempo de Garantia: </label>
+        <label>Tiempo de garantia:</label>
         <div class="input-group mb-3">
-          <span class="input-group-text">Meses</span>
-          <input type="number" class="form-control" required="">
+          <span class="input-group-text">Meses:</span>
+          <input type="number" class="form-control" required="" name="tiempoG" #tiempoG="ngModel" [(ngModel)]="tipoActual.tiempoDeGarantia">
         </div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ACEPTAR</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="editarTipoDipositivo(tipoActual)">ACEPTAR</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
       </div>
     </div>

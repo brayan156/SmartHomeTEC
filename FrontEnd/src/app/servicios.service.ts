@@ -99,6 +99,17 @@ export class ServiciosService {
   public crearTipoDispositivo(tipo: Tipo){
     return this.http.post(this.Url + 'Tipo', tipo);
   }
+
+  // tslint:disable-next-line:typedef
+  public editarTipoDispositivo(id: string, tipo: Tipo){
+    return this.http.put(this.Url + 'Tipo/' + id , tipo);
+  }
+
+  // tslint:disable-next-line:typedef
+  public eliminarTipoDispositivo(id: string){
+    return this.http.delete(this.Url + 'Tipo/' + id );
+  }
+
   // tslint:disable-next-line:typedef
   public ValidarLogin(correo: string, contrasena: string) {
     return this.http.get<Administrador[]>(this.Url + 'Administrador/validar/' + contrasena + '/' + correo);
