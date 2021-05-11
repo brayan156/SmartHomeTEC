@@ -109,7 +109,7 @@ namespace smarthometec_API.Controllers
             {
                 Debug.WriteLine("otro mas");
                 r = t.NewRow();
-                r["hora"] = tp.hora;
+                r["hora"] = tp.hora.hora;
                 r["promedio_dispositivos"] = tp.promedio_dispositivos;
                 r["cantidad_minutos"] = tp.cantidadTotalMinutos;
                 t.Rows.Add(r);
