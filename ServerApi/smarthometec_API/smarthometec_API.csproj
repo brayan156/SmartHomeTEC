@@ -59,11 +59,17 @@
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>DataSet3.Designer.cs</LastGenOutput>
     </None>
+    <None Update="reportes\Factura.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="reportes\Garantia.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="reportes\Reporteperiodo.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="reportes\Usodetipos.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
