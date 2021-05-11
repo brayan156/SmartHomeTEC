@@ -50,7 +50,7 @@ export class RepDiaDispComponent implements OnInit {
   }
 
   generarPdf(): void {
-    this.service.obtenerPDFreportetipo(this.listaReporte).subscribe(res => {
+    this.service.obtenerPDFDia(this.listaReporte).subscribe(res => {
       var newBlob = new Blob([res], { type: "application/pdf" });
 
       if (window.navigator && window.navigator.msSaveOrOpenBlob) {

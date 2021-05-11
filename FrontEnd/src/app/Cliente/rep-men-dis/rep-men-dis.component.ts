@@ -39,7 +39,7 @@ export class RepMenDisComponent implements OnInit {
   }
 
   generarPdf(): void {
-    this.service.obtenerPDFreportetipo(this.listaAux).subscribe(res => {
+    this.service.obtenerPDFMensual(this.listaAux).subscribe(res => {
       var newBlob = new Blob([res], { type: "application/pdf" });
 
       if (window.navigator && window.navigator.msSaveOrOpenBlob) {
