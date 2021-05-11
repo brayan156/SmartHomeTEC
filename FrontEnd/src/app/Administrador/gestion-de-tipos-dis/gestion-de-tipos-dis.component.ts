@@ -17,7 +17,7 @@ export class GestionDeTiposDisComponent implements OnInit {
   // tslint:disable-next-line:new-parens
   tipoActual: Tipo = new Tipo;
   listaDeModelos: DispositivoModelo[] = [];
-  oldDispositivocreado: DispositivoModelo = new DispositivoModelo();
+  oldDispositivocreado: DispositivoModelo = new DispositivoModelo;
 
   ngOnInit(): void {
     this.service.getTiposDispositivos().subscribe(lista => {
@@ -54,11 +54,10 @@ export class GestionDeTiposDisComponent implements OnInit {
     this.ngOnInit();
   }
 
-  public editarDispositivoM(dispositivoModelo: DispositivoModelo): void{
+  public editarDispositivo(dispositivoModelo: DispositivoModelo): void{
     console.log(dispositivoModelo);
-    this.service.editarDipositivoModelo(dispositivoModelo.modelo, dispositivoModelo).subscribe(a => {console.log(a);
-                                                                                                     this.ngOnInit();
-    });
+    this.service.editarDipositivoModelo(dispositivoModelo.modelo, dispositivoModelo).subscribe(a => console.log(a));
+    this.ngOnInit();
   }
 }
 
