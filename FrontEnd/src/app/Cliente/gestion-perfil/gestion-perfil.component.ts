@@ -31,7 +31,6 @@ export class GestionPerfilComponent implements OnInit {
     {this.cliente = clienteAux;
      this.service.leerDirrecionEntrega(this.cliente.id).subscribe(lista => {this.dirrecionesEntrega = lista ;
                                                                             console.log(this.dirrecionesEntrega); });
-
      this.service.getRegiones().subscribe(lista => {this.listaDeRegiones = lista;
                                                     console.log(lista);
       });
