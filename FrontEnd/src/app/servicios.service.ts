@@ -65,7 +65,7 @@ export class ServiciosService {
 
   // tslint:disable-next-line:typedef
   public editarCliente(id: number, cliente: Cliente){
-    return this.http.put(this.Url  + id, cliente);
+    return this.http.put(this.Url  +"Cliente/"+ id, cliente);
   }
 
   public getdispositvosasociados(): Observable<number>{
@@ -163,8 +163,9 @@ export class ServiciosService {
     return this.http.get<{tipo: string, uso: number} []>(this.Url + 'Reportes/consumo_tipo/' + id);
   }
   // tslint:disable-next-line:typedef
-  public habilitarAposentos(id: number){
-    return this.http.post(this.Url + 'Aposento/Default', id);
+  public habilitarAposentos(id: number) {
+    console.log(id)
+    return this.http.get(this.Url + 'Aposento/Default/'+id);
   }
   // tslint:disable-next-line:typedef
   public obtenereportetipo() {
@@ -192,6 +193,10 @@ export class ServiciosService {
   // tslint:disable-next-line:typedef
   public getRegiones(){
     return this.http.get<Regiones[]>(this.Url + 'Regiones');
+  }
+
+  public comprar(dsv: DispositivoSeVendeEn, idcliente: number) {
+    return this.http.post<{ pedido: Pedido, factura: Factura, certificado: CertificadoGarantia }>(this.Url + 'DispositivoSeVendeEn/comprar/' + idcliente, dsv);
   }
 
 

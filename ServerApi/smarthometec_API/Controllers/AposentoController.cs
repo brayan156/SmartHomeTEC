@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
@@ -129,9 +130,11 @@ namespace smarthometec_API.Controllers
         }
 
 
-        [HttpPost("Default")]
+        [HttpGet("Default/{idCliente}")]
         public async Task<IActionResult> PostAposento(int idCliente)
         {
+            Debug.WriteLine(idCliente);
+            Debug.WriteLine(_context.Cliente.Any(c=> c.Id==idCliente));
             string[] aposentos_nombre = {"dormitorio","cocina","sala","comedor"};
             foreach (var aposento_nombre in aposentos_nombre)
             {

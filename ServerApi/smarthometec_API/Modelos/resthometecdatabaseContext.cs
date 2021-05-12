@@ -72,9 +72,17 @@ namespace smarthometec_API.Modelos
 
             modelBuilder.Entity<Aposento>(entity =>
             {
+                entity.HasKey(e => new { e.Id, e.IdCliente })
+                    .HasName("aposento_pkey");
+
                 entity.ToTable("aposento");
 
-                entity.Property(e => e.Id).HasColumnName("id").UseSerialColumn();
+                entity.HasIndex(e => e.Id)
+                    .HasName("aposento_id_key")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id").UseSerialColumn();
 
                 entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
 
@@ -229,6 +237,7 @@ namespace smarthometec_API.Modelos
 
                 entity.HasOne(d => d.IdAposentoNavigation)
                     .WithMany(p => p.DispositivoAdquirido)
+                    .HasPrincipalKey(p => p.Id)
                     .HasForeignKey(d => d.IdAposento)
                     .HasConstraintName("dispositivo_adquirido_id_aposento_fkey");
 
@@ -253,8 +262,7 @@ namespace smarthometec_API.Modelos
                 entity.Property(e => e.ConsumoElectrico).HasColumnName("consumo_electrico");
 
                 entity.Property(e => e.Imagen)
-                    .HasColumnName("imagen")
-                    .HasMaxLength(600);
+                    .HasColumnName("imagen");
 
                 entity.Property(e => e.Marca)
                     .HasColumnName("marca")
@@ -313,8 +321,7 @@ namespace smarthometec_API.Modelos
 
                 entity.Property(e => e.Imagen)
                     .IsRequired()
-                    .HasColumnName("imagen")
-                    .HasMaxLength(200);
+                    .HasColumnName("imagen");
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()
@@ -483,8 +490,7 @@ namespace smarthometec_API.Modelos
                     .HasMaxLength(400);
 
                 entity.Property(e => e.Imagen)
-                    .HasColumnName("imagen")
-                    .HasMaxLength(600);
+                    .HasColumnName("imagen");
 
                 entity.Property(e => e.TiempoDeGarantia).HasColumnName("tiempo_de_garantia");
             });
