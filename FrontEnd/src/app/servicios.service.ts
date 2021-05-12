@@ -199,6 +199,10 @@ export class ServiciosService {
     return this.http.post<{ pedido: Pedido, factura: Factura, certificado: CertificadoGarantia }>(this.Url + 'DispositivoSeVendeEn/comprar/' + idcliente, dsv);
   }
 
+  public guardardatosexcel(datos: DispositivoSeVendeEn[]) {
+    return this.http.post(this.Url + "DispositivoSeVendeEn/excel", datos);
+  }
+
 
 }
 

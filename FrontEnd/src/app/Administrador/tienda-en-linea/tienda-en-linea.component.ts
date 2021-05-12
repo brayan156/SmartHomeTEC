@@ -15,7 +15,7 @@ export class TiendaEnLineaComponent implements OnInit {
   // tslint:disable-next-line:new-parens
   dispositivosSeVendenEn: DispositivoSeVendeEn = new DispositivoSeVendeEn();
   data: [][];
-  constructor(servise: ServiciosService) {
+  constructor(private service: ServiciosService) {
   }
 
   ngOnInit(): void {
@@ -55,11 +55,17 @@ export class TiendaEnLineaComponent implements OnInit {
     this.data.forEach(i => {
       this.dispositivosSeVendenEn = new DispositivoSeVendeEn();
       this.dispositivosSeVendenEn.cjDistribuidor = i.slice(0, 1)[0];
-      this.dispositivosSeVendenEn.modeloDispositivo = i.slice(1, 2)[0];
+      this.dispositivosSeVendenEn.modeloDispotivo = i.slice(1, 2)[0];
       this.dispositivosSeVendenEn.precio = i.slice(2, 3)[0];
       this.dispositivosSeVendenEn.cantidad = i.slice(3, 4)[0];
       console.log(this.dispositivosSeVendenEn);
       this.ListadispositivosSeVendenEn.push(this.dispositivosSeVendenEn);
     });
   }
+
+  guardardatos() {
+    this.service.guardardatosexcel(this.ListadispositivosSeVendenEn).subscribe(r => console.log(r));
+  }
+
+
 }
