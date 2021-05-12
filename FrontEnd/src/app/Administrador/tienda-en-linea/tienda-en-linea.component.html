@@ -1,44 +1,27 @@
 <app-nav></app-nav>
 <div class="posicion ">
-<<<<<<< HEAD
-=======
-
-
->>>>>>> backend
   <div class="tamano">
-    <input class="form-control form-control-lg" id="formFileLg"  type="file" accept=".xlsx">
+    <input type="file" (change)="onFileChange($event)" multiple="false" />
   </div>
   <div class="container">
     <label class="color">Nombre del Distribuidor</label>
     <table class="table table-light">
       <thead>
       <tr>
-        <th scope="col">Dipositivo</th>
+        <th scope="col">Cedula Juridica Distribuidor</th>
+        <th scope="col">Nombre del Dispositivo</th>
+        <th scope="col">Precio del Dispositivo</th>
         <th scope="col">Cantidad de Dispositivos</th>
-        <th scope="col">Precio</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>Nombre del dispositivo</td>
-        <td>12</td>
-        <td>12213</td>
+      <tr *ngFor="let item of ListadispositivosSeVendenEn">
+        <th scope="col">{{item.cjDistribuidor}}</th>
+        <th scope="col">{{item.modeloDispositivo}}</th>
+        <th scope="col">{{item.precio}}</th>
+        <th scope="col">{{item.cantidad}}</th>
       </tr>
       </tbody>
-    </table>
-  </div>
-  <div>
-    <table id="contactJs" class="table-contact">
-      <tr class="thead">
-        <th>Name</th>
-        <th>E-mail</th>
-        <th>Phone</th>
-        <th>Address</th>
-      </tr>
-
-      <tr class="tbody" *ngFor="let contact of exportContacts; let odd = odd" [ngClass]="{'odd': odd}">
-        <td>{{contact.distribuidor}}</td>
-      </tr>
     </table>
   </div>
 </div>

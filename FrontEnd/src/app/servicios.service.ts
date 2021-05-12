@@ -18,6 +18,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {ClienteEntregaEn} from './Comunicacion/cliente-entrega-en';
 import {Datos} from './Comunicacion/datos';
 import {Hora} from './Comunicacion/hora';
+import {CookieService} from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,7 @@ export class ServiciosService {
   public administrador: Administrador = new Administrador;
   // tslint:disable-next-line:new-parens
   public cliente: Cliente = new Cliente;
-
+  private cokieService: CookieService;
   // tslint:disable-next-line:typedef
   public obtenerDispositivosModelo() {
     return this.http.get<DispositivoModelo[]>(this.Url + 'DispositivoModelo');
@@ -55,7 +56,8 @@ export class ServiciosService {
 
   // tslint:disable-next-line:typedef
   public editarCliente(id: number, cliente: Cliente){
-    return this.http.put(this.Url + 'Cliente/' + id, cliente);
+    const idA = this.cokieService.get('cedula');
+    return this.http.put(this.Url  + idA, cliente);
   }
 
   public getdispositvosasociados(): Observable<number>{

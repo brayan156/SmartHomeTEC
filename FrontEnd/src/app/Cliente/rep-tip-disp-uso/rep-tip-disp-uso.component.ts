@@ -23,6 +23,7 @@ export class RepTipDispUsoComponent implements OnInit {
     });
 
     this.service.obtenereportetipo().subscribe(datos => this.datos = datos);
+    console.log(this.datos);
   }
 
 

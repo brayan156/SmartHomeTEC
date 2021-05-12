@@ -17,6 +17,7 @@ export class GestionDeTiposDisComponent implements OnInit {
   // tslint:disable-next-line:new-parens
   tipoActual: Tipo = new Tipo;
   listaDeModelos: DispositivoModelo[] = [];
+  // tslint:disable-next-line:new-parens
   oldDispositivocreado: DispositivoModelo = new DispositivoModelo;
 
   ngOnInit(): void {

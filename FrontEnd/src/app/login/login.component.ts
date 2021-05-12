@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import { Administrador } from '../Comunicacion/administrador';
 import { ServiciosService } from '../servicios.service';
 import {Cliente} from '../Comunicacion/cliente';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   public typeLogin = 0;
 
   constructor(
-    private router: Router, private service: ServiciosService) {
+    private router: Router, private service: ServiciosService, private cookieService: CookieService) {
 
   }
 
@@ -65,6 +66,7 @@ export class LoginComponent implements OnInit {
           console.log('datos correctos');
           this.service.cliente = lista[0];
           this.router.navigate(['/usuario']);
+          this.cookieService.set('cedula', String(this.cliente.id));
         }
       });
     }
