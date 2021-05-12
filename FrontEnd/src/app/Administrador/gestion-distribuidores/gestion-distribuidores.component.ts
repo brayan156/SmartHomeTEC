@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ServiciosService} from '../../servicios.service';
 import {Distribuidor} from '../../Comunicacion/distribuidor';
+import {Regiones} from '../../Comunicacion/regiones';
 
 @Component({
   selector: 'app-gestion-distribuidores',
@@ -16,10 +17,15 @@ export class GestionDistribuidoresComponent implements OnInit {
   distribuidor: Distribuidor = new Distribuidor;
   // tslint:disable-next-line:new-parens
 
+  listaDeRegiones: Regiones[] = [] ;
+
   ngOnInit(): void {
     this.service.obtenerDistribuidores().subscribe(lista => {
       this.listaDistribuidores = lista;
       console.log(this.listaDistribuidores);
+    });
+    this.service.getRegiones().subscribe(lista => {this.listaDeRegiones = lista;
+      console.log(lista);
     });
   }
   public crearDistribuidor(distribuidor: Distribuidor): void{

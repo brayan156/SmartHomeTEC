@@ -7,17 +7,15 @@
 
       <thead>
         <tr>
-          <th scope="col">#</th>
           <th scope="col">Dispositivo</th>
           <th scope="col">Consumo Mensual</th>
         </tr>
       </thead>
 
-      <tbody>
+      <tbody *ngFor="let item of datosAMostrar">
         <tr>
-          <th scope="row">1</th>
-          <td>DISPOSITIVO</td>
-          <td>HORAS</td>
+          <td>{{item.tipo}}</td>
+          <td>{{item.uso}}</td>
         </tr>
       </tbody>
     </table>

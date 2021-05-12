@@ -3,6 +3,7 @@ import {ServiciosService} from '../../servicios.service';
 import {Cliente} from '../../Comunicacion/cliente';
 import {DispositivoModelo} from '../../Comunicacion/dispositivo-modelo';
 import {DispositivoSeVendeEn} from '../../Comunicacion/dispositivo-se-vende-en';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-tienda-en-linea-usuario',
@@ -11,7 +12,8 @@ import {DispositivoSeVendeEn} from '../../Comunicacion/dispositivo-se-vende-en';
 })
 export class TiendaEnLineaUsuarioComponent implements OnInit {
 
-  constructor(private service: ServiciosService) { }
+  constructor(private service: ServiciosService,
+              private cookieService: CookieService) { }
 
   // tslint:disable-next-line:new-parens
   cliente: Cliente = new Cliente;
@@ -22,8 +24,10 @@ export class TiendaEnLineaUsuarioComponent implements OnInit {
   dispositivos: {dispositivoSeVendeEn: DispositivoSeVendeEn , dispositivoModelo: DispositivoModelo}[] = [];
 
   ngOnInit(): void {
-    this.cliente = this.service.cliente;
-    this.service.obtenerTiendaLinea(this.cliente.pais).subscribe( data => this.dispositivos = data);
+    this.service.getCliente().subscribe(clienteAux =>
+    {this.cliente = clienteAux;
+     this.service.obtenerTiendaLinea(this.cliente.pais).subscribe( data => this.dispositivos = data);
+    });
   }
 
 

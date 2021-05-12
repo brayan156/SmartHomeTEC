@@ -1,24 +1,31 @@
 <app-nav-u></app-nav-u>
 <div class="contenedor">
-  <div class="row ">
-    <input class="fecha" type="date">
-    <button type="submit" class="btn btn-primary boton">Buscar</button>
+  <div class="row">
+    <div class="col">
+      <label class="color">Fecha de inicio:</label>
+      <input class="fecha" type="date" name="fecha1" #fecha1="ngModel" [(ngModel)]="fechaAuxI">
+      <label class="color">Fecha de final:</label>
+      <input class="fecha" type="date" name="fecha2" #fecha2="ngModel" [(ngModel)]="fechaAuxF">
+      <button type="submit" class="btn btn-primary boton" (click)="auxFuntion()">Buscar</button>
+    </div>
   </div>
   <div class="margenes">
 
+    <button type="button" class="btn btn-secondary" (click)="generarPdf()"
+    >Generar pdf</button>
     <table class="table table-light">
       <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Dispositivo</th>
-        <th scope="col">Consumo Mensual</th>
+        <th scope="col">Hora</th>
+        <th scope="col">Promedio Dispositivos</th>
+        <th scope="col">Cantidad Total de minutos</th>
       </tr>
       </thead>
-      <tbody>
+      <tbody *ngFor="let item of listaReporte">
       <tr>
-        <th scope="row">1</th>
-        <td>DISPOSITIVO</td>
-        <td>HORAS</td>
+        <td>{{item.hora.hora}}</td>
+        <td>{{item.promedio_dispositivos}}</td>
+        <td>{{item.cantidadTotalMinutos}}</td>
       </tr>
       </tbody>
     </table>

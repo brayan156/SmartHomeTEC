@@ -3,6 +3,7 @@ import {Cliente} from '../../Comunicacion/cliente';
 import {ServiciosService} from '../../servicios.service';
 import {ClienteEntregaEn} from '../../Comunicacion/cliente-entrega-en';
 import {NgModel} from '@angular/forms';
+import {Regiones} from '../../Comunicacion/regiones';
 
 @Component({
   selector: 'app-gestion-perfil',
@@ -20,10 +21,22 @@ export class GestionPerfilComponent implements OnInit {
   // tslint:disable-next-line:new-parens
   direccionEntrega: ClienteEntregaEn = new ClienteEntregaEn;
   dirrecionesEntrega: ClienteEntregaEn[] = [];
+
+
+  listaDeRegiones: Regiones[] = [] ;
+
   ngOnInit(): void {
     this.cliente = this.service.cliente;
-    this.service.leerDirrecionEntrega(this.cliente.id).subscribe(lista => {this.dirrecionesEntrega = lista ;
-                                                                           console.log(this.dirrecionesEntrega); });
+    this.service.getCliente().subscribe(clienteAux =>
+    {this.cliente = clienteAux;
+     this.service.leerDirrecionEntrega(this.cliente.id).subscribe(lista => {this.dirrecionesEntrega = lista ;
+                                                                            console.log(this.dirrecionesEntrega); });
+
+     this.service.getRegiones().subscribe(lista => {this.listaDeRegiones = lista;
+                                                    console.log(lista);
+      });
+    });
+
     console.log(this.cliente);
     console.log(this.dirrecionesEntrega);
   }

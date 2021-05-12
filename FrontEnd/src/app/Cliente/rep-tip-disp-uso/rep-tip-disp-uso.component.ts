@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiciosService } from '../../servicios.service';
+import {Cliente} from '../../Comunicacion/cliente';
 
 @Component({
   selector: 'app-rep-tip-disp-uso',
@@ -10,12 +11,19 @@ export class RepTipDispUsoComponent implements OnInit {
 
   constructor(private service: ServiciosService) { }
 
-  public datos: { tipo: string, uso: number }[] =[];
+  public cliente: Cliente;
+  public datosAMostrar: {tipo: string, uso: number} [] = [];
+  public datos: { tipo: string, uso: number }[] = [];
 
 
   ngOnInit(): void {
-    this.service.obtenereportetipo().subscribe(datos => this.datos = datos)
-
+    this.service.getCliente().subscribe(clienteAux =>
+    {this.cliente = clienteAux;
+    });
+    this.cliente = this.service.cliente;
+    this.service.getConsumoTipo(this.cliente.id).subscribe( tabla => this.datosAMostrar = tabla);
+    this.service.obtenereportetipo().subscribe(datos => this.datos = datos);
+    console.log(this.datos);
   }
 
 
@@ -36,7 +44,7 @@ export class RepTipDispUsoComponent implements OnInit {
 
       link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
 
-      setTimeout(function () {
+      setTimeout(function() {
         window.URL.revokeObjectURL(data);
       }, 100);
 

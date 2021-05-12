@@ -26,6 +26,7 @@
     "bootstrap-icons": "^1.4.1",
     "faker": "^5.5.3",
     "jquery": "^3.6.0",
+    "ngx-cookie-service": "^11.0.2",
     "rxjs": "~6.6.0",
     "ts-xlsx": "0.0.11",
     "tslib": "^2.0.0",

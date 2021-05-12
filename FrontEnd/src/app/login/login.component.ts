@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 import { Administrador } from '../Comunicacion/administrador';
 import { ServiciosService } from '../servicios.service';
 import {Cliente} from '../Comunicacion/cliente';
+import {CookieService} from 'ngx-cookie-service';
+import {Regiones} from '../Comunicacion/regiones';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,7 @@ export class LoginComponent implements OnInit {
   public typeLogin = 0;
 
   constructor(
-    private router: Router, private service: ServiciosService) {
+    private router: Router, private service: ServiciosService, private cookieService: CookieService) {
 
   }
 
@@ -23,7 +25,11 @@ export class LoginComponent implements OnInit {
   administrador: Administrador = new Administrador;
   // tslint:disable-next-line:new-parens
   cliente: Cliente = new Cliente;
+  listaDeRegiones: Regiones[] = [] ;
   ngOnInit(): void {
+    this.service.getRegiones().subscribe(lista => {this.listaDeRegiones = lista;
+                                                   console.log(lista);
+    });
   }
 
   chageAdmin(): void{
@@ -64,6 +70,8 @@ export class LoginComponent implements OnInit {
         } else {
           console.log('datos correctos');
           this.service.cliente = lista[0];
+          this.cliente = this.service.cliente;
+          this.cookieService.set('cedula', (this.cliente.id).toString());
           this.router.navigate(['/usuario']);
         }
       });
@@ -72,5 +80,6 @@ export class LoginComponent implements OnInit {
   // tslint:disable-next-line:typedef
   crearCliente(cliente: Cliente) {
     this.service.crearCliente(this.cliente).subscribe(c => console.log(c));
+    this.service.habilitarAposentos(this.cliente.id).subscribe(c => console.log(c));
   }
 }
