@@ -53,7 +53,6 @@ export class GestionDeTiposDisComponent implements OnInit {
 
   public obtenerInformacionItem(dipositivo: DispositivoModelo): void{
     this.oldDispositivocreado = dipositivo;
-    this.ngOnInit();
   }
 
   public editarDispositivo(dispositivoModelo: DispositivoModelo): void{

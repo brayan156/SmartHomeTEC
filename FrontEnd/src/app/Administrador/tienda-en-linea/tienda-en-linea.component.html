@@ -3,24 +3,25 @@
   <div class="tamano">
     <input type="file" (change)="onFileChange($event)" multiple="false" />
   </div>
+  <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="guardardatos()">Guardar</button>
   <div class="container">
     <label class="color">Nombre del Distribuidor</label>
     <table class="table table-light">
       <thead>
-      <tr>
-        <th scope="col">Cedula Juridica Distribuidor</th>
-        <th scope="col">Nombre del Dispositivo</th>
-        <th scope="col">Precio del Dispositivo</th>
-        <th scope="col">Cantidad de Dispositivos</th>
-      </tr>
+        <tr>
+          <th scope="col">Cedula Juridica Distribuidor</th>
+          <th scope="col">Nombre del Dispositivo</th>
+          <th scope="col">Precio del Dispositivo</th>
+          <th scope="col">Cantidad de Dispositivos</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of ListadispositivosSeVendenEn">
-        <th scope="col">{{item.cjDistribuidor}}</th>
-        <th scope="col">{{item.modeloDispositivo}}</th>
-        <th scope="col">{{item.precio}}</th>
-        <th scope="col">{{item.cantidad}}</th>
-      </tr>
+        <tr *ngFor="let item of ListadispositivosSeVendenEn">
+          <th scope="col">{{item.cjDistribuidor}}</th>
+          <th scope="col">{{item.modeloDispotivo}}</th>
+          <th scope="col">{{item.precio}}</th>
+          <th scope="col">{{item.cantidad}}</th>
+        </tr>
       </tbody>
     </table>
   </div>

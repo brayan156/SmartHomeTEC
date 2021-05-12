@@ -1,7 +1,6 @@
 export class Pedido{
-  N_usuario: number;
-  monto: number;
-  dia: string;
-  mes: string;
-  year: string;
+  Id : number;
+  Monto : number;
+  IdCliente : number;
+  NSerieDispositivo : number;
 }

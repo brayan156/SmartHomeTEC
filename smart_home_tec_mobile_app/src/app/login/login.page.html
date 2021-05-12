@@ -4,8 +4,8 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <img src="assets/SVG/pina.svg" alt="Pina">
-  <form #form="ngForm" id='ourForm' (ngSubmit)="login(form)">
+  <img src="" alt="Pina">
+  <form #form="ngForm" id='ourForm' (ngSubmit)="login()">
     <div id='myDiv'>
 <ion-item>
     
@@ -14,7 +14,7 @@
       </ion-item>
       <ion-item>
       <ion-input [(ngModel)]="this.password" [ngModelOptions]="{standalone: true}" type="password"
-        placeholder="Constraseña" ngModel required></ion-input>
+        placeholder="Contraseña" ngModel required></ion-input>
       </ion-item>
       </div>
     <ion-button shape='round' type="submit" [disabled]="form.invalid" >Ingresar</ion-button>

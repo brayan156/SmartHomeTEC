@@ -21,13 +21,24 @@ export class TiendaEnLineaUsuarioComponent implements OnInit {
   dispositivoModelo: DispositivoModelo = new DispositivoModelo;
   // tslint:disable-next-line:new-parens
   dispositivoSeVende: DispositivoSeVendeEn = new DispositivoSeVendeEn;
-  dispositivos: {dispositivoSeVendeEn: DispositivoSeVendeEn , dispositivoModelo: DispositivoModelo}[] = [];
+  dispositivos: { dispositivoSeVendeEn: DispositivoSeVendeEn, dispositivoModelo: DispositivoModelo }[] = [];
+  dispositivoactual: { dispositivoSeVendeEn: DispositivoSeVendeEn, dispositivoModelo: DispositivoModelo };
+
 
   ngOnInit(): void {
     this.service.getCliente().subscribe(clienteAux =>
-    {this.cliente = clienteAux;
+    {
+      this.cliente = clienteAux;
+      this.service.cliente = clienteAux;
      this.service.obtenerTiendaLinea(this.cliente.pais).subscribe( data => this.dispositivos = data);
     });
+  }
+  guardarobjeto(item) {
+    this.dispositivoactual = item;
+  }
+  comprar() {
+    this.service.comprar(this.dispositivoactual.dispositivoSeVendeEn, this.cliente.id).subscribe(c =>
+      console.log(c))
   }
 
 

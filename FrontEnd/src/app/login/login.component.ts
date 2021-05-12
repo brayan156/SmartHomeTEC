@@ -79,9 +79,11 @@ export class LoginComponent implements OnInit {
   }
   // tslint:disable-next-line:typedef
   crearCliente(cliente: Cliente) {
-    this.service.crearCliente(cliente).subscribe(c => {
-      console.log(cliente.id);
-      this.service.habilitarAposentos(cliente.id).subscribe(a => console.log(a));
+    this.service.crearCliente(this.cliente).subscribe(c => {
+      console.log(c);
+      console.log(c["id"]);
+      this.service.habilitarAposentos(cliente.id).subscribe(c => console.log(c));
     });
+    
   }
 }
