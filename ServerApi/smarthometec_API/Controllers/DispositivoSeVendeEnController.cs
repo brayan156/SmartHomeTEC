@@ -109,6 +109,29 @@ namespace smarthometec_API.Controllers
             return CreatedAtAction("GetDispositivoSeVendeEn", new { id = dispositivoSeVendeEn.CjDistribuidor }, dispositivoSeVendeEn);
         }
 
+
+        [HttpPost("excel")]
+        public async Task<ActionResult<IEnumerable<DispositivoSeVendeEn>>> posttodos(DispositivoSeVendeEn[] dispositivoSeVendeEn)
+        {
+
+            _context.DispositivoSeVendeEn.RemoveRange(_context.DispositivoSeVendeEn.ToList());
+            _context.DispositivoSeVendeEn.AddRange(dispositivoSeVendeEn);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                    return Conflict();        
+              
+            }
+
+            return _context.DispositivoSeVendeEn.ToList();
+        }
+
+
+
+
         static public List<Pdfs> pdfslista = new List<Pdfs>();
 
         [HttpPost("comprar/{idcliente}")]
@@ -239,13 +262,12 @@ namespace smarthometec_API.Controllers
 
 
 
-
             string nombrereportegarantia = "Garantia";
 
             byte[] pdfcertificado = GenerateReportAsync(nombrereportegarantia, t2);
          //   var file = File(pdfcertificado, System.Net.Mime.MediaTypeNames.Application.Octet, nombrereportegarantia + ".pdf");
 
-            enviaremail(stringfactura, pdfcertificado);
+            enviaremail(stringfactura, pdfcertificado,cliente.Email);
 
 
 
@@ -261,53 +283,12 @@ namespace smarthometec_API.Controllers
             return new { pedido, factura, certificado };
         }
 
-
-        [HttpPost("enviar/{idcliente}")]
-        public string enviarpdfs (int idcliente, dynamic pfc)
-        {
-
-            if (!pdfslista.Any(pdfs => pdfs.idcliente == idcliente))
-            {
-                return "factura no encontrada";
-            }
-            else
-            {
-                Pdfs pdfs=  pdfslista.First(pdfs => pdfs.idcliente == idcliente);
-
-
-
-
-                Cliente cliente = _context.Cliente.Find(idcliente);
-                int pedido_nserie = pfc.pedido.nSerieDispositivo;
-                DispositivoAdquirido adquirido = _context.DispositivoAdquirido.First(ad => ad.NSerie == pedido_nserie);
-                DispositivoModelo modelo = _context.DispositivoModelo.Find(adquirido.Modelo);
-                int nfactura = pfc.factura.nFactura;
-                CertificadoGarantia certificado = _context.CertificadoGarantia.First(g => g.NFactura == nfactura);
-
-
-                Dictionary<string, string> parameterscertificado = new Dictionary<string, string>();
-                parameterscertificado.Add("nombre", cliente.Nombre + " " + cliente.PrimerApellido + " " + cliente.SegundoApellido);
-                parameterscertificado.Add("fechacompra", "" + pfc.factura.dia + "/" + pfc.factura.mes + "/" + pfc.factura.ano);
-                parameterscertificado.Add("fechafin", certificado.MesFinGarantia + "/" + certificado.AnoFinGarantia);
-                parameterscertificado.Add("nserie", pedido_nserie + "");
-                parameterscertificado.Add("tipo", modelo.Tipo);
-                parameterscertificado.Add("modelo", modelo.Modelo);
-                parameterscertificado.Add("marca", modelo.Marca);
-
-
-
-                pdfslista.Remove(pdfs);
-
-            }
-            return "Completado";
-         }
-
-            private void enviaremail(byte[] pdfFactura, byte[] pdfCertificado)
+            private void enviaremail(byte[] pdfFactura, byte[] pdfCertificado, string email)
         {
 
 
             var fromAddress = "smarthometecbjt@gmail.com";
-            var toAddress = "brayan4365@gmail.com";
+            var toAddress = email;
             //Password of your gmail address
             const string fromPassword = "1seguridad.";
             // smtp settings
