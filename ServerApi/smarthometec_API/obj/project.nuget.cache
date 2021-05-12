@@ -2,9 +2,8 @@
   "version": 2,
   "dgSpecHash": "WrmFMVLI87hPXNsfMNKmb99hYeJZtKOu59fsS8pu6xnWCWbchnjDrjbsttgjo+kr/1jfSxIie3OQx/g81dIiBA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Juan Solis\\Desktop\\Proyecto_1_SmartHomeTec\\SmartHomeTEC\\ServerApi\\smarthometec_API\\smarthometec_API.csproj",
+  "projectFilePath": "C:\\Users\\braya\\Desktop\\bases\\github_proyecto1_smarthometec\\SmartHomeTEC\\ServerApi\\smarthometec_API\\smarthometec_API.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Juan Solis\\.nuget\\packages\\microsoft.codeanalysis.common\\3.3.1\\microsoft.codeanalysis.common.3.3.1.nupkg.sha512",
     "C:\\Users\\braya\\.nuget\\packages\\aspnetcore.reporting\\2.1.0\\aspnetcore.reporting.2.1.0.nupkg.sha512",
     "C:\\Users\\braya\\.nuget\\packages\\aspnetcore.reportingservices\\2.1.0\\aspnetcore.reportingservices.2.1.0.nupkg.sha512",
     "C:\\Users\\braya\\.nuget\\packages\\mailkit\\2.11.1\\mailkit.2.11.1.nupkg.sha512",
