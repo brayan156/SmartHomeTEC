@@ -94,18 +94,8 @@
 
         <div class="tamano3">
           <label>Pais</label>
-          <select class="form-select" id="validationCustom04" name="6" required #pais="ngModel" [(ngModel)]="distribuidor.pais">
-            <optgroup label="América">
-              <option>Costa Rica</option>
-              <option>Panamá</option>
-              <option>Colombia</option>
-              <option>Argentina</option>
-              <option>Mexico</option>
-            </optgroup>
-            <optgroup label="Europa">
-              <option>España</option>
-              <option>Italia</option>
-            </optgroup>
+          <select class="form-select" id="validationCustom" name="6" required #pais="ngModel" [(ngModel)]="distribuidor.pais">
+            <option *ngFor="let item of listaDeRegiones">{{item.pais}}</option>
           </select>
         </div>
 

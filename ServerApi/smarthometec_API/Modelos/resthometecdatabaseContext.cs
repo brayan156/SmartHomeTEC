@@ -74,14 +74,14 @@ namespace smarthometec_API.Modelos
             {
                 entity.ToTable("aposento");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id").UseSerialColumn();
 
                 entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
 
                 entity.Property(e => e.NombreCuarto)
                     .IsRequired()
                     .HasColumnName("nombre_cuarto")
-                    .HasMaxLength(20);
+                    .HasMaxLength(50);
 
                 entity.HasOne(d => d.IdClienteNavigation)
                     .WithMany(p => p.Aposento)
@@ -130,25 +130,25 @@ namespace smarthometec_API.Modelos
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasColumnName("email")
-                    .HasMaxLength(50);
+                    .HasMaxLength(100);
 
                 entity.Property(e => e.Nombre)
                     .IsRequired()
                     .HasColumnName("nombre")
-                    .HasMaxLength(15);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Pais)
                     .IsRequired()
                     .HasColumnName("pais")
-                    .HasMaxLength(20);
+                    .HasMaxLength(60);
 
                 entity.Property(e => e.PrimerApellido)
                     .HasColumnName("primer_apellido")
-                    .HasMaxLength(15);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.SegundoApellido)
                     .HasColumnName("segundo_apellido")
-                    .HasMaxLength(15);
+                    .HasMaxLength(50);
 
                 entity.HasOne(d => d.PaisNavigation)
                     .WithMany(p => p.Cliente)
@@ -194,7 +194,7 @@ namespace smarthometec_API.Modelos
 
                 entity.Property(e => e.DireccionEntrega1)
                     .HasColumnName("direccion_entrega")
-                    .HasMaxLength(50);
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.IdCliente).HasColumnName("id_cliente");
 
@@ -221,7 +221,7 @@ namespace smarthometec_API.Modelos
                 entity.Property(e => e.Modelo)
                     .IsRequired()
                     .HasColumnName("modelo")
-                    .HasMaxLength(15);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Prendido)
                     .HasColumnName("prendido")
@@ -248,21 +248,21 @@ namespace smarthometec_API.Modelos
 
                 entity.Property(e => e.Modelo)
                     .HasColumnName("modelo")
-                    .HasMaxLength(15);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.ConsumoElectrico).HasColumnName("consumo_electrico");
 
                 entity.Property(e => e.Imagen)
                     .HasColumnName("imagen")
-                    .HasMaxLength(200);
+                    .HasMaxLength(600);
 
                 entity.Property(e => e.Marca)
                     .HasColumnName("marca")
-                    .HasMaxLength(15);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Tipo)
                     .HasColumnName("tipo")
-                    .HasMaxLength(15);
+                    .HasMaxLength(50);
 
                 entity.HasOne(d => d.TipoNavigation)
                     .WithMany(p => p.DispositivoModelo)
@@ -281,7 +281,7 @@ namespace smarthometec_API.Modelos
 
                 entity.Property(e => e.ModeloDispotivo)
                     .HasColumnName("modelo_dispotivo")
-                    .HasMaxLength(15);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Cantidad).HasColumnName("cantidad");
 
@@ -319,12 +319,12 @@ namespace smarthometec_API.Modelos
                 entity.Property(e => e.Nombre)
                     .IsRequired()
                     .HasColumnName("nombre")
-                    .HasMaxLength(15);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Pais)
                     .IsRequired()
                     .HasColumnName("pais")
-                    .HasMaxLength(20);
+                    .HasMaxLength(60);
 
                 entity.HasOne(d => d.PaisNavigation)
                     .WithMany(p => p.Distribuidor)
@@ -459,12 +459,12 @@ namespace smarthometec_API.Modelos
 
                 entity.Property(e => e.Pais)
                     .HasColumnName("pais")
-                    .HasMaxLength(20);
+                    .HasMaxLength(60);
 
                 entity.Property(e => e.Continente)
                     .IsRequired()
                     .HasColumnName("continente")
-                    .HasMaxLength(15);
+                    .HasMaxLength(30);
             });
 
             modelBuilder.Entity<Tipo>(entity =>
@@ -476,15 +476,15 @@ namespace smarthometec_API.Modelos
 
                 entity.Property(e => e.Nombre)
                     .HasColumnName("nombre")
-                    .HasMaxLength(15);
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.Descripcion)
                     .HasColumnName("descripcion")
-                    .HasMaxLength(50);
+                    .HasMaxLength(400);
 
                 entity.Property(e => e.Imagen)
                     .HasColumnName("imagen")
-                    .HasMaxLength(200);
+                    .HasMaxLength(600);
 
                 entity.Property(e => e.TiempoDeGarantia).HasColumnName("tiempo_de_garantia");
             });

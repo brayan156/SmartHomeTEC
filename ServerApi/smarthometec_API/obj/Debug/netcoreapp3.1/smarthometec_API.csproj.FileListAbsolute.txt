@@ -157,6 +157,11 @@ C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerAp
 C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Text.Encoding.CodePages.dll
 C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Consumomensual.rdlc
 C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Reporteperiodo.rdlc
+C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Factura.rdlc
+C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Garantia.rdlc
+C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\MailKit.dll
+C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\MimeKit.dll
+C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
 C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Usodetipos.rdlc
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\appsettings.json
@@ -165,6 +170,7 @@ C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smart
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Factura.rdlc
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Garantia.rdlc
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Reporteperiodo.rdlc
+C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Usodetipos.rdlc
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\smarthometec_API.deps.json
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\smarthometec_API.runtimeconfig.json
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\smarthometec_API.runtimeconfig.dev.json
@@ -172,6 +178,7 @@ C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smart
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\smarthometec_API.pdb
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\AspNetCore.Reporting.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\AspNetCore.ReportingServices.dll
+C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\MailKit.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
@@ -214,11 +221,13 @@ C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smart
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\MimeKit.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\Npgsql.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\NuGet.Frameworks.dll
+C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\System.CodeDom.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
 C:\Users\Juan Solis\Desktop\Proyecto_1_SmartHomeTec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\System.Composition.AttributedModel.dll

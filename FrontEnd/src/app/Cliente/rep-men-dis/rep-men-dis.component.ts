@@ -19,7 +19,9 @@ export class RepMenDisComponent implements OnInit {
   // tslint:disable-next-line:new-parens
   cliente: Cliente = new Cliente;
   ngOnInit(): void {
-    this.cliente = this.service.cliente;
+    this.service.getCliente().subscribe(clienteAux =>
+    {this.cliente = clienteAux;
+    });
   }
   // tslint:disable-next-line:typedef
   public printAux(){

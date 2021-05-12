@@ -17,11 +17,11 @@ export class RepTipDispUsoComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.cliente = this.service.cliente;
-    this.service.getConsumoTipo(this.cliente.id).subscribe( tabla => {this.datosAMostrar = tabla;
-                                                                      console.log(this.datosAMostrar);
+    this.service.getCliente().subscribe(clienteAux =>
+    {this.cliente = clienteAux;
     });
-
+    this.cliente = this.service.cliente;
+    this.service.getConsumoTipo(this.cliente.id).subscribe( tabla => this.datosAMostrar = tabla);
     this.service.obtenereportetipo().subscribe(datos => this.datos = datos);
     console.log(this.datos);
   }

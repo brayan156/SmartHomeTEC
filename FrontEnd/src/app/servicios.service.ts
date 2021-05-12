@@ -19,6 +19,7 @@ import {ClienteEntregaEn} from './Comunicacion/cliente-entrega-en';
 import {Datos} from './Comunicacion/datos';
 import {Hora} from './Comunicacion/hora';
 import {CookieService} from 'ngx-cookie-service';
+import {Regiones} from './Comunicacion/regiones';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +28,23 @@ export class ServiciosService {
   Url = 'https://localhost:44341/api/';
   private valores = new BehaviorSubject('');
   public valoresActuales = this.valores.asObservable();
-  constructor(private http: HttpClient) { }
+
+
+
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
   // tslint:disable-next-line:new-parens
+
   public administrador: Administrador = new Administrador;
   // tslint:disable-next-line:new-parens
   public cliente: Cliente = new Cliente;
-  private cokieService: CookieService;
   // tslint:disable-next-line:typedef
   public obtenerDispositivosModelo() {
     return this.http.get<DispositivoModelo[]>(this.Url + 'DispositivoModelo');
+  }
+  // tslint:disable-next-line:typedef
+  public  getCliente(){
+    const idA = (this.cookieService.get('cedula'));
+    return this.http.get<Cliente>(this.Url + 'Cliente/' + idA);
   }
   // tslint:disable-next-line:typedef
   public crearDispositivoModelo(disposivoModelo: DispositivoModelo){
@@ -56,8 +65,7 @@ export class ServiciosService {
 
   // tslint:disable-next-line:typedef
   public editarCliente(id: number, cliente: Cliente){
-    const idA = this.cokieService.get('cedula');
-    return this.http.put(this.Url  + idA, cliente);
+    return this.http.put(this.Url  + id, cliente);
   }
 
   public getdispositvosasociados(): Observable<number>{
@@ -158,6 +166,7 @@ export class ServiciosService {
   public habilitarAposentos(id: number){
     return this.http.post(this.Url + 'Aposento/Default', id);
   }
+  // tslint:disable-next-line:typedef
   public obtenereportetipo() {
     return this.http.get<{tipo: string, uso: number} [] > (this.Url + 'Reportes/consumo_tipo/' + this.cliente.id);
   }
@@ -165,18 +174,24 @@ export class ServiciosService {
   // tslint:disable-next-line:typedef
   public obtenerPDFreportetipo(reporte) {
     // tslint:disable-next-line:max-line-length
-    return this.http.post(this.Url + 'Pdf/consumo_tipo/' + this.cliente.nombre + "/" + this.cliente.primerApellido + "/" + this.cliente.segundoApellido, reporte, { responseType: "blob" });
+    return this.http.post(this.Url + 'Pdf/consumo_tipo/' + this.cliente.nombre + '/' + this.cliente.primerApellido + '/' + this.cliente.segundoApellido, reporte, { responseType: 'blob' });
   }
 
   // tslint:disable-next-line:typedef
   public obtenerPDFMensual(reporte) {
     // tslint:disable-next-line:max-line-length
-    return this.http.post(this.Url + 'Pdf/consumo_mensual/' + this.cliente.nombre + "/" + this.cliente.primerApellido + "/" + this.cliente.segundoApellido, reporte, { responseType: "blob" });
+    return this.http.post(this.Url + 'Pdf/consumo_mensual/' + this.cliente.nombre + '/' + this.cliente.primerApellido + '/' + this.cliente.segundoApellido, reporte, { responseType: 'blob' });
   }
 
+  // tslint:disable-next-line:typedef
   public obtenerPDFDia(reporte) {
     // tslint:disable-next-line:max-line-length
-    return this.http.post(this.Url + 'Pdf/consumo_periodo_dia/' + this.cliente.nombre + "/" + this.cliente.primerApellido + "/" + this.cliente.segundoApellido, reporte, { responseType: "blob" });
+    return this.http.post(this.Url + 'Pdf/consumo_periodo_dia/' + this.cliente.nombre + '/' + this.cliente.primerApellido + '/' + this.cliente.segundoApellido, reporte, { responseType: 'blob' });
+  }
+
+  // tslint:disable-next-line:typedef
+  public getRegiones(){
+    return this.http.get<Regiones[]>(this.Url + 'Regiones');
   }
 
 
