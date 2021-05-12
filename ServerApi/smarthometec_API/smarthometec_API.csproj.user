@@ -22,5 +22,11 @@
     <None Update="reportes\DataSet3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Update="reportes\facturaset.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="reportes\garantiaset.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
 </Project>

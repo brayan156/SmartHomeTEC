@@ -157,4 +157,9 @@ C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerAp
 C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Text.Encoding.CodePages.dll
 C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Consumomensual.rdlc
 C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Reporteperiodo.rdlc
+C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Factura.rdlc
+C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Garantia.rdlc
+C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\MailKit.dll
+C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\MimeKit.dll
+C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
 C:\Users\braya\Desktop\bases\github_proyecto1_smarthometec\SmartHomeTEC\ServerApi\smarthometec_API\bin\Debug\netcoreapp3.1\reportes\Usodetipos.rdlc

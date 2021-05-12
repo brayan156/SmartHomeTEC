@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
+    <PackageReference Include="MailKit" Version="2.11.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.14">
@@ -41,6 +42,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DataSet3.xsd</DependentUpon>
     </Compile>
+    <Compile Update="reportes\facturaset.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>facturaset.xsd</DependentUpon>
+    </Compile>
+    <Compile Update="reportes\garantiaset.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>garantiaset.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -62,14 +73,22 @@
     <None Update="reportes\Factura.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="reportes\facturaset.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>facturaset.Designer.cs</LastGenOutput>
+    </None>
     <None Update="reportes\Garantia.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="reportes\garantiaset.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>garantiaset.Designer.cs</LastGenOutput>
     </None>
     <None Update="reportes\Reporteperiodo.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="reportes\Usodetipos.rdlc">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
