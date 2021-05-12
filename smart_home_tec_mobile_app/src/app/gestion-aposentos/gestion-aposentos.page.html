@@ -5,7 +5,7 @@
         <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>X habitación</ion-title>
+    <ion-title>Administrar {{this.misDispositivosPorAposentos}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,12 +15,11 @@
       <ion-icon name="create"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-card *ngFor="let card of [0,1,2,3,4,5,6]">
-    <img src='https://cdn.shopify.com/s/files/1/2393/8647/products/5AT1S3-WEN0.jpg?v=1606809887'>
+  <ion-card *ngFor="let dispositivo of misDispositivosPorAposentos">
+    <img src={{dispositivo.imagen}}>
     <ion-card-content>
-      <p class='name'>Bombillo</p>
-      <p class='spec'>20mW</p>
-      <p class='spec'>#Serie 2129312</p>
+      <p class='name'>{{dispositivo.modelo}}</p>
+      <p class='spec'>#Serie {{dispositivo.n_serie}}</p>
       <ion-item>
         <ion-label>Habitación</ion-label>
         <ion-select interface="action-sheet" placeholder='Tu habitación' okText="Listo" cancelText="Me arrepentí">
