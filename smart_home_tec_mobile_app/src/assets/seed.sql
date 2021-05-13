@@ -139,6 +139,7 @@ create table if not exists Certificado_garantia(
     foreign key (n_factura) references Factura(n_factura)
 );
 
+
 -- insert into  Pedido (id, monto, id_cliente, n_serie_dispositivo) values  (1, 3500, 1, 2);
 -- insert into Pedido_Factura (id_pedido, n_factura) VALUES (1,1);
 -- insert into Pedido_Factura ( id_pedido, n_factura) values  (2,2);
@@ -153,7 +154,10 @@ create table if not exists Certificado_garantia(
 -- insert into Aposento (nombre_cuarto, id_cliente) values ('cocina', 2);
 -- insert into Aposento (nombre_cuarto, id_cliente) values ('garaje', 2);
 
--- insert into Cliente VALUES (1, 'juan@gmail', 'blupblup', 'Solis', 'Argueyo', 'Juan', 'Argentina');
+
+ insert into Cliente VALUES (1, 'juan@gmail', 'blupblup', 'Solis', 'Argueyo', 'Juan', 'Argentina');
+
+
 -- insert into Cliente VALUES (2, 'brayan@gmail', 'blupblup', 'Leon', 'Urbina', 'Brayan', 'Austria');
 -- INSERT INTO Aposento (nombre_cuarto, id_cliente)
 -- VALUES ('sala', 1);
