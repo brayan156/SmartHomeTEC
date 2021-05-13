@@ -10,26 +10,65 @@ import { Aposento } from '../tablas-y-relaciones/aposento';
 })
 export class GestionAposentosPage implements OnInit {
 
-  @Input() misDispositivosPorAposentos;
+  // misDispositivosPorAposentos = [
+  //   {
+  //     mes_fin_garantia: 3,
+  //     ano_fin_garantia: 3,
+  //     n_serie: 2,
+  //     prendido: 1,
+  //     imagen: "https://cdn57.androidauthority.net/wp-content/uploads/2020/11/aukey-smart-lamp-990x675.jpg",
+  //     modelo: "Lamp3000"
+  //   }
+  // ];
+  misDispositivosPorAposentos = [];
+  misAposentos: Aposento[] = [];
+  @Input() aposento: Aposento;
 
   constructor(public modalController: ModalController,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
     private db: DbServiceService) {
-
+    this.updateContenido();
   }
 
   ngOnInit() {
+    this.updateContenido();
   }
 
   dismiss() {
     this.modalController.dismiss();
+    console.log(this.misDispositivosPorAposentos.length, "es la logingutd en dismiss");
+    console.log(this.misAposentos.length, "es la logingutd en dismiss")
+
   }
 
+  updateContenido() {
+    setTimeout(() => {
+      this.db.getMisDispositivosPorAposento(this.aposento.Id);
+      this.misDispositivosPorAposentos = this.db.tmpQuery.value;
+      this.misAposentos = this.db.getAposentosPorUsuario();
+    }, 300)
+
+  }
+
+  doRefresh(evento) {
+    setTimeout(() => {
+      this.updateContenido();
+
+
+      evento.target.complete();
+    }, 300)
+  }
+
+  updateAposentoDeDispositivo(evento, n_serie: number) {
+    console.log(evento.detail.value, "son mis detalles");
+    this.db.updateDispositivoAdquirido(evento.detail.value, n_serie);
+    this.updateContenido();
+  }
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
-      header: 'Editar X habitación',
+      header: 'Editar ' + this.aposento.NombreCuarto,
       cssClass: 'my-custom-class',
       buttons: [{
         text: 'Eliminar habitación',
@@ -37,42 +76,13 @@ export class GestionAposentosPage implements OnInit {
         icon: 'trash',
         handler: () => {
           console.log('Delete clicked');
+          this.db.deleteAposento(this.aposento.Id);
         }
       }, {
         text: 'Cambiar nombre',
         icon: 'pencil',
         handler: () => {
           this.presentAlertPrompt();
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Definir como cocina',
-        icon: 'assets/rooms/SVG/kitchen_room.svg',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Definir como sala',
-        icon: 'assets/rooms/SVG/living_room.svg',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Definir como habitación',
-        icon: 'assets/rooms/SVG/bed_room.svg',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Definir como garaje',
-        icon: 'assets/rooms/SVG/garage_room.svg',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Definir como otro',
-        icon: 'assets/rooms/SVG/other_room.svg',
-        handler: () => {
           console.log('Favorite clicked');
         }
       }, {
@@ -113,6 +123,7 @@ export class GestionAposentosPage implements OnInit {
           text: 'Listo',
           handler: data => {
             console.log(data);
+            this.db.updateNombreAposento(this.aposento.Id, data.nuevoNombre);
           }
         }
       ]

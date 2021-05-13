@@ -23,14 +23,14 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
 
-    this.db.getDatabaseState().subscribe(rdy => {
-      if (rdy) {
-        this.db.getClientes().subscribe(devs => {
-          this.clientes = devs;
-        })
-        //this.products = this.db.getProducts();
-      }
-    });
+    // this.db.getDatabaseState().subscribe(rdy => {
+    //   if (rdy) {
+    //     this.db.getClientes().subscribe(devs => {
+    //       this.clientes = devs;
+    //     })
+    //     //this.products = this.db.getProducts();
+    //   }
+    // });
   }
 
   login() {
@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
       } else {
         this.presentAlert();
       }
-    }, 1500);
+    }, 400);
     
 
   }
