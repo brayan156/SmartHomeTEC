@@ -208,7 +208,7 @@ export class DispositivoService {
 
 
   getMisDispositivosModelo(database: SQLiteObject, tmpQuery: BehaviorSubject<any[]>, cliente: Cliente) {
-    return database.executeSql('select Da.modelo, n_serie, prendido, tipo, imagen, consumo_electrico, marca, mes_fin_garantia, ano_fin_garantia from Cliente_ha_usado join Dispositivo_adquirido Da on Cliente_ha_usado.n_serie_dispositivo = Da.n_serie join Dispositivo_modelo Dm on Da.modelo = Dm.modelo join Pedido P on Da.n_serie = P.n_serie_dispositivo join Pedido_Factura PF on P.id = PF.id_pedido join Factura F on PF.n_factura = F.n_factura Join Certificado_garantia Cg on F.n_factura = Cg.n_factura  where Cliente_ha_usado.id_cliente = ? AND propietario_actual = true;',
+    return database.executeSql('select Dispositivo_adquirido.modelo, n_serie, prendido, tipo, imagen, consumo_electrico, marca, mes_fin_garantia, ano_fin_garantia from Cliente_ha_usado join Dispositivo_adquirido  on Cliente_ha_usado.n_serie_dispositivo = Dispositivo_adquirido.n_serie join Dispositivo_modelo Dm on Dispositivo_adquirido.modelo = Dm.modelo join Pedido P on Dispositivo_adquirido.n_serie = P.n_serie_dispositivo join Pedido_Factura PF on P.id = PF.id_pedido join Factura F on PF.n_factura = F.n_factura Join Certificado_garantia Cg on F.n_factura = Cg.n_factura  where Cliente_ha_usado.id_cliente = ? AND propietario_actual = 1;',
       [cliente.Id]).then(data => {
         let tmpList = [];
         if (data.rows.length > 0) {
@@ -216,6 +216,10 @@ export class DispositivoService {
             let today = new Date();
             let mesHoy = today.getMonth() + 1;
             let anoHoy = today.getFullYear();
+            console.log(data.rows.item(i).mes_fin_garantia, "mes termina la garantia");
+            console.log(data.rows.item(i).ano_fin_garantia, "año termina la garantia");
+
+            
             let mesesRestantes = data.rows.item(i).mes_fin_garantia - mesHoy;
             let anosRestantes = data.rows.item(i).ano_fin_garantia - anoHoy;
             tmpList.push({
@@ -235,7 +239,21 @@ export class DispositivoService {
       });
   }
 
+  disociarDispositivoDePropietario(database: SQLiteObject, clientesHanUsado:BehaviorSubject<any[]>, N_serie:number) {
+    
+    return database.executeSql('update Cliente_ha_usado set propietario_actual = 0 where n_serie_dispositivo = ?',
+    [N_serie]).then(data => {
+      this.loadClienteHaUsado(database, clientesHanUsado);
+    });
+  }
 
+  asociarDispositivoANuevoPropietario(database: SQLiteObject, clientesHanUsado:BehaviorSubject<any[]>, N_serie:number, data:number) {
+    
+    return database.executeSql('insert into Cliente_ha_usado (n_serie_dispositivo, id_cliente, propietario_actual) values (?,?,1)',
+    [N_serie, data]).then(data => {
+      this.loadClienteHaUsado(database, clientesHanUsado);
+    });
+  }
 
   getFechaPrendido(database: SQLiteObject, tmpQuery: BehaviorSubject<any[]>, N_serie: number) {
     return database.executeSql('select fecha_prendido from Dispositivo_adquirido where n_serie=? and prendido=1',

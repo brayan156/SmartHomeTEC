@@ -48,6 +48,7 @@ export class DbServiceService {
   fechaPrendido = new BehaviorSubject([]);
 
   aposentosPorUsuario = new BehaviorSubject([]);
+  misDispostivosModelo = new BehaviorSubject([]);
 
 
   constructor(private sqlite: SQLite, private plt: Platform, private sqlitePorter: SQLitePorter, private http: HttpClient,
@@ -179,11 +180,11 @@ export class DbServiceService {
   apagarDispositivo(N_serie: number) {
 
     this.dispositivoService.getFechaPrendido(this.database, this.fechaPrendido, N_serie);
-    setTimeout(() => {
-      let fechaPrendido = this.fechaPrendido.value[0].FechaPrendido;
-      let day = new Date(fechaPrendido);
-      this.historialService.apagarDispositivo(this.database, this.historiales, N_serie, day);
-    }, 300);
+
+    let fechaPrendido = this.fechaPrendido.value[0].FechaPrendido;
+    let day = new Date(fechaPrendido);
+    this.historialService.apagarDispositivo(this.database, this.historiales, N_serie, day);
+
 
   }
 
@@ -204,9 +205,17 @@ export class DbServiceService {
   }
 
   getMisDispositivosModelo() {
-    this.dispositivoService.getMisDispositivosModelo(this.database, this.tmpQuery, this.Usuario.value[0]);
-    console.log("voy a retornar los siguietes dispositivos modelo ", this.tmpQuery.value[0]);
-    return this.tmpQuery.value;
+    this.dispositivoService.getMisDispositivosModelo(this.database, this.misDispostivosModelo, this.Usuario.value[0]);
+    console.log("los dispositivos modelo son: ", this.misDispostivosModelo.value);
+    return this.misDispostivosModelo.value;
+
+  }
+
+  asociarDispositivoANuevoCliente(N_serie: number, data: number) {
+    this.dispositivoService.disociarDispositivoDePropietario(this.database, this.clientesHanUsado, N_serie);
+    setTimeout(() => {
+      this.dispositivoService.asociarDispositivoANuevoPropietario(this.database, this.clientesHanUsado, N_serie, data)
+    }, 300)
   }
 
   getAposentosPorUsuario() {

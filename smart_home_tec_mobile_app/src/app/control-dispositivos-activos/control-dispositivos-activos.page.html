@@ -34,18 +34,18 @@
   <ion-grid>
     <ion-col>
       <ion-row>
-        <ion-card *ngFor="let dispositivo of this.dispositivosMios"  >
+        <ion-card  *ngFor="let dispositivo of dispositivosMios" >
           
-          <img src={{dispositivo.Imagen}}>
+          <img src={{dispositivo.Imagen}} (click)="showInfoDispositivo(dispositivo)">
           <ion-card-content>
             <p class='name'>{{dispositivo.Modelo}}</p>
             <p class='spec'>{{dispositivo.ConsumoElectrico}} mW</p>
             <p class='spec'>{{dispositivo.Marca}}</p>
             <p class='room'>{{dispositivo.Tipo}}</p>
-            <p class='spec'>Tiempo restante de garantía:  </p>
-            <p class='spec'>{{dispositivo.mes_fin_garantia}} meses, </p>
-            <p class='spec'>{{dispositivo.ano_fin_garantia}} años</p>
-            <ion-toggle (ionChange)="prenderApagar($event, dispositivo)" value='{{dispositivo.Prendido}}'></ion-toggle>
+            <ion-select interface="action-sheet"  (ionChange)="(updateAposentoDeDispositivo($event,dispositivo.N_serie))" placeholder='Tu habitación' okText="Listo" cancelText="Me arrepentí">
+              <ion-select-option *ngFor="let aposento of this.misAposentos"  value={{aposento.Id}}>{{aposento.NombreCuarto}}</ion-select-option>
+            </ion-select>
+            <!-- <ion-toggle (ionChange)="prenderApagar($event, dispositivo)" value='{{dispositivo.Prendido}}'></ion-toggle> -->
           </ion-card-content>
         </ion-card>
       </ion-row>

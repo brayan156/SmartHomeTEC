@@ -8,12 +8,15 @@ import { DbServiceService } from './services/db/db-service.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  
+  correo;
   public appPages = [
     { title: 'Dispositivos', url: 'control-dispositivos-activos', icon: 'heart' },
     { title: 'Agregar dispositivo', url: 'agregar-nuevo', icon: 'heart' },
   ];
   constructor(public router: Router, public menu: MenuController,
-  private db: DbServiceService) { }
+    private db: DbServiceService) {
+  }
   
   goToLogin() {
     this.db.resetMyId();

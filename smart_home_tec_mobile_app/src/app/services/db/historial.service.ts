@@ -101,9 +101,7 @@ export class HistorialService {
       }
       // Actualizar histo dentro historiales
       this.updateTotalMins(database, historiales, histo);
-      setTimeout(() => {
-       console.log("estoy esperando 300ms...") 
-      },300)
+
 
     } else {
       if (fechaPrendido.getHours() == today.getHours()) {
@@ -115,9 +113,7 @@ export class HistorialService {
       // agregar historial a historiales
       let data = [historial.NSerie, historial.Dia, historial.Mes, historial.Ano, historial.Hora, historial.MinutosDeUso];
       this.insertHistorial(database, historiales, data);
-      setTimeout(() => {
-        console.log("estoy esperando 300ms...") 
-       },300)
+
     }
 
 
@@ -153,9 +149,7 @@ export class HistorialService {
 
     // Update prendido de dispositivo a off
     this.apagarDispostivoAux(database, historiales, N_serie);
-    setTimeout(() => {
-      console.log("estoy esperando 300ms...") 
-     },300)
+
 
   }
 }

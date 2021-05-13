@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "smart_home_tec_mobile_app",
+  "appId": "io.SmartHomeTEC",
+  "appName": "Smart Home TEC",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

@@ -10,16 +10,17 @@ import { Aposento } from '../tablas-y-relaciones/aposento';
 })
 export class GestionAposentosPage implements OnInit {
 
-  misDispositivosPorAposentos = [
-    {
-      mes_fin_garantia: 3,
-      ano_fin_garantia: 3,
-      n_serie: 2,
-      prendido: 1,
-      imagen: "https://cdn57.androidauthority.net/wp-content/uploads/2020/11/aukey-smart-lamp-990x675.jpg",
-      modelo: "Lamp3000"
-    }
-  ];
+  // misDispositivosPorAposentos = [
+  //   {
+  //     mes_fin_garantia: 3,
+  //     ano_fin_garantia: 3,
+  //     n_serie: 2,
+  //     prendido: 1,
+  //     imagen: "https://cdn57.androidauthority.net/wp-content/uploads/2020/11/aukey-smart-lamp-990x675.jpg",
+  //     modelo: "Lamp3000"
+  //   }
+  // ];
+  misDispositivosPorAposentos = [];
   misAposentos: Aposento[] = [];
   @Input() aposento: Aposento;
 
@@ -27,11 +28,11 @@ export class GestionAposentosPage implements OnInit {
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
     private db: DbServiceService) {
-    // this.updateContenido();
+    this.updateContenido();
   }
 
   ngOnInit() {
-    // this.updateContenido();
+    this.updateContenido();
   }
 
   dismiss() {
@@ -122,7 +123,7 @@ export class GestionAposentosPage implements OnInit {
           text: 'Listo',
           handler: data => {
             console.log(data);
-            this.db.updateNombreAposento(this.aposento.Id, data);
+            this.db.updateNombreAposento(this.aposento.Id, data.nuevoNombre);
           }
         }
       ]
