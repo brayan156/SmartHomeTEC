@@ -65,7 +65,7 @@ export class ServiciosService {
 
   // tslint:disable-next-line:typedef
   public editarCliente(id: number, cliente: Cliente){
-    return this.http.put(this.Url  +"Cliente/"+ id, cliente);
+    return this.http.put(this.Url  + 'Cliente/' + id, cliente);
   }
 
   public getdispositvosasociados(): Observable<number>{

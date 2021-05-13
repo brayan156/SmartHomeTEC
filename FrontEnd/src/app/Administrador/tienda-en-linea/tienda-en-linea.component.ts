@@ -15,6 +15,8 @@ export class TiendaEnLineaComponent implements OnInit {
   // tslint:disable-next-line:new-parens
   dispositivosSeVendenEn: DispositivoSeVendeEn = new DispositivoSeVendeEn();
   data: [][];
+
+  dispositivoActual: DispositivoSeVendeEn = new DispositivoSeVendeEn();
   constructor(private service: ServiciosService) {
   }
 
@@ -22,7 +24,7 @@ export class TiendaEnLineaComponent implements OnInit {
   }
 
   onFileChange(evt: any) {
-    const target: DataTransfer =  <DataTransfer>(evt.target);
+    const target: DataTransfer = <DataTransfer>(evt.target);
 
     if (target.files.length !== 1) throw new Error('Cannot use multiple files');
 
@@ -63,9 +65,27 @@ export class TiendaEnLineaComponent implements OnInit {
     });
   }
 
-  guardardatos() {
+  // tslint:disable-next-line:typedef
+  public guardardatos() {
     this.service.guardardatosexcel(this.ListadispositivosSeVendenEn).subscribe(r => console.log(r));
   }
 
+  public itemActual(itemActual: DispositivoSeVendeEn): void{
+    this.dispositivoActual = itemActual;
+  }
+  public editarDispositvo(item: DispositivoSeVendeEn): void{
+    console.log(this.ListadispositivosSeVendenEn);
+  }
 
+  public eliminarDispositivo(item: DispositivoSeVendeEn): void{
+    // tslint:disable-next-line:prefer-for-of
+    // for (let i = 0; i < this.ListadispositivosSeVendenEn.length; i++){
+    //   // tslint:disable-next-line:no-unused-expression max-line-length
+    // tslint:disable-next-line:max-line-length
+    //   if (this.ListadispositivosSeVendenEn[i].cjDistribuidor === item.cjDistribuidor && this.ListadispositivosSeVendenEn[i].modeloDispotivo === item.modeloDispotivo){
+    //     this.ListadispositivosSeVendenEn.slice(i, i);
+    //   }
+    //   console.log(this.ListadispositivosSeVendenEn);
+    // }
+  }
 }

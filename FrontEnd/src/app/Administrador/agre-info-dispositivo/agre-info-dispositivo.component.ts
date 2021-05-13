@@ -34,19 +34,21 @@ export class AgreInfoDispositivoComponent implements OnInit {
   public crearDispositivo(dispositivoModelo: DispositivoModelo): void{
     console.log(dispositivoModelo);
     dispositivoModelo.tipo = null;
-    this.service.crearDispositivoModelo(dispositivoModelo).subscribe( a => console.log(a));
-    this.ngOnInit();
+    this.service.crearDispositivoModelo(dispositivoModelo).subscribe( a => {console.log(a);
+                                                                            this.ngOnInit();
+    });
   }
   public editarDispositivo(dispositivoModelo: DispositivoModelo): void{
     console.log(dispositivoModelo);
-    this.service.editarDipositivoModelo(dispositivoModelo.modelo, dispositivoModelo).subscribe(a => console.log(a));
-    this.ngOnInit();
-
+    this.service.editarDipositivoModelo(dispositivoModelo.modelo, dispositivoModelo).subscribe(a => {console.log(a);
+                                                                                                     this.ngOnInit();
+    });
   }
 
   public eliminarDispositivo(dispositivoModelo: DispositivoModelo): void{
-    this.service.eliminarDispositivosModelo(dispositivoModelo.modelo).subscribe(a => console.log(a));
-    this.ngOnInit();
+    this.service.eliminarDispositivosModelo(dispositivoModelo.modelo).subscribe(a => {console.log(a);
+                                                                                      this.ngOnInit();
+    });
 
   }
   public obtenerInformacionItem(dipositivo: DispositivoModelo): void{

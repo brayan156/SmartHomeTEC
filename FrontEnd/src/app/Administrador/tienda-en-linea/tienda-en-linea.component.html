@@ -1,9 +1,11 @@
 <app-nav></app-nav>
 <div class="posicion ">
-  <div class="tamano">
-    <input type="file" (change)="onFileChange($event)" multiple="false" />
+  <div class="row">
+    <input class="form-control tamano2" type="file" id="formFile" (change)="onFileChange($event)" multiple="false" type="file">
+    <button type="button" class="btn botonGuadar col" data-bs-dismiss="modal" (click)="guardardatos()">Guardar</button>
+
   </div>
-  <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="guardardatos()">Guardar</button>
+
   <div class="container">
     <label class="color">Nombre del Distribuidor</label>
     <table class="table table-light">
@@ -13,6 +15,8 @@
           <th scope="col">Nombre del Dispositivo</th>
           <th scope="col">Precio del Dispositivo</th>
           <th scope="col">Cantidad de Dispositivos</th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -21,8 +25,58 @@
           <th scope="col">{{item.modeloDispotivo}}</th>
           <th scope="col">{{item.precio}}</th>
           <th scope="col">{{item.cantidad}}</th>
+          <th><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editarDatos" (click)="itemActual(item)">Editar</button>
+          </th>
+          <th><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#eliminarFila" (click)="itemActual(item)">Eliminar Fila</button></th>
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editarDatos" tabindex="-1" aria-labelledby="editarDatosLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editarDatosLabel">Gestion de tienda en linea</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label>Cambiar Precio:</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" required="" name="precio" #precio="ngModel" [(ngModel)]="dispositivoActual.precio">
+        </div>
+        <label>Cantidad de Dispositivos :</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" required="" name="CJ" #cantida="ngModel" [(ngModel)]="dispositivoActual.cantidad">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                (click)="editarDispositvo(dispositivoActual)">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="eliminarFila" tabindex="-1" aria-labelledby="eliminarFilaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eliminarFilaLabel">Gestion de tienda en linea</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label >Se eliminira la fila del distribuidor {{dispositivoActual.cjDistribuidor}} con el dispositivo
+          {{dispositivoActual.modeloDispotivo}}</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="eliminarDispositivo(dispositivoActual)">Aceptar</button>
+      </div>
+    </div>
   </div>
 </div>

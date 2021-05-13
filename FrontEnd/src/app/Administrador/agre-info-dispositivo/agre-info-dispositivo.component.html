@@ -6,9 +6,9 @@
   <button class="btn tamano"  data-bs-toggle="modal" data-bs-target="#agregarDispositivo" >Agregar Dispositivo</button>
   <div class="row">
     <div class="col" *ngFor="let item of modeloscreados">
-      <div class=" card cardPosicion" style="width: 18rem;" >
+      <div class="card cardPosicion" style="width: 18rem;" >
         <img src="{{item.imagen}}"
-             class="card-img-top" width="100%" height="100%">
+             class="card-img-top" width="100px" height="200px">
         <div class="card-body">
           <h5 class="card-title centrar"><b>Modelo del dispositivo: </b> {{item.modelo}}</h5>
           <label class="card-title centrar"><b>Tipo de dispositivo:</b> {{item.tipo}}</label>
