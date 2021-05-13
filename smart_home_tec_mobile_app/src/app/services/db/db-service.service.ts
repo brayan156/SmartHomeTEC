@@ -45,6 +45,9 @@ export class DbServiceService {
   tipos = new BehaviorSubject([]);
   tmpQuery = new BehaviorSubject([]);
   Usuario = new BehaviorSubject([]);
+  fechaPrendido = new BehaviorSubject([]);
+
+  aposentosPorUsuario = new BehaviorSubject([]);
 
 
   constructor(private sqlite: SQLite, private plt: Platform, private sqlitePorter: SQLitePorter, private http: HttpClient,
@@ -152,6 +155,7 @@ export class DbServiceService {
 
   }
 
+
   updateDispositivoAdquirido(idAposento: number, n_serie: number) {
     this.dispositivoService.updateDispositivoAdquirido(this.database, this.dispositivosAdquiridos, idAposento, n_serie);
   }
@@ -172,14 +176,42 @@ export class DbServiceService {
     this.Usuario = new BehaviorSubject([]);
   }
 
-  getMisDispositivosPorAposento(idAposento:number) {
+  apagarDispositivo(N_serie: number) {
+
+    this.dispositivoService.getFechaPrendido(this.database, this.fechaPrendido, N_serie);
+    setTimeout(() => {
+      let fechaPrendido = this.fechaPrendido.value[0].FechaPrendido;
+      let day = new Date(fechaPrendido);
+      this.historialService.apagarDispositivo(this.database, this.historiales, N_serie, day);
+    }, 300);
+
+  }
+
+  deleteAposento(aposentoId: number) {
+    this.aposentosService.deleteAposento(this.database, this.aposentos, aposentoId);
+  }
+
+  updateNombreAposento(aposentoId: number, nuevoNombre: string) {
+    this.aposentosService.updateNombre(this.database, this.aposentos, aposentoId, nuevoNombre);
+  }
+
+  prenderDispositivo(N_serie: number) {
+    this.historialService.prenderDispositivo(this.database, this.historiales, N_serie);
+  }
+
+  getMisDispositivosPorAposento(idAposento: number) {
     this.dispositivoService.getMisDispositivosPorAposento(this.database, this.tmpQuery, this.Usuario.value[0], idAposento);
-    return this.tmpQuery.value;
   }
 
   getMisDispositivosModelo() {
     this.dispositivoService.getMisDispositivosModelo(this.database, this.tmpQuery, this.Usuario.value[0]);
-    return this.tmpQuery.asObservable();
+    console.log("voy a retornar los siguietes dispositivos modelo ", this.tmpQuery.value[0]);
+    return this.tmpQuery.value;
+  }
+
+  getAposentosPorUsuario() {
+    this.aposentosService.loadAposentosPorUsuario(this.database, this.aposentosPorUsuario, this.Usuario.value[0]);
+    return this.aposentosPorUsuario.value;
   }
 
   // Cambiar estos gets para asociarlos al id del usuario ya que ahora estan retornando la informacion

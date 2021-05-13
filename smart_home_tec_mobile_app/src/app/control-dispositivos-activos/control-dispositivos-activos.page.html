@@ -42,7 +42,10 @@
             <p class='spec'>{{dispositivo.ConsumoElectrico}} mW</p>
             <p class='spec'>{{dispositivo.Marca}}</p>
             <p class='room'>{{dispositivo.Tipo}}</p>
-            <ion-toggle></ion-toggle>
+            <p class='spec'>Tiempo restante de garantía:  </p>
+            <p class='spec'>{{dispositivo.mes_fin_garantia}} meses, </p>
+            <p class='spec'>{{dispositivo.ano_fin_garantia}} años</p>
+            <ion-toggle (ionChange)="prenderApagar($event, dispositivo)" value='{{dispositivo.Prendido}}'></ion-toggle>
           </ion-card-content>
         </ion-card>
       </ion-row>

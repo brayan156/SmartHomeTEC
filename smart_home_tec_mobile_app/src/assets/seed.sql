@@ -140,7 +140,9 @@ create table if not exists Certificado_garantia(
 );
 
 
-
+-- insert into Pedido (id, monto, id_cliente, n_serie_dispositivo) values  (1, 2500, 1, 2);
+-- insert into Pedido_Factura (id_pedido, n_factura) VALUES (1, 1);
+-- insert into Certificado_garantia (n_factura, mes_fin_garantia, ano_fin_garantia) VALUES (1, 7, 2022);
 
 -- insert into Aposento (nombre_cuarto, id_cliente) VALUES('sala', 2);
 -- insert into Aposento (nombre_cuarto, id_cliente) values ('cuarto', 2);

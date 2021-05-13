@@ -30,7 +30,7 @@ export class AgregarNuevoPage implements OnInit {
     private alertController: AlertController) { }
 
   ngOnInit() {
-    this.aposentos = this.db.getAposentos();
+    this.aposentos = this.db.getAposentosPorUsuario();
     this.tipos = this.db.getTipos();
     this.dispositivosModelo = this.db.getDispositivosModelo();
   }

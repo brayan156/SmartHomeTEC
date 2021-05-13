@@ -34,17 +34,18 @@ export class LoginPage implements OnInit {
   }
 
   login() {
-    this.db.resetUsuario();
-    let tmp;
-    this.db.validarCliente(this.correo, this.password);
-    setTimeout(() => {
-      tmp = (this.db.Usuario.value.length != 0 ) ? true : false;
-      if (tmp) {
-        this.router.navigateByUrl('control-dispositivos-activos');
-      } else {
-        this.presentAlert();
-      }
-    }, 1500);
+    // this.db.resetUsuario();
+    // let tmp;
+    // this.db.validarCliente(this.correo, this.password);
+    // setTimeout(() => {
+    //   tmp = (this.db.Usuario.value.length != 0 ) ? true : false;
+    //   if (tmp) {
+    //     this.router.navigateByUrl('control-dispositivos-activos');
+    //   } else {
+    //     this.presentAlert();
+    //   }
+    // }, 300);
+    this.router.navigateByUrl('control-dispositivos-activos');
     
 
   }

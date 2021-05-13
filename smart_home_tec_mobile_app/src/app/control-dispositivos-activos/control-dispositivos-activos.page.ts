@@ -3,7 +3,6 @@ import { ActionSheetController, AlertController, ModalController } from '@ionic/
 import { GestionAposentosPage } from '../gestion-aposentos/gestion-aposentos.page';
 import { DbServiceService } from '../services/db/db-service.service';
 import { Aposento } from '../tablas-y-relaciones/aposento';
-import { DispositivoAdquirido } from '../tablas-y-relaciones/dispositivoAdquirido';
 import { DispositivoModelo } from '../tablas-y-relaciones/DispositivoModelo';
 
 @Component({
@@ -13,50 +12,49 @@ import { DispositivoModelo } from '../tablas-y-relaciones/DispositivoModelo';
 })
 export class ControlDispositivosActivosPage implements OnInit {
 
-  dispositivosMios: DispositivoModelo[];
-  misAposentos: Aposento[];
+  dispositivosMios: any[];
+  misAposentos: Aposento[] = [
+    {
+      Id: 2,
+      NombreCuarto: "sala",
+      IdCliente: 2,
+    }
+  ];
   misDispositivosPorAposentos = [];
 
   constructor(public modalController: ModalController,
     public alertController: AlertController,
     public actionSheetController: ActionSheetController,
     private db: DbServiceService) {
-    this.updateMisDispositivosModelo();
 
   }
 
   ngOnInit() {
-    this.updateMisDispositivosModelo();
-    this.misAposentos = this.db.getAposentos();
+    // this.actualizarContenido();
 
   }
 
-  updateMisDispositivosModelo() {
-    this.db.getDatabaseState().subscribe(rdy => {
-      if (rdy) {
-        this.db.getMisDispositivosModelo().subscribe(data => {
-          this.dispositivosMios=[];
-          this.dispositivosMios = data;
-        })
-        //this.products = this.db.getProducts();
-      }
-    });
+
+  actualizarContenido() {
+    this.dispositivosMios = this.db.getMisDispositivosModelo()
+    this.misAposentos = this.db.getAposentosPorUsuario();
+    setTimeout(() => {
+
+    }, 300)
   }
 
   doRefresh(evento) {
+    this.actualizarContenido();
     setTimeout(() => {
-      this.updateMisDispositivosModelo();
-      this.misAposentos = this.db.getAposentos();
-
       evento.target.complete();
-    }, 1000)
+    }, 300)
   }
 
 
 
   async NuevaHabitacion() {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      cssClass: 'alerta',
       header: 'Nuevo aposento',
       inputs: [
         {
@@ -79,7 +77,7 @@ export class ControlDispositivosActivosPage implements OnInit {
           handler: data => {
             console.log("Ingresaste ", data.nuevoNombre);
             this.db.addAposento(data.nuevoNombre);
-            this.misAposentos = this.db.getAposentos();
+            this.misAposentos = this.db.getAposentosPorUsuario();
           }
         }
       ]
@@ -93,11 +91,12 @@ export class ControlDispositivosActivosPage implements OnInit {
       header: 'No tienes dispositivos asociados :(',
       buttons: [
         {
-          text: 'Me arrepentí',
+          text: 'Ok',
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
             console.log('Confirm Cancel');
+            this.actualizarContenido();
           }
         }
       ]
@@ -105,29 +104,40 @@ export class ControlDispositivosActivosPage implements OnInit {
     await alert.present();
   }
 
+  prenderApagar(evento, dispositivo) {
+    console.log("El valor del evento del toggle es", evento.detail.checked);
+    console.log("El valor de prendido del dispositivo es", dispositivo.Prendido);
+    if (evento.detail.checked != 1) {
+      this.db.prenderDispositivo(dispositivo.N_serie);
+    } else {
+      this.db.apagarDispositivo(dispositivo.N_serie);
+    }
+    this.actualizarContenido();
+  }
 
-  async presentModal( aposento: Aposento) {
-    this.misDispositivosPorAposentos = this.db.getMisDispositivosPorAposento(aposento.Id);
-    setTimeout(async () => {
-      if (this.misDispositivosPorAposentos.length != 0){
+  async presentModal(aposento: Aposento) {
+    // let tmp;
+    // this.db.getMisDispositivosPorAposento(aposento.Id);
+
+    // setTimeout(async () => {
+    //   this.misDispositivosPorAposentos = this.db.tmpQuery.value;
+    //   console.log(this.misDispositivosPorAposentos.length, " es la longitud de la lista");
+    //   tmp = (this.misDispositivosPorAposentos.length != 0) ? true : false;
+    let tmp = true;
+      if (tmp) {
         const modal = await this.modalController.create({
           component: GestionAposentosPage,
           componentProps: {
-            aposento: this.misDispositivosPorAposentos
+            aposento: aposento,
           }
         });
         return await modal.present();
       } else {
         this.noHayContenidoAlert();
       }
-    }, 2000)
-    
+  // }, 300)
+
   }
-
-
-
-
-
 
 }
 

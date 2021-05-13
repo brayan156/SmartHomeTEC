@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" id='form' (ngSubmit)="nuevoDispositivo()">
+  <form #form="ngForm" id="form" (ngSubmit)="nuevoDispositivo()">
 
 
     <ion-item>
@@ -43,6 +43,6 @@
       </ion-select>
 
     </ion-item>
-      <ion-button  id='round' size='full'type="submit" [disabled]="form.invalid" >Agregar</ion-button>
+      <ion-button shape='round' id='round' size='full'type="submit" [disabled]="form.invalid" >Agregar</ion-button>
   </form>
 </ion-content>
