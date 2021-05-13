@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { DbAPIService } from '../services/API/db-api.service';
 import { DbServiceService } from '../services/db/db-service.service';
 import { Cliente } from '../tablas-y-relaciones/cliente';
 
@@ -17,8 +18,9 @@ export class LoginPage implements OnInit {
 
   constructor(public alert: AlertController,
     public router: Router,
-    private db: DbServiceService) {
-    this.db.seedDatabase();
+    private db: DbServiceService,
+  private dbAPI: DbAPIService) {
+    // this.db.seedDatabase();
     }
 
   ngOnInit() {
@@ -35,19 +37,33 @@ export class LoginPage implements OnInit {
 
   login() {
     this.db.resetUsuario();
-    let tmp;
-    this.db.validarCliente(this.correo, this.password);
-    setTimeout(() => {
-      tmp = (this.db.Usuario.value.length != 0 ) ? true : false;
-      if (tmp) {
+    // let tmp;
+    // this.db.validarCliente(this.correo, this.password);
+    // setTimeout(() => {
+    //   tmp = (this.db.Usuario.value.length != 0 ) ? true : false;
+    //   if (tmp) {
+    //     this.router.navigateByUrl('control-dispositivos-activos');
+    //   } else {
+    //     this.presentAlert();
+    //   }
+    // }, 400);
+    this.validarCliente(this.correo, this.password);
+    
+  }
+  
+  validarCliente(correo: string, password: string) {
+    this.dbAPI.validarCliente(correo, password).subscribe(data => {
+      if (data.length != 0) {
+        let Cliente = data[0];
+        this.db.Usuario[0] = Cliente;
+        this.dbAPI.Usuario = Cliente;
         this.router.navigateByUrl('control-dispositivos-activos');
       } else {
         this.presentAlert();
-      }
-    }, 400);
-    
-
+      }   
+    })
   }
+
   /**
    * En caso de que la validacion del usuario falle, 
    * se despliega una alerta.
