@@ -15,7 +15,9 @@ export class RepTipDispUsoComponent implements OnInit {
   public datosAMostrar: {tipo: string, uso: number} [] = [];
   public datos: { tipo: string, uso: number }[] = [];
 
-
+  /**
+   * Incialisa el HTML con los de la base de datos
+   */
   ngOnInit(): void {
     this.service.getCliente().subscribe(clienteAux =>
     {this.cliente = clienteAux;
@@ -26,7 +28,9 @@ export class RepTipDispUsoComponent implements OnInit {
   }
 
 
-
+  /**
+   * Genera el pdf de dispostivos por tipo
+   */
   generarPdf(): void {
     this.service.obtenerPDFreportetipo(this.datos, this.cliente.nombre, this.cliente.primerApellido, this.cliente.segundoApellido).subscribe(res => {
       var newBlob = new Blob([res], { type: "application/pdf" });

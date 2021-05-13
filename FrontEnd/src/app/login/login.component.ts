@@ -16,6 +16,12 @@ import {Regiones} from '../Comunicacion/regiones';
 export class LoginComponent implements OnInit {
   public typeLogin = 0;
 
+  /**
+   * Constructor del moldulo login
+   * @param router libreria para nevegar entre los links
+   * @param service servicios para comunicar el login con la base de datos
+   * @param cookieService libreria para guardar datos cuando la pagina haga refrech no se borre
+   */
   constructor(
     private router: Router, private service: ServiciosService, private cookieService: CookieService) {
 

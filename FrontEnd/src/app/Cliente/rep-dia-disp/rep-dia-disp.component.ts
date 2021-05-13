@@ -29,6 +29,9 @@ export class RepDiaDispComponent implements OnInit {
     });
   }
 
+  /**
+   * Parsea la fecha que resive del html para poder generar el reporte y la tabala
+   */
   // tslint:disable-next-line:typedef
   public auxFuntion(){
     // tslint:disable-next-line:radix
@@ -45,12 +48,19 @@ export class RepDiaDispComponent implements OnInit {
     this.diaF = parseInt(this.fechaAuxF.slice(8, 11));
     this.obtenetTabla();
   }
+
+  /**
+   * obtiene la tabla para mostrar en el html
+   */
   // tslint:disable-next-line:typedef
   public obtenetTabla(){
     this.service.getReporteDias(this.cliente.id, this.diaI , this.mesI , this.anoI , this.diaF , this.mesF , this.anoF).
     subscribe(lista => {this.listaReporte = lista; console.log(this.listaReporte);});
   }
 
+  /**
+   * Genera el reporte del PDF
+   */
   generarPdf(): void {
     this.service.obtenerPDFDia(this.listaReporte, this.cliente.nombre, this.cliente.primerApellido, this.cliente.segundoApellido ).subscribe(res => {
       var newBlob = new Blob([res], { type: "application/pdf" });

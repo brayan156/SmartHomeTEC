@@ -34,6 +34,9 @@ export class TiendaEnLineaUsuarioComponent implements OnInit {
   dispositivoactual: {dispositivoSeVendeEn: DispositivoSeVendeEn, dispositivoModelo: DispositivoModelo};
   dispositivoCompra: {dispositivoSeVendeEn: DispositivoSeVendeEn, dispositivoModelo: DispositivoModelo};
 
+  /**
+   * Inicialisa el html con los datos que recupera de la base de datos para la tienda en linea
+   */
   ngOnInit(): void {
     this.service.getCliente().subscribe(clienteAux =>
     {
@@ -42,6 +45,11 @@ export class TiendaEnLineaUsuarioComponent implements OnInit {
       this.service.obtenerTiendaLinea(this.cliente.pais).subscribe( data => this.dispositivos = data);
     });
   }
+
+  /**
+   * Guarda el item al cual se selecciona para ver mas informacion o comprar
+   * @param item que desea comprar
+   */
   // tslint:disable-next-line:typedef
   public guardarobjeto(item: {dispositivoSeVendeEn: DispositivoSeVendeEn, dispositivoModelo: DispositivoModelo}) {
     this.dispositivoactual = item;
@@ -54,6 +62,10 @@ export class TiendaEnLineaUsuarioComponent implements OnInit {
         this.distribuidor = distribuidorAux);
     });
   }
+
+  /**
+   * Envia los datos para crear los reportes y enviar el correo al cliente que desea comprar un dispositivo
+   */
   // tslint:disable-next-line:typedef
   public comprar() {
     this.service.comprar(this.dispositivoactual.dispositivoSeVendeEn, this.cliente.id).subscribe(c =>

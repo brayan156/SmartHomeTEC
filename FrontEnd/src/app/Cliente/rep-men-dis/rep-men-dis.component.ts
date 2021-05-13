@@ -18,11 +18,18 @@ export class RepMenDisComponent implements OnInit {
 
   // tslint:disable-next-line:new-parens
   cliente: Cliente = new Cliente;
+  /**
+   * Inicialisa los valores del cliente para que se muenstren en el html
+   */
   ngOnInit(): void {
     this.service.getCliente().subscribe(clienteAux =>
     {this.cliente = clienteAux;
     });
   }
+
+  /**
+   * Funcion para parsear el mes y ano a utilizar
+   */
   // tslint:disable-next-line:typedef
   public printAux(){
     // tslint:disable-next-line:radix
@@ -40,6 +47,9 @@ export class RepMenDisComponent implements OnInit {
   });
   }
 
+  /**'
+   * Genera el pdf de los reportes mensuales
+   */
   generarPdf(): void {
     this.service.obtenerPDFMensual(this.listaAux , this.cliente.nombre, this.cliente.primerApellido, this.cliente.segundoApellido).subscribe(res => {
       var newBlob = new Blob([res], { type: "application/pdf" });

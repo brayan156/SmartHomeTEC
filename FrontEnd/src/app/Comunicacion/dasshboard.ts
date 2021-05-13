@@ -1,3 +1,6 @@
+/**
+ * Clase para modelar el Dasshboard
+ */
 export class Dasshboard {
   lista1 = [];
   lista2 = [];
