@@ -9,7 +9,11 @@ import {DispositivoAdquirido} from '../../Comunicacion/dispositivo-adquirido';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+  /**
+   * Contructor del componete el cual se utiliza para la gestion de informacion del dispositivos
+   * @param service se utiliza para comunicar los servicios, estos se utilizan para comunicar la base de datos con
+   * la aplicacion web
+   */
   constructor(private service: ServiciosService) { }
 
   cantidadPromedio: number;
@@ -17,6 +21,9 @@ export class DashboardComponent implements OnInit {
   cantidadTotalDispositivosRegion: {pais: string , cantidad: number}[] = [];
   ListaDispositivosTotalesRegistros: {dispositivoAdquirido: DispositivoAdquirido, dueno: string}[] = [];
 
+  /**
+   * Recarga los valores a mostrar en el HTML cada que se inicaliza la pagina
+   */
   ngOnInit(): void {
     this.service.getdispositvosasociados().subscribe(numero => {
       this.cantidadTotalDispositivos = numero;
