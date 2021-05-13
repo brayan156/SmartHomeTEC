@@ -1,9 +1,12 @@
 .color{
   background: #F0BB6F;
 }
-
+.container{
+  margin-top: 10%;
+  border-collapse: collapse;
+}
 .centrar{
-  margin-left: 40%;
+  margin-left: 10%;
 }
 
 .bordes {

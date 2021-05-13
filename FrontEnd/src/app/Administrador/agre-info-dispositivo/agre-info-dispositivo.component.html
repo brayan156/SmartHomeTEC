@@ -2,26 +2,28 @@
 
 
 <div class="posicion ">
-  
+
   <button class="btn tamano"  data-bs-toggle="modal" data-bs-target="#agregarDispositivo" >Agregar Dispositivo</button>
-
-
-    <div class="card cardPosicion" style="width: 18rem;">
-      <img src="https://d500.epimg.net/cincodias/imagenes/2018/12/21/smartphones/1545388381_924715_1545389337_noticia_normal.jpg"
-           class="card-img-top" width="100" height="100">
-      <div class="card-body">
-        <h5 class="card-title">Numero de serie</h5>
-        <label class="card-text">Estado del Dispositivo</label>
-        <label class="card-text">Tipo de Dispositivo</label>
-        <label class="card-text">Marca del Dispositivo</label>
-        <label class="card-text">Consumo Electrico</label>
+  <div class="row">
+    <div class="col" *ngFor="let item of modeloscreados">
+      <div class=" card cardPosicion" style="width: 18rem;" >
+        <img src="{{item.imagen}}"
+             class="card-img-top" width="100%" height="100%">
+        <div class="card-body">
+          <h5 class="card-title centrar"><b>Modelo del dispositivo: </b> {{item.modelo}}</h5>
+          <label class="card-title centrar"><b>Tipo de dispositivo:</b> {{item.tipo}}</label>
+          <label class="card-text centrar"><b>Marca del Dispositivo:</b> {{item.marca}}</label>
+          <label class="card-text centrar"><b>Consumo Electrico :</b>{{item.consumoElectrico}}</label>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-dark margen" data-bs-toggle="modal" data-bs-target="#editarDispositivo"
+                  (click)="obtenerInformacionItem(item)">Editar</button>
+          <button class="btn  margen" data-bs-toggle="modal" data-bs-target="#eliminarDispositivo"
+                  (click)="obtenerInformacionItem(item)">Eliminar</button>
+        </div>
       </div>
-      <div class="card-footer">
-        <button class="btn btn-dark margen" data-bs-toggle="modal" data-bs-target="#editarDispositivo">Editar</button>
-        <button class="btn  margen" data-bs-toggle="modal" data-bs-target="#eliminarDispositivo">Eliminar</button>
-      </div>
-    </div>
-
+  </div>
+  </div>
 </div>
 
 <div class="modal fade" id="agregarDispositivo" tabindex="-1" aria-labelledby="agregarDispositivoDispositivoLabel" aria-hidden="true">
@@ -34,28 +36,28 @@
 
         <label>URL-DE-IMAGEN</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control"required="">
+          <input type="text" class="form-control"required="" name="imagen" #imagen="ngModel" [(ngModel)]="dipositivoModelo.imagen">
         </div>
 
-        <label>Tipo de dipositvo:</label>
+        <label>Modelo Dispositivo:</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control"required="">
+          <input type="text" class="form-control"required="" name="modelo" #modelo="ngModel" [(ngModel)]="dipositivoModelo.modelo">
         </div>
 
         <label>Marca del Dispositivo</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control"required="">
+          <input type="text" class="form-control"required="" name="marca" #marca="ngModel" [(ngModel)]="dipositivoModelo.marca">
         </div>
 
         <label>Cosumo Electrico: </label>
         <div class="input-group mb-3">
           <span class="input-group-text">Kw</span>
-          <input type="number" class="form-control" required="">
+          <input type="number" class="form-control" required="" name="consumo" #consumo="ngModel" [(ngModel)]="dipositivoModelo.consumoElectrico">
         </div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ACEPTAR</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="crearDispositivo(dipositivoModelo)">ACEPTAR</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
       </div>
     </div>
@@ -66,30 +68,28 @@
 <div class="modal fade" id="editarDispositivo" tabindex="-1" aria-labelledby="editarDispositivoLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
-        <label>Numero de Serie:</label>
-      </div>
+      <div class="modal-header">{{oldDispositivocreado.modelo}}</div>
       <div class="modal-body">
 
-        <label>Tipo de dipositvo:</label>
+        <label>URL-DE-IMAGEN</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control"required="">
+          <input type="text" class="form-control"required="" name="imagen1" #imagen="ngModel" [(ngModel)]="oldDispositivocreado.imagen">
         </div>
 
         <label>Marca del Dispositivo</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control"required="">
+          <input type="text" class="form-control"required="" name="marca1" #marca="ngModel" [(ngModel)]="oldDispositivocreado.marca">
         </div>
 
         <label>Cosumo Electrico: </label>
         <div class="input-group mb-3">
           <span class="input-group-text">Kw</span>
-          <input type="number" class="form-control" required="">
+          <input type="number" class="form-control" required="" name="consumo1" #consumo="ngModel" [(ngModel)]="oldDispositivocreado.consumoElectrico">
         </div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ACEPTAR</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="editarDispositivo(oldDispositivocreado)">ACEPTAR</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
       </div>
     </div>
@@ -100,10 +100,10 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h4>Esta seguro que desea eliminar el dispositivo ,#de Serie</h4>
+        <h4>Esta seguro que desea eliminar el dispositivo {{oldDispositivocreado.modelo}}</h4>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">ACEPTAR</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="eliminarDispositivo(oldDispositivocreado)">ACEPTAR</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCELAR</button>
       </div>
     </div>

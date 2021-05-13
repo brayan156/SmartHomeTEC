@@ -12,7 +12,7 @@ b {
 }
 
 .navVertical {
-  position: stciky;
+  position: sticky;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -24,7 +24,7 @@ b {
 
 
 .btnSalir{
-  margin-top:130%;
+  margin-top: 100%;
 }
 
 

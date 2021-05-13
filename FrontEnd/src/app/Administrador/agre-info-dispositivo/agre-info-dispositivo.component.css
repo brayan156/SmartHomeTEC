@@ -6,7 +6,7 @@
   margin-top: 1%;
   background: #62C6CA;
   border-color: transparent;
-  
+
 }
 
 .tamano:hover {
@@ -17,21 +17,23 @@
 
 .posicion{
   margin-left: 15%;
-  margin-right:10% ;
+  margin-right:15% ;
   z-index: -1;
 }
 
 .cardPosicion{
+  width: 10%;
   margin-left: 2%;
   margin-top: 10px;
-  background: #3c3c3c;
-  color: white;
+  background: white;
+  color: black;
 }
 
 .margen{
-  margin-left: 5%;
-  width: full;
-  background: #62C6CA; 
+  margin-left: 25%;
+  margin-top: 5px;
+  width: 50%;
+  background: #62C6CA;
   border-color: transparent;
   color: black;
 }
@@ -40,3 +42,17 @@
   background: #FAB04A;
 }
 
+.centrar{
+  margin-left: 10%;
+}
+
+.modal{
+  background: linear-gradient(65deg, #212121, #212121);
+  border-color: transparent;
+}
+
+.card{
+  height: 525px;
+  width: 400px;
+  margin-bottom: 50px;
+}

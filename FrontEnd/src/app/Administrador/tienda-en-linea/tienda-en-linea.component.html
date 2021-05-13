@@ -1,59 +1,28 @@
 <app-nav></app-nav>
 <div class="posicion ">
   <div class="tamano">
-    <input class="form-control form-control-lg" id="formFileLg" type="file">
+    <input type="file" (change)="onFileChange($event)" multiple="false" />
   </div>
-
-  <div class="row">
-
-    <div class="card cardPosicion" style="width: 18rem;">
-      <img src="https://www.cnet.com/a/img/TP2-mWLkTScMvfIdd7PbMhxXQvM=/1200x675/2020/12/10/c962db96-83a7-436a-85ac-a3846efc9753/iphone-12-pro-max-hoyle-product-hero.jpg"
-           class="card-img-top" width="100" height="100">
-      <div class="card-body">
-        <h5 class="card-title margen" >Distribuidor: #Serie</h5>
-        <button class="btn  botones" data-bs-toggle="modal" data-bs-target="#verDispositivos">Productos Disponibles</button>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<div class="modal fade" id="verDispositivos" tabindex="-1" aria-labelledby="verDispositivosLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="verDispositivosLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-
-        <div class="row">
-
-          <div class="card cardPosicion" style="width: 18rem;">
-            <img src="http://cdn2.dineroenimagen.com/media/dinero/styles/xlarge/public/images/2018/10/util-e-interesante-nokia-3310-podria-volver-n265510-624x352-344584.jpg"
-                 class="card-img-top" width="100" height="100">
-            <div class="card-body">
-              <h5 class="card-title">Nombres del Dispositivo</h5>
-              <b>Descripción:</b>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <p class="card-text"><small>Tiempo de Garantia</small></p>
-            </div>
-          </div>
-
-          <div class="card cardPosicion" style="width: 18rem;">
-            <img src="http://cdn2.dineroenimagen.com/media/dinero/styles/xlarge/public/images/2018/10/util-e-interesante-nokia-3310-podria-volver-n265510-624x352-344584.jpg"
-                 class="card-img-top" width="100" height="100">
-            <div class="card-body">
-              <h5 class="card-title">Nombres del Dispositivo</h5>
-              <b>Descripción:</b>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <p class="card-text"><small>Tiempo de Garantia</small></p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
+  <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="guardardatos()">Guardar</button>
+  <div class="container">
+    <label class="color">Nombre del Distribuidor</label>
+    <table class="table table-light">
+      <thead>
+        <tr>
+          <th scope="col">Cedula Juridica Distribuidor</th>
+          <th scope="col">Nombre del Dispositivo</th>
+          <th scope="col">Precio del Dispositivo</th>
+          <th scope="col">Cantidad de Dispositivos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of ListadispositivosSeVendenEn">
+          <th scope="col">{{item.cjDistribuidor}}</th>
+          <th scope="col">{{item.modeloDispotivo}}</th>
+          <th scope="col">{{item.precio}}</th>
+          <th scope="col">{{item.cantidad}}</th>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

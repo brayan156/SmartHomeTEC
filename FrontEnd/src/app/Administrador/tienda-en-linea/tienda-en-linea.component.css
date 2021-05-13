@@ -7,12 +7,12 @@
 
 
 .tamano{
-  width: 80%;
+  width: 100%;
   margin-left: 1%;
   margin-top: 1%;
   background: #62C6CA;
   border-color: transparent;
-  
+
 }
 
 .tamano:hover {
@@ -35,7 +35,13 @@
   color: black;
 
 }
-
+.color{
+  margin-top: 20px;
+  color: white;
+}
+.container{
+  margin-top: 10px;
+}
 .botones:hover{
   background: #FAB04A;
 }

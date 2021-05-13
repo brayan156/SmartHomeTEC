@@ -1,6 +1,6 @@
 export class DispositivoSeVendeEn {
   cjDistribuidor: string;
-  modeloDispositivo: string;
+  modeloDispotivo: string;
   precio: string;
   cantidad: string;
 }

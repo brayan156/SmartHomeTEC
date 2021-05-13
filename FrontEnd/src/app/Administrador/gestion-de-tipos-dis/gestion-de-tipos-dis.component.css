@@ -4,7 +4,7 @@
   margin-top: 1%;
   background: #62C6CA;
   border-color: transparent;
-  
+
 }
 
 .tamano:hover {
@@ -21,25 +21,21 @@
   width: 25%;
   margin-left: 2%;
   margin-top: 10px;
-  background: #3c3c3c;
+  background: grey;
   color: white;
 }
-
-/* .cardPosicion2{
-  margin-left: 4%;
-  margin-top: 40px;
-} */
-
 
 .margen{
   margin: 5%;
 }
+
 .botones{
   background: #62C6CA;
   margin-top: 1%;
-  margin-left: 1%;
+  margin-left: 10%;
   border-color: transparent;
   color: black;
+  width: 80%;
 
 }
 
@@ -47,3 +43,11 @@
   background: #FAB04A;
 }
 
+.modal{
+  background: #3c3c3c;
+}
+
+.color{
+  color: white;
+  background: #3c3c3c;
+}

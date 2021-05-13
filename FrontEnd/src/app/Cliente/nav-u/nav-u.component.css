@@ -1,3 +1,23 @@
 .margen{
   margin-right: 5px;
 }
+.navHori{
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  z-index: 10;
+  background-color: black;
+}
+
+.color{
+  color: white;
+}
+
+.backGraud{
+  background: black;
+}
+
+
+.btn:hover{
+  background-color: #1e2f37;
+}

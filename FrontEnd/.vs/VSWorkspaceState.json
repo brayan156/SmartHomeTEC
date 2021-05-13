@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\Administrador",
+    "\\src\\app\\Administrador\\gestion-de-tipos-dis",
+    "\\src\\app\\Administrador\\tienda-en-linea",
+    "\\src\\app\\Cliente\\gestion-perfil",
+    "\\src\\app\\Cliente\\tienda-en-linea-usuario",
+    "\\src\\app\\Comunicacion",
+    "\\src\\assets"
+  ],
+  "SelectedNode": "\\src\\app\\Administrador\\tienda-en-linea\\tienda-en-linea.component.ts",
+  "PreviewInSolutionExplorer": false
+}
