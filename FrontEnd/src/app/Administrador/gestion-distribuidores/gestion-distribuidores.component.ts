@@ -19,26 +19,33 @@ export class GestionDistribuidoresComponent implements OnInit {
 
   listaDeRegiones: Regiones[] = [] ;
 
+
   ngOnInit(): void {
     this.service.obtenerDistribuidores().subscribe(lista => {
       this.listaDistribuidores = lista;
       console.log(this.listaDistribuidores);
     });
     this.service.getRegiones().subscribe(lista => {this.listaDeRegiones = lista;
-      console.log(lista);
+                                                   console.log(lista);
     });
   }
   public crearDistribuidor(distribuidor: Distribuidor): void{
-    this.service.crearDistribuidord(distribuidor).subscribe(a => console.log(a));
+    this.service.crearDistribuidord(distribuidor).subscribe(a => {console.log(a);
+                                                                  this.ngOnInit();
+    });
   }
 
   public editarDistribuido(distribuidor: Distribuidor): void{
     console.log(distribuidor);
-    this.service.editarDistribuidores(distribuidor.cedulaJuridica, distribuidor).subscribe(a => console.log(a));
+    this.service.editarDistribuidores(distribuidor.cedulaJuridica, distribuidor).subscribe(a => {console.log(a);
+                                                                                                 this.ngOnInit();
+    });
   }
 
   public eliminarDistribuidor(distribuidor: Distribuidor): void{
-    this.service.eliminarDistribuidor(distribuidor.cedulaJuridica).subscribe(a => console.log(a));
+    this.service.eliminarDistribuidor(distribuidor.cedulaJuridica).subscribe(a => {console.log(a);
+                                                                                   this.ngOnInit();
+    });
   }
 
   public obtenerInformacionItem(distribuidor: Distribuidor): void{

@@ -1,5 +1,5 @@
 export class DispositivoSeVendeEn {
-  cjDistribuidor: string;
+  cjDistribuidor: number;
   modeloDispotivo: string;
   precio: string;
   cantidad: string;

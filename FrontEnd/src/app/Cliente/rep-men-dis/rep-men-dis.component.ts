@@ -41,7 +41,7 @@ export class RepMenDisComponent implements OnInit {
   }
 
   generarPdf(): void {
-    this.service.obtenerPDFMensual(this.listaAux).subscribe(res => {
+    this.service.obtenerPDFMensual(this.listaAux , this.cliente.nombre, this.cliente.primerApellido, this.cliente.segundoApellido).subscribe(res => {
       var newBlob = new Blob([res], { type: "application/pdf" });
 
       if (window.navigator && window.navigator.msSaveOrOpenBlob) {
@@ -52,7 +52,7 @@ export class RepMenDisComponent implements OnInit {
 
       var link = document.createElement('a');
       link.href = data;
-      link.download = "Tipos_de_dispositivos_de_mayor_uso.pdf";
+      link.download = 'Reporte_De_Consumo_Mensual.pdf';
 
       link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
 

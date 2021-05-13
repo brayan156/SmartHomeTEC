@@ -104,6 +104,11 @@ export class ServiciosService {
   }
 
   // tslint:disable-next-line:typedef
+  public getDistribuidor(id: number){
+    return this.http.get<Distribuidor>(this.Url + 'Distribuidor/' + id);
+  }
+
+  // tslint:disable-next-line:typedef
   public getTiposDispositivos(){
     return this.http.get<Tipo[]>(this.Url + 'Tipo');
   }
@@ -123,9 +128,16 @@ export class ServiciosService {
   }
 
   // tslint:disable-next-line:typedef
+  public getTipo(id: string){
+    return this.http.get<Tipo>(this.Url + 'Tipo/' + id);
+  }
+
+  // tslint:disable-next-line:typedef
   public ValidarLogin(correo: string, contrasena: string) {
     return this.http.get<Administrador[]>(this.Url + 'Administrador/validar/' + contrasena + '/' + correo);
   }
+
+
 
   // tslint:disable-next-line:typedef
   public validarLogin2(correo: string, contrasena: string){
@@ -164,7 +176,7 @@ export class ServiciosService {
   }
   // tslint:disable-next-line:typedef
   public habilitarAposentos(id: number) {
-    console.log(id)
+    console.log(id);
     return this.http.get(this.Url + 'Aposento/Default/'+id);
   }
   // tslint:disable-next-line:typedef
@@ -173,21 +185,21 @@ export class ServiciosService {
   }
 
   // tslint:disable-next-line:typedef
-  public obtenerPDFreportetipo(reporte) {
+  public obtenerPDFreportetipo(reporte, nombre: string , primerApellido: string , segundoApellido: string) {
     // tslint:disable-next-line:max-line-length
-    return this.http.post(this.Url + 'Pdf/consumo_tipo/' + this.cliente.nombre + '/' + this.cliente.primerApellido + '/' + this.cliente.segundoApellido, reporte, { responseType: 'blob' });
+    return this.http.post(this.Url + 'Pdf/consumo_tipo/' + nombre + '/' + primerApellido + '/' + segundoApellido, reporte, { responseType: 'blob' });
   }
 
   // tslint:disable-next-line:typedef
-  public obtenerPDFMensual(reporte) {
+  public obtenerPDFMensual(reporte, nombre: string , primerApellido: string , segundoApellido: string) {
     // tslint:disable-next-line:max-line-length
-    return this.http.post(this.Url + 'Pdf/consumo_mensual/' + this.cliente.nombre + '/' + this.cliente.primerApellido + '/' + this.cliente.segundoApellido, reporte, { responseType: 'blob' });
+    return this.http.post(this.Url + 'Pdf/consumo_mensual/' + nombre + '/' + primerApellido + '/' + segundoApellido, reporte, { responseType: 'blob' });
   }
 
   // tslint:disable-next-line:typedef
-  public obtenerPDFDia(reporte) {
+  public obtenerPDFDia(reporte, nombre: string , primerApellido: string , segundoApellido: string ) {
     // tslint:disable-next-line:max-line-length
-    return this.http.post(this.Url + 'Pdf/consumo_periodo_dia/' + this.cliente.nombre + '/' + this.cliente.primerApellido + '/' + this.cliente.segundoApellido, reporte, { responseType: 'blob' });
+    return this.http.post(this.Url + 'Pdf/consumo_periodo_dia/' + nombre + '/' + primerApellido + '/' + segundoApellido, reporte, { responseType: 'blob' });
   }
 
   // tslint:disable-next-line:typedef

@@ -19,17 +19,16 @@ export class RepTipDispUsoComponent implements OnInit {
   ngOnInit(): void {
     this.service.getCliente().subscribe(clienteAux =>
     {this.cliente = clienteAux;
+     this.service.getConsumoTipo(this.cliente.id).subscribe( tabla => this.datosAMostrar = tabla);
+     this.service.obtenereportetipo().subscribe(datos => this.datos = datos);
     });
-    this.cliente = this.service.cliente;
-    this.service.getConsumoTipo(this.cliente.id).subscribe( tabla => this.datosAMostrar = tabla);
-    this.service.obtenereportetipo().subscribe(datos => this.datos = datos);
     console.log(this.datos);
   }
 
 
 
   generarPdf(): void {
-    this.service.obtenerPDFreportetipo(this.datos).subscribe(res => {
+    this.service.obtenerPDFreportetipo(this.datos, this.cliente.nombre, this.cliente.primerApellido, this.cliente.segundoApellido).subscribe(res => {
       var newBlob = new Blob([res], { type: "application/pdf" });
 
       if (window.navigator && window.navigator.msSaveOrOpenBlob) {

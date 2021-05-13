@@ -52,7 +52,7 @@ export class RepDiaDispComponent implements OnInit {
   }
 
   generarPdf(): void {
-    this.service.obtenerPDFDia(this.listaReporte).subscribe(res => {
+    this.service.obtenerPDFDia(this.listaReporte, this.cliente.nombre, this.cliente.primerApellido, this.cliente.segundoApellido ).subscribe(res => {
       var newBlob = new Blob([res], { type: "application/pdf" });
 
       if (window.navigator && window.navigator.msSaveOrOpenBlob) {
@@ -63,7 +63,7 @@ export class RepDiaDispComponent implements OnInit {
 
       var link = document.createElement('a');
       link.href = data;
-      link.download = "Tipos_de_dispositivos_de_mayor_uso.pdf";
+      link.download = 'Reportes_De_Mayor_Consumo_Diario.pdf';
 
       link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
 
