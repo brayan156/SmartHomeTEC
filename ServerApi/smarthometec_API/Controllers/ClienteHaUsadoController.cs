@@ -46,12 +46,9 @@ namespace smarthometec_API.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClienteHaUsado(int id, ClienteHaUsado clienteHaUsado)
+        public async Task<IActionResult> PutClienteHaUsado( ClienteHaUsado clienteHaUsado)
         {
-            if (id != clienteHaUsado.NSerieDispositivo)
-            {
-                return BadRequest();
-            }
+
 
             _context.Entry(clienteHaUsado).State = EntityState.Modified;
 
@@ -59,16 +56,10 @@ namespace smarthometec_API.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClienteHaUsadoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
+            catch (DbUpdateConcurrencyException) { 
+
                     throw;
-                }
+                
             }
 
             return NoContent();

@@ -98,6 +98,72 @@ namespace smarthometec_API.Controllers
 
 
 
+        [HttpPost("sincronizar/{idcliente}")]
+        public string PostCliente(Dictionary<string, dynamic> clase, int idcliente)
+        {
+
+            List<Historial> historiales = clase["historiales"];
+            List<ClienteHaUsado> clienteHaUsado = clase["clienteHaUsado"];
+            List<DispositivoAdquirido> dispositivos = clase["dispositivos"];
+            List<Aposento> aposentos = clase["aposentos"];
+
+            clienteHaUsado.ForEach(chu => {
+                if (!_context.ClienteHaUsado.Any(clienteha => chu.IdCliente == clienteha.IdCliente & chu.IdCliente == idcliente & chu.NSerieDispositivo == clienteha.NSerieDispositivo)) {
+                    _context.ClienteHaUsado.Add(chu);
+                }
+            });
+            _context.SaveChanges();
+
+           
+            var aposentosclientebase = _context.Aposento.Where(ap => ap.IdCliente == idcliente);
+
+            var aposentoseditar = aposentos.Where(aposento => aposentosclientebase.Any(a => a.IdCliente == aposento.IdCliente & a.Id == aposento.Id)).ToList();
+            var aposentosagregar = aposentos.Where(aposento => aposentosclientebase.All(a => a.IdCliente == aposento.IdCliente & a.Id != aposento.Id));
+            var aposentoseliminar = aposentosclientebase.Where(aposento => aposentos.Where(a => a.IdCliente == idcliente).All(a => a.Id != aposento.Id));
+
+            aposentoseditar.ForEach(aposento =>
+            {
+                _context.Entry(aposento).State = EntityState.Modified;
+            });
+            _context.SaveChanges();
+
+            aposentosagregar.ToList().ForEach(aposento =>
+            {
+                var apagregado = _context.Aposento.Add(aposento).Entity;
+                dispositivos.Where(dispositivo => aposento.Id == dispositivo.IdAposento).ToList().ForEach(dis=>{
+                    dis.IdAposento = apagregado.Id;
+                    _context.Entry(dis).State= EntityState.Modified;
+                });
+            });
+            _context.SaveChanges();
+
+
+            _context.ClienteHaUsado.Where(cu => cu.IdCliente == idcliente & cu.PropietarioActual == true).Join(dispositivos, cu => cu.NSerieDispositivo, da => da.NSerie, (cu, da) => da).ToList().ForEach(dis=> {
+                _context.Entry(dis).State = EntityState.Modified;
+
+            });
+            _context.SaveChanges();
+
+            _context.Aposento.RemoveRange(aposentoseliminar);
+            _context.SaveChanges();
+
+            var dispositivoscliente=_context.ClienteHaUsado.Where(cu => cu.IdCliente == idcliente & cu.PropietarioActual == true).Join(_context.DispositivoAdquirido, cu => cu.NSerieDispositivo, da => da.NSerie, (cu, da) => da);
+            historiales.Where(historial => dispositivoscliente.Any(d => d.NSerie == historial.NSerie)).ToList().ForEach(historial => {
+                if (_context.Historial.Any(hist => hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes & hist.Dia == historial.Dia & hist.Hora == historial.Hora))
+                {
+                    _context.Entry(historial).State = EntityState.Modified;
+                }
+                else {
+                    _context.Historial.Add(historial);
+                }
+            });
+            _context.SaveChanges();
+
+            return "sincronizado wapo";
+        }
+
+
+
 
         // POST: api/Cliente
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
