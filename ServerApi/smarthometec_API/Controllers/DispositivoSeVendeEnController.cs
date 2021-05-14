@@ -54,13 +54,9 @@ namespace smarthometec_API.Controllers
         // PUT: api/DispositivoSeVendeEn/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDispositivoSeVendeEn(int id, DispositivoSeVendeEn dispositivoSeVendeEn)
+        [HttpPut()]
+        public async Task<IActionResult> PutDispositivoSeVendeEn( DispositivoSeVendeEn dispositivoSeVendeEn)
         {
-            if (id != dispositivoSeVendeEn.CjDistribuidor)
-            {
-                return BadRequest();
-            }
 
             _context.Entry(dispositivoSeVendeEn).State = EntityState.Modified;
 
@@ -70,16 +66,8 @@ namespace smarthometec_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DispositivoSeVendeEnExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
-
             return NoContent();
         }
 
