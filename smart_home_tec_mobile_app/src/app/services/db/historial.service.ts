@@ -118,6 +118,10 @@ export class HistorialService {
 
 
     var hora_dia = fechaprendido.getHours() + 1;
+    if (fechaprendido.toDateString() == today.toDateString() && hora_dia > today.getHours()) {
+      hora_dia = 24;
+    }
+    
     for (let i = total_dias; i >= 0; i--)
     {
       while (hora_dia < 24) {
@@ -127,6 +131,9 @@ export class HistorialService {
         h.mes = fechaprendido.getMonth() + 1;
         h.ano = fechaprendido.getFullYear();;
         h.hora = hora_dia;
+
+        h.nSerie = N_serie;
+
 
         if (fechaprendido.toDateString() == today.toDateString() && hora_dia == today.getHours()) {
           h.minutosDeUso = today.getMinutes();

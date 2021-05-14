@@ -139,11 +139,13 @@ export class GestionAposentosPage implements OnInit {
       if (this.db.Sincronizar) {
         this.dbAPI.deleteAposento(this.aposento.id).subscribe(data => {
           console.log(data);
+          this.router.navigateByUrl('control-dispositivos-activos');
         });
       } else {
         this.db.deleteAposento(this.aposento.id);
+        this.router.navigateByUrl('control-dispositivos-activos');
       }
-      this.router.navigateByUrl('control-dispositivos-activos');
+      
     } else {
       this.presentAlert("Lo siento, tienes dispositivos asociados a este aposento :(");
     }

@@ -43,7 +43,7 @@ export class ControlDispositivosActivosPage implements OnInit {
     public alertController: AlertController,
     public actionSheetController: ActionSheetController,
     private db: DbServiceService,
-  private dbAPI: DbAPIService) {
+    private dbAPI: DbAPIService) {
     this.actualizarContenido();
   }
 
@@ -69,7 +69,7 @@ export class ControlDispositivosActivosPage implements OnInit {
         } else {
           this.presentAlert("No tiene aposentos asociados.");
         }
-        
+
       })
     } else {
       this.db.getMisDispositivosmodelo();
@@ -99,10 +99,10 @@ export class ControlDispositivosActivosPage implements OnInit {
       this.dbAPI.getDispositivoAdquirido(dispositivo.n_serie).subscribe(data => {
         data.idAposento = evento.detail.value;
         this.dbAPI.putDispositivoAdquirido(data).subscribe(data2 => {
-        
+
         });
       })
-      
+
     } else {
       this.db.updateDispositivoAdquirido(evento.detail.value, dispositivo.n_serie);
     }
@@ -143,14 +143,24 @@ export class ControlDispositivosActivosPage implements OnInit {
           text: 'Listo',
           handler: data => {
             console.log("Ingresaste ", data.nuevonombre);
-            if (this.db.Sincronizar) {
-              this.dbAPI.addAposento(data.nuevoNombre).subscribe(data => {
-                
-              });
-            } else {
-              this.db.addAposento(data.nuevonombre);
-            }   
-            this.actualizarContenido();
+            let existe = false;
+            this.misAposentos.forEach(elemento => {
+              if (elemento.nombreCuarto == data.nuevonombre) {
+                this.presentAlert("Este nombre ya está registrado.");
+                existe = true;
+              }
+            });
+            if (!existe) {
+              if (this.db.Sincronizar) {
+                this.dbAPI.addAposento(data.nuevonombre).subscribe(data => {
+                  this.actualizarContenido();
+                });
+              } else {
+                this.db.addAposento(data.nuevonombre);
+                this.actualizarContenido();
+              }
+            }
+
           }
         }
       ]
@@ -164,7 +174,7 @@ export class ControlDispositivosActivosPage implements OnInit {
     } else {
       this.presentAlert("¿Está seguro de que desea activar sincronizacion?");
     }
-    
+
   }
 
   async noHayContenidoAlert() {
@@ -219,7 +229,7 @@ export class ControlDispositivosActivosPage implements OnInit {
 
           }
         },
-      {
+        {
           text: 'Asociar a otro usuario',
           icon: 'pencil',
           handler: () => {
@@ -242,10 +252,9 @@ export class ControlDispositivosActivosPage implements OnInit {
   }
 
   prenderDispositivo(n_serie: number) {
-    console.log("el n_serie es" + n_serie);
     if (this.db.Sincronizar) {
       this.dbAPI.prenderDispositivo(n_serie).subscribe(data => {
-        
+
       });
     } else {
       this.db.prenderDispositivo(n_serie);
@@ -255,7 +264,7 @@ export class ControlDispositivosActivosPage implements OnInit {
   apagarDispositivo(n_serie: number) {
     if (this.db.Sincronizar) {
       this.dbAPI.apagarDispositivo(n_serie).subscribe(data => {
-        
+
       });
     } else {
       this.db.apagarDispositivo(n_serie);
@@ -287,7 +296,7 @@ export class ControlDispositivosActivosPage implements OnInit {
           text: 'Listo',
           handler: data => {
             console.log(data);
-            this.asociarDispositivoANuevoCliente(dispositivo.N_serie, data.nuevoId);
+            this.asociarDispositivoANuevoCliente(dispositivo.n_serie, data.nuevoId);
           }
         }
       ]
@@ -299,7 +308,7 @@ export class ControlDispositivosActivosPage implements OnInit {
   asociarDispositivoANuevoCliente(n_serie: number, idCliente: number) {
     if (this.db.Sincronizar) {
       this.dbAPI.asociarDispositivoANuevoCliente(n_serie, idCliente).subscribe(data => {
-        
+
       });
     } else {
       this.db.asociarDispositivoANuevoCliente(n_serie, idCliente);

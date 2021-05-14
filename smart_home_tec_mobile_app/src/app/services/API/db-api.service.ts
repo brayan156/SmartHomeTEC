@@ -37,11 +37,12 @@ export class DbAPIService {
     return this.http.put(this.Url + "DispositivoAdquirido/"  + dispositivoAdquirido.nSerie, dispositivoAdquirido);
   }
 
-  addAposento(nuevoNombre:string) {
+  addAposento(nuevoNombre: string) {
+    console.log("el nuevoNombre ", nuevoNombre);
     let aposento = new Aposento();
     aposento.nombreCuarto = nuevoNombre;
     aposento.idCliente = this.Usuario.id;
-    return this.http.post(this.Url + "Aposento", aposento);
+    return this.http.post(this.Url + "Aposento", aposento, {responseType: "text"});
   }
 
   prenderDispositivo(n_serie: number) {
@@ -69,7 +70,7 @@ export class DbAPIService {
   }
 
   deleteAposento(idAposento: number) {
-    return this.http.delete(this.Url + 'Aposento/' + idAposento + "/" + this.Usuario.id);
+    return this.http.delete(this.Url + 'Aposento/' + idAposento + "/" + this.Usuario.id, {responseType:"text"});
   }
 
   putAposento(aposento: Aposento) {
