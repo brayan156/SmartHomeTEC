@@ -48,18 +48,47 @@ namespace smarthometec_API.Controllers
             return cliente;
         }
 
+        public  int gettiempo(int nserie)
+        {
+            var pedido = _context.Pedido.First(p => p.NSerieDispositivo == nserie);
+            var pfactura = _context.PedidoFactura.First(pf => pf.IdPedido == pedido.Id);
+            var factura = _context.Factura.First(f => f.NFactura == pfactura.NFactura);
+            var garantia = _context.CertificadoGarantia.First(f => f.NFactura == factura.NFactura);
+            var fechafinal = new DateTime(garantia.AnoFinGarantia, garantia.MesFinGarantia, factura.Dia.Value);
+            var mesesrestantes = ((fechafinal.Year - DateTime.Now.Year) * 12) + fechafinal.Month - DateTime.Now.Month;
+
+            if (mesesrestantes < 0)
+            {
+                return 0;
+            }
+
+            return mesesrestantes;
+        }
+
 
         [HttpGet("dispositivosDueno/{id}")]
-        public async Task<ActionResult<IEnumerable<DispositivoAdquirido>>> Getdispositvos(int id)
+        public async Task<ActionResult<IEnumerable<dynamic>>> Getdispositvos(int id)
         {
-            var dipositivos = await _context.ClienteHaUsado.Where(cu=>cu.IdCliente==id & cu.PropietarioActual==true).Join(_context.DispositivoAdquirido,cu=>cu.NSerieDispositivo,da=>da.NSerie,(cu,da)=>da).ToListAsync();
+            var dipositivos =  _context.ClienteHaUsado.Where(cu=>cu.IdCliente==id & cu.PropietarioActual==true).Join(_context.DispositivoAdquirido,cu=>cu.NSerieDispositivo,da=>da.NSerie,(cu,da)=>da);
+            var dis_modelo = dipositivos.Join(_context.DispositivoModelo,d=> d.Modelo,m=>m.Modelo, (d,m)=>new
+            {d,m });
+            List<dynamic> lista = new List<dynamic>();
+
+            dis_modelo.ToList().ForEach(dm => {
+                var meses = this.gettiempo(dm.d.NSerie);
+                var mesfin = meses - meses / 12;
+                var anofin = meses / 12;
+                var dmh = new { modelo = dm.m.Modelo, marca = dm.m.Marca, consumoElectrico = dm.m.ConsumoElectrico, tipo = dm.m.Tipo, imagen = dm.m.Imagen, n_serie = dm.d.NSerie, prendido = dm.d.Prendido, mes_fin_garantia= meses, ano_fin_garantia=anofin };
+                lista.Add(dmh);
+            });
+
 
             if (dipositivos == null)
             {
                 return NotFound();
             }
 
-            return dipositivos;
+            return lista;
         }
 
 
