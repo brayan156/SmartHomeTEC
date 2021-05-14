@@ -193,7 +193,7 @@ export class ControlDispositivosActivosPage implements OnInit {
           }
         }, {
           text: 'Si xD',
-          handler: () => {
+          handler: () => { 
             this.db.seedDatabase();
             this.actualizarContenido();
             this.db.Sincronizar = false;
