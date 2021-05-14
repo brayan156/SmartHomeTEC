@@ -34,6 +34,8 @@ export class TiendaEnLineaUsuarioComponent implements OnInit {
   // tslint:disable-next-line:new-parens
   dispositivoactual: {dispositivoSeVendeEn: DispositivoSeVendeEn, dispositivoModelo: DispositivoModelo};
   dispositivoCompra: {dispositivoSeVendeEn: DispositivoSeVendeEn, dispositivoModelo: DispositivoModelo};
+
+  hora: Date = new Date();
   /**
    * Inicialisa el html con los datos que recupera de la base de datos para la tienda en linea
    */
@@ -79,11 +81,15 @@ export class TiendaEnLineaUsuarioComponent implements OnInit {
    */
   // tslint:disable-next-line:typedef
   public comprar() {
-    this.dispositivoSeVende.cantidad -= 1;
     this.service.comprar(this.dispositivoactual.dispositivoSeVendeEn, this.cliente.id).subscribe(c => {
       console.log(c);
+      this.dispositivoactual.dispositivoSeVendeEn.cantidad -= 1;
+      this.service.editarDispostivoSeVende(this.dispositivoactual.dispositivoSeVendeEn).subscribe(a => console.log(a));
+      // tslint:disable-next-line:max-line-length
+      alert('Compra realizada, ' + ' Numero consecutivo: ' + c.pedido.id + ' Fecha: ' + c.factura.dia + '/' + c.factura.mes + '/' + c.factura.ano + ' Hora: ' +
+        // tslint:disable-next-line:max-line-length
+        this.hora.getHours() + this.hora.getMinutes() + ' Tipo Dispositivo: ' + this.dispositivoactual.dispositivoModelo.tipo + ' Marca :' + this.dispositivoactual.dispositivoModelo.marca +
+      ' Numero de serie: ' + c.pedido.nSerieDispositivo + ' Precio: ₡ ' + this.dispositivoSeVende.precio);
     });
   }
-
-
 }

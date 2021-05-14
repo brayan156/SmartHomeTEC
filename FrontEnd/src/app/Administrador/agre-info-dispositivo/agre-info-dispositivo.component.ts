@@ -50,8 +50,12 @@ export class AgreInfoDispositivoComponent implements OnInit {
   public crearDispositivo(dispositivoModelo: DispositivoModelo): void{
     console.log(dispositivoModelo);
     dispositivoModelo.tipo = null;
-    this.service.crearDispositivoModelo(dispositivoModelo).subscribe( a => {console.log(a);
-                                                                            this.ngOnInit();
+    this.service.crearDispositivoModelo(dispositivoModelo).subscribe( respuesta => {
+      if (respuesta === 'Modelo Existente'){
+        alert('Este modelo ya existe');
+      }else {
+        this.ngOnInit();
+      }
     });
   }
 
@@ -61,8 +65,13 @@ export class AgreInfoDispositivoComponent implements OnInit {
    */
   public editarDispositivo(dispositivoModelo: DispositivoModelo): void{
     console.log(dispositivoModelo);
-    this.service.editarDipositivoModelo(dispositivoModelo.modelo, dispositivoModelo).subscribe(a => {console.log(a);
-                                                                                                     this.ngOnInit();
+    this.service.editarDipositivoModelo(dispositivoModelo.modelo, dispositivoModelo).subscribe(respuesta => {
+      console.log(respuesta);
+      if (respuesta === 'el dispositivo ya ha sido comprado'){
+        alert('No se puede editar este dispositivo puesto que ya ha sido comprado');
+      }else {
+        this.ngOnInit();
+      }
     });
   }
 
@@ -71,8 +80,15 @@ export class AgreInfoDispositivoComponent implements OnInit {
    * @param dispositivoModelo dispositivo a eliminar
    */
   public eliminarDispositivo(dispositivoModelo: DispositivoModelo): void{
-    this.service.eliminarDispositivosModelo(dispositivoModelo.modelo).subscribe(a => {console.log(a);
-                                                                                      this.ngOnInit();
+    this.service.eliminarDispositivosModelo(dispositivoModelo.modelo).subscribe(respuesta => {
+      console.log(respuesta);
+      this.ngOnInit();
+      console.log(respuesta);
+      if (respuesta === 'dispositivo ya comprado'){
+        alert('No se puede eliminar este dispositivo puesto ya ha sido comprado');
+      }else {
+        this.ngOnInit();
+      }
     });
 
   }

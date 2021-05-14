@@ -43,8 +43,14 @@ export class GestionDistribuidoresComponent implements OnInit {
    * @param distribuidor el objeto que se crea el crear un nuevo distribuidor
    */
   public crearDistribuidor(distribuidor: Distribuidor): void{
-    this.service.crearDistribuidord(distribuidor).subscribe(a => {console.log(a);
-                                                                  this.ngOnInit();
+    this.service.crearDistribuidord(distribuidor).subscribe(a => {
+      console.log(a);
+      if (a === 'distribuidor existente'){
+        alert('Ya existe un distribuidor con esta cedula juridica');
+      }
+      else{
+        this.ngOnInit();
+      }
     });
   }
 
@@ -65,8 +71,14 @@ export class GestionDistribuidoresComponent implements OnInit {
    * @param distribuidor del distribuidor actual se tomara el id para eliminarlo en la base de datos
    */
   public eliminarDistribuidor(distribuidor: Distribuidor): void{
-    this.service.eliminarDistribuidor(distribuidor.cedulaJuridica).subscribe(a => {console.log(a);
-                                                                                   this.ngOnInit();
+    this.service.eliminarDistribuidor(distribuidor.cedulaJuridica).subscribe(respuesta => {
+      console.log(respuesta);
+      if (respuesta === 'distribuidor tiene dispositivos asociados'){
+        alert('No se puede eliminar este distribuidor puesto que tiene dispositivos asosciados');
+      }
+      else {
+        this.ngOnInit();
+      }
     });
   }
 
