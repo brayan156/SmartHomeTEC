@@ -225,7 +225,8 @@ export class ControlDispositivosActivosPage implements OnInit {
         }, {
           text: 'Si xD',
           handler: () => {
-            this.db.SincronizarTodo();
+            this.db.SincronizarTodo().subscribe(d =>
+              console.log(d));
             this.db.Sincronizar = true;
           }
         }

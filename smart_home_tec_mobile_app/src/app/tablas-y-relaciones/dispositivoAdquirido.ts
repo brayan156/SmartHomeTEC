@@ -1,7 +1,7 @@
 export class DispositivoAdquirido {
   nSerie  :number;
-  prendido  :boolean;
+  prendido;
   modelo  : string;
   idAposento : number;
-  fechaprendido : string;
+  fechaPrendido : string;
 }

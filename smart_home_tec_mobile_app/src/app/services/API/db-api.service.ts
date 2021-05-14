@@ -12,7 +12,7 @@ import { ClienteAPIService } from './cliente-api.service';
 })
 export class DbAPIService {
 
-  Url = 'https://localhost:44341/api/';
+  Url = 'https://192.168.1.2:45455/api/';
   Usuario: Cliente;
 
 

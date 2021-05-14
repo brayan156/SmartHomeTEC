@@ -55,7 +55,7 @@ export class DbServiceService {
   tipos = new BehaviorSubject([]);
   tmpQuery = new BehaviorSubject([]);
   Usuario = new BehaviorSubject([]);
-  fechaprendido = new BehaviorSubject([]);
+  fechaPrendido = new BehaviorSubject([]);
 
   aposentosPorUsuario = new BehaviorSubject([]);
   misDispostivosmodelo = new BehaviorSubject([]);
@@ -121,11 +121,30 @@ export class DbServiceService {
   }
 
   SincronizarTodo() {
+    this.historialService.loadHistoriales(this.database, this.historiales);
+    this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
+    this.dispositivoService.loadDispositivosAdquiridos(this.database, this.dispositivosAdquiridos);
+    this.aposentosService.loadAposentos(this.database, this.aposentos);
+
+    this.clientesHanUsado.value.forEach(saliente => {
+      if (saliente.propietarioActual == 1) { saliente.propietarioActual = true; }
+      else { saliente.propietarioActual = false; }
+    })
+
+    this.dispositivosAdquiridos.value.forEach(saliente => {
+      if (saliente.prendido == 1) { saliente.prendido = true; }
+      else { saliente.prendido = false; }
+    })
+
+    console.log(JSON.stringify(this.dispositivosAdquiridos))
+
+
+
     let objeto = {
-      historiales: this.historiales,
-      clienteHaUsado: this.clientesHanUsado,
-      dispositivos: this.dispositivosAdquiridos,
-      aposentos: this.aposentos
+      historiales: this.historiales.value,
+      clienteHaUsado: this.clientesHanUsado.value,
+      dispositivos: this.dispositivosAdquiridos.value,
+      aposentos: this.aposentos.value
     }
     return this.http.post(this.dbAPI.Url + "Cliente/sincronizar/" + this.dbAPI.Usuario.id, objeto);
   }
@@ -135,6 +154,7 @@ export class DbServiceService {
   }
 
   SincronizarTodoConApi() {
+    this.Usuario.value[0] = this.dbAPI.Usuario;
     this.SincronizarConApi().subscribe(data => {
       console.log("estoy populando datos....")
       
@@ -176,8 +196,11 @@ export class DbServiceService {
 
       let dipositivoAdquiridosEntran: DispositivoAdquirido[] = data.dipositivoAdquiridos;
       dipositivoAdquiridosEntran.forEach(entro => {
+        
+        if (entro.prendido == true) entro.prendido = 1;
+        else entro.prendido = 0;
         this.database.executeSql('insert into Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento) VALUES (?,?,?,?,?)',
-          [entro.nSerie, entro.prendido, entro.fechaprendido, entro.modelo, entro.idAposento]).then(data2 => {
+          [entro.nSerie, entro.prendido, entro.fechaPrendido, entro.modelo, entro.idAposento]).then(data2 => {
             this.dispositivoService.loadDispositivosAdquiridos(this.database, this.dispositivosAdquiridos);
         })
       })
@@ -185,6 +208,8 @@ export class DbServiceService {
 
       let clientesHanUsadoEntran: ClienteHaUsado[] = data.clientesHanUsado;
       clientesHanUsadoEntran.forEach(entro => {
+        if (entro.propietarioActual == true) entro.propietarioActual = 1;
+        else entro.propietarioActual = 0;
         this.database.executeSql('insert into Cliente_ha_usado (n_serie_dispositivo, id_cliente,propietario_actual) VALUES (?,?,?)',
           [entro.nSerieDispositivo, entro.idCliente, entro.propietarioActual]).then(data2 => {
             this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
@@ -193,7 +218,7 @@ export class DbServiceService {
 
       let historialesEntran: Historial[] = data.historiales;
       historialesEntran.forEach(entro => {
-        this.database.executeSql('insert into Historial (n_historial, n_serie, dia, mes, ano, hora, minutos_de_uso) VALUES  (?,?,?,?,?,?)',
+        this.database.executeSql('insert into Historial (n_historial, n_serie, dia, mes, ano, hora, minutos_de_uso) VALUES  (?,?,?,?,?,?,?)',
           [entro.nHistorial, entro.nSerie, entro.dia, entro.mes, entro.ano, entro.hora, entro.minutosDeUso]).then(data2 => {
             this.historialService.loadHistoriales(this.database, this.historiales);
         })
@@ -203,7 +228,7 @@ export class DbServiceService {
       let pedidosEntran: Pedido[] = data.pedidos;
       pedidosEntran.forEach(entro => {
         this.database.executeSql('insert into Pedido (id, monto, id_cliente, n_serie_dispositivo) VALUES  (?,?,?,?)',
-          [entro.Id, entro.Monto, entro.idCliente, entro.nSerieDispositivo]).then(data2 => {
+          [entro.id, entro.monto, entro.idCliente, entro.nSerieDispositivo]).then(data2 => {
             this.pedidoService.loadPedidos(this.database, this.pedidos);
         })
       })
@@ -220,7 +245,7 @@ export class DbServiceService {
       let pedidosFacturasEntran: PedidoFactura[] = data.pedidosFacturas;
       pedidosFacturasEntran .forEach(entro => {
         this.database.executeSql('insert into Pedido_Factura (id_pedido, n_factura) VALUES (?,?)',
-          [entro.IdPedido, entro.nFactura]).then(data2 => {
+          [entro.idPedido, entro.nFactura]).then(data2 => {
             this.pedidoService.loadPedidosFactura(this.database, this.pedidosFactura);
         })
       })
@@ -310,12 +335,18 @@ export class DbServiceService {
   }
 
   apagarDispositivo(N_serie: number) {
+    console.log(N_serie)
+    console.log("el numero de serie arriba")
+    this.dispositivoService.getFechaprendido(this.database, this.fechaPrendido, N_serie).then(() => {
+      console.log(this.fechaPrendido.value[0]);
+      console.log("un camino")
+      let fechaPrendido = this.fechaPrendido.value[0].fechaPrendido;
+      console.log(fechaPrendido);
+      let day = new Date(fechaPrendido);
+      this.historialService.apagarDispositivo(this.database, this.historiales, N_serie, day);
+      this.dispositivoService.apagarDispostivoAux(this.database, this.dispositivosAdquiridos, N_serie);
 
-    this.dispositivoService.getFechaprendido(this.database, this.fechaprendido, N_serie);
-
-    let fechaprendido = this.fechaprendido.value[0].Fechaprendido;
-    let day = new Date(fechaprendido);
-    this.historialService.apagarDispositivo(this.database, this.historiales, N_serie, day);
+    });
 
 
   }
@@ -329,7 +360,7 @@ export class DbServiceService {
   }
 
   prenderDispositivo(N_serie: number) {
-    this.historialService.prenderDispositivo(this.database, this.historiales, N_serie);
+    this.dispositivoService.prenderDispositivo(this.database, this.dispositivosAdquiridos, N_serie);
   }
 
   getMisDispositivosPorAposento(idAposento: number) {
