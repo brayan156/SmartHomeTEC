@@ -137,6 +137,7 @@ export class DbServiceService {
   SincronizarTodoConApi() {
     this.SincronizarConApi().subscribe(data => {
       console.log("estoy populando datos....")
+      
       let clientesEntrantes: Cliente[] = data.clientes;
       clientesEntrantes.forEach(entro => {
         this.database.executeSql('insert into Cliente (id, email, contrasena, primer_apellido, segundo_apellido, nombre, pais) VALUES (?,?,?,?,?,?,?)',

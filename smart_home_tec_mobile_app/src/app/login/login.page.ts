@@ -39,13 +39,10 @@ export class LoginPage implements OnInit {
   login() {
     this.db.resetUsuario();
    
-    let db = this.db.Sincronizar;
-    if (db) {
-      this.validarCliente();
-    } else {
-      this.validarCliente();
-    }
-   
+    this.db.Sincronizar = true;
+    this.db.SincronizarTodo();
+    
+    this.validarCliente();
     
   }
 
