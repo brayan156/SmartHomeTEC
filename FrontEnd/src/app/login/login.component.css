@@ -48,3 +48,10 @@
   width: 35%;
   margin-top: 10px;
 }
+
+.modal-footer{
+  margin-top: 10px;
+  margin-left: 10%;
+  width: 80%;
+  background: white;
+}

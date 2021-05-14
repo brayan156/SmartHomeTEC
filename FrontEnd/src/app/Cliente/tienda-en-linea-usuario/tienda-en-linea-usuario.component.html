@@ -10,37 +10,56 @@
       <button type="submit" class="btn btn-primary mb-3">Buscar</button>
     </div>
   </form>
-
-  <div class="card cardPosicion" style="width: 18rem;" *ngFor="let item of dispositivos">
-    <img src="{{item.dispositivoModelo.imagen}}"
-         class="card-img-top" width="100%" height="100%">
-    <div class="card-body">
-      <h5 class="card-title">Nombre del Articulo {{item.dispositivoModelo.modelo}}</h5>
-      <p class="card-text">Tipo de atriculo {{item.dispositivoModelo.tipo}}</p>
-      <p class="card-text">Consumo del dipositivo {{item.dispositivoModelo.consumoElectrico}}</p>
-      <p class="card-text">Precio {{item.dispositivoSeVendeEn.precio}}</p>
-    </div>
-    <div class="card-footer">
-      <button type="button" class="btn btn-danger margen" data-bs-toggle="modal" data-bs-target="#comprarDispositivo" (click)="guardarobjeto(item)">
-        Comprar
-      </button>
+  <div class="row">
+    <div class="card cardPosicion margenes" style="width: 18rem;" *ngFor="let item of listaDispositivosComprables">
+      <img src="{{item.dispositivoModelo.imagen}}"
+           class="card-img-top" width="100%" height="100%">
+      <div class="card-body">
+        <h5 class="card-title">Nombre del Articulo {{item.dispositivoModelo.modelo}}</h5>
+        <p class="card-text">Tipo de atriculo {{item.dispositivoModelo.tipo}}</p>
+        <p class="card-text">Consumo del dipositivo {{item.dispositivoModelo.consumoElectrico}}</p>
+        <p class="card-text">Precio {{item.dispositivoSeVendeEn.precio}}</p>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary margen" data-bs-toggle="modal" data-bs-target="#comprarDispositivo" (click)="guardarobjeto(item)">
+          <b>Mas informacion
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg></b>
+        </button>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="modal fade" id="comprarDispositivo" tabindex="-1" aria-labelledby="comprarDispositivoLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="comprarDispositivoLabel">Modal title</h5>
+        <h5 class="modal-title" id="comprarDispositivoLabel">Menu de Compra</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="comprar()">Save changes</button>
+        <div class="card mb-3 bg-dark info">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="{{dispositivoModelo.imagen}}" class="card-img-top" width="250" height="250">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{dispositivoModelo.modelo}}</h5>
+                <p class="card-text">Dispositivo se vende en: {{distribuidor.nombre}}</p>
+                <p class="card-text">Descripcion del Dispositivo: {{tipo.descripcion}}</p>
+                <p class="card-text">Cosumo electrico KW: {{dispositivoModelo.consumoElectrico}}</p>
+                <p class="card-text">Cantidad de dipositivos restantes: {{dispositivoSeVende.cantidad}}</p>
+                <p class="card-text h5"> Precio: {{dispositivoSeVende.precio}}</p>
+                <p class="card-text"><small>Tiempo de Garantia: {{tipo.tiempoDeGarantia}} meses</small></p>
+
+                <button type="button" class="btn btn-danger tamanoAux"  data-bs-dismiss="modal" (click)="comprar()">Comprar</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

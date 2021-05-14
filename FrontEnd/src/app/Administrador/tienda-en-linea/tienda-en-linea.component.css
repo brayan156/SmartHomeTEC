@@ -5,7 +5,11 @@
 }
 
 
-
+.tamano2{
+  width: 82%;
+  margin-top: 20px;
+  margin-left: 3%;
+}
 .tamano{
   width: 100%;
   margin-left: 1%;
@@ -42,6 +46,14 @@
 .container{
   margin-top: 10px;
 }
+.botonGuadar{
+  background: #FAB04A;
+  margin-top: 20px;
+  height: 25%;
+}
 .botones:hover{
   background: #FAB04A;
+}
+.modal{
+  background: #3c3c3c;
 }

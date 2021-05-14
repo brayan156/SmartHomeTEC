@@ -1,3 +1,6 @@
+/**
+ * Clase para modelar al cliente
+ */
 export class Cliente {
   id: number;
   email: string;

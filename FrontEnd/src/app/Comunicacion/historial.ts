@@ -1,3 +1,6 @@
+/**
+ * Clase para modelar el historial de la base de datos
+ */
 export class Historial {
   HorasUso: number;
   numeroDeHistorial: number;
