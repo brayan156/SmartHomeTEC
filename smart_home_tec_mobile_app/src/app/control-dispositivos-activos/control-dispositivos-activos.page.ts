@@ -33,7 +33,6 @@ export class ControlDispositivosActivosPage implements OnInit {
   //   }
   // ];
   dispositivosMios = [];
-
   misAposentos: Aposento[] = []
   misDispositivosPorAposentos = [];
   dispositivosSinAposento = [];
@@ -46,7 +45,6 @@ export class ControlDispositivosActivosPage implements OnInit {
   }
 
   ngOnInit() {
-    this.misAposentos.
     this.actualizarContenido();
 
   }
