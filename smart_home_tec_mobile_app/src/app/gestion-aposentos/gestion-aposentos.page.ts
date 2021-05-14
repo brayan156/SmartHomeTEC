@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'node:constants';
+import { DbAPIService } from '../services/API/db-api.service';
 import { DbServiceService } from '../services/db/db-service.service';
 import { Aposento } from '../tablas-y-relaciones/aposento';
+import { DispositivoAdquirido } from '../tablas-y-relaciones/dispositivoAdquirido';
 
 @Component({
   selector: 'app-gestion-aposentos',
@@ -27,7 +30,8 @@ export class GestionAposentosPage implements OnInit {
   constructor(public modalController: ModalController,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
-    private db: DbServiceService) {
+    private db: DbServiceService,
+  private dbAPI:DbAPIService) {
     this.updateContenido();
   }
 
@@ -43,7 +47,18 @@ export class GestionAposentosPage implements OnInit {
   updateContenido() {
 
     if (this.db.Sincronizar) {
-      
+      this.dbAPI.getMisDispositivos().subscribe(dispositivos => {
+        if (dispositivos.length != 0) {
+          this.misDispositivosPorAposentos = dispositivos;
+          console.log(dispositivos, "son mis dispositivos");
+
+          this.dbAPI.getMisAposentos().subscribe(aposentos => {
+            this.misAposentos = aposentos;
+          })
+        } else {
+          this.presentAlert("No tiene dispositivos asociados.");
+        }
+      })
     } else {
       setTimeout(() => {
         this.db.getMisDispositivosPorAposento(this.aposento.id);
@@ -56,16 +71,25 @@ export class GestionAposentosPage implements OnInit {
   doRefresh(evento) {
     setTimeout(() => {
       this.updateContenido();
-
-
       evento.target.complete();
     }, 300)
   }
 
-  updateAposentoDeDispositivo(evento, n_serie: number) {
+  updateAposentoDeDispositivo(evento, n_serie: number, dispositivo) {
     console.log(evento.detail.value, "son mis detalles");
-    this.db.updateDispositivoAdquirido(evento.detail.value, n_serie);
-    this.updateContenido();
+    if (this.db.Sincronizar) {
+      let dispositivoAdquirido = new DispositivoAdquirido();
+      dispositivoAdquirido.idAposento = evento.detail.value;
+      dispositivoAdquirido.modelo = dispositivo.modelo;
+      dispositivoAdquirido.nSerie = n_serie;
+      dispositivoAdquirido.prendido = false;
+      this.dbAPI.putDispositivoAdquirido(dispositivoAdquirido).subscribe(data => {
+        
+      });
+    } else {
+      this.db.updateDispositivoAdquirido(evento.detail.value, n_serie);
+      this.updateContenido();
+    }
   }
 
   async presentActionSheet() {
@@ -134,5 +158,13 @@ export class GestionAposentosPage implements OnInit {
     await alert.present();
   }
 
-
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alerta',
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
 }

@@ -35,7 +35,6 @@ export class ControlDispositivosActivosPage implements OnInit {
   //   }
   // ];
   dispositivosMios = [];
-
   misAposentos: Aposento[] = []
   misDispositivosPorAposentos = [];
   dispositivosSinAposento = [];
@@ -49,7 +48,6 @@ export class ControlDispositivosActivosPage implements OnInit {
   }
 
   ngOnInit() {
-    this.misAposentos.
     this.actualizarContenido();
 
   }
@@ -99,7 +97,9 @@ export class ControlDispositivosActivosPage implements OnInit {
     console.log(evento.detail.value, "son mis detalles");
     if (this.db.Sincronizar) {
       dispositivo.n_serie = evento.detail.value;
-      this.dbAPI.putDispositivoAdquirido(dispositivo);
+      this.dbAPI.putDispositivoAdquirido(dispositivo).subscribe(data => {
+        
+      });
     } else {
       this.db.updateDispositivoAdquirido(evento.detail.value, dispositivo.n_serie);
     }
@@ -141,7 +141,9 @@ export class ControlDispositivosActivosPage implements OnInit {
           handler: data => {
             console.log("Ingresaste ", data.nuevonombre);
             if (this.db.Sincronizar) {
-              this.dbAPI.addAposento(data.nuevoNombre);
+              this.dbAPI.addAposento(data.nuevoNombre).subscribe(data => {
+                
+              });
             } else {
               this.db.addAposento(data.nuevonombre);
             }   
@@ -238,7 +240,9 @@ export class ControlDispositivosActivosPage implements OnInit {
 
   prenderDispositivo(n_serie: number) {
     if (this.db.Sincronizar) {
-      this.dbAPI.prenderDispositivo(n_serie);
+      this.dbAPI.prenderDispositivo(n_serie).subscribe(data => {
+        
+      });
     } else {
       this.db.prenderDispositivo(n_serie);
     }
@@ -246,7 +250,9 @@ export class ControlDispositivosActivosPage implements OnInit {
 
   apagarDispositivo(n_serie: number) {
     if (this.db.Sincronizar) {
-      this.dbAPI.apagarDispositivo(n_serie);
+      this.dbAPI.apagarDispositivo(n_serie).subscribe(data => {
+        
+      });
     } else {
       this.db.apagarDispositivo(n_serie);
     }
@@ -288,7 +294,9 @@ export class ControlDispositivosActivosPage implements OnInit {
 
   asociarDispositivoANuevoCliente(n_serie: number, idCliente: number) {
     if (this.db.Sincronizar) {
-      this.dbAPI.asociarDispositivoANuevoCliente(n_serie, idCLiente);
+      this.dbAPI.asociarDispositivoANuevoCliente(n_serie, idCliente).subscribe(data => {
+        
+      });
     } else {
       this.db.asociarDispositivoANuevoCliente(n_serie, idCliente);
     }

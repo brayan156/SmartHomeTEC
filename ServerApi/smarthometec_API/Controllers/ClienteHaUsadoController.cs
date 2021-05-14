@@ -106,11 +106,11 @@ namespace smarthometec_API.Controllers
             int idaposento=datos.aposento;
 
 
-            if (_context.DispositivoAdquirido.Any(d => d.NSerie == nserie)) {
+            if (!_context.DispositivoAdquirido.Any(d => d.NSerie == nserie)) {
                 return "dispositivo no existe";
                 
             }
-            else if (_context.ClienteHaUsado.Any(c=> c.NSerieDispositivo==nserie)) {
+            else if (!_context.ClienteHaUsado.Any(c=> c.NSerieDispositivo==nserie)) {
                 return "dispositivo ya ha sido registrado";
             }
 

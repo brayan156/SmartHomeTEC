@@ -32,7 +32,7 @@
       <p class='spec'>Años restantes de garantía: {{dispositivo.ano_fin_garantia}}</p>
       <ion-item>
         <ion-label>Habitación</ion-label>
-        <ion-select interface="action-sheet"  (ionChange)="(updateAposentoDeDispositivo($event,dispositivo.n_serie))" placeholder='Tu habitación' okText="Listo" cancelText="Me arrepentí">
+        <ion-select interface="action-sheet"  (ionChange)="(updateAposentoDeDispositivo($event,dispositivo.n_serie, dispositivo))" placeholder='Tu habitación' okText="Listo" cancelText="Me arrepentí">
           <ion-select-option *ngFor="let aposento of this.misAposentos"  value={{aposento.id}}>{{aposento.nombreCuarto}}</ion-select-option>
         </ion-select>
       </ion-item>

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Aposento } from 'src/app/tablas-y-relaciones/aposento';
 import { Cliente } from 'src/app/tablas-y-relaciones/cliente';
 import { DispositivoAdquirido } from 'src/app/tablas-y-relaciones/dispositivoAdquirido';
+import { Dispositivomodelo } from 'src/app/tablas-y-relaciones/Dispositivomodelo';
+import { tipo } from 'src/app/tablas-y-relaciones/tipo';
 import { ClienteAPIService } from './cliente-api.service';
 
 @Injectable({
@@ -47,6 +49,22 @@ export class DbAPIService {
 
   apagarDispositivo(n_serie) {
     return this.http.get(this.Url + "DispositivoAdquirido/apagar/" + n_serie);
+  }
+
+  asociarDispositivoANuevoCliente(n_serie:number, idNuevoCliente: number) {
+    
+  }
+
+  getDispositivosModelo() {
+    return this.http.get<Dispositivomodelo[]>(this.Url + "DispositivoModelo");
+  }
+
+  getTipos() {
+    return this.http.get<tipo[]>(this.Url + "Tipo");
+  }
+
+  nuevoDispositivo(objeto: object) {
+    return this.http.post(this.Url + 'ClienteHaUsado/agregardispositivo/' + this.Usuario.id, objeto);
   }
 
 }
