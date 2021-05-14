@@ -1,4 +1,4 @@
 export class PedidoFactura {
-  IdPedido: number;
+  idPedido: number;
   nFactura: number;
 }

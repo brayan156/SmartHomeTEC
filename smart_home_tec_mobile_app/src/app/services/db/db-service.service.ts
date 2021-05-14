@@ -203,7 +203,7 @@ export class DbServiceService {
       let pedidosEntran: Pedido[] = data.pedidos;
       pedidosEntran.forEach(entro => {
         this.database.executeSql('insert into Pedido (id, monto, id_cliente, n_serie_dispositivo) VALUES  (?,?,?,?)',
-          [entro.Id, entro.Monto, entro.idCliente, entro.nSerieDispositivo]).then(data2 => {
+          [entro.id, entro.monto, entro.idCliente, entro.nSerieDispositivo]).then(data2 => {
             this.pedidoService.loadPedidos(this.database, this.pedidos);
         })
       })
@@ -220,7 +220,7 @@ export class DbServiceService {
       let pedidosFacturasEntran: PedidoFactura[] = data.pedidosFacturas;
       pedidosFacturasEntran .forEach(entro => {
         this.database.executeSql('insert into Pedido_Factura (id_pedido, n_factura) VALUES (?,?)',
-          [entro.IdPedido, entro.nFactura]).then(data2 => {
+          [entro.idPedido, entro.nFactura]).then(data2 => {
             this.pedidoService.loadPedidosFactura(this.database, this.pedidosFactura);
         })
       })

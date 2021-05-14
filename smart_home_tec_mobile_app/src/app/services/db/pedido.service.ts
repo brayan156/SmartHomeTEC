@@ -20,8 +20,8 @@ export class PedidoService {
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           tmpList.push({
-            Id : data.rows.item(i).id,
-            Monto : data.rows.item(i).monto,
+            id : data.rows.item(i).id,
+            monto : data.rows.item(i).monto,
             idCliente : data.rows.item(i).id_cliente,
             nSerieDispositivo : data.rows.item(i).n_serie_dispositivo,
           });
@@ -39,7 +39,7 @@ export class PedidoService {
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           tmpList.push({
-            IdPedido: data.rows.item(i).id_pedido,
+            idPedido: data.rows.item(i).id_pedido,
             nFactura: data.rows.item(i).n_factura,
           });
         }

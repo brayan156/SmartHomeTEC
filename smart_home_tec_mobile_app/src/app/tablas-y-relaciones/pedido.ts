@@ -1,6 +1,6 @@
 export class Pedido{
-  Id : number;
-  Monto : number;
+  id : number;
+  monto : number;
   idCliente : number;
   nSerieDispositivo : number;
 }
