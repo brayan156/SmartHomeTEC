@@ -103,9 +103,9 @@ namespace smarthometec_API.Controllers
 
 
             ClienteHaUsado clienteusadoactual = new ClienteHaUsado();
-            clienteusado.IdCliente = idnuevo;
-            clienteusado.NSerieDispositivo = nserie;
-            clienteusado.PropietarioActual = true;
+            clienteusadoactual.IdCliente = idactual;
+            clienteusadoactual.NSerieDispositivo = nserie;
+            clienteusadoactual.PropietarioActual = false;
 
             if (!_context.Cliente.Any(c => c.Id == idnuevo))
             {
@@ -145,7 +145,7 @@ namespace smarthometec_API.Controllers
                 return "dispositivo no existe";
                 
             }
-            else if (!_context.ClienteHaUsado.Any(c=> c.NSerieDispositivo==nserie)) {
+            else if (_context.ClienteHaUsado.Any(c=> c.NSerieDispositivo==nserie)) {
                 return "dispositivo ya ha sido registrado";
             }
 
