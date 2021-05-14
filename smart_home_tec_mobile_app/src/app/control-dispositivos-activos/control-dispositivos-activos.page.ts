@@ -212,9 +212,9 @@ export class ControlDispositivosActivosPage implements OnInit {
           icon: 'contrast',
           handler: () => {
             if (dispositivo.prendido == 1) {
-              this.apagarDispositivo(dispositivo.N_serie);
+              this.apagarDispositivo(dispositivo.n_serie);
             } else {
-              this.prenderDispositivo(dispositivo.N_serie);
+              this.prenderDispositivo(dispositivo.n_serie);
             }
 
           }
@@ -242,6 +242,7 @@ export class ControlDispositivosActivosPage implements OnInit {
   }
 
   prenderDispositivo(n_serie: number) {
+    console.log("el n_serie es" + n_serie);
     if (this.db.Sincronizar) {
       this.dbAPI.prenderDispositivo(n_serie).subscribe(data => {
         
