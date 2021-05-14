@@ -45,7 +45,7 @@ namespace smarthometec_API.Controllers
         // PUT: api/ClienteHaUsado/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
+        [HttpPut()]
         public async Task<IActionResult> PutClienteHaUsado( ClienteHaUsado clienteHaUsado)
         {
 
@@ -91,6 +91,41 @@ namespace smarthometec_API.Controllers
             return CreatedAtAction("GetClienteHaUsado", new { id = clienteHaUsado.NSerieDispositivo }, clienteHaUsado);
         }
 
+
+
+        [HttpGet("transferir/{idactual}/{idnuevo}/{nserie}")]
+        public async Task<string> transferir(int idactual, int idnuevo,int nserie)
+        {
+            ClienteHaUsado clienteusado= new ClienteHaUsado();
+            clienteusado.IdCliente = idnuevo;
+            clienteusado.NSerieDispositivo = nserie;
+            clienteusado.PropietarioActual = true;
+
+
+            ClienteHaUsado clienteusadoactual = new ClienteHaUsado();
+            clienteusado.IdCliente = idnuevo;
+            clienteusado.NSerieDispositivo = nserie;
+            clienteusado.PropietarioActual = true;
+
+            if (!_context.Cliente.Any(c => c.Id == idnuevo))
+            {
+                return "usuario nuevo no existe";
+            }
+            else {
+                if (_context.ClienteHaUsado.Any(c => c.IdCliente == idnuevo & c.NSerieDispositivo == nserie))
+                {
+                    _context.Entry(clienteusado).State = EntityState.Modified;
+                }
+                else {
+                    _context.ClienteHaUsado.Add(clienteusado);
+                }
+                _context.Entry(clienteusadoactual).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return "transferido exictosamente";
+            }
+
+
+        }
 
 
 
