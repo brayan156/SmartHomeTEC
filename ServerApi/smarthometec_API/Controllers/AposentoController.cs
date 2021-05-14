@@ -181,10 +181,10 @@ namespace smarthometec_API.Controllers
 
 
         // DELETE: api/Aposento/5
-        [HttpDelete("{id}")]
-        public async Task<string> DeleteAposento(int id)
+        [HttpDelete("{id}/{id_cliente}")]
+        public async Task<string> DeleteAposento(int id,int idcliente)
         {
-            var aposento = await _context.Aposento.FindAsync(id);
+            var aposento = await _context.Aposento.FirstAsync(a=> a.Id==id & a.IdCliente==idcliente);
             if (aposento == null)
             {
                 return "aposnto no encontrado";
