@@ -17,7 +17,9 @@ import {RepTipDispUsoComponent} from './Cliente/rep-tip-disp-uso/rep-tip-disp-us
 import {TiendaEnLineaUsuarioComponent} from './Cliente/tienda-en-linea-usuario/tienda-en-linea-usuario.component';
 
 
-
+/**
+ * Se utiliza para moverse en las diferentes rutas del proyecto
+ */
 export let rutas: Routes;
 rutas = [ {path: '', component: LoginComponent},
   { path: 'administrador', component: VistaAdminComponent,

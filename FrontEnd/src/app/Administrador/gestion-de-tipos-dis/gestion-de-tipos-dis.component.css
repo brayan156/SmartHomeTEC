@@ -17,13 +17,6 @@
   z-index: -1;
 }
 
-.cardPosicion{
-  width: 25%;
-  margin-left: 2%;
-  margin-top: 10px;
-  background: grey;
-  color: white;
-}
 
 .margen{
   margin: 5%;
@@ -50,4 +43,23 @@
 .color{
   color: white;
   background: #3c3c3c;
+}
+
+.cardPosicion{
+  width: 10%;
+  margin-left: 2%;
+  margin-top: 10px;
+  background: white;
+  color: black;
+}
+.card{
+  height: 525px;
+  width: 100px;
+  margin-bottom: 50px;
+}
+
+.card2{
+  height: 490px;
+  width: 100px;
+  margin-bottom: 50px;
 }

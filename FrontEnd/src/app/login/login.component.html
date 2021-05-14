@@ -69,22 +69,23 @@
 
         <div class="tamano3">
           <label>Correo electronico:</label>
-          <input type="email" class="form-control" name="1"  required="" #correo="ngModel" [(ngModel)]="cliente.email">
+          <input type="email" class="form-control" name="1" id="1" required="" #correo="ngModel" [(ngModel)]="cliente.email">
         </div>
 
         <div class="tamano3">
           <label>Password</label>
-          <input type="password" class="form-control"  name="2"  required="" #password="ngModel" [(ngModel)]="cliente.contrasena">
+          <input type="password" class="form-control"  name="2" id="2" required="" #password="ngModel" [(ngModel)]="cliente.contrasena">
         </div>
 
         <div class="tamano2">
           <label>Nombre:</label>
-          <input type="text" class="form-control" name="3"  required="" #nombre="ngModel" [(ngModel)]="cliente.nombre">
+          <input type="text" class="form-control" name="3"  id="3" required="" #nombre="ngModel" [(ngModel)]="cliente.nombre">
         </div>
 
         <div class="tamano4">
           <label>Primer Apellido:</label>
-          <input type="text" class="form-control" name="4" required="" #primerApellido="ngModel" [(ngModel)]="cliente.primerApellido">
+          <input type="text" class="form-control" name="4" id="4"
+                 required="" #primerApellido="ngModel" [(ngModel)]="cliente.primerApellido">
         </div>
         <div class="tamano4">
           <label>Segundo Apellido:</label>
@@ -93,27 +94,23 @@
 
         <div class="tamano3">
           <label>Cedula:</label>
-          <input type="email" class="form-control" name="8"  required="" #cedula="ngModel" [(ngModel)]="cliente.id">
+          <input type="number" class="form-control" name="8"  required="" #cedula="ngModel" [(ngModel)]="cliente.id">
         </div>
 
         <div class="tamano3">
           <label>Pais</label>
-          <select class="form-select" id="validationCustom04" name="6" required #pais="ngModel" [(ngModel)]="cliente.pais">
+          <select class="form-select" id="validationCustom04" name="6" required="" #pais="ngModel" [(ngModel)]="cliente.pais">
             <optgroup label="">
               <option *ngFor="let item of listaDeRegiones">{{item.pais}}</option>
             </optgroup>
           </select>
         </div>
 
-        <div class="tamano3">
-          <label>Dirrecion</label>
-          <input type="text" class="form-control">
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" name="7" (click)="crearCliente(cliente)">Aceptar</button>
         </div>
-
       </form>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" name="7"  data-bs-dismiss="modal" (click)="crearCliente(cliente)">Aceptar</button>
-      </div>
+
     </div>
   </div>
 </div>

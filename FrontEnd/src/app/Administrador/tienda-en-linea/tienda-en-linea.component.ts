@@ -12,17 +12,20 @@ import {DispositivoSeVendeEn} from '../../Comunicacion/dispositivo-se-vende-en';
 export class TiendaEnLineaComponent implements OnInit {
 
   ListadispositivosSeVendenEn: DispositivoSeVendeEn[] = [];
+  listaDispositivosSeVendenEnBaseDatos: DispositivoSeVendeEn[] = [];
   // tslint:disable-next-line:new-parens
   dispositivosSeVendenEn: DispositivoSeVendeEn = new DispositivoSeVendeEn();
   data: [][];
+
+  dispositivoActual: DispositivoSeVendeEn = new DispositivoSeVendeEn();
   constructor(private service: ServiciosService) {
   }
-
   ngOnInit(): void {
+    this.service.getDispositivosSeVende().subscribe(lista => this.ListadispositivosSeVendenEn = lista);
   }
 
   onFileChange(evt: any) {
-    const target: DataTransfer =  <DataTransfer>(evt.target);
+    const target: DataTransfer = <DataTransfer>(evt.target);
 
     if (target.files.length !== 1) throw new Error('Cannot use multiple files');
 
@@ -30,7 +33,6 @@ export class TiendaEnLineaComponent implements OnInit {
 
     reader.onload = (e: any) => {
       const bstr: string = e.target.result;
-
       const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
 
       const wsname: string = wb.SheetNames[0];
@@ -63,9 +65,31 @@ export class TiendaEnLineaComponent implements OnInit {
     });
   }
 
-  guardardatos() {
-    this.service.guardardatosexcel(this.ListadispositivosSeVendenEn).subscribe(r => console.log(r));
+  // tslint:disable-next-line:typedef
+  public guardardatos() {
+    this.service.guardardatosexcel(this.ListadispositivosSeVendenEn).subscribe(r => {
+      console.log(r);
+      this.ngOnInit();
+    });
   }
 
+  public itemActual(itemActual: DispositivoSeVendeEn): void{
+    this.dispositivoActual = itemActual;
+  }
+  public editarDispositvo(item: DispositivoSeVendeEn): void{
+    console.log(this.ListadispositivosSeVendenEn);
+  }
 
+  public eliminarDispositivo(item: DispositivoSeVendeEn): void{
+    // tslint:disable-next-line:prefer-for-of
+     for (let i = 0; i < this.ListadispositivosSeVendenEn.length; i++){
+       // tslint:disable-next-line:no-unused-expression max-line-length
+       // tslint:disable-next-line:max-line-length
+       if (this.ListadispositivosSeVendenEn[i].cjDistribuidor === item.cjDistribuidor && this.ListadispositivosSeVendenEn[i].modeloDispotivo === item.modeloDispotivo){
+         console.log(i);
+         this.ListadispositivosSeVendenEn.splice(i , 1);
+       }
+       console.log(this.ListadispositivosSeVendenEn);
+     }
+  }
 }

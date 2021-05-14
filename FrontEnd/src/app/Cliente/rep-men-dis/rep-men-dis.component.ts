@@ -18,11 +18,18 @@ export class RepMenDisComponent implements OnInit {
 
   // tslint:disable-next-line:new-parens
   cliente: Cliente = new Cliente;
+  /**
+   * Inicialisa los valores del cliente para que se muenstren en el html
+   */
   ngOnInit(): void {
     this.service.getCliente().subscribe(clienteAux =>
     {this.cliente = clienteAux;
     });
   }
+
+  /**
+   * Funcion para parsear el mes y ano a utilizar
+   */
   // tslint:disable-next-line:typedef
   public printAux(){
     // tslint:disable-next-line:radix
@@ -40,8 +47,11 @@ export class RepMenDisComponent implements OnInit {
   });
   }
 
+  /**'
+   * Genera el pdf de los reportes mensuales
+   */
   generarPdf(): void {
-    this.service.obtenerPDFMensual(this.listaAux).subscribe(res => {
+    this.service.obtenerPDFMensual(this.listaAux , this.cliente.nombre, this.cliente.primerApellido, this.cliente.segundoApellido).subscribe(res => {
       var newBlob = new Blob([res], { type: "application/pdf" });
 
       if (window.navigator && window.navigator.msSaveOrOpenBlob) {
@@ -52,7 +62,7 @@ export class RepMenDisComponent implements OnInit {
 
       var link = document.createElement('a');
       link.href = data;
-      link.download = "Tipos_de_dispositivos_de_mayor_uso.pdf";
+      link.download = 'Reporte_De_Consumo_Mensual.pdf';
 
       link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
 

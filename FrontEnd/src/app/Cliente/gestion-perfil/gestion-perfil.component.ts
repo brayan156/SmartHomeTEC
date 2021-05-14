@@ -25,13 +25,15 @@ export class GestionPerfilComponent implements OnInit {
 
   listaDeRegiones: Regiones[] = [] ;
 
+  /**
+   * Recargan los datos del componete gertion de perfil para que estos se visualicen dentro del HTML
+   */
   ngOnInit(): void {
     this.cliente = this.service.cliente;
     this.service.getCliente().subscribe(clienteAux =>
     {this.cliente = clienteAux;
      this.service.leerDirrecionEntrega(this.cliente.id).subscribe(lista => {this.dirrecionesEntrega = lista ;
                                                                             console.log(this.dirrecionesEntrega); });
-
      this.service.getRegiones().subscribe(lista => {this.listaDeRegiones = lista;
                                                     console.log(lista);
       });
@@ -40,10 +42,18 @@ export class GestionPerfilComponent implements OnInit {
     console.log(this.cliente);
     console.log(this.dirrecionesEntrega);
   }
+
+  /**
+   * Imprime el primerApellido del cliente
+   */
   public prueba(): void{
   console.log(this.cliente.primerApellido);
   }
 
+  /**
+   * Anande una nueva dirreccion de entrega
+   * @param direccionEntrega
+   */
   // tslint:disable-next-line:typedef
   anadirUbicacion(direccionEntrega: ClienteEntregaEn){
     if (direccionEntrega.direccionEntrega1 !== ''){
@@ -53,26 +63,38 @@ export class GestionPerfilComponent implements OnInit {
       console.log('Valor nulo');
     }
   }
+
+  /**
+   * Funciones para editar las direferntes variables en la base de datos
+   */
   public editarClienteNombre(): void {
     this.cliente.nombre = this.newCliente.nombre;
     this.service.editarCliente(this.cliente.id, this.cliente).subscribe( a => console.log(a));
   }
-
+  /**
+   * Funciones para editar las direferntes variables en la base de datos
+   */
   public editarClienteApellido(): void{
     this.cliente.primerApellido = this.newCliente.primerApellido;
     this.service.editarCliente(this.cliente.id, this.cliente).subscribe( a => console.log(a));
   }
-
+  /**
+   * Funciones para editar las direferntes variables en la base de datos
+   */
   public editarClienteApellido2(): void{
     this.cliente.segundoApellido = this.newCliente.segundoApellido;
     this.service.editarCliente(this.cliente.id, this.cliente).subscribe( a => console.log(a));
   }
-
+  /**
+   * Funciones para editar las direferntes variables en la base de datos
+   */
   public editarClienteContrasena(): void{
     this.cliente.contrasena = this.newCliente.contrasena;
     this.service.editarCliente(this.cliente.id, this.cliente).subscribe( a => console.log(a));
   }
-
+  /**
+   * Funciones para editar las direferntes variables en la base de datos
+   */
   public editarClientePais(): void{
     this.cliente.pais = this.newCliente.pais;
     this.service.editarCliente(this.cliente.id, this.cliente).subscribe( a => console.log(a));
