@@ -60,6 +60,7 @@ export class ControlDispositivosActivosPage implements OnInit {
           this.dbAPI.getMisDispositivos().subscribe(dispositivos => {
             if (dispositivos.length != 0) {
               this.dispositivosMios = dispositivos;
+              console.log(dispositivos, "son mis dispositivos");
             } else {
               this.presentAlert("No tiene dispositivos asociados.");
             }

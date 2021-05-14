@@ -36,7 +36,7 @@
       <ion-row>
         <ion-card  *ngFor="let dispositivo of dispositivosMios" >
           
-          <img src={{dispositivo.imagen}} (click)="showInfoDispositivo(dispositivo)">
+          <img src="{{dispositivo.imagen}}" (click)="showInfoDispositivo(dispositivo)">
           <ion-card-content>
             <p class='name'>{{dispositivo.modelo}}</p>
             <p class='spec'>{{dispositivo.consumoElectrico}} mW</p>
