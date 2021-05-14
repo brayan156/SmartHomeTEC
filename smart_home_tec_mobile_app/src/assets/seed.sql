@@ -1,3 +1,20 @@
+drop TABLE  if EXISTS Aposento;
+drop TABLE if EXISTS  Certificado_garantia;
+drop TABLE  if EXISTS Cliente;
+drop TABLE if EXISTS  Cliente_ha_usado;
+drop TABLE if EXISTS  direccion_entrega;
+drop TABLE  if EXISTS Dispositivo_adquirido;
+drop TABLE if EXISTS  Dispositivo_modelo;
+drop TABLE if EXISTS  Dispositivo_se_vende_en;
+drop TABLE if EXISTS  Distribuidor;
+drop TABLE if EXISTS  Factura;
+drop TABLE if EXISTS  Historial;
+drop TABLE  if EXISTS Pedido;
+drop TABLE if EXISTS  Pedido_Factura;
+drop TABLE if EXISTS  Regiones;
+drop TABLE  if EXISTS Tipo;
+
+
 create table if not exists Regiones(
     pais varchar (60) unique not null,
     continente varchar(30) not null,

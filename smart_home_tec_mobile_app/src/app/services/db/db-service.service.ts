@@ -17,6 +17,7 @@ import { HistorialService } from './historial.service';
 import { PedidoService } from './pedido.service';
 import { RegionService } from './region.service';
 import { tipoService } from './tipo.service';
+import { DbAPIService } from '../API/db-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +65,8 @@ export class DbServiceService {
     private historialService: HistorialService,
     private pedidoService: PedidoService,
     private regionesService: RegionService,
-    private tiposService: tipoService) {
+    private tiposService: tipoService,
+  private dbAPI: DbAPIService) {
     
   }
 
@@ -109,7 +111,15 @@ export class DbServiceService {
       });
   }
 
-
+  SincronizarTodo() {
+    let objeto = {
+      historiales: this.historiales,
+      clienteHaUsado: this.clientesHanUsado,
+      dispositivos: this.dispositivosAdquiridos,
+      aposentos: this.aposentos
+    }
+    return this.http.post(this.dbAPI.Url + "Cliente/sincronizar/" + this.dbAPI.Usuario.id, objeto);
+  }
 
   resetMyId() {
     this.myID = new Cliente();

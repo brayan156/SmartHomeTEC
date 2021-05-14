@@ -170,11 +170,65 @@ export class ControlDispositivosActivosPage implements OnInit {
 
   confirmarSincronizacion() {
     if (this.db.Sincronizar) {
-      this.presentAlert("¿Está seguro de que desea desactivar sincronizacion?");
+      this.presentarAlertConfirmacionSinc();
     } else {
-      this.presentAlert("¿Está seguro de que desea activar sincronizacion?");
+      this.presentarAlertConfirmacionNoSinc();
+
     }
 
+  }
+
+  async presentarAlertConfirmacionSinc() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: '¡Aló!',
+      message: '¿Está seguro de que desea desactivar sincronizacion? :O',
+      buttons: [
+        {
+          text: 'NO :O',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Si xD',
+          handler: () => {
+            this.db.seedDatabase();
+            this.actualizarContenido();
+            this.db.Sincronizar = false;
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentarAlertConfirmacionNoSinc() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: '¡Aló!',
+      message: '¿Está seguro de que desea activar sincronizacion? :O',
+      buttons: [
+        {
+          text: 'NO :O',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Si xD',
+          handler: () => {
+            this.db.SincronizarTodo();
+            this.db.Sincronizar = true;
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   async noHayContenidoAlert() {
@@ -309,10 +363,11 @@ export class ControlDispositivosActivosPage implements OnInit {
   asociarDispositivoANuevoCliente(n_serie: number, idCliente: number) {
     if (this.db.Sincronizar) {
       this.dbAPI.asociarDispositivoANuevoCliente(n_serie, idCliente).subscribe(data => {
-
+        this.actualizarContenido();
       });
     } else {
       this.db.asociarDispositivoANuevoCliente(n_serie, idCliente);
+      this.actualizarContenido();
     }
   }
 

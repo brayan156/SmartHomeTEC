@@ -54,7 +54,7 @@ export class DbAPIService {
   }
 
   asociarDispositivoANuevoCliente(n_serie:number, idNuevoCliente: number) {
-    return this.http.get(this.Url + "ClienteHaUsado/transferir/" + this.Usuario.id + "/" + idNuevoCliente + "/" + n_serie);
+    return this.http.get(this.Url + "ClienteHaUsado/transferir/" + this.Usuario.id + "/" + idNuevoCliente + "/" + n_serie, {responseType:"text"});
   }
 
   getDispositivosModelo() {
