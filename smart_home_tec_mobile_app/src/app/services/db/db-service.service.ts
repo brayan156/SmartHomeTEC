@@ -18,6 +18,8 @@ import { PedidoService } from './pedido.service';
 import { RegionService } from './region.service';
 import { tipoService } from './tipo.service';
 import { DbAPIService } from '../API/db-api.service';
+import { Aposento } from 'src/app/tablas-y-relaciones/aposento';
+import { CertificadoDeGarantia } from 'src/app/tablas-y-relaciones/certificado_garantia';
 
 @Injectable({
   providedIn: 'root'
@@ -119,6 +121,39 @@ export class DbServiceService {
       aposentos: this.aposentos
     }
     return this.http.post(this.dbAPI.Url + "Cliente/sincronizar/" + this.dbAPI.Usuario.id, objeto);
+  }
+
+  SincronizarConApi() {
+    return this.http.get<any>(this.dbAPI.Url + "Cliente/desincronizar");
+  }
+
+  SincronizarTodoConApi() {
+    this.SincronizarConApi().subscribe(data => {
+      let clientesEntrantes: Cliente[] = data.clientes;
+      clientesEntrantes.forEach(entro => {
+        this.database.executeSql('insert into Cliente (id, email, contrasena, primer_apellido, segundo_apellido, nombre, pais) VALUES (?,?,?,?,?,?,?)',
+          [entro.id, entro.email, entro.contrasena, entro.primerApellido, entro.segundoApellido, entro.nombre, entro.pais]).then(data2 => {
+            this.clientService.loadClientes(this.database, this.clientes);
+        })
+      })
+
+      let aposentosEntrantes: Aposento[] = data.aposentos;
+      aposentosEntrantes.forEach(entro => {
+        this.database.executeSql('insert into Aposento (id, nombre_cuarto, id_cliente) values (?,?,?)',
+          [entro.id, entro.nombreCuarto, entro.idCliente]).then(data2 => {
+            this.aposentosService.loadAposentos(this.database, this.aposentos);
+        })
+      })
+
+      // let certificadosEntrantes: CertificadoDeGarantia[] = data.certificados;
+      // certificadosEntrantes.forEach(entro => {
+      //   this.database.executeSql('insert into Certificado_garantia (id, nombre_cuarto, id_cliente) values (?,?,?)',
+      //     [entro.id, entro.nombreCuarto, entro.idCliente]).then(data2 => {
+      //       this.aposentosService.loadAposentos(this.database, this.aposentos);
+      //   })
+      // })
+      
+    })
   }
 
   resetMyId() {

@@ -195,6 +195,7 @@ export class ControlDispositivosActivosPage implements OnInit {
           text: 'Si xD',
           handler: () => { 
             this.db.seedDatabase();
+            this.db.SincronizarTodoConApi();
             this.actualizarContenido();
             this.db.Sincronizar = false;
           }
@@ -204,6 +205,8 @@ export class ControlDispositivosActivosPage implements OnInit {
 
     await alert.present();
   }
+
+
 
   async presentarAlertConfirmacionNoSinc() {
     const alert = await this.alertController.create({
