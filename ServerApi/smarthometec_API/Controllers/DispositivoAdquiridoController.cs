@@ -46,13 +46,10 @@ namespace smarthometec_API.Controllers
 
 
 
-        [HttpPut("encender/{id}")]
-        public async Task<IActionResult> Encender(int id, DispositivoAdquirido dispositivoAdquirido)
+        [HttpGet("encender/{id}")]
+        public async Task<IActionResult> Encender(int id)
         {
-            if (id != dispositivoAdquirido.NSerie)
-            {
-                return BadRequest();
-            }
+            var dispositivoAdquirido = _context.DispositivoAdquirido.First(d => d.NSerie == id);
 
             if (dispositivoAdquirido.Prendido != true)
             {
@@ -81,13 +78,10 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
-        [HttpPut("apagar/{id}")]
-        public async Task<IActionResult> Apagar(int id, DispositivoAdquirido dispositivoAdquirido)
+        [HttpGet("apagar/{id}")]
+        public async Task<IActionResult> Apagar(int id)
         {
-            if (id != dispositivoAdquirido.NSerie)
-            {
-                return BadRequest();
-            }
+            var dispositivoAdquirido = _context.DispositivoAdquirido.First(d=> d.NSerie==id);
 
             if (dispositivoAdquirido.Prendido == true)
             {
