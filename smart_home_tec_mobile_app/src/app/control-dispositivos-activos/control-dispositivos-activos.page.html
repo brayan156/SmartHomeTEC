@@ -4,6 +4,11 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Mi casa</ion-title>
+    <ion-buttons slot='end'>
+      <ion-button color="tertiary" (click)="confirmarSincronizacion()">
+        <ion-icon color="tertiary" name="sync"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -25,27 +30,26 @@
 
   <ion-title>Mis dispositivos</ion-title>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingText="Jala para refrescar"
-      refreshingSpinner="circles"
+    <ion-refresher-content pullingText="Jala para refrescar" refreshingSpinner="circles"
       refreshingText="Refrescando...">
     </ion-refresher-content>
   </ion-refresher>
   <ion-grid>
     <ion-col>
       <ion-row>
-        <ion-card  *ngFor="let dispositivo of dispositivosMios" >
-          
+        <ion-card *ngFor="let dispositivo of dispositivosMios">
+
           <img src="{{dispositivo.imagen}}" (click)="showInfoDispositivo(dispositivo)">
           <ion-card-content>
             <p class='name'>{{dispositivo.modelo}}</p>
             <p class='spec'>{{dispositivo.consumoElectrico}} mW</p>
             <p class='spec'>{{dispositivo.marca}}</p>
             <p class='room'>{{dispositivo.tipo}}</p>
-            <ion-select interface="action-sheet"  (ionChange)="(updateAposentoDeDispositivo($event,dispositivo))" placeholder='Tu habitación' okText="Listo" cancelText="Me arrepentí">
-              <ion-select-option *ngFor="let aposento of this.misAposentos"  value={{aposento.id}}>{{aposento.nombreCuarto}}</ion-select-option>
+            <ion-select interface="action-sheet" (ionChange)="(updateAposentoDeDispositivo($event,dispositivo))"
+              placeholder='Tu habitación' okText="Listo" cancelText="Me arrepentí">
+              <ion-select-option *ngFor="let aposento of this.misAposentos" value={{aposento.id}}>
+                {{aposento.nombreCuarto}}</ion-select-option>
             </ion-select>
-            <!-- <ion-toggle (ionChange)="prenderApagar($event, dispositivo)" value='{{dispositivo.prendido}}'></ion-toggle> -->
           </ion-card-content>
         </ion-card>
       </ion-row>

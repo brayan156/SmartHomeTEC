@@ -4,6 +4,7 @@ import { GestionAposentosPage } from '../gestion-aposentos/gestion-aposentos.pag
 import { DbAPIService } from '../services/API/db-api.service';
 import { DbServiceService } from '../services/db/db-service.service';
 import { Aposento } from '../tablas-y-relaciones/aposento';
+import { DispositivoAdquirido } from '../tablas-y-relaciones/dispositivoAdquirido';
 import { Dispositivomodelo } from '../tablas-y-relaciones/Dispositivomodelo';
 
 @Component({
@@ -138,7 +139,7 @@ export class ControlDispositivosActivosPage implements OnInit {
           handler: data => {
             console.log("Ingresaste ", data.nuevonombre);
             if (this.db.Sincronizar) {
-              
+              this.dbAPI.addAposento(data.nuevoNombre);
             } else {
               this.db.addAposento(data.nuevonombre);
             }   
@@ -148,6 +149,15 @@ export class ControlDispositivosActivosPage implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  confirmarSincronizacion() {
+    if (this.db.Sincronizar) {
+      this.presentAlert("¿Está seguro de que desea desactivar sincronizacion?");
+    } else {
+      this.presentAlert("¿Está seguro de que desea activar sincronizacion?");
+    }
+    
   }
 
   async noHayContenidoAlert() {
@@ -195,9 +205,9 @@ export class ControlDispositivosActivosPage implements OnInit {
           icon: 'contrast',
           handler: () => {
             if (dispositivo.prendido == 1) {
-              this.db.apagarDispositivo(dispositivo.N_serie);
+              this.apagarDispositivo(dispositivo.N_serie);
             } else {
-              this.db.prenderDispositivo(dispositivo.N_serie);
+              this.prenderDispositivo(dispositivo.N_serie);
             }
 
           }
@@ -206,7 +216,7 @@ export class ControlDispositivosActivosPage implements OnInit {
           text: 'Asociar a otro usuario',
           icon: 'pencil',
           handler: () => {
-            this.presentAlertPrompt(dispositivo);
+            this.presentarAlertaDeNuevoAsocie(dispositivo);
             console.log('Favorite clicked');
           }
         }, {
@@ -224,7 +234,23 @@ export class ControlDispositivosActivosPage implements OnInit {
     console.log('onDidDismiss resolved with role', role);
   }
 
-  async presentAlertPrompt(dispositivo) {
+  prenderDispositivo(n_serie: number) {
+    if (this.db.Sincronizar) {
+      this.dbAPI.prenderDispositivo(n_serie);
+    } else {
+      this.db.prenderDispositivo(n_serie);
+    }
+  }
+
+  apagarDispositivo(n_serie: number) {
+    if (this.db.Sincronizar) {
+      this.dbAPI.apagarDispositivo(n_serie);
+    } else {
+      this.db.apagarDispositivo(n_serie);
+    }
+  }
+
+  async presentarAlertaDeNuevoAsocie(dispositivo) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Asociar a otro usuario',
@@ -249,7 +275,7 @@ export class ControlDispositivosActivosPage implements OnInit {
           text: 'Listo',
           handler: data => {
             console.log(data);
-            this.db.asociarDispositivoANuevoCliente(dispositivo.N_serie, data.nuevoId);
+            this.asociarDispositivoANuevoCliente(dispositivo.N_serie, data.nuevoId);
           }
         }
       ]
@@ -258,16 +284,14 @@ export class ControlDispositivosActivosPage implements OnInit {
     await alert.present();
   }
 
-  prenderApagar(evento, dispositivo) {
-    console.log("El valor del evento del toggle es", evento.detail.checked);
-    console.log("El valor de prendido del dispositivo es", dispositivo.prendido);
-    if (evento.detail.checked != 1) {
-      this.db.prenderDispositivo(dispositivo.N_serie);
+  asociarDispositivoANuevoCliente(n_serie: number, idCliente: number) {
+    if (this.db.Sincronizar) {
+      this.dbAPI.asociarDispositivoANuevoCliente(n_serie, idCLiente);
     } else {
-      this.db.apagarDispositivo(dispositivo.N_serie);
+      this.db.asociarDispositivoANuevoCliente(n_serie, idCliente);
     }
-    this.actualizarContenido();
   }
+
 
   async presentModal(aposento: Aposento) {
     let tmp;

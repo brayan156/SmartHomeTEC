@@ -34,8 +34,19 @@ export class DbAPIService {
     return this.http.put(this.Url + "Cliente/DispositivoAdquirido/"  + this.Usuario.id, dispositivoAdquirido);
   }
 
-  addAposento(nuevoNombre: string) {
-    
+  addAposento(nuevoNombre:string) {
+    let aposento = new Aposento();
+    aposento.nombreCuarto = nuevoNombre;
+    aposento.idCliente = this.Usuario.id;
+    return this.http.post(this.Url + "Aposento", aposento);
+  }
+
+  prenderDispositivo(n_serie: number) {
+    return this.http.get(this.Url + "DispositivoAdquirido/encender/" + n_serie);
+  }
+
+  apagarDispositivo(n_serie) {
+    return this.http.get(this.Url + "DispositivoAdquirido/apagar/" + n_serie);
   }
 
 }
