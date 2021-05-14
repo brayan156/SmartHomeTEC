@@ -106,8 +106,9 @@ export class LoginComponent implements OnInit {
   // tslint:disable-next-line:typedef
   crearCliente(cliente: Cliente) {
     // tslint:disable-next-line:prefer-for-of
-    this.service.crearCliente(this.cliente).subscribe(c => {
-      if (c === 'cliente existente') {
+    this.service.crearCliente(this.cliente).subscribe(respuesta => {
+      console.log(respuesta)
+      if (respuesta == 'cliente existente') {
         alert('Este numero de cedula pertenece a un cliente');
       } else {
         // tslint:disable-next-line:no-shadowed-variable
