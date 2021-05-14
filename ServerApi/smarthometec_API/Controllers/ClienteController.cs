@@ -48,7 +48,7 @@ namespace smarthometec_API.Controllers
             return cliente;
         }
 
-        public int gettiempo(int nserie)
+        public  int gettiempo(int nserie)
         {
             var pedido = _context.Pedido.First(p => p.NSerieDispositivo == nserie);
             var pfactura = _context.PedidoFactura.First(pf => pf.IdPedido == pedido.Id);
@@ -70,14 +70,25 @@ namespace smarthometec_API.Controllers
         public async Task<ActionResult<IEnumerable<dynamic>>> Getdispositvos(int id)
         {
             var dipositivos =  _context.ClienteHaUsado.Where(cu=>cu.IdCliente==id & cu.PropietarioActual==true).Join(_context.DispositivoAdquirido,cu=>cu.NSerieDispositivo,da=>da.NSerie,(cu,da)=>da);
-            var dis_modelo = await dipositivos.Join(_context.DispositivoModelo,d=> d.Modelo,m=>m.Modelo, (d,m)=>new 
-            {modelo=m.Modelo, marca=m.Marca, consumoElectrico=m.ConsumoElectrico, tipo=m, imagen=m.Imagen, n_serie=d.NSerie,prendido=d.Prendido, mes_fin_garantia=gettiempo(d.NSerie) }).ToListAsync();
+            var dis_modelo = dipositivos.Join(_context.DispositivoModelo,d=> d.Modelo,m=>m.Modelo, (d,m)=>new
+            {d,m });
+            List<dynamic> lista = new List<dynamic>();
+
+            dis_modelo.ToList().ForEach(dm => {
+                var meses = this.gettiempo(dm.d.NSerie);
+                var mesfin = meses - meses / 12;
+                var anofin = meses / 12;
+                var dmh = new { modelo = dm.m.Modelo, marca = dm.m.Marca, consumoElectrico = dm.m.ConsumoElectrico, tipo = dm.m.Tipo, imagen = dm.m.Imagen, n_serie = dm.d.NSerie, prendido = dm.d.Prendido, mes_fin_garantia= meses, ano_fin_garantia=anofin };
+                lista.Add(dmh);
+            });
+
+
             if (dipositivos == null)
             {
                 return NotFound();
             }
 
-            return dis_modelo;
+            return lista;
         }
 
 
