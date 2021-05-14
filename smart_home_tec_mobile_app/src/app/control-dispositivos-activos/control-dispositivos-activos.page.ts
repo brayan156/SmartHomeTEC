@@ -193,10 +193,9 @@ export class ControlDispositivosActivosPage implements OnInit {
           }
         }, {
           text: 'Si xD',
-          handler: () => { 
-
+          handler: () => {
             this.db.initSQLite();
-            //this.db.seedDatabase();
+            // this.db.seedDatabase();
             this.db.SincronizarTodoConApi();
             this.actualizarContenido();
             this.db.Sincronizar = false;
