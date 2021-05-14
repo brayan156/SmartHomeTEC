@@ -145,7 +145,7 @@ namespace smarthometec_API.Controllers
                 return "dispositivo no existe";
                 
             }
-            else if (!_context.ClienteHaUsado.Any(c=> c.NSerieDispositivo==nserie)) {
+            else if (_context.ClienteHaUsado.Any(c=> c.NSerieDispositivo==nserie)) {
                 return "dispositivo ya ha sido registrado";
             }
 
