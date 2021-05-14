@@ -226,6 +226,7 @@ export class ControlDispositivosActivosPage implements OnInit {
             } else {
               this.prenderDispositivo(dispositivo.n_serie);
             }
+            this.actualizarContenido();
 
           }
         },
@@ -264,7 +265,7 @@ export class ControlDispositivosActivosPage implements OnInit {
   apagarDispositivo(n_serie: number) {
     if (this.db.Sincronizar) {
       this.dbAPI.apagarDispositivo(n_serie).subscribe(data => {
-
+        this.actualizarContenido();
       });
     } else {
       this.db.apagarDispositivo(n_serie);

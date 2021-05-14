@@ -16,13 +16,13 @@
       <ion-input [(ngModel)]="this.descripcion" [ngModelOptions]="{standalone: true}" id='descripcion'></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>tipo</ion-label>
+      <ion-label>Tipo</ion-label>
       <ion-select  [(ngModel)]="this.tipo" [ngModelOptions]="{standalone: true}" id='tipo'  interface="action-sheet">
       <ion-select-option *ngFor="let tipo of tipos">{{tipo.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>marca</ion-label>
+      <ion-label>Marca</ion-label>
       <ion-select  [(ngModel)]="this.marca" [ngModelOptions]="{standalone: true}" id='marca' interface="action-sheet">
         <ion-select-option  *ngFor="let dispositivo of dispositivosmodelo">{{dispositivo.marca}}</ion-select-option>
       </ion-select>

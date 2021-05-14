@@ -64,6 +64,7 @@ export class AgregarNuevoPage implements OnInit {
         consumo: this.Consumo,
         aposento: this.getidAposento()
       };
+      console.log(objeto);
       this.dbAPI.nuevoDispositivo(objeto).subscribe(data => {
         if (data == "dispositivo no existe") this.presentAlert("Hagame el favor e ingrese un número de serie válido.");
         else if (data == "dispositivo ya ha sido registrado") this.presentAlert("El dispositivo ya está asociado a un cliente.");

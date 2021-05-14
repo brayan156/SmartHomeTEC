@@ -34,7 +34,7 @@ export class DbAPIService {
 
 
   putDispositivoAdquirido(dispositivoAdquirido:DispositivoAdquirido) {
-    return this.http.put(this.Url + "DispositivoAdquirido/"  + dispositivoAdquirido.nSerie, dispositivoAdquirido);
+    return this.http.put(this.Url + "DispositivoAdquirido/"  + dispositivoAdquirido.nSerie, dispositivoAdquirido, {responseType: "text"});
   }
 
   addAposento(nuevoNombre: string) {
@@ -66,7 +66,7 @@ export class DbAPIService {
   }
 
   nuevoDispositivo(objeto: object) {
-    return this.http.post(this.Url + 'ClienteHaUsado/agregardispositivo/' + this.Usuario.id, objeto);
+    return this.http.post(this.Url + 'ClienteHaUsado/agregardispositivo/' + this.Usuario.id, objeto, {responseType: "text"});
   }
 
   deleteAposento(idAposento: number) {
