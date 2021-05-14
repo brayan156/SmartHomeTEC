@@ -20,6 +20,13 @@ import { tipoService } from './tipo.service';
 import { DbAPIService } from '../API/db-api.service';
 import { Aposento } from 'src/app/tablas-y-relaciones/aposento';
 import { CertificadoDeGarantia } from 'src/app/tablas-y-relaciones/certificado_garantia';
+import { DispositivoAdquirido } from 'src/app/tablas-y-relaciones/dispositivoAdquirido';
+import { Dispositivomodelo } from 'src/app/tablas-y-relaciones/Dispositivomodelo';
+import { Factura } from 'src/app/tablas-y-relaciones/factura';
+import { Historial } from 'src/app/tablas-y-relaciones/historial';
+import { Pedido } from 'src/app/tablas-y-relaciones/pedido';
+import { PedidoFactura } from 'src/app/tablas-y-relaciones/pedidoFactura';
+import { tipo } from 'src/app/tablas-y-relaciones/tipo';
 
 @Injectable({
   providedIn: 'root'
@@ -129,11 +136,13 @@ export class DbServiceService {
 
   SincronizarTodoConApi() {
     this.SincronizarConApi().subscribe(data => {
+      console.log("estoy populando datos....")
       let clientesEntrantes: Cliente[] = data.clientes;
       clientesEntrantes.forEach(entro => {
         this.database.executeSql('insert into Cliente (id, email, contrasena, primer_apellido, segundo_apellido, nombre, pais) VALUES (?,?,?,?,?,?,?)',
           [entro.id, entro.email, entro.contrasena, entro.primerApellido, entro.segundoApellido, entro.nombre, entro.pais]).then(data2 => {
             this.clientService.loadClientes(this.database, this.clientes);
+            console.log("estoy populando datos....", entro.email);
         })
       })
 
@@ -145,13 +154,83 @@ export class DbServiceService {
         })
       })
 
-      // let certificadosEntrantes: CertificadoDeGarantia[] = data.certificados;
-      // certificadosEntrantes.forEach(entro => {
-      //   this.database.executeSql('insert into Certificado_garantia (id, nombre_cuarto, id_cliente) values (?,?,?)',
-      //     [entro.id, entro.nombreCuarto, entro.idCliente]).then(data2 => {
-      //       this.aposentosService.loadAposentos(this.database, this.aposentos);
-      //   })
-      // })
+      let certificadosEntrantes: CertificadoDeGarantia[] = data.certificados;
+      certificadosEntrantes.forEach(entro => {
+        this.database.executeSql('insert into  Certificado_garantia (n_factura, mes_fin_garantia, ano_fin_garantia) VALUES (?,?,?)',
+          [entro.nFactura, entro.mesFinGarantia, entro.anoFinGarantia]).then(data2 => {
+            this.garantiaService.loadGarantias(this.database, this.garantias);
+
+        })
+      })
+
+      let clientesHanUsadoEntran: ClienteHaUsado[] = data.clientesHanUsado;
+      clientesHanUsadoEntran.forEach(entro => {
+        this.database.executeSql('insert into Cliente_ha_usado (n_serie_dispositivo, id_cliente,propietario_actual) VALUES (?,?,?)',
+          [entro.nSerieDispositivo, entro.idCliente, entro.propietarioActual]).then(data2 => {
+            this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
+        })
+      })
+
+      let dipositivoAdquiridosEntran: DispositivoAdquirido[] = data.dipositivoAdquiridos;
+      dipositivoAdquiridosEntran.forEach(entro => {
+        this.database.executeSql('insert into Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento) VALUES (?,?,?,?,?)',
+          [entro.nSerie, entro.prendido, entro.fechaprendido, entro.modelo, entro.idAposento]).then(data2 => {
+            this.dispositivoService.loadDispositivosAdquiridos(this.database, this.dispositivosAdquiridos);
+        })
+      })
+
+      let dispositivoModelosEntran: Dispositivomodelo[] = data.dispositivoModelos;
+      dispositivoModelosEntran.forEach(entro => {
+        this.database.executeSql('insert into Dispositivo_modelo (modelo, marca, imagen, consumo_electrico, tipo) values  (?,?,?,?,?)',
+          [entro.modelo, entro.marca, entro.imagen, entro.consumoElectrico, entro.tipo]).then(data2 => {
+            this.dispositivoService.loadDispositivosmodelo(this.database, this.dispositivosmodelo);
+            console.log("estoy populando datos....", entro.marca);
+
+        })
+      })
+
+      let facturasEntran: Factura[] = data.facturas;
+      facturasEntran.forEach(entro => {
+        this.database.executeSql('insert into Factura (n_factura, dia, mes, ano) values (?,?,?,?)',
+          [entro.nFactura, entro.dia, entro.mes, entro.ano]).then(data2 => {
+            this.facturaService.loadFacturas(this.database, this.facturas);
+        })
+      })
+
+
+      let historialesEntran: Historial[] = data.historiales;
+      historialesEntran.forEach(entro => {
+        this.database.executeSql('insert into Historial (n_historial, n_serie, dia, mes, ano, hora, minutos_de_uso) VALUES  (?,?,?,?,?,?)',
+          [entro.nHistorial, entro.nSerie, entro.dia, entro.mes, entro.ano, entro.hora, entro.minutosDeUso]).then(data2 => {
+            this.historialService.loadHistoriales(this.database, this.historiales);
+        })
+      })
+
+
+      let pedidosEntran: Pedido[] = data.pedidos;
+      pedidosEntran.forEach(entro => {
+        this.database.executeSql('insert into Pedido (id, monto, id_cliente, n_serie_dispositivo) VALUES  (?,?,?,?)',
+          [entro.Id, entro.Monto, entro.idCliente, entro.nSerieDispositivo]).then(data2 => {
+            this.pedidoService.loadPedidos(this.database, this.pedidos);
+        })
+      })
+
+      let pedidosFacturasEntran: PedidoFactura[] = data.pedidosFacturas;
+      pedidosFacturasEntran .forEach(entro => {
+        this.database.executeSql('insert into Pedido_Factura (id_pedido, n_factura) VALUES (?,?)',
+          [entro.IdPedido, entro.nFactura]).then(data2 => {
+            this.pedidoService.loadPedidosFactura(this.database, this.pedidosFactura);
+        })
+      })
+
+      let tiposEntran: tipo[] = data.tipos;
+      tiposEntran .forEach(entro => {
+        this.database.executeSql('insert into Tipo (nombre, tiempo_de_garantia, imagen, descripcion) VALUES (?,?,?,?)',
+          [entro.nombre, entro.tiempoDeGarantia, entro.imagen, entro.descripcion]).then(data2 => {
+            this.tiposService.loadtipos(this.database, this.tipos);
+        })
+      })
+
       
     })
   }
