@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -87,14 +88,17 @@ namespace smarthometec_API.Controllers
             {
                 int total_dias = (DateTime.Now - dispositivoAdquirido.FechaPrendido.Value).Days;
                 int total_minutos = (DateTime.Now - dispositivoAdquirido.FechaPrendido.Value).Minutes;
+                Debug.WriteLine(total_dias);
                 Historial historial = new Historial();
                 historial.Ano = dispositivoAdquirido.FechaPrendido.Value.Year;
                 historial.Mes = dispositivoAdquirido.FechaPrendido.Value.Month;
                 historial.Dia = dispositivoAdquirido.FechaPrendido.Value.Day;
                 historial.Hora = dispositivoAdquirido.FechaPrendido.Value.Hour;
                 historial.NSerie = dispositivoAdquirido.NSerie;
+                Debug.WriteLine("llego a crear historial");
                 if (_context.Historial.Any(hist => hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes & hist.Dia == historial.Dia & hist.Hora == historial.Hora))
                 {
+                    Debug.WriteLine("existe historial primera hora");
                     Historial histo = _context.Historial.First(hist =>
                         hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes &
                         hist.Dia == historial.Dia & hist.Hora == historial.Hora);
@@ -106,6 +110,7 @@ namespace smarthometec_API.Controllers
                 {
                     if (dispositivoAdquirido.FechaPrendido.Value.Hour == DateTime.Now.Hour) historial.MinutosDeUso = total_minutos;
                     else historial.MinutosDeUso = 60 - dispositivoAdquirido.FechaPrendido.Value.Minute;
+                    Debug.WriteLine("hago historial de la hora en la que estoy");
                     _context.Historial.Add(historial);
 
 
@@ -113,17 +118,22 @@ namespace smarthometec_API.Controllers
 
                 DateTime time = dispositivoAdquirido.FechaPrendido.Value;
                 var hora_dia = dispositivoAdquirido.FechaPrendido.Value.Hour+1;
+                if (time.Date == DateTime.Today & hora_dia > DateTime.Now.Hour) hora_dia = 24;
+
                 for (int i = total_dias; i >= 0; i--)
                 {
                     while (hora_dia < 24)
                     {
+                        Debug.WriteLine(hora_dia);
                         Historial h = new Historial();
                         h.Dia = time.Day;
                         h.Mes = time.Month;
                         h.Ano = time.Year;
                         h.Hora = hora_dia;
+                        h.NSerie = dispositivoAdquirido.NSerie;
                         if (time.Date == DateTime.Today & hora_dia == DateTime.Now.Hour)
                         {
+                            Debug.WriteLine(DateTime.Now);
                             h.MinutosDeUso = DateTime.Now.Minute;
                             hora_dia = 24;
                         }
@@ -136,6 +146,7 @@ namespace smarthometec_API.Controllers
                 }
                 dispositivoAdquirido.Prendido = false;
             }
+            await _context.SaveChangesAsync();
 
             _context.Entry(dispositivoAdquirido).State = EntityState.Modified;
 
