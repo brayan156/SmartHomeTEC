@@ -1,7 +1,7 @@
-export class DispositivoModelo {
-  Modelo  : string;
-  Marca: string;
-  ConsumoElectrico: number;
-  Tipo : boolean;
-  Imagen : string;
+export class Dispositivomodelo {
+  modelo  : string;
+  marca: string;
+  consumoElectrico: number;
+  tipo : boolean;
+  imagen : string;
 }

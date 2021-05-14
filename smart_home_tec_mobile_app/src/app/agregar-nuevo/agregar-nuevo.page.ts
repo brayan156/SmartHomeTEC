@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { DbAPIService } from '../services/API/db-api.service';
 import { DbServiceService } from '../services/db/db-service.service';
 import { Aposento } from '../tablas-y-relaciones/aposento';
-import { DispositivoModelo } from '../tablas-y-relaciones/DispositivoModelo';
-import { Tipo } from '../tablas-y-relaciones/tipo';
+import { Dispositivomodelo } from '../tablas-y-relaciones/Dispositivomodelo';
+import { tipo } from '../tablas-y-relaciones/tipo';
 
 @Component({
   selector: 'app-agregar-nuevo',
@@ -12,33 +13,73 @@ import { Tipo } from '../tablas-y-relaciones/tipo';
 })
 export class AgregarNuevoPage implements OnInit {
 
-  Descripcion: string;
-  Tipo: string;
+  descripcion: string;
+  tipo: string;
   Consumo: string;
-  Marca: string;
+  marca: string;
   N_serie: number;
   Aposento: string;
 
 
   registro = {};
-  tipos: Tipo[] = [];
+  tipos: tipo[] = [];
   aposentos: Aposento[] = [];
-  dispositivosModelo: DispositivoModelo[] = [];
+  dispositivosmodelo: Dispositivomodelo[] = [];
   tmpQuery = [];
 
   constructor(private db: DbServiceService,
-    private alertController: AlertController) { }
+    private alertController: AlertController,
+    private dbAPI: DbAPIService) { }
 
   ngOnInit() {
-    this.aposentos = this.db.getAposentosPorUsuario();
-    this.tipos = this.db.getTipos();
-    this.dispositivosModelo = this.db.getDispositivosModelo();
+    this.actualizarContenido();
+  }
+
+
+  actualizarContenido() {
+    if (this.db.Sincronizar) {
+      this.dbAPI.getMisAposentos().subscribe(data => {
+        this.aposentos = data;
+      });
+      this.dbAPI.getTipos().subscribe(data => {
+        this.tipos = data;
+      });
+      this.dbAPI.getDispositivosModelo().subscribe(data => {
+        this.dispositivosmodelo = data;
+      });
+    } else {
+      this.aposentos = this.db.getAposentosPorUsuario();
+      this.tipos = this.db.gettipos();
+      this.dispositivosmodelo = this.db.getDispositivosmodelo();
+    }
+  }
+
+  nuevoDispositivo() {
+    if (this.db.Sincronizar) {
+      let objeto = {
+        descripcion: this.descripcion,
+        tipo: this.tipo,
+        marca: this.marca,
+        n_serie: this.N_serie,
+        consumo: this.Consumo,
+        aposento: this.getidAposento()
+      };
+      console.log(objeto);
+      this.dbAPI.nuevoDispositivo(objeto).subscribe(data => {
+        if (data == "dispositivo no existe") this.presentAlert("Hagame el favor e ingrese un número de serie válido.");
+        else if (data == "dispositivo ya ha sido registrado") this.presentAlert("El dispositivo ya está asociado a un cliente.");
+        else if (data == "dispositivo registrado con exito") this.presentConfirmacion("Tu dispositivo fue agregado exitosamente.");
+        else if (data == "datos invalidos") this.presentAlert("La información no coincide con la base de datos.");
+      });
+    } else {
+      this.nuevoDispositivoLocal();
+    }
   }
 
   // Recibe la informacion y la envia
-  nuevoDispositivo() {
+  nuevoDispositivoLocal() {
     console.log(this.N_serie);
-    console.log(this.Descripcion, this.Marca, this.Tipo);
+    console.log(this.descripcion, this.marca, this.tipo);
 
 
 
@@ -63,11 +104,11 @@ export class AgregarNuevoPage implements OnInit {
     this.db.getDatabaseState().subscribe(rdy => {
       if (rdy) {
         //Preguntamos si coinciden los parametros marca-tipo-N_serie-descripcion
-        if (!this.db.coincideInformacion(this.N_serie, this.Marca, this.Descripcion, this.Tipo)) {
+        if (!this.db.coincideInformacion(this.N_serie, this.marca, this.descripcion, this.tipo)) {
           this.presentAlert("La información no coincide con la base de datos.");
         } else {
           this.db.addClienteHaUsado(this.N_serie);
-          this.db.updateDispositivoAdquirido(this.getIdAposento(), this.N_serie);
+          this.db.updateDispositivoAdquirido(this.getidAposento(), this.N_serie);
           this.presentConfirmacion("Tu dispositivo fue agregado exitosamente.");
         }
       }
@@ -77,11 +118,11 @@ export class AgregarNuevoPage implements OnInit {
 
   };
 
-  getIdAposento() {
+  getidAposento() {
     let result = null;
     this.aposentos.forEach(aposento => {
-      if (aposento.NombreCuarto == this.Aposento) {
-        result = aposento.Id;
+      if (aposento.nombreCuarto == this.Aposento) {
+        result = aposento.id;
       }
     });
     return result;

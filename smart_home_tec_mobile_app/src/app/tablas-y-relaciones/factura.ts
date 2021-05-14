@@ -1,8 +1,8 @@
 
 export class Factura{
-  NFactura : number;
-  Dia : string;
-  Mes : string;
-  Ano : string;
+  nFactura : number;
+  dia : string;
+  mes : string;
+  ano : string;
 
 }

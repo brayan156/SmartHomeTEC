@@ -1,6 +1,6 @@
 
 export class Aposento {
-  Id : number;
-  NombreCuarto: string;
-  IdCliente: number;
+  id : number;
+  nombreCuarto: string;
+  idCliente: number;
 }

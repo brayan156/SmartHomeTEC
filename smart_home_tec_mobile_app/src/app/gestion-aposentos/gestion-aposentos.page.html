@@ -5,7 +5,7 @@
         <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Administrar {{this.aposento.NombreCuarto}}</ion-title>
+    <ion-title>Administrar {{this.aposento.nombreCuarto}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -28,12 +28,12 @@
     <ion-card-content>
       <p class='name'>{{dispositivo.modelo}}</p>
       <p class='spec'>#Serie: {{dispositivo.n_serie}}</p>
-      <p class='spec'>Meses restantes de garantía: {{dispositivo.mes_fin_garantia}}</p>
+      <p class='spec'>meses restantes de garantía: {{dispositivo.mes_fin_garantia}}</p>
       <p class='spec'>Años restantes de garantía: {{dispositivo.ano_fin_garantia}}</p>
       <ion-item>
         <ion-label>Habitación</ion-label>
-        <ion-select interface="action-sheet"  (ionChange)="(updateAposentoDeDispositivo($event,dispositivo.n_serie))" placeholder='Tu habitación' okText="Listo" cancelText="Me arrepentí">
-          <ion-select-option *ngFor="let aposento of this.misAposentos"  value={{aposento.Id}}>{{aposento.NombreCuarto}}</ion-select-option>
+        <ion-select interface="action-sheet"  (ionChange)="(updateAposentoDeDispositivo($event,dispositivo.n_serie, dispositivo))" placeholder='Tu habitación' okText="Listo" cancelText="Me arrepentí">
+          <ion-select-option *ngFor="let aposento of this.misAposentos"   value={{aposento.id}}>{{aposento.nombreCuarto}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-card-content>

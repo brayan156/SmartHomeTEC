@@ -1,10 +1,10 @@
 
 export class Historial{
-  NHistorial : number;
-  NSerie : number;
-  Dia : number;
-  Mes : number;
-  Ano: number;
-  MinutosDeUso: number;
-  Hora: number;
+  nHistorial : number;
+  nSerie : number;
+  dia : number;
+  mes : number;
+  ano: number;
+  minutosDeUso: number;
+  hora: number;
 }

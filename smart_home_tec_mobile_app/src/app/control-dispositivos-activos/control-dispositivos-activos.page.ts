@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { GestionAposentosPage } from '../gestion-aposentos/gestion-aposentos.page';
+import { DbAPIService } from '../services/API/db-api.service';
 import { DbServiceService } from '../services/db/db-service.service';
 import { Aposento } from '../tablas-y-relaciones/aposento';
-import { DispositivoModelo } from '../tablas-y-relaciones/DispositivoModelo';
+import { DispositivoAdquirido } from '../tablas-y-relaciones/dispositivoAdquirido';
+import { Dispositivomodelo } from '../tablas-y-relaciones/Dispositivomodelo';
 
 @Component({
   selector: 'app-control-dispositivos-activos',
@@ -14,13 +16,13 @@ export class ControlDispositivosActivosPage implements OnInit {
 
   // dispositivosMios: any[] = [
   //   {
-  //     Modelo: "Lamp3000",
-  //     Marca: "Xiaomi",
-  //     ConsumoElectrico: "30",
-  //     Tipo: "Lamp",
-  //     Imagen: "https://images.thdstatic.com/productImages/9525a3b0-8fe3-4024-a93b-ea6e1460bb19/svn/white-energizer-colored-light-bulbs-ecom-1062-pp4-64_1000.jpg",
+  //     modelo: "Lamp3000",
+  //     marca: "Xiaomi",
+  //     consumoElectrico: "30",
+  //     tipo: "Lamp",
+  //     imagen: "https://images.thdstatic.com/productImages/9525a3b0-8fe3-4024-a93b-ea6e1460bb19/svn/white-energizer-colored-light-bulbs-ecom-1062-pp4-64_1000.jpg",
   //     N_serie: 3,
-  //     Prendido: 1,
+  //     prendido: 1,
   //     mes_fin_garantia: 4,
   //     ano_fin_garantia: 0,
   //   }
@@ -28,8 +30,8 @@ export class ControlDispositivosActivosPage implements OnInit {
   // misAposentos: Aposento[] = [
   //   {
   //     Id: 2,
-  //     NombreCuarto: "sala",
-  //     IdCliente: 2,
+  //     nombreCuarto: "sala",
+  //     idCliente: 2,
   //   }
   // ];
   dispositivosMios = [];
@@ -40,7 +42,8 @@ export class ControlDispositivosActivosPage implements OnInit {
   constructor(public modalController: ModalController,
     public alertController: AlertController,
     public actionSheetController: ActionSheetController,
-    private db: DbServiceService) {
+    private db: DbServiceService,
+    private dbAPI: DbAPIService) {
     this.actualizarContenido();
   }
 
@@ -51,19 +54,61 @@ export class ControlDispositivosActivosPage implements OnInit {
 
 
   actualizarContenido() {
-    this.db.getMisDispositivosModelo();
-    this.dispositivosMios = this.db.misDispostivosModelo.value;
-    this.misAposentos = this.db.getAposentosPorUsuario();
-    setTimeout(() => {
-      // console.log("voy a printear este dipositivo", this.dispositivosMios[0].Tipo);
-    }, 300)
+    if (this.db.Sincronizar) {
+      this.dbAPI.getMisAposentos().subscribe(data => {
+        if (data.length != 0) {
+          this.misAposentos = data;
+          this.dbAPI.getMisDispositivos().subscribe(dispositivos => {
+            if (dispositivos.length != 0) {
+              this.dispositivosMios = dispositivos;
+              console.log(dispositivos, "son mis dispositivos");
+            } else {
+              this.presentAlert("No tiene dispositivos asociados.");
+            }
+          })
+        } else {
+          this.presentAlert("No tiene aposentos asociados.");
+        }
+
+      })
+    } else {
+      this.db.getMisDispositivosmodelo();
+      this.dispositivosMios = this.db.misDispostivosmodelo.value;
+      this.misAposentos = this.db.getAposentosPorUsuario();
+      setTimeout(() => {
+        if (this.misAposentos.length == 0) {
+          this.presentAlert("No tiene aposentos asociados.");
+        }
+      }, 300)
+    }
   }
 
-  updateAposentoDeDispositivo(evento, n_serie: number) {
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alerta',
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  updateAposentoDeDispositivo(evento, dispositivo) {
     console.log(evento.detail.value, "son mis detalles");
-    this.db.updateDispositivoAdquirido(evento.detail.value, n_serie);
+    if (this.db.Sincronizar) {
+      this.dbAPI.getDispositivoAdquirido(dispositivo.n_serie).subscribe(data => {
+        data.idAposento = evento.detail.value;
+        this.dbAPI.putDispositivoAdquirido(data).subscribe(data2 => {
+
+        });
+      })
+
+    } else {
+      this.db.updateDispositivoAdquirido(evento.detail.value, dispositivo.n_serie);
+    }
     this.actualizarContenido();
   }
+
 
   doRefresh(evento) {
     this.actualizarContenido();
@@ -80,9 +125,9 @@ export class ControlDispositivosActivosPage implements OnInit {
       header: 'Nuevo aposento',
       inputs: [
         {
-          name: 'nuevoNombre',
+          name: 'nuevonombre',
           type: 'text',
-          placeholder: 'Nombre'
+          placeholder: 'nombre'
         },
 
       ],
@@ -97,13 +142,95 @@ export class ControlDispositivosActivosPage implements OnInit {
         }, {
           text: 'Listo',
           handler: data => {
-            console.log("Ingresaste ", data.nuevoNombre);
-            this.db.addAposento(data.nuevoNombre);
-            this.misAposentos = this.db.getAposentosPorUsuario();
+            console.log("Ingresaste ", data.nuevonombre);
+            let existe = false;
+            this.misAposentos.forEach(elemento => {
+              if (elemento.nombreCuarto == data.nuevonombre) {
+                this.presentAlert("Este nombre ya está registrado.");
+                existe = true;
+              }
+            });
+            if (!existe) {
+              if (this.db.Sincronizar) {
+                this.dbAPI.addAposento(data.nuevonombre).subscribe(data => {
+                  this.actualizarContenido();
+                });
+              } else {
+                this.db.addAposento(data.nuevonombre);
+                this.actualizarContenido();
+              }
+            }
+
           }
         }
       ]
     });
+    await alert.present();
+  }
+
+  confirmarSincronizacion() {
+    if (this.db.Sincronizar) {
+      this.presentarAlertConfirmacionSinc();
+    } else {
+      this.presentarAlertConfirmacionNoSinc();
+
+    }
+
+  }
+
+  async presentarAlertConfirmacionSinc() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: '¡Aló!',
+      message: '¿Está seguro de que desea desactivar sincronizacion? :O',
+      buttons: [
+        {
+          text: 'NO :O',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Si xD',
+          handler: () => { 
+            this.db.seedDatabase();
+            this.db.SincronizarTodoConApi();
+            this.actualizarContenido();
+            this.db.Sincronizar = false;
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
+
+  async presentarAlertConfirmacionNoSinc() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: '¡Aló!',
+      message: '¿Está seguro de que desea activar sincronizacion? :O',
+      buttons: [
+        {
+          text: 'NO :O',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Si xD',
+          handler: () => {
+            this.db.SincronizarTodo();
+            this.db.Sincronizar = true;
+          }
+        }
+      ]
+    });
+
     await alert.present();
   }
 
@@ -129,13 +256,13 @@ export class ControlDispositivosActivosPage implements OnInit {
 
   async showInfoDispositivo(dispositivo) {
     let textoPrenderApagar = ''
-    if (dispositivo.Prendido == 1) {
+    if (dispositivo.prendido == 1) {
       textoPrenderApagar = 'Apagar'
     } else {
       textoPrenderApagar = 'Prender'
     }
     const actionSheet = await this.actionSheetController.create({
-      header: 'Información de ' + dispositivo.Modelo,
+      header: 'Información de ' + dispositivo.modelo,
       cssClass: 'my-custom-class',
       buttons: [
         //{
@@ -144,26 +271,27 @@ export class ControlDispositivosActivosPage implements OnInit {
         //   icon: 'trash',
         //   handler: () => {
         //     console.log('Delete clicked');
-        //     this.db.deleteAposento(this.aposento.Id);
+        //     this.db.deleteAposento(this.aposento.id);
         //   }
         // }, 
         {
           text: textoPrenderApagar,
           icon: 'contrast',
           handler: () => {
-            if (dispositivo.Prendido == 1) {
-              this.db.apagarDispositivo(dispositivo.N_serie);
+            if (dispositivo.prendido == 1) {
+              this.apagarDispositivo(dispositivo.n_serie);
             } else {
-              this.db.prenderDispositivo(dispositivo.N_serie);
+              this.prenderDispositivo(dispositivo.n_serie);
             }
+            this.actualizarContenido();
 
           }
         },
-      {
+        {
           text: 'Asociar a otro usuario',
           icon: 'pencil',
           handler: () => {
-            this.presentAlertPrompt(dispositivo);
+            this.presentarAlertaDeNuevoAsocie(dispositivo);
             console.log('Favorite clicked');
           }
         }, {
@@ -181,11 +309,31 @@ export class ControlDispositivosActivosPage implements OnInit {
     console.log('onDidDismiss resolved with role', role);
   }
 
-  async presentAlertPrompt(dispositivo) {
+  prenderDispositivo(n_serie: number) {
+    if (this.db.Sincronizar) {
+      this.dbAPI.prenderDispositivo(n_serie).subscribe(data => {
+
+      });
+    } else {
+      this.db.prenderDispositivo(n_serie);
+    }
+  }
+
+  apagarDispositivo(n_serie: number) {
+    if (this.db.Sincronizar) {
+      this.dbAPI.apagarDispositivo(n_serie).subscribe(data => {
+        this.actualizarContenido();
+      });
+    } else {
+      this.db.apagarDispositivo(n_serie);
+    }
+  }
+
+  async presentarAlertaDeNuevoAsocie(dispositivo) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Asociar a otro usuario',
-      subHeader: dispositivo.Modelo,
+      subHeader: dispositivo.modelo,
       message: 'Tiempo restante de garantia: ' + dispositivo.ano_fin_garantia + ' meses y ' + dispositivo.ano_fin_garantia + ' años.',
       inputs: [
         {
@@ -206,7 +354,7 @@ export class ControlDispositivosActivosPage implements OnInit {
           text: 'Listo',
           handler: data => {
             console.log(data);
-            this.db.asociarDispositivoANuevoCliente(dispositivo.N_serie, data.nuevoId);
+            this.asociarDispositivoANuevoCliente(dispositivo.n_serie, data.nuevoId);
           }
         }
       ]
@@ -215,39 +363,52 @@ export class ControlDispositivosActivosPage implements OnInit {
     await alert.present();
   }
 
-  prenderApagar(evento, dispositivo) {
-    console.log("El valor del evento del toggle es", evento.detail.checked);
-    console.log("El valor de prendido del dispositivo es", dispositivo.Prendido);
-    if (evento.detail.checked != 1) {
-      this.db.prenderDispositivo(dispositivo.N_serie);
+  asociarDispositivoANuevoCliente(n_serie: number, idCliente: number) {
+    if (this.db.Sincronizar) {
+      this.dbAPI.asociarDispositivoANuevoCliente(n_serie, idCliente).subscribe(data => {
+        this.actualizarContenido();
+      });
     } else {
-      this.db.apagarDispositivo(dispositivo.N_serie);
+      this.db.asociarDispositivoANuevoCliente(n_serie, idCliente);
+      this.actualizarContenido();
     }
-    this.actualizarContenido();
   }
 
+  // getMisDispositivosPorAposento(aposento: Aposento) {
+  //   if (this.db.Sincronizar) {
+  //     this.dbAPI.getMisDispositivosPorAposento(aposento.id).subscribe(data => {
+  //       this.misDispositivosPorAposentos = data;
+  //     })
+  //   } else {
+  //     this.getMisDispositivosPorAposentoLocal(aposento);
+  //   }
+  // }
+
+  // getMisDispositivosPorAposentoLocal(aposento: Aposento) {
+  //   let tmp;
+  //   this.db.getMisDispositivosPorAposento(aposento.id);
+
+  //   setTimeout(async () => {
+  //     this.misDispositivosPorAposentos = this.db.tmpQuery.value;
+  //     console.log(this.misDispositivosPorAposentos.length, " es la longitud de la lista");
+  //     tmp = (this.misDispositivosPorAposentos.length != 0) ? true : false;
+  //   // let tmp = true;
+  //   if (tmp) {
+  //     this.presentModal(aposento)
+  //   } else {
+  //     this.noHayContenidoAlert();
+  //   }
+  //   }, 300)
+  // }
+
   async presentModal(aposento: Aposento) {
-    let tmp;
-    this.db.getMisDispositivosPorAposento(aposento.Id);
-
-    setTimeout(async () => {
-      this.misDispositivosPorAposentos = this.db.tmpQuery.value;
-      console.log(this.misDispositivosPorAposentos.length, " es la longitud de la lista");
-      tmp = (this.misDispositivosPorAposentos.length != 0) ? true : false;
-    // let tmp = true;
-    if (tmp) {
-      const modal = await this.modalController.create({
-        component: GestionAposentosPage,
-        componentProps: {
-          aposento: aposento,
-        }
-      });
-      return await modal.present();
-    } else {
-      this.noHayContenidoAlert();
-    }
-    }, 300)
-
+    const modal = await this.modalController.create({
+      component: GestionAposentosPage,
+      componentProps: {
+        aposento: aposento,
+      }
+    });
+    return await modal.present();
   }
 
 }

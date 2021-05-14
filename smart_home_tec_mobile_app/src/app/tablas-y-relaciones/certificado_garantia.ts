@@ -1,6 +1,6 @@
 export class CertificadoDeGarantia{
-  NFactura : number;
-  MesFinGarantia : number;
-  AnoFinGarantia : number;
+  nFactura : number;
+  mesFinGarantia : number;
+  anoFinGarantia : number;
   
 }

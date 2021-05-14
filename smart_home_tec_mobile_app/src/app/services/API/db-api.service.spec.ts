@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { tipoService } from './tipo.service';
+import { DbAPIService } from './db-api.service';
 
-describe('tipoService', () => {
-  let service: tipoService;
+describe('DbAPIService', () => {
+  let service: DbAPIService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(tipoService);
+    service = TestBed.inject(DbAPIService);
   });
 
   it('should be created', () => {
