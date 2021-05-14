@@ -157,7 +157,7 @@ create table if not exists Certificado_garantia(
 );
 
 
-  insert into Cliente VALUES (1, 'juan@gmail', 'blupblup', 'Solis', 'Argueyo', 'Juan', 'Mexico');
+--  insert into Cliente VALUES (1, 'juan@gmail', 'blupblup', 'Solis', 'Argueyo', 'Juan', 'Mexico');
 --
 -- insert into Cliente VALUES (2, 'brayan@gmail', 'blupblup', 'Leon', 'Urbina', 'Brayan', 'Mali');
 -- insert into Cliente VALUES (3, 'tomas.seguram@gmail.com', 'blupblup', 'Segura', 'Monge', 'Tomas', 'Italy');
