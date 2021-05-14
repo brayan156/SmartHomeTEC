@@ -21,8 +21,8 @@ export class DistribuidorService {
           tmpList.push({
             CedulaJuridica: data.rows.item(i).cedula_juridica,
             Pais: data.rows.item(i).pais,
-            Nombre: data.rows.item(i).nombre,
-            Imagen: data.rows.item(i).imagen,
+            nombre: data.rows.item(i).nombre,
+            imagen: data.rows.item(i).imagen,
           });
         }
       }

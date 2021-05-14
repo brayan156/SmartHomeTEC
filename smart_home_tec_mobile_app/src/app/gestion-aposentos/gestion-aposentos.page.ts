@@ -37,18 +37,20 @@ export class GestionAposentosPage implements OnInit {
 
   dismiss() {
     this.modalController.dismiss();
-    console.log(this.misDispositivosPorAposentos.length, "es la logingutd en dismiss");
-    console.log(this.misAposentos.length, "es la logingutd en dismiss")
 
   }
 
   updateContenido() {
-    setTimeout(() => {
-      this.db.getMisDispositivosPorAposento(this.aposento.Id);
-      this.misDispositivosPorAposentos = this.db.tmpQuery.value;
-      this.misAposentos = this.db.getAposentosPorUsuario();
-    }, 300)
 
+    if (this.db.Sincronizar) {
+      
+    } else {
+      setTimeout(() => {
+        this.db.getMisDispositivosPorAposento(this.aposento.id);
+        this.misDispositivosPorAposentos = this.db.tmpQuery.value;
+        this.misAposentos = this.db.getAposentosPorUsuario();
+      }, 300);
+    }
   }
 
   doRefresh(evento) {
@@ -68,7 +70,7 @@ export class GestionAposentosPage implements OnInit {
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
-      header: 'Editar ' + this.aposento.NombreCuarto,
+      header: 'Editar ' + this.aposento.nombreCuarto,
       cssClass: 'my-custom-class',
       buttons: [{
         text: 'Eliminar habitación',
@@ -76,7 +78,7 @@ export class GestionAposentosPage implements OnInit {
         icon: 'trash',
         handler: () => {
           console.log('Delete clicked');
-          this.db.deleteAposento(this.aposento.Id);
+          this.db.deleteAposento(this.aposento.id);
         }
       }, {
         text: 'Cambiar nombre',
@@ -106,9 +108,9 @@ export class GestionAposentosPage implements OnInit {
       header: 'Cambiar nombre',
       inputs: [
         {
-          name: 'nuevoNombre',
+          name: 'nuevonombre',
           type: 'text',
-          placeholder: 'Nombre'
+          placeholder: 'nombre'
         },
       ],
       buttons: [
@@ -123,7 +125,7 @@ export class GestionAposentosPage implements OnInit {
           text: 'Listo',
           handler: data => {
             console.log(data);
-            this.db.updateNombreAposento(this.aposento.Id, data.nuevoNombre);
+            this.db.updatenombreAposento(this.aposento.id, data.nuevonombre);
           }
         }
       ]

@@ -19,13 +19,13 @@ export class HistorialService {
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           tmpList.push({
-            NHistorial: data.rows.item(i).n_historial,
-            NSerie: data.rows.item(i).n_serie,
-            Dia: data.rows.item(i).dia,
-            Mes: data.rows.item(i).mes,
-            Ano: data.rows.item(i).ano,
-            MinutosDeUso: data.rows.item(i).minutos_de_uso,
-            Hora: data.rows.item(i).hora,
+            nHistorial: data.rows.item(i).n_historial,
+            nSerie: data.rows.item(i).n_serie,
+            dia: data.rows.item(i).dia,
+            mes: data.rows.item(i).mes,
+            ano: data.rows.item(i).ano,
+            minutosDeUso: data.rows.item(i).minutos_de_uso,
+            hora: data.rows.item(i).hora,
           });
         }
       }
@@ -42,7 +42,7 @@ export class HistorialService {
   }
 
   updateTotalMins(database: SQLiteObject, conexion: BehaviorSubject<any[]>, historial: Historial) {
-   let data = [historial.MinutosDeUso, historial.NSerie, historial.Dia, historial.Mes, historial.Ano, historial.Hora];
+   let data = [historial.minutosDeUso, historial.nSerie, historial.dia, historial.mes, historial.ano, historial.hora];
     return database.executeSql('update Historial set minutos_de_uso = ? where n_serie = ? and dia = ? and mes = ? and ano = ? and hora = ?', data).then(data => {
       this.loadHistoriales(database, conexion);
 
@@ -64,39 +64,39 @@ export class HistorialService {
     });
   }
 
-  apagarDispositivo(database: SQLiteObject, historiales: BehaviorSubject<any[]>, N_serie: number, fechaPrendido: Date) {
+  apagarDispositivo(database: SQLiteObject, historiales: BehaviorSubject<any[]>, N_serie: number, fechaprendido: Date) {
     let today = new Date();
 
     let historial = new Historial();
 
-    let diffTime = today.valueOf() - fechaPrendido.valueOf();
+    let diffTime = today.valueOf() - fechaprendido.valueOf();
     let total_dias = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     let total_minutos = Math.ceil(diffTime / (1000 * 60));
     console.log(total_minutos + " mins");
     console.log(total_dias + " days");
 
-    historial.Ano = fechaPrendido.getFullYear();
-    historial.Mes = fechaPrendido.getMonth() + 1;
-    historial.Dia = fechaPrendido.getDate();
-    historial.Hora = fechaPrendido.getHours();
-    historial.NSerie = N_serie;
+    historial.ano = fechaprendido.getFullYear();
+    historial.mes = fechaprendido.getMonth() + 1;
+    historial.dia = fechaprendido.getDate();
+    historial.hora = fechaprendido.getHours();
+    historial.nSerie = N_serie;
 
 
     if (historiales.value.some(hist =>
-      hist.NSerie == historial.NSerie
-      && hist.Ano == historial.Ano
-      && hist.Mes == historial.Mes
-      && hist.Dia == historial.Dia
-      && hist.Hora == historial.Hora)) {
+      hist.nSerie == historial.nSerie
+      && hist.ano == historial.ano
+      && hist.mes == historial.mes
+      && hist.dia == historial.dia
+      && hist.hora == historial.hora)) {
 
       let histo = historiales.value.find(hist =>
-        hist.NSerie == historial.NSerie && hist.Ano == historial.Ano && hist.Mes == historial.Mes &&
-        hist.Dia == historial.Dia && hist.Hora == historial.Hora);
+        hist.nSerie == historial.nSerie && hist.ano == historial.ano && hist.mes == historial.mes &&
+        hist.dia == historial.dia && hist.hora == historial.hora);
 
-      if (total_minutos + fechaPrendido.getMinutes() <= 60) {
-        histo.MinutosDeUso += total_minutos;
+      if (total_minutos + fechaprendido.getMinutes() <= 60) {
+        histo.minutosDeUso += total_minutos;
       } else {
-        histo.MinutosDeUso += 60 - fechaPrendido.getMinutes();
+        histo.minutosDeUso += 60 - fechaprendido.getMinutes();
 
       }
       // Actualizar histo dentro historiales
@@ -104,46 +104,46 @@ export class HistorialService {
 
 
     } else {
-      if (fechaPrendido.getHours() == today.getHours()) {
-        historial.MinutosDeUso = total_minutos;
+      if (fechaprendido.getHours() == today.getHours()) {
+        historial.minutosDeUso = total_minutos;
       } else {
-        historial.MinutosDeUso = 60 - fechaPrendido.getMinutes();
+        historial.minutosDeUso = 60 - fechaprendido.getMinutes();
       }
 
       // agregar historial a historiales
-      let data = [historial.NSerie, historial.Dia, historial.Mes, historial.Ano, historial.Hora, historial.MinutosDeUso];
+      let data = [historial.nSerie, historial.dia, historial.mes, historial.ano, historial.hora, historial.minutosDeUso];
       this.insertHistorial(database, historiales, data);
 
     }
 
 
-    var hora_dia = fechaPrendido.getHours() + 1;
+    var hora_dia = fechaprendido.getHours() + 1;
     for (let i = total_dias; i >= 0; i--)
     {
       while (hora_dia < 24) {
         let h = new Historial();
 
-        h.Dia = fechaPrendido.getDate();
-        h.Mes = fechaPrendido.getMonth() + 1;
-        h.Ano = fechaPrendido.getFullYear();;
-        h.Hora = hora_dia;
+        h.dia = fechaprendido.getDate();
+        h.mes = fechaprendido.getMonth() + 1;
+        h.ano = fechaprendido.getFullYear();;
+        h.hora = hora_dia;
 
-        if (fechaPrendido.toDateString() == today.toDateString() && hora_dia == today.getHours()) {
-          h.MinutosDeUso = today.getMinutes();
+        if (fechaprendido.toDateString() == today.toDateString() && hora_dia == today.getHours()) {
+          h.minutosDeUso = today.getMinutes();
           hora_dia = 24;
         }
         else {
-          h.MinutosDeUso = 60;
+          h.minutosDeUso = 60;
         }
         // Agregar a historiales h
-        let data = [h.NSerie, h.Dia, h.Mes, h.Ano, h.Hora, h.MinutosDeUso];
+        let data = [h.nSerie, h.dia, h.mes, h.ano, h.hora, h.minutosDeUso];
         this.insertHistorial(database, historiales, data);
         // setTimeout(() => {
         //   console.log("estoy esperando 300ms...")
         // }, 300);
         hora_dia++;
       }
-      fechaPrendido.setDate(fechaPrendido.getDate()+1);
+      fechaprendido.setDate(fechaprendido.getDate()+1);
       hora_dia = 0;
     }
 

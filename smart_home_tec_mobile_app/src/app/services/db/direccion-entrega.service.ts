@@ -18,8 +18,8 @@ export class DireccionEntregaService {
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           tmpList.push({
-            IdCliente: data.rows.item(i).id_cliente,
-            DireccionEntrega1: data.rows.item(i).direccion_entrega,
+            idCliente: data.rows.item(i).id_cliente,
+            direccionEntrega1: data.rows.item(i).direccion_entrega,
           });
         }
       }

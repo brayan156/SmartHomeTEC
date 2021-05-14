@@ -25,13 +25,13 @@ export class ClienteServiceService {
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           clientesBD.push({
-            Id: data.rows.item(i).ID,
-            Email: data.rows.item(i).Email,
-            Contrasena: data.rows.item(i).Contrasena,
-            PrimerApellido: data.rows.item(i).PrimerApellido,
-            SegundoApellido: data.rows.item(i).SegundoApellido,
-            Nombre: data.rows.item(i).Nombre,
-            Pais: data.rows.item(i).Pais,
+            id: data.rows.item(i).ID,
+            email: data.rows.item(i).email,
+            contrasena: data.rows.item(i).contrasena,
+            primerApellido: data.rows.item(i).primerApellido,
+            segundoApellido: data.rows.item(i).segundoApellido,
+            nombre: data.rows.item(i).nombre,
+            pais: data.rows.item(i).Pais,
           });
         }
       }
@@ -49,13 +49,13 @@ export class ClienteServiceService {
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           modelo.push({
-            Id: data.rows.item(i).id,
-            Email: data.rows.item(i).email,
-            Contrasena: data.rows.item(i).contrasena,
-            PrimerApellido: data.rows.item(i).primer_apellido,
-            SegundoApellido: data.rows.item(i).segundo_apellido,
-            Nombre: data.rows.item(i).nombre,
-            Pais: data.rows.item(i).pais,
+            id: data.rows.item(i).id,
+            email: data.rows.item(i).email,
+            contrasena: data.rows.item(i).contrasena,
+            primerApellido: data.rows.item(i).primer_apellido,
+            segundoApellido: data.rows.item(i).segundo_apellido,
+            nombre: data.rows.item(i).nombre,
+            pais: data.rows.item(i).pais,
           });
         }
       }

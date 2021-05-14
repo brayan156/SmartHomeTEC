@@ -1,3 +1,4 @@
+import { hostViewClassName } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
@@ -37,31 +38,43 @@ export class LoginPage implements OnInit {
 
   login() {
     this.db.resetUsuario();
-    // let tmp;
-    // this.db.validarCliente(this.correo, this.password);
-    // setTimeout(() => {
-    //   tmp = (this.db.Usuario.value.length != 0 ) ? true : false;
-    //   if (tmp) {
-    //     this.router.navigateByUrl('control-dispositivos-activos');
-    //   } else {
-    //     this.presentAlert();
-    //   }
-    // }, 400);
-    this.validarCliente(this.correo, this.password);
+   
+    let db = this.db.Sincronizar;
+    if (db) {
+      this.validarCliente();
+    } else {
+      this.validarCliente();
+    }
+   
     
   }
+
+  validarClienteLocal() {
+    let tmp;
+    this.db.validarCliente(this.correo, this.password);
+    setTimeout(() => {
+      tmp = (this.db.Usuario.value.length != 0 ) ? true : false;
+      if (tmp) {
+        this.router.navigateByUrl('control-dispositivos-activos');
+      } else {
+        this.presentAlert();
+      }
+    }, 400);
+  }
   
-  validarCliente(correo: string, password: string) {
-    this.dbAPI.validarCliente(correo, password).subscribe(data => {
+  validarCliente() {
+    this.dbAPI.validarCliente(this.correo, this.password).subscribe(data => {
       if (data.length != 0) {
         let Cliente = data[0];
         this.db.Usuario[0] = Cliente;
         this.dbAPI.Usuario = Cliente;
+        console.log(Cliente.id, "id de ", Cliente.nombre);
         this.router.navigateByUrl('control-dispositivos-activos');
       } else {
         this.presentAlert();
-      }   
+      }
     })
+    
   }
 
   /**

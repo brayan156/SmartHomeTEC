@@ -140,13 +140,10 @@ create table if not exists Certificado_garantia(
 );
 
 
--- insert into  Pedido (id, monto, id_cliente, n_serie_dispositivo) values  (1, 3500, 1, 2);
--- insert into Pedido_Factura (id_pedido, n_factura) VALUES (1,1);
--- insert into Pedido_Factura ( id_pedido, n_factura) values  (2,2);
--- insert into Factura (n_factura, dia, mes, ano) values (1, 3,4,2020);
--- insert into Factura (n_factura, dia, mes, ano) values (2, 3,4,2020);
--- insert into Certificado_garantia (n_factura, mes_fin_garantia, ano_fin_garantia) values (1, 5, 2021);
--- insert into Certificado_garantia (n_factura, mes_fin_garantia, ano_fin_garantia) values (2, 1, 2021);
+--  insert into Cliente VALUES (1, 'juan@gmail', 'blupblup', 'Solis', 'Argueyo', 'Juan', 'Mexico');
+--
+-- insert into Cliente VALUES (2, 'brayan@gmail', 'blupblup', 'Leon', 'Urbina', 'Brayan', 'Mali');
+-- insert into Cliente VALUES (3, 'tomas.seguram@gmail.com', 'blupblup', 'Segura', 'Monge', 'Tomas', 'Italy');
 
 
 -- insert into Aposento (nombre_cuarto, id_cliente) VALUES('sala', 2);
@@ -154,11 +151,6 @@ create table if not exists Certificado_garantia(
 -- insert into Aposento (nombre_cuarto, id_cliente) values ('cocina', 2);
 -- insert into Aposento (nombre_cuarto, id_cliente) values ('garaje', 2);
 
-
- insert into Cliente VALUES (1, 'juan@gmail', 'blupblup', 'Solis', 'Argueyo', 'Juan', 'Argentina');
-
-
--- insert into Cliente VALUES (2, 'brayan@gmail', 'blupblup', 'Leon', 'Urbina', 'Brayan', 'Austria');
 -- INSERT INTO Aposento (nombre_cuarto, id_cliente)
 -- VALUES ('sala', 1);
 
@@ -168,11 +160,7 @@ create table if not exists Certificado_garantia(
 -- INSERT INTO Aposento (nombre_cuarto, id_cliente)
 -- VALUES ('cuarto', 1);
 
--- INSERT INTO Cliente_ha_usado (n_serie_dispositivo, id_cliente, propietario_actual)
--- VALUES (1, 1, true);
 
--- INSERT INTO Cliente_ha_usado (n_serie_dispositivo, id_cliente, propietario_actual)
--- VALUES (2, 1, true);
 
 -- INSERT INTO Tipo (nombre, tiempo_de_garantia, imagen, descripcion)
 -- VALUES ('bombillo', 4,
@@ -189,14 +177,28 @@ create table if not exists Certificado_garantia(
 -- INSERT INTO Dispositivo_modelo (modelo, marca, imagen, consumo_electrico, tipo)
 -- VALUES ('Socket3000', 'Xiaomi', 'https://images-na.ssl-images-amazon.com/images/I/41M5BfLYjQL._AC_SX466_.jpg', 35,
 --         'socket');
-        
+
 -- INSERT INTO Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento)
 -- VALUES (1, false, '2021-05-09 21:19:21.000', 'Bombillo3000', null);
 
 -- INSERT INTO Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento)
 -- VALUES (2, false, '2021-05-09 21:20:06.000', 'Socket3000', null);
 
+-- INSERT INTO Cliente_ha_usado (n_serie_dispositivo, id_cliente, propietario_actual)
+-- VALUES (1, 1, true);
 
+-- INSERT INTO Cliente_ha_usado (n_serie_dispositivo, id_cliente, propietario_actual)
+-- VALUES (2, 1, true);
+
+-- insert into  Pedido (id, monto, id_cliente, n_serie_dispositivo) values  (1, 3500, 1, 2);
+-- insert into  Pedido (id, monto, id_cliente, n_serie_dispositivo) values  (2, 3500, 2, 1);
+-- insert into Factura (n_factura, dia, mes, ano) values (1, 3,4,2020);
+-- insert into Factura (n_factura, dia, mes, ano) values (2, 3,4,2020);
+-- insert into Pedido_Factura (id_pedido, n_factura) VALUES (1,1);
+-- insert into Pedido_Factura ( id_pedido, n_factura) values  (2,2);
+
+-- insert into Certificado_garantia (n_factura, mes_fin_garantia, ano_fin_garantia) values (1, 5, 2021);
+-- insert into Certificado_garantia (n_factura, mes_fin_garantia, ano_fin_garantia) values (2, 1, 2021);
 
 -- drop TABLE Aposento;
 -- drop TABLE Certificado_garantia;

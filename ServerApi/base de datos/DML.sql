@@ -244,3 +244,15 @@ insert into regiones (pais, continente) values ('Afghanistan', 'Asia'),
                                                ('Yemen', 'Asia'),
                                                ('Zambia', 'Africa'),
                                                ('Zimbabwe', 'Africa');
+
+
+
+
+
+
+
+
+
+
+
+

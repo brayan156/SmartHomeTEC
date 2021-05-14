@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Cliente } from 'src/app/tablas-y-relaciones/cliente';
 import { ClienteHaUsado } from 'src/app/tablas-y-relaciones/cliente_ha_usado';
 import { DispositivoAdquirido } from 'src/app/tablas-y-relaciones/dispositivoAdquirido';
-import { DispositivoModelo } from 'src/app/tablas-y-relaciones/DispositivoModelo';
+import { Dispositivomodelo } from 'src/app/tablas-y-relaciones/Dispositivomodelo';
 import { DispositivoSeVendeEn } from 'src/app/tablas-y-relaciones/DispositivoSeVendeEn';
 
 @Injectable({
@@ -24,13 +24,13 @@ export class DispositivoService {
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           clientesBD.push({
-            Id: data.rows.item(i).ID,
-            Email: data.rows.item(i).Email,
-            Contrasena: data.rows.item(i).Contrasena,
-            PrimerApellido: data.rows.item(i).PrimerApellido,
-            SegundoApellido: data.rows.item(i).SegundoApellido,
-            Nombre: data.rows.item(i).Nombre,
-            Pais: data.rows.item(i).Pais,
+            id: data.rows.item(i).ID,
+            email: data.rows.item(i).email,
+            contrasena: data.rows.item(i).contrasena,
+            primerApellido: data.rows.item(i).primerApellido,
+            segundoApellido: data.rows.item(i).segundoApellido,
+            nombre: data.rows.item(i).nombre,
+            pais: data.rows.item(i).Pais,
           });
         }
       }
@@ -38,19 +38,19 @@ export class DispositivoService {
     });
   }
 
-  loadDispositivosModelo(database: SQLiteObject, coleccion: BehaviorSubject<any[]>) {
+  loadDispositivosmodelo(database: SQLiteObject, coleccion: BehaviorSubject<any[]>) {
     return database.executeSql('SELECT * FROM Dispositivo_modelo', []).then(data => {
 
-      let tmpList: DispositivoModelo[] = [];
+      let tmpList: Dispositivomodelo[] = [];
 
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           tmpList.push({
-            Modelo: data.rows.item(i).modelo,
-            Marca: data.rows.item(i).marca,
-            ConsumoElectrico: data.rows.item(i).consumo_electrico,
-            Tipo: data.rows.item(i).tipo,
-            Imagen: data.rows.item(i).imagen,
+            modelo: data.rows.item(i).modelo,
+            marca: data.rows.item(i).marca,
+            consumoElectrico: data.rows.item(i).consumo_electrico,
+            tipo: data.rows.item(i).tipo,
+            imagen: data.rows.item(i).imagen,
           });
         }
       }
@@ -66,11 +66,11 @@ export class DispositivoService {
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           tmpList.push({
-            NSerie: data.rows.item(i).n_serie,
-            Prendido: data.rows.item(i).prendido,
-            Modelo: data.rows.item(i).modelo,
-            IdAposento: data.rows.item(i).id_aposento,
-            FechaPrendido: data.rows.item(i).fecha_prendido,
+            nSerie: data.rows.item(i).n_serie,
+            prendido: data.rows.item(i).prendido,
+            modelo: data.rows.item(i).modelo,
+            idAposento: data.rows.item(i).id_aposento,
+            fechaprendido: data.rows.item(i).fecha_prendido,
           });
         }
       }
@@ -86,10 +86,10 @@ export class DispositivoService {
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           tmpList.push({
-            CjDistribuidor: data.rows.item(i).cj_distribuidor,
-            ModeloDispotivo: data.rows.item(i).modelo_dispotivo,
-            Precio: data.rows.item(i).precio,
-            Cantidad: data.rows.item(i).cantidad,
+            cjDistribuidor: data.rows.item(i).cj_distribuidor,
+            modeloDispotivo: data.rows.item(i).modelo_dispotivo,
+            precio: data.rows.item(i).precio,
+            cantidad: data.rows.item(i).cantidad,
           });
         }
       }
@@ -106,9 +106,9 @@ export class DispositivoService {
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           clientesHanUsadoList.push({
-            IdCliente: data.rows.item(i).id_cliente,
-            NSerieDispositivo: data.rows.item(i).n_serie_dispositivo,
-            PropietarioActual: data.rows.item(i).propietario_actual
+            idCliente: data.rows.item(i).id_cliente,
+            nSerieDispositivo: data.rows.item(i).n_serie_dispositivo,
+            propietarioActual: data.rows.item(i).propietario_actual
           });
         }
       }
@@ -146,13 +146,13 @@ export class DispositivoService {
 
   coincideInformacion(database: SQLiteObject, tmpQuery: BehaviorSubject<any[]>, N_serie: number) {
     console.log("entre a coincideInfo");
-    return database.executeSql("SELECT n_serie, descripcion, marca, tipo FROM Dispositivo_adquirido JOIN Dispositivo_modelo on Dispositivo_adquirido.modelo = Dispositivo_modelo.modelo JOIN Tipo ON Dispositivo_modelo.tipo = Tipo.nombre where n_serie = ?", [N_serie]).then(data => {
+    return database.executeSql("SELECT n_serie, descripcion, marca, tipo FROM Dispositivo_adquirido JOIN Dispositivo_modelo on Dispositivo_adquirido.modelo = Dispositivo_modelo.modelo JOIN tipo ON Dispositivo_modelo.tipo = tipo.nombre where n_serie = ?", [N_serie]).then(data => {
       let dispositivos = [];
       console.log(data);
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           dispositivos.push({
-            N_serie: data.rows.item(i).n_serie,
+            n_serie: data.rows.item(i).n_serie,
             descripcion: data.rows.item(i).descripcion,
             marca: data.rows.item(i).marca,
             tipo: data.rows.item(i).tipo
@@ -167,8 +167,8 @@ export class DispositivoService {
 
 
   addClienteHaUsado(database: SQLiteObject, clienteHaUsado: ClienteHaUsado, clientesHanUsado: BehaviorSubject<any[]>) {
-    let data = [clienteHaUsado.NSerieDispositivo, clienteHaUsado.IdCliente, 1];
-    console.log("estoy ingresando los siguientes datos ", clienteHaUsado.IdCliente, clienteHaUsado.NSerieDispositivo, clienteHaUsado.PropietarioActual);
+    let data = [clienteHaUsado.nSerieDispositivo, clienteHaUsado.idCliente, 1];
+    console.log("estoy ingresando los siguientes datos ", clienteHaUsado.idCliente, clienteHaUsado.nSerieDispositivo, clienteHaUsado.propietarioActual);
     return database.executeSql('INSERT INTO Cliente_ha_usado (n_serie_dispositivo, id_cliente, propietario_actual) VALUES (?, ?, ?)', data).then(data => {
       this.loadClienteHaUsado(database, clientesHanUsado);
     });
@@ -207,9 +207,9 @@ export class DispositivoService {
   }
 
 
-  getMisDispositivosModelo(database: SQLiteObject, tmpQuery: BehaviorSubject<any[]>, cliente: Cliente) {
+  getMisDispositivosmodelo(database: SQLiteObject, tmpQuery: BehaviorSubject<any[]>, cliente: Cliente) {
     return database.executeSql('select Dispositivo_adquirido.modelo, n_serie, prendido, tipo, imagen, consumo_electrico, marca, mes_fin_garantia, ano_fin_garantia from Cliente_ha_usado join Dispositivo_adquirido  on Cliente_ha_usado.n_serie_dispositivo = Dispositivo_adquirido.n_serie join Dispositivo_modelo Dm on Dispositivo_adquirido.modelo = Dm.modelo join Pedido P on Dispositivo_adquirido.n_serie = P.n_serie_dispositivo join Pedido_Factura PF on P.id = PF.id_pedido join Factura F on PF.n_factura = F.n_factura Join Certificado_garantia Cg on F.n_factura = Cg.n_factura  where Cliente_ha_usado.id_cliente = ? AND propietario_actual = 1;',
-      [cliente.Id]).then(data => {
+      [cliente.id]).then(data => {
         let tmpList = [];
         if (data.rows.length > 0) {
           for (var i = 0; i < data.rows.length; i++) {
@@ -223,13 +223,13 @@ export class DispositivoService {
             let mesesRestantes = data.rows.item(i).mes_fin_garantia - mesHoy;
             let anosRestantes = data.rows.item(i).ano_fin_garantia - anoHoy;
             tmpList.push({
-              Modelo: data.rows.item(i).modelo,
-              Marca: data.rows.item(i).marca,
-              ConsumoElectrico: data.rows.item(i).consumo_electrico,
-              Tipo: data.rows.item(i).tipo,
-              Imagen: data.rows.item(i).imagen,
-              N_serie: data.rows.item(i).n_serie,
-              Prendido: data.rows.item(i).prendido,
+              modelo: data.rows.item(i).modelo,
+              marca: data.rows.item(i).marca,
+              consumoElectrico: data.rows.item(i).consumo_electrico,
+              tipo: data.rows.item(i).tipo,
+              imagen: data.rows.item(i).imagen,
+              n_serie: data.rows.item(i).n_serie,
+              prendido: data.rows.item(i).prendido,
               mes_fin_garantia: mesesRestantes,
               ano_fin_garantia: anosRestantes,
             });
@@ -255,14 +255,14 @@ export class DispositivoService {
     });
   }
 
-  getFechaPrendido(database: SQLiteObject, tmpQuery: BehaviorSubject<any[]>, N_serie: number) {
+  getFechaprendido(database: SQLiteObject, tmpQuery: BehaviorSubject<any[]>, N_serie: number) {
     return database.executeSql('select fecha_prendido from Dispositivo_adquirido where n_serie=? and prendido=1',
       [N_serie]).then(data => {
         let tmpList = [];
         if (data.rows.length > 0) {
           for (var i = 0; i < data.rows.length; i++) {
             tmpList.push({
-              FechaPrendido: data.rows.item(i).fecha_prendido,
+              fechaprendido: data.rows.item(i).fecha_prendido,
             });
           }
         }

@@ -16,7 +16,7 @@ import { FacturaService } from './factura.service';
 import { HistorialService } from './historial.service';
 import { PedidoService } from './pedido.service';
 import { RegionService } from './region.service';
-import { TipoService } from './tipo.service';
+import { tipoService } from './tipo.service';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class DbServiceService {
   garantias = new BehaviorSubject([]);
   direcciones = new BehaviorSubject([]);
   dispositivosAdquiridos = new BehaviorSubject([]);
-  dispositivosModelo = new BehaviorSubject([]);
+  dispositivosmodelo = new BehaviorSubject([]);
   dispositivoSeVendeEn = new BehaviorSubject([]);
   distribuidores = new BehaviorSubject([]);
   facturas = new BehaviorSubject([]);
@@ -45,10 +45,12 @@ export class DbServiceService {
   tipos = new BehaviorSubject([]);
   tmpQuery = new BehaviorSubject([]);
   Usuario = new BehaviorSubject([]);
-  fechaPrendido = new BehaviorSubject([]);
+  fechaprendido = new BehaviorSubject([]);
 
   aposentosPorUsuario = new BehaviorSubject([]);
-  misDispostivosModelo = new BehaviorSubject([]);
+  misDispostivosmodelo = new BehaviorSubject([]);
+
+  Sincronizar = true;
 
 
   constructor(private sqlite: SQLite, private plt: Platform, private sqlitePorter: SQLitePorter, private http: HttpClient,
@@ -62,7 +64,11 @@ export class DbServiceService {
     private historialService: HistorialService,
     private pedidoService: PedidoService,
     private regionesService: RegionService,
-    private tiposService: TipoService) {
+    private tiposService: tipoService) {
+    
+  }
+
+  initSQLite() {
     this.plt.ready().then(() => {
       this.sqlite.create({
         name: 'SmartHomeTEC.db',
@@ -72,7 +78,7 @@ export class DbServiceService {
           this.database = db;
           this.seedDatabase();
         });
-    });
+    }); 
   }
 
   seedDatabase() {
@@ -84,7 +90,7 @@ export class DbServiceService {
             this.clientService.loadClientes(this.database, this.clientes);
             this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
             this.dispositivoService.loadDispositivosAdquiridos(this.database, this.dispositivosAdquiridos);
-            this.dispositivoService.loadDispositivosModelo(this.database, this.dispositivosModelo);
+            this.dispositivoService.loadDispositivosmodelo(this.database, this.dispositivosmodelo);
             this.dispositivoService.loadDispositivosSeVendeEn(this.database, this.dispositivoSeVendeEn);
             this.aposentosService.loadAposentos(this.database, this.aposentos);
             this.garantiaService.loadGarantias(this.database, this.garantias);
@@ -95,7 +101,7 @@ export class DbServiceService {
             this.pedidoService.loadPedidos(this.database, this.pedidos);
             this.pedidoService.loadPedidosFactura(this.database, this.pedidosFactura);
             this.regionesService.loadRegiones(this.database, this.regiones);
-            this.tiposService.loadTipos(this.database, this.tipos);
+            this.tiposService.loadtipos(this.database, this.tipos);
 
             this.dbReady.next(true);
           })
@@ -122,7 +128,7 @@ export class DbServiceService {
   }
 
   getMyID() {
-    return this.myID.Id;
+    return this.myID.id;
   }
 
   existeDispositivo(N_serie: number) {
@@ -149,9 +155,9 @@ export class DbServiceService {
 
   addClienteHaUsado(n_serie_dispositivo: number) {
     let data: ClienteHaUsado = new ClienteHaUsado();
-    data.IdCliente = this.Usuario.value[0].Id;
-    data.NSerieDispositivo = n_serie_dispositivo;
-    data.PropietarioActual = true;
+    data.idCliente = this.Usuario.value[0].id;
+    data.nSerieDispositivo = n_serie_dispositivo;
+    data.propietarioActual = true;
     this.dispositivoService.addClienteHaUsado(this.database, data, this.clientesHanUsado);
 
   }
@@ -161,8 +167,8 @@ export class DbServiceService {
     this.dispositivoService.updateDispositivoAdquirido(this.database, this.dispositivosAdquiridos, idAposento, n_serie);
   }
 
-  addAposento(nuevoNombre: string) {
-    this.aposentosService.addAposento(this.database, this.aposentos, this.Usuario.value[0], nuevoNombre);
+  addAposento(nuevonombre: string) {
+    this.aposentosService.addAposento(this.database, this.aposentos, this.Usuario.value[0], nuevonombre);
   }
 
   validarCliente(email: string, contrasena: string) {
@@ -179,10 +185,10 @@ export class DbServiceService {
 
   apagarDispositivo(N_serie: number) {
 
-    this.dispositivoService.getFechaPrendido(this.database, this.fechaPrendido, N_serie);
+    this.dispositivoService.getFechaprendido(this.database, this.fechaprendido, N_serie);
 
-    let fechaPrendido = this.fechaPrendido.value[0].FechaPrendido;
-    let day = new Date(fechaPrendido);
+    let fechaprendido = this.fechaprendido.value[0].Fechaprendido;
+    let day = new Date(fechaprendido);
     this.historialService.apagarDispositivo(this.database, this.historiales, N_serie, day);
 
 
@@ -192,8 +198,8 @@ export class DbServiceService {
     this.aposentosService.deleteAposento(this.database, this.aposentos, aposentoId);
   }
 
-  updateNombreAposento(aposentoId: number, nuevoNombre: string) {
-    this.aposentosService.updateNombre(this.database, this.aposentos, aposentoId, nuevoNombre);
+  updatenombreAposento(aposentoId: number, nuevonombre: string) {
+    this.aposentosService.updatenombre(this.database, this.aposentos, aposentoId, nuevonombre);
   }
 
   prenderDispositivo(N_serie: number) {
@@ -204,10 +210,10 @@ export class DbServiceService {
     this.dispositivoService.getMisDispositivosPorAposento(this.database, this.tmpQuery, this.Usuario.value[0], idAposento);
   }
 
-  getMisDispositivosModelo() {
-    this.dispositivoService.getMisDispositivosModelo(this.database, this.misDispostivosModelo, this.Usuario.value[0]);
-    console.log("los dispositivos modelo son: ", this.misDispostivosModelo.value);
-    return this.misDispostivosModelo.value;
+  getMisDispositivosmodelo() {
+    this.dispositivoService.getMisDispositivosmodelo(this.database, this.misDispostivosmodelo, this.Usuario.value[0]);
+    console.log("los dispositivos modelo son: ", this.misDispostivosmodelo.value);
+    return this.misDispostivosmodelo.value;
 
   }
 
@@ -230,14 +236,14 @@ export class DbServiceService {
     return this.aposentos.value;
   }
 
-  getTipos() {
-    this.tiposService.loadTipos(this.database, this.tipos);
+  gettipos() {
+    this.tiposService.loadtipos(this.database, this.tipos);
     return this.tipos.value;
   }
 
-  getDispositivosModelo() {
-    this.dispositivoService.loadDispositivosModelo(this.database, this.dispositivosModelo);
-    return this.dispositivosModelo.value;
+  getDispositivosmodelo() {
+    this.dispositivoService.loadDispositivosmodelo(this.database, this.dispositivosmodelo);
+    return this.dispositivosmodelo.value;
   }
 
 

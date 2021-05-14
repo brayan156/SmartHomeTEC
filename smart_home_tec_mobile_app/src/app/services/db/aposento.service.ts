@@ -22,9 +22,9 @@ export class AposentoService {
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           aposentosList.push({
-            Id: data.rows.item(i).id,
-            NombreCuarto: data.rows.item(i).nombre_cuarto,
-            IdCliente: data.rows.item(i).id_cliente,
+            id: data.rows.item(i).id,
+            nombreCuarto: data.rows.item(i).nombre_cuarto,
+            idCliente: data.rows.item(i).id_cliente,
           });
         }
       }
@@ -33,16 +33,16 @@ export class AposentoService {
   }
 
   loadAposentosPorUsuario(database: SQLiteObject, aposentosPorUsuario: BehaviorSubject<any[]>, cliente:Cliente) {
-    return database.executeSql('SELECT * FROM Aposento WHERE id_cliente = ?', [cliente.Id]).then(data => {
+    return database.executeSql('SELECT * FROM Aposento WHERE id_cliente = ?', [cliente.id]).then(data => {
 
       let aposentosList: Aposento[] = [];
 
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           aposentosList.push({
-            Id: data.rows.item(i).id,
-            NombreCuarto: data.rows.item(i).nombre_cuarto,
-            IdCliente: data.rows.item(i).id_cliente,
+            id: data.rows.item(i).id,
+            nombreCuarto: data.rows.item(i).nombre_cuarto,
+            idCliente: data.rows.item(i).id_cliente,
           });
         }
       }
@@ -58,9 +58,9 @@ export class AposentoService {
       if (data.rows.length > 0) {
         for (var i = 0; i < data.rows.length; i++) {
           aposentosList.push({
-            Id: data.rows.item(i).id,
-            NombreCuarto: data.rows.item(i).nombre_cuarto,
-            IdCliente: data.rows.item(i).id_cliente,
+            id: data.rows.item(i).id,
+            nombreCuarto: data.rows.item(i).nombre_cuarto,
+            idCliente: data.rows.item(i).id_cliente,
           });
         }
       }
@@ -68,8 +68,8 @@ export class AposentoService {
     });
   }
 
-  addAposento(database:SQLiteObject,  aposentos: BehaviorSubject<any[]>, cliente:Cliente, nuevoNombre:string) {
-    return database.executeSql('insert into Aposento (nombre_cuarto, id_cliente) values (?,?)', [nuevoNombre, cliente.Id]).then(data => {
+  addAposento(database:SQLiteObject,  aposentos: BehaviorSubject<any[]>, cliente:Cliente, nuevonombre:string) {
+    return database.executeSql('insert into Aposento (nombre_cuarto, id_cliente) values (?,?)', [nuevonombre, cliente.id]).then(data => {
       this.loadAposentos(database, aposentos);
     });
   }
@@ -80,8 +80,8 @@ export class AposentoService {
     });
   }
 
-  updateNombre(database:SQLiteObject,  aposentos: BehaviorSubject<any[]>, idAposento:number, nuevoNombre:string) {
-    return database.executeSql('update Aposento set nombre_cuarto = ? where id =?', [nuevoNombre, idAposento]).then(data => {
+  updatenombre(database:SQLiteObject,  aposentos: BehaviorSubject<any[]>, idAposento:number, nuevonombre:string) {
+    return database.executeSql('update Aposento set nombre_cuarto = ? where id =?', [nuevonombre, idAposento]).then(data => {
       this.loadAposentos(database, aposentos);
     });
   }

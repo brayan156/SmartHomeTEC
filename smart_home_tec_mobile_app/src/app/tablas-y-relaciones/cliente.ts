@@ -1,10 +1,10 @@
 
 export class Cliente {
-  Id : number;
-  Email : string;
-  Contrasena : string;
-  PrimerApellido : string;
-  SegundoApellido : string;
-  Nombre : string;
-  Pais : string;
+  id : number;
+  email : string;
+  contrasena : string;
+  primerApellido : string;
+  segundoApellido : string;
+  nombre : string;
+  pais : string;
 }

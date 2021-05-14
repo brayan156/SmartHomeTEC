@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { DbServiceService } from '../services/db/db-service.service';
 import { Aposento } from '../tablas-y-relaciones/aposento';
-import { DispositivoModelo } from '../tablas-y-relaciones/DispositivoModelo';
-import { Tipo } from '../tablas-y-relaciones/tipo';
+import { Dispositivomodelo } from '../tablas-y-relaciones/Dispositivomodelo';
+import { tipo } from '../tablas-y-relaciones/tipo';
 
 @Component({
   selector: 'app-agregar-nuevo',
@@ -12,18 +12,18 @@ import { Tipo } from '../tablas-y-relaciones/tipo';
 })
 export class AgregarNuevoPage implements OnInit {
 
-  Descripcion: string;
-  Tipo: string;
+  descripcion: string;
+  tipo: string;
   Consumo: string;
-  Marca: string;
+  marca: string;
   N_serie: number;
   Aposento: string;
 
 
   registro = {};
-  tipos: Tipo[] = [];
+  tipos: tipo[] = [];
   aposentos: Aposento[] = [];
-  dispositivosModelo: DispositivoModelo[] = [];
+  dispositivosmodelo: Dispositivomodelo[] = [];
   tmpQuery = [];
 
   constructor(private db: DbServiceService,
@@ -31,14 +31,14 @@ export class AgregarNuevoPage implements OnInit {
 
   ngOnInit() {
     this.aposentos = this.db.getAposentosPorUsuario();
-    this.tipos = this.db.getTipos();
-    this.dispositivosModelo = this.db.getDispositivosModelo();
+    this.tipos = this.db.gettipos();
+    this.dispositivosmodelo = this.db.getDispositivosmodelo();
   }
 
   // Recibe la informacion y la envia
   nuevoDispositivo() {
     console.log(this.N_serie);
-    console.log(this.Descripcion, this.Marca, this.Tipo);
+    console.log(this.descripcion, this.marca, this.tipo);
 
 
 
@@ -63,11 +63,11 @@ export class AgregarNuevoPage implements OnInit {
     this.db.getDatabaseState().subscribe(rdy => {
       if (rdy) {
         //Preguntamos si coinciden los parametros marca-tipo-N_serie-descripcion
-        if (!this.db.coincideInformacion(this.N_serie, this.Marca, this.Descripcion, this.Tipo)) {
+        if (!this.db.coincideInformacion(this.N_serie, this.marca, this.descripcion, this.tipo)) {
           this.presentAlert("La información no coincide con la base de datos.");
         } else {
           this.db.addClienteHaUsado(this.N_serie);
-          this.db.updateDispositivoAdquirido(this.getIdAposento(), this.N_serie);
+          this.db.updateDispositivoAdquirido(this.getidAposento(), this.N_serie);
           this.presentConfirmacion("Tu dispositivo fue agregado exitosamente.");
         }
       }
@@ -77,11 +77,11 @@ export class AgregarNuevoPage implements OnInit {
 
   };
 
-  getIdAposento() {
+  getidAposento() {
     let result = null;
     this.aposentos.forEach(aposento => {
-      if (aposento.NombreCuarto == this.Aposento) {
-        result = aposento.Id;
+      if (aposento.nombreCuarto == this.Aposento) {
+        result = aposento.id;
       }
     });
     return result;

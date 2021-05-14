@@ -1,5 +1,5 @@
 export class ClienteHaUsado {
-  IdCliente  :number;
-  NSerieDispositivo  :number;
-  PropietarioActual: boolean;
+  idCliente  :number;
+  nSerieDispositivo  :number;
+  propietarioActual: boolean;
 }
