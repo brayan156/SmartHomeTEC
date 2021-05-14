@@ -48,18 +48,47 @@ namespace smarthometec_API.Controllers
             return cliente;
         }
 
+        public  int gettiempo(int nserie)
+        {
+            var pedido = _context.Pedido.First(p => p.NSerieDispositivo == nserie);
+            var pfactura = _context.PedidoFactura.First(pf => pf.IdPedido == pedido.Id);
+            var factura = _context.Factura.First(f => f.NFactura == pfactura.NFactura);
+            var garantia = _context.CertificadoGarantia.First(f => f.NFactura == factura.NFactura);
+            var fechafinal = new DateTime(garantia.AnoFinGarantia, garantia.MesFinGarantia, factura.Dia.Value);
+            var mesesrestantes = ((fechafinal.Year - DateTime.Now.Year) * 12) + fechafinal.Month - DateTime.Now.Month;
+
+            if (mesesrestantes < 0)
+            {
+                return 0;
+            }
+
+            return mesesrestantes;
+        }
+
 
         [HttpGet("dispositivosDueno/{id}")]
-        public async Task<ActionResult<IEnumerable<DispositivoAdquirido>>> Getdispositvos(int id)
+        public async Task<ActionResult<IEnumerable<dynamic>>> Getdispositvos(int id)
         {
-            var dipositivos = await _context.ClienteHaUsado.Where(cu=>cu.IdCliente==id & cu.PropietarioActual==true).Join(_context.DispositivoAdquirido,cu=>cu.NSerieDispositivo,da=>da.NSerie,(cu,da)=>da).ToListAsync();
+            var dipositivos =  _context.ClienteHaUsado.Where(cu=>cu.IdCliente==id & cu.PropietarioActual==true).Join(_context.DispositivoAdquirido,cu=>cu.NSerieDispositivo,da=>da.NSerie,(cu,da)=>da);
+            var dis_modelo = dipositivos.Join(_context.DispositivoModelo,d=> d.Modelo,m=>m.Modelo, (d,m)=>new
+            {d,m });
+            List<dynamic> lista = new List<dynamic>();
+
+            dis_modelo.ToList().ForEach(dm => {
+                var meses = this.gettiempo(dm.d.NSerie);
+                var mesfin = meses - meses / 12;
+                var anofin = meses / 12;
+                var dmh = new { modelo = dm.m.Modelo, marca = dm.m.Marca, consumoElectrico = dm.m.ConsumoElectrico, tipo = dm.m.Tipo, imagen = dm.m.Imagen, n_serie = dm.d.NSerie, prendido = dm.d.Prendido, mes_fin_garantia= meses, ano_fin_garantia=anofin };
+                lista.Add(dmh);
+            });
+
 
             if (dipositivos == null)
             {
                 return NotFound();
             }
 
-            return dipositivos;
+            return lista;
         }
 
 
@@ -98,12 +127,78 @@ namespace smarthometec_API.Controllers
 
 
 
+        [HttpPost("sincronizar/{idcliente}")]
+        public string PostCliente(Dictionary<string, dynamic> clase, int idcliente)
+        {
+
+            List<Historial> historiales = clase["historiales"];
+            List<ClienteHaUsado> clienteHaUsado = clase["clienteHaUsado"];
+            List<DispositivoAdquirido> dispositivos = clase["dispositivos"];
+            List<Aposento> aposentos = clase["aposentos"];
+
+            clienteHaUsado.ForEach(chu => {
+                if (!_context.ClienteHaUsado.Any(clienteha => chu.IdCliente == clienteha.IdCliente & chu.IdCliente == idcliente & chu.NSerieDispositivo == clienteha.NSerieDispositivo)) {
+                    _context.ClienteHaUsado.Add(chu);
+                }
+            });
+            _context.SaveChanges();
+
+           
+            var aposentosclientebase = _context.Aposento.Where(ap => ap.IdCliente == idcliente);
+
+            var aposentoseditar = aposentos.Where(aposento => aposentosclientebase.Any(a => a.IdCliente == aposento.IdCliente & a.Id == aposento.Id)).ToList();
+            var aposentosagregar = aposentos.Where(aposento => aposentosclientebase.All(a => a.IdCliente == aposento.IdCliente & a.Id != aposento.Id));
+            var aposentoseliminar = aposentosclientebase.Where(aposento => aposentos.Where(a => a.IdCliente == idcliente).All(a => a.Id != aposento.Id));
+
+            aposentoseditar.ForEach(aposento =>
+            {
+                _context.Entry(aposento).State = EntityState.Modified;
+            });
+            _context.SaveChanges();
+
+            aposentosagregar.ToList().ForEach(aposento =>
+            {
+                var apagregado = _context.Aposento.Add(aposento).Entity;
+                dispositivos.Where(dispositivo => aposento.Id == dispositivo.IdAposento).ToList().ForEach(dis=>{
+                    dis.IdAposento = apagregado.Id;
+                    _context.Entry(dis).State= EntityState.Modified;
+                });
+            });
+            _context.SaveChanges();
+
+
+            _context.ClienteHaUsado.Where(cu => cu.IdCliente == idcliente & cu.PropietarioActual == true).Join(dispositivos, cu => cu.NSerieDispositivo, da => da.NSerie, (cu, da) => da).ToList().ForEach(dis=> {
+                _context.Entry(dis).State = EntityState.Modified;
+
+            });
+            _context.SaveChanges();
+
+            _context.Aposento.RemoveRange(aposentoseliminar);
+            _context.SaveChanges();
+
+            var dispositivoscliente=_context.ClienteHaUsado.Where(cu => cu.IdCliente == idcliente & cu.PropietarioActual == true).Join(_context.DispositivoAdquirido, cu => cu.NSerieDispositivo, da => da.NSerie, (cu, da) => da);
+            historiales.Where(historial => dispositivoscliente.Any(d => d.NSerie == historial.NSerie)).ToList().ForEach(historial => {
+                if (_context.Historial.Any(hist => hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes & hist.Dia == historial.Dia & hist.Hora == historial.Hora))
+                {
+                    _context.Entry(historial).State = EntityState.Modified;
+                }
+                else {
+                    _context.Historial.Add(historial);
+                }
+            });
+            _context.SaveChanges();
+
+            return "sincronizado wapo";
+        }
+
+
+
 
         // POST: api/Cliente
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
+        public async Task<string> PostCliente(Cliente cliente)
         {
             Debug.WriteLine(cliente);
             _context.Cliente.Add(cliente);
@@ -115,15 +210,14 @@ namespace smarthometec_API.Controllers
             {
                 if (ClienteExists(cliente.Id))
                 {
-                    return Conflict();
+                    return "cliente existente";
                 }
                 else
                 {
-                    throw;
+                    return "datos invalidos";
                 }
             }
-
-            return CreatedAtAction("GetCliente", new { id = cliente.Id }, cliente);
+            return "usuario creado";
         }
 
         // DELETE: api/Cliente/5

@@ -77,7 +77,7 @@ namespace smarthometec_API.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Distribuidor>> PostDistribuidor(Distribuidor distribuidor)
+        public async Task<string> PostDistribuidor(Distribuidor distribuidor)
         {
             _context.Distribuidor.Add(distribuidor);
             try
@@ -88,15 +88,15 @@ namespace smarthometec_API.Controllers
             {
                 if (DistribuidorExists(distribuidor.CedulaJuridica))
                 {
-                    return Conflict();
+                    return "distribuidor existente";
                 }
                 else
                 {
-                    throw;
+                    return "datos invalidos";
                 }
             }
 
-            return CreatedAtAction("GetDistribuidor", new { id = distribuidor.CedulaJuridica }, distribuidor);
+            return "distribuidor creado";
         }
 
         // DELETE: api/Distribuidor/5

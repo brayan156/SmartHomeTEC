@@ -45,13 +45,10 @@ namespace smarthometec_API.Controllers
         // PUT: api/ClienteHaUsado/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutClienteHaUsado(int id, ClienteHaUsado clienteHaUsado)
+        [HttpPut()]
+        public async Task<IActionResult> PutClienteHaUsado( ClienteHaUsado clienteHaUsado)
         {
-            if (id != clienteHaUsado.NSerieDispositivo)
-            {
-                return BadRequest();
-            }
+
 
             _context.Entry(clienteHaUsado).State = EntityState.Modified;
 
@@ -59,16 +56,10 @@ namespace smarthometec_API.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClienteHaUsadoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
+            catch (DbUpdateConcurrencyException) { 
+
                     throw;
-                }
+                
             }
 
             return NoContent();
@@ -99,6 +90,85 @@ namespace smarthometec_API.Controllers
 
             return CreatedAtAction("GetClienteHaUsado", new { id = clienteHaUsado.NSerieDispositivo }, clienteHaUsado);
         }
+
+
+
+        [HttpGet("transferir/{idactual}/{idnuevo}/{nserie}")]
+        public async Task<string> transferir(int idactual, int idnuevo,int nserie)
+        {
+            ClienteHaUsado clienteusado= new ClienteHaUsado();
+            clienteusado.IdCliente = idnuevo;
+            clienteusado.NSerieDispositivo = nserie;
+            clienteusado.PropietarioActual = true;
+
+
+            ClienteHaUsado clienteusadoactual = new ClienteHaUsado();
+            clienteusado.IdCliente = idnuevo;
+            clienteusado.NSerieDispositivo = nserie;
+            clienteusado.PropietarioActual = true;
+
+            if (!_context.Cliente.Any(c => c.Id == idnuevo))
+            {
+                return "usuario nuevo no existe";
+            }
+            else {
+                if (_context.ClienteHaUsado.Any(c => c.IdCliente == idnuevo & c.NSerieDispositivo == nserie))
+                {
+                    _context.Entry(clienteusado).State = EntityState.Modified;
+                }
+                else {
+                    _context.ClienteHaUsado.Add(clienteusado);
+                }
+                _context.Entry(clienteusadoactual).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return "transferido exictosamente";
+            }
+
+
+        }
+
+
+
+        [HttpPost("agregardispositivo/{idcliente}")]
+        public async Task<string> agregardispostiivosusuario(int idcliente,dynamic datos)
+        {
+
+            string descripcion=datos.descripcion;
+            string tipo=datos.tipo;
+            string marca=datos.marca;
+            int nserie=datos.n_serie;
+            int consumo=datos.consumo;
+            int idaposento=datos.aposento;
+
+
+            if (!_context.DispositivoAdquirido.Any(d => d.NSerie == nserie)) {
+                return "dispositivo no existe";
+                
+            }
+            else if (!_context.ClienteHaUsado.Any(c=> c.NSerieDispositivo==nserie)) {
+                return "dispositivo ya ha sido registrado";
+            }
+
+            var dispositivo = _context.DispositivoAdquirido.Where(d => d.NSerie == nserie).Join(_context.DispositivoModelo,da=>da.Modelo,dm=>dm.Modelo,(da,dm)=>  
+                new { da, dm }).First();
+
+            if (_context.Tipo.Any(t => t.Descripcion == descripcion & t.Nombre == tipo & t.Nombre == dispositivo.dm.Tipo) & dispositivo.dm.ConsumoElectrico == consumo & dispositivo.dm.Marca == marca)
+            {
+                ClienteHaUsado cliente = new ClienteHaUsado();
+                cliente.IdCliente = idcliente;
+                cliente.NSerieDispositivo = nserie;
+                _context.ClienteHaUsado.Add(cliente);
+                dispositivo.da.IdAposento = idaposento;
+                _context.Entry(dispositivo.da).State= EntityState.Modified;
+                 await _context.SaveChangesAsync();
+                return "dispositivo registrado con exito";
+            }
+            else {
+                return "datos invalidos";
+            }
+        }
+
+
 
         // DELETE: api/ClienteHaUsado/5
         [HttpDelete("{id}")]
