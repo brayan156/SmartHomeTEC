@@ -69,7 +69,7 @@ export class DbAPIService {
   }
 
   deleteAposento(idAposento: number) {
-    return this.http.delete(this.Url + 'Aposento/' + idAposento);
+    return this.http.delete(this.Url + 'Aposento/' + idAposento + "/" + this.Usuario.id);
   }
 
   putAposento(aposento: Aposento) {

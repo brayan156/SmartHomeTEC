@@ -138,7 +138,7 @@ export class GestionAposentosPage implements OnInit {
     if (this.misDispositivosPorAposentos.length == 0) {
       if (this.db.Sincronizar) {
         this.dbAPI.deleteAposento(this.aposento.id).subscribe(data => {
-
+          console.log(data);
         });
       } else {
         this.db.deleteAposento(this.aposento.id);
