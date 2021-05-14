@@ -31,10 +31,14 @@ export class LoginComponent implements OnInit {
   administrador: Administrador = new Administrador;
   // tslint:disable-next-line:new-parens
   cliente: Cliente = new Cliente;
+
+  listaClientes: Cliente[] = [];
   listaDeRegiones: Regiones[] = [] ;
   ngOnInit(): void {
-    this.service.getRegiones().subscribe(lista => {this.listaDeRegiones = lista;
-                                                   console.log(lista);
+    this.service.getRegiones().subscribe(lista =>
+    {this.listaDeRegiones = lista;
+     console.log(lista);
+     this.service.getListaCliente().subscribe(clienteLista => this.listaClientes = clienteLista);
     });
   }
 
@@ -102,10 +106,10 @@ export class LoginComponent implements OnInit {
    */
   // tslint:disable-next-line:typedef
   crearCliente(cliente: Cliente) {
+    // tslint:disable-next-line:prefer-for-of
     this.service.crearCliente(this.cliente).subscribe(c => {
       console.log(c);
-      console.log(c["id"]);
       this.service.habilitarAposentos(cliente.id).subscribe(c => console.log(c));
-    });
-  }
+      });
+    }
 }

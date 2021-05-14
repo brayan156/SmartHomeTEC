@@ -62,6 +62,14 @@ export class ServiciosService {
   }
 
   /**
+   * Obtiene la lista de todos los clientes en la base de datos
+   */
+  // tslint:disable-next-line:typedef
+  public getListaCliente(){
+    return this.http.get<Cliente[]>(this.Url + 'Cliente');
+  }
+
+  /**
    * Crea un nuevo dispositivo en la base de datos
    * @param disposivoModelo objero que se envia a la base de datos para crear un dispositico Modelo en ella
    */
@@ -399,9 +407,16 @@ export class ServiciosService {
    * @param datos datos del excel
    */
   public guardardatosexcel(datos: DispositivoSeVendeEn[]) {
-    return this.http.post(this.Url + "DispositivoSeVendeEn/excel", datos);
+    return this.http.post(this.Url + 'DispositivoSeVendeEn/excel', datos);
   }
 
+  /**
+   * obtiene la clase dispositvo se vende de la base de datos
+   */
+  // tslint:disable-next-line:typedef
+  public getDispositivosSeVende(){
+    return this.http.get<DispositivoSeVendeEn[]>(this.Url + 'DispositivoSeVendeEn');
+  }
 
 }
 

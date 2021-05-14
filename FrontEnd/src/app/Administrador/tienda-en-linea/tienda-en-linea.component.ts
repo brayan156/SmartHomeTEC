@@ -12,6 +12,7 @@ import {DispositivoSeVendeEn} from '../../Comunicacion/dispositivo-se-vende-en';
 export class TiendaEnLineaComponent implements OnInit {
 
   ListadispositivosSeVendenEn: DispositivoSeVendeEn[] = [];
+  listaDispositivosSeVendenEnBaseDatos: DispositivoSeVendeEn[] = [];
   // tslint:disable-next-line:new-parens
   dispositivosSeVendenEn: DispositivoSeVendeEn = new DispositivoSeVendeEn();
   data: [][];
@@ -19,8 +20,8 @@ export class TiendaEnLineaComponent implements OnInit {
   dispositivoActual: DispositivoSeVendeEn = new DispositivoSeVendeEn();
   constructor(private service: ServiciosService) {
   }
-
   ngOnInit(): void {
+    this.service.getDispositivosSeVende().subscribe(lista => this.ListadispositivosSeVendenEn = lista);
   }
 
   onFileChange(evt: any) {
@@ -32,7 +33,6 @@ export class TiendaEnLineaComponent implements OnInit {
 
     reader.onload = (e: any) => {
       const bstr: string = e.target.result;
-
       const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
 
       const wsname: string = wb.SheetNames[0];
@@ -67,7 +67,10 @@ export class TiendaEnLineaComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   public guardardatos() {
-    this.service.guardardatosexcel(this.ListadispositivosSeVendenEn).subscribe(r => console.log(r));
+    this.service.guardardatosexcel(this.ListadispositivosSeVendenEn).subscribe(r => {
+      console.log(r);
+      this.ngOnInit();
+    });
   }
 
   public itemActual(itemActual: DispositivoSeVendeEn): void{
@@ -79,13 +82,14 @@ export class TiendaEnLineaComponent implements OnInit {
 
   public eliminarDispositivo(item: DispositivoSeVendeEn): void{
     // tslint:disable-next-line:prefer-for-of
-    // for (let i = 0; i < this.ListadispositivosSeVendenEn.length; i++){
-    //   // tslint:disable-next-line:no-unused-expression max-line-length
-    // tslint:disable-next-line:max-line-length
-    //   if (this.ListadispositivosSeVendenEn[i].cjDistribuidor === item.cjDistribuidor && this.ListadispositivosSeVendenEn[i].modeloDispotivo === item.modeloDispotivo){
-    //     this.ListadispositivosSeVendenEn.slice(i, i);
-    //   }
-    //   console.log(this.ListadispositivosSeVendenEn);
-    // }
+     for (let i = 0; i < this.ListadispositivosSeVendenEn.length; i++){
+       // tslint:disable-next-line:no-unused-expression max-line-length
+       // tslint:disable-next-line:max-line-length
+       if (this.ListadispositivosSeVendenEn[i].cjDistribuidor === item.cjDistribuidor && this.ListadispositivosSeVendenEn[i].modeloDispotivo === item.modeloDispotivo){
+         console.log(i);
+         this.ListadispositivosSeVendenEn.splice(i , 1);
+       }
+       console.log(this.ListadispositivosSeVendenEn);
+     }
   }
 }

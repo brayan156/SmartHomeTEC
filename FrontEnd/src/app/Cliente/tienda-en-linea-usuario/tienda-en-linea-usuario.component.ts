@@ -24,6 +24,7 @@ export class TiendaEnLineaUsuarioComponent implements OnInit {
   // tslint:disable-next-line:new-parens
   dispositivoSeVende: DispositivoSeVendeEn = new DispositivoSeVendeEn;
   dispositivos: { dispositivoSeVendeEn: DispositivoSeVendeEn, dispositivoModelo: DispositivoModelo }[] = [];
+  listaDispositivosComprables: {dispositivoSeVendeEn: DispositivoSeVendeEn, dispositivoModelo: DispositivoModelo}[] = [];
 
   // tslint:disable-next-line:new-parens
   tipo: Tipo = new Tipo;
@@ -33,7 +34,6 @@ export class TiendaEnLineaUsuarioComponent implements OnInit {
   // tslint:disable-next-line:new-parens
   dispositivoactual: {dispositivoSeVendeEn: DispositivoSeVendeEn, dispositivoModelo: DispositivoModelo};
   dispositivoCompra: {dispositivoSeVendeEn: DispositivoSeVendeEn, dispositivoModelo: DispositivoModelo};
-
   /**
    * Inicialisa el html con los datos que recupera de la base de datos para la tienda en linea
    */
@@ -42,10 +42,23 @@ export class TiendaEnLineaUsuarioComponent implements OnInit {
     {
       this.cliente = clienteAux;
       this.service.cliente = clienteAux;
-      this.service.obtenerTiendaLinea(this.cliente.pais).subscribe( data => this.dispositivos = data);
+      this.service.obtenerTiendaLinea(this.cliente.pais).subscribe( data => {
+        this.dispositivos = data;
+        this.filtroDeLista();
+      });
     });
   }
-
+  public filtroDeLista(): void{
+    console.log('Entro');
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.dispositivos.length; i ++) {
+      if (this.dispositivos[i].dispositivoModelo.tipo != null && this.dispositivos[i].dispositivoSeVendeEn.cantidad > 0) {
+        console.log('Entro');
+        this.listaDispositivosComprables.push(this.dispositivos[i]);
+      }
+    }
+    console.log(this.listaDispositivosComprables);
+  }
   /**
    * Guarda el item al cual se selecciona para ver mas informacion o comprar
    * @param item que desea comprar
@@ -68,8 +81,11 @@ export class TiendaEnLineaUsuarioComponent implements OnInit {
    */
   // tslint:disable-next-line:typedef
   public comprar() {
-    this.service.comprar(this.dispositivoactual.dispositivoSeVendeEn, this.cliente.id).subscribe(c =>
-      console.log(c));
+    this.dispositivoSeVende.cantidad -= 1;
+    this.service.comprar(this.dispositivoactual.dispositivoSeVendeEn, this.cliente.id).subscribe(c => {
+      console.log(c);
+    });
   }
+
 
 }
