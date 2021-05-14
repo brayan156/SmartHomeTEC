@@ -198,7 +198,7 @@ namespace smarthometec_API.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<string> PostCliente(Cliente cliente)
+        public async Task<ActionResult<string>> PostCliente(Cliente cliente)
         {
             Debug.WriteLine(cliente);
             _context.Cliente.Add(cliente);
@@ -217,7 +217,7 @@ namespace smarthometec_API.Controllers
                     return "datos invalidos";
                 }
             }
-            return "usuario creado";
+            return "creado";
         }
 
         // DELETE: api/Cliente/5

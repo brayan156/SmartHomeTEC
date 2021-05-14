@@ -104,7 +104,7 @@ export class ServiciosService {
   // tslint:disable-next-line:typedef
   public crearCliente(cliente: Cliente){
     // tslint:disable-next-line:ban-types
-    return this.http.post<String>(this.Url + 'Cliente', cliente);
+    return this.http.post(this.Url + 'Cliente', cliente, { responseType: 'text' });
   }
 
   /**
@@ -115,7 +115,7 @@ export class ServiciosService {
 
   // tslint:disable-next-line:typedef
   public editarCliente(id: number, cliente: Cliente){
-    return this.http.put(this.Url  + 'Cliente/' + id, cliente);
+    return this.http.put(this.Url + 'Cliente/' + id, cliente, { responseType: 'text' });
   }
 
   /**

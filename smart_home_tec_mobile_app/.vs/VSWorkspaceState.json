@@ -1,8 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\android",
     "\\src",
-    "\\src\\app"
+    "\\src\\app",
+    "\\src\\app\\agregar-nuevo",
+    "\\src\\app\\control-dispositivos-activos",
+    "\\src\\app\\samples-de-tablas",
+    "\\src\\app\\services",
+    "\\src\\app\\tablas-y-relaciones",
+    "\\src\\assets"
   ],
+  "SelectedNode": "\\src\\app\\control-dispositivos-activos\\control-dispositivos-activos.page.ts",
   "PreviewInSolutionExplorer": false
 }
