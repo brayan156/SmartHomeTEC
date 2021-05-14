@@ -13,16 +13,7 @@ import { DispositivoAdquirido } from '../tablas-y-relaciones/dispositivoAdquirid
 })
 export class GestionAposentosPage implements OnInit {
 
-  // misDispositivosPorAposentos = [
-  //   {
-  //     mes_fin_garantia: 3,
-  //     ano_fin_garantia: 3,
-  //     n_serie: 2,
-  //     prendido: 1,
-  //     imagen: "https://cdn57.androidauthority.net/wp-content/uploads/2020/11/aukey-smart-lamp-990x675.jpg",
-  //     modelo: "Lamp3000"
-  //   }
-  // ];
+
   misDispositivosPorAposentos;
   misAposentos: Aposento[];
   @Input() aposento: Aposento = new Aposento();
@@ -45,6 +36,10 @@ export class GestionAposentosPage implements OnInit {
 
   }
 
+  /**
+   * Esta es la funcion que se encarga de actualizar el contenido 
+   * de toda la pagina
+   */
   updateContenido() {
     this.misDispositivosPorAposentos = [];
 
@@ -70,6 +65,10 @@ export class GestionAposentosPage implements OnInit {
     }
   }
 
+  /**
+   * Accion para el ion refresher
+   * @param evento 
+   */
   doRefresh(evento) {
     setTimeout(() => {
       this.updateContenido();
@@ -77,6 +76,13 @@ export class GestionAposentosPage implements OnInit {
     }, 300)
   }
 
+
+/**
+ * Actualiza el aposento de un dispositivo
+ * @param evento 
+ * @param n_serie 
+ * @param dispositivo 
+ */
   updateAposentoDeDispositivo(evento, n_serie: number, dispositivo) {
     console.log(evento.detail, "son mis detalles");
     if (this.db.Sincronizar) {
@@ -100,6 +106,9 @@ export class GestionAposentosPage implements OnInit {
     }
   }
 
+  /**
+   * Muestra las acciones que se pueden hacer para un aposento
+   */
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Editar ' + this.aposento.nombreCuarto,
@@ -134,6 +143,9 @@ export class GestionAposentosPage implements OnInit {
     console.log('onDidDismiss resolved with role', role);
   }
 
+  /**
+   * Elimina el aposento de la base de datos
+   */
   deleteAposento() {
     if (this.misDispositivosPorAposentos.length == 0) {
       if (this.db.Sincronizar) {
@@ -153,6 +165,9 @@ export class GestionAposentosPage implements OnInit {
     
   }
 
+  /**
+   * Esta es la alerta que se usa para cambiar el nombre de un aposento
+   */
   async presentAlertPrompt() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -185,6 +200,11 @@ export class GestionAposentosPage implements OnInit {
     await alert.present();
   }
 
+  /**
+   * Actualiza el nombre de un aposento en la base
+   * de datos.
+   * @param nuevoNombre 
+   */
   updateNombreAposento(nuevoNombre: string) {
     if (this.db.Sincronizar) {
       this.aposento.nombreCuarto = nuevoNombre;
@@ -194,6 +214,10 @@ export class GestionAposentosPage implements OnInit {
     }
   }
 
+  /**
+   * Una funcion generica para mostrar alertas.
+   * @param message 
+   */
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { DbAPIService } from '../services/API/db-api.service';
 import { DbServiceService } from '../services/db/db-service.service';
@@ -29,13 +30,16 @@ export class AgregarNuevoPage implements OnInit {
 
   constructor(private db: DbServiceService,
     private alertController: AlertController,
-    private dbAPI: DbAPIService) { }
+    private dbAPI: DbAPIService,
+  private router: Router) { }
 
   ngOnInit() {
     this.actualizarContenido();
   }
 
-
+/**
+ * Actualiza el contenido de toda la pagina.
+ */
   actualizarContenido() {
     if (this.db.Sincronizar) {
       this.dbAPI.getMisAposentos().subscribe(data => {
@@ -54,6 +58,9 @@ export class AgregarNuevoPage implements OnInit {
     }
   }
 
+  /**
+   * Funcion para asociar dispositivo a la base de datos.
+   */
   nuevoDispositivo() {
     if (this.db.Sincronizar) {
       let objeto = {
@@ -70,13 +77,17 @@ export class AgregarNuevoPage implements OnInit {
         else if (data == "dispositivo ya ha sido registrado") this.presentAlert("El dispositivo ya está asociado a un cliente.");
         else if (data == "dispositivo registrado con exito") this.presentConfirmacion("Tu dispositivo fue agregado exitosamente.");
         else if (data == "datos invalidos") this.presentAlert("La información no coincide con la base de datos.");
+        this.router.navigateByUrl('control-dispositivos-activos');
       });
     } else {
       this.nuevoDispositivoLocal();
+      this.router.navigateByUrl('control-dispositivos-activos');
     }
   }
 
-  // Recibe la informacion y la envia
+  /**
+   * Crea un dispositivo en la base de datos local
+   */
   nuevoDispositivoLocal() {
     console.log(this.N_serie);
     console.log(this.descripcion, this.marca, this.tipo);
@@ -118,6 +129,10 @@ export class AgregarNuevoPage implements OnInit {
 
   };
 
+  /**
+   * Retorna el id de un aposento
+   * @returns 
+   */
   getidAposento() {
     let result = null;
     this.aposentos.forEach(aposento => {
@@ -128,6 +143,10 @@ export class AgregarNuevoPage implements OnInit {
     return result;
   }
 
+  /**
+   * Una funcion generica para mostrar un mensaje en una alerta
+   * @param message 
+   */
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -138,6 +157,10 @@ export class AgregarNuevoPage implements OnInit {
     await alert.present();
   }
 
+  /**
+   * Alerta de confirmacion
+   * @param message 
+   */
   async presentConfirmacion(message: string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',

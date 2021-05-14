@@ -122,10 +122,10 @@ export class DbServiceService {
 
   SincronizarTodo() {
     let objeto = {
-      historiales: this.historiales,
-      clienteHaUsado: this.clientesHanUsado,
-      dispositivos: this.dispositivosAdquiridos,
-      aposentos: this.aposentos
+      historiales: JSON.stringify(this.historiales.value),
+      clienteHaUsado: JSON.stringify(this.clientesHanUsado.value),
+      dispositivos: JSON.stringify(this.dispositivosAdquiridos.value),
+      aposentos: JSON.stringify(this.aposentos.value)
     }
     return this.http.post(this.dbAPI.Url + "Cliente/sincronizar/" + this.dbAPI.Usuario.id, objeto);
   }
@@ -135,6 +135,7 @@ export class DbServiceService {
   }
 
   SincronizarTodoConApi() {
+    this.Usuario.value[0] = this.dbAPI.Usuario;
     this.SincronizarConApi().subscribe(data => {
       console.log("estoy populando datos....")
       
@@ -193,7 +194,7 @@ export class DbServiceService {
 
       let historialesEntran: Historial[] = data.historiales;
       historialesEntran.forEach(entro => {
-        this.database.executeSql('insert into Historial (n_historial, n_serie, dia, mes, ano, hora, minutos_de_uso) VALUES  (?,?,?,?,?,?)',
+        this.database.executeSql('insert into Historial (n_historial, n_serie, dia, mes, ano, hora, minutos_de_uso) VALUES  (?,?,?,?,?,?,?)',
           [entro.nHistorial, entro.nSerie, entro.dia, entro.mes, entro.ano, entro.hora, entro.minutosDeUso]).then(data2 => {
             this.historialService.loadHistoriales(this.database, this.historiales);
         })

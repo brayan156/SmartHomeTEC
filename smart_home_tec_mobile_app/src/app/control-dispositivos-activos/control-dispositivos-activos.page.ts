@@ -52,7 +52,9 @@ export class ControlDispositivosActivosPage implements OnInit {
 
   }
 
-
+/**
+ * Esta funciona actualiza todo el contenido de la pagina
+ */
   actualizarContenido() {
     if (this.db.Sincronizar) {
       this.dbAPI.getMisAposentos().subscribe(data => {
@@ -83,6 +85,11 @@ export class ControlDispositivosActivosPage implements OnInit {
     }
   }
 
+  /**
+   * Una funcion generica para desplegar alertas
+   * Recibe un string que es el mensaje que muestra
+   * @param message 
+   */
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -93,6 +100,11 @@ export class ControlDispositivosActivosPage implements OnInit {
     await alert.present();
   }
 
+  /**
+   * Actualiza el aposento al cual esta asociado un dispositivo
+   * @param evento 
+   * @param dispositivo 
+   */
   updateAposentoDeDispositivo(evento, dispositivo) {
     console.log(evento.detail.value, "son mis detalles");
     if (this.db.Sincronizar) {
@@ -109,7 +121,10 @@ export class ControlDispositivosActivosPage implements OnInit {
     this.actualizarContenido();
   }
 
-
+  /**
+   * Funcion para el ion refresher
+   * @param evento 
+   */
   doRefresh(evento) {
     this.actualizarContenido();
     setTimeout(() => {
@@ -118,7 +133,9 @@ export class ControlDispositivosActivosPage implements OnInit {
   }
 
 
-
+  /**
+   * Permite crear una habaitacion nueva en la base de datos
+   */
   async NuevaHabitacion() {
     const alert = await this.alertController.create({
       cssClass: 'alerta',
@@ -168,6 +185,12 @@ export class ControlDispositivosActivosPage implements OnInit {
     await alert.present();
   }
 
+  /**
+   * Le da una segunda oportunidad al usuario
+   * de confirmar la sincronizacion.
+   * 
+   * Tambien ejecuta la funcion de sincronizar la base de datos.
+   */
   confirmarSincronizacion() {
     if (this.db.Sincronizar) {
       this.presentarAlertConfirmacionSinc();
@@ -178,6 +201,10 @@ export class ControlDispositivosActivosPage implements OnInit {
 
   }
 
+  /**
+   * Alerta que se muestra para confirmar la sincronizacion de la
+   * base de datos.
+   */
   async presentarAlertConfirmacionSinc() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -208,7 +235,10 @@ export class ControlDispositivosActivosPage implements OnInit {
   }
 
 
-
+  /**
+   * Presenta la alerta de confirmacion para
+   * no sincronizar la base de datos
+   */
   async presentarAlertConfirmacionNoSinc() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -225,7 +255,9 @@ export class ControlDispositivosActivosPage implements OnInit {
         }, {
           text: 'Si xD',
           handler: () => {
-            this.db.SincronizarTodo();
+            this.db.SincronizarTodo().subscribe(data => {
+              console.log("estoy sincronizando....")
+            });
             this.db.Sincronizar = true;
           }
         }
@@ -235,6 +267,9 @@ export class ControlDispositivosActivosPage implements OnInit {
     await alert.present();
   }
 
+  /**
+   * Alerta que indica que no hay contenido asociado al cliente
+   */
   async noHayContenidoAlert() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -254,7 +289,10 @@ export class ControlDispositivosActivosPage implements OnInit {
     await alert.present();
   }
 
-
+/**
+ * Muestra la informacion del dispositivo
+ * @param dispositivo 
+ */
   async showInfoDispositivo(dispositivo) {
     let textoPrenderApagar = ''
     if (dispositivo.prendido == 1) {
@@ -266,15 +304,6 @@ export class ControlDispositivosActivosPage implements OnInit {
       header: 'Información de ' + dispositivo.modelo,
       cssClass: 'my-custom-class',
       buttons: [
-        //{
-        //   text: 'Eliminar habitación',
-        //   role: 'destructive',
-        //   icon: 'trash',
-        //   handler: () => {
-        //     console.log('Delete clicked');
-        //     this.db.deleteAposento(this.aposento.id);
-        //   }
-        // }, 
         {
           text: textoPrenderApagar,
           icon: 'contrast',
@@ -310,6 +339,10 @@ export class ControlDispositivosActivosPage implements OnInit {
     console.log('onDidDismiss resolved with role', role);
   }
 
+  /**
+   * Prende el dispositivo en la base de datos
+   * @param n_serie 
+   */
   prenderDispositivo(n_serie: number) {
     if (this.db.Sincronizar) {
       this.dbAPI.prenderDispositivo(n_serie).subscribe(data => {
@@ -320,6 +353,10 @@ export class ControlDispositivosActivosPage implements OnInit {
     }
   }
 
+  /**
+   * Apaga el dispositivo en la base de datos
+   * @param n_serie 
+   */
   apagarDispositivo(n_serie: number) {
     if (this.db.Sincronizar) {
       this.dbAPI.apagarDispositivo(n_serie).subscribe(data => {
@@ -330,6 +367,11 @@ export class ControlDispositivosActivosPage implements OnInit {
     }
   }
 
+  /**
+   * Este es un cuadro de dialogo que muestra las opciones para asociar
+   * para asociar a otro cliente un dispositivo
+   * @param dispositivo 
+   */
   async presentarAlertaDeNuevoAsocie(dispositivo) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -364,6 +406,11 @@ export class ControlDispositivosActivosPage implements OnInit {
     await alert.present();
   }
 
+  /**
+   * Esta es la funcion que se encarga de coordinar un asocie del dispositivo a nuevo cliente
+   * @param n_serie 
+   * @param idCliente 
+   */
   asociarDispositivoANuevoCliente(n_serie: number, idCliente: number) {
     if (this.db.Sincronizar) {
       this.dbAPI.asociarDispositivoANuevoCliente(n_serie, idCliente).subscribe(data => {
@@ -375,33 +422,11 @@ export class ControlDispositivosActivosPage implements OnInit {
     }
   }
 
-  // getMisDispositivosPorAposento(aposento: Aposento) {
-  //   if (this.db.Sincronizar) {
-  //     this.dbAPI.getMisDispositivosPorAposento(aposento.id).subscribe(data => {
-  //       this.misDispositivosPorAposentos = data;
-  //     })
-  //   } else {
-  //     this.getMisDispositivosPorAposentoLocal(aposento);
-  //   }
-  // }
-
-  // getMisDispositivosPorAposentoLocal(aposento: Aposento) {
-  //   let tmp;
-  //   this.db.getMisDispositivosPorAposento(aposento.id);
-
-  //   setTimeout(async () => {
-  //     this.misDispositivosPorAposentos = this.db.tmpQuery.value;
-  //     console.log(this.misDispositivosPorAposentos.length, " es la longitud de la lista");
-  //     tmp = (this.misDispositivosPorAposentos.length != 0) ? true : false;
-  //   // let tmp = true;
-  //   if (tmp) {
-  //     this.presentModal(aposento)
-  //   } else {
-  //     this.noHayContenidoAlert();
-  //   }
-  //   }, 300)
-  // }
-
+  /**
+   * Presenta el modal al cual se le ingresa la informacion del aposento
+   * @param aposento 
+   * @returns 
+   */
   async presentModal(aposento: Aposento) {
     const modal = await this.modalController.create({
       component: GestionAposentosPage,
