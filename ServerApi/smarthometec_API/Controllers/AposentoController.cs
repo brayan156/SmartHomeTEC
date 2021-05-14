@@ -106,16 +106,16 @@ namespace smarthometec_API.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAposento(int id, Aposento aposento)
+        public async Task<string> PutAposento(int id, Aposento aposento)
         {
             if (id != aposento.Id)
             {
-                return BadRequest();
+                return "aposento incorrecto";
             }
 
             if (_context.Aposento.Any(a => a.IdCliente == aposento.IdCliente & a.NombreCuarto == aposento.NombreCuarto))
             {
-                return BadRequest("cliente ya tiene ese aposento");
+                return "ya existe aposento";
             }
 
             _context.Entry(aposento).State = EntityState.Modified;
@@ -128,15 +128,15 @@ namespace smarthometec_API.Controllers
             {
                 if (!AposentoExists(id))
                 {
-                    return NotFound();
+                    return "aposento no existe";
                 }
                 else
                 {
-                    throw;
+                    return "datos invalidos";
                 }
             }
 
-            return NoContent();
+            return "aposento editado";
         }
 
 
@@ -145,18 +145,18 @@ namespace smarthometec_API.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Aposento>> PostAposento(Aposento aposento)
+        public async Task<string> PostAposento(Aposento aposento)
         {
 
             if (_context.Aposento.Any(a => a.IdCliente == aposento.IdCliente & a.NombreCuarto == aposento.NombreCuarto))
             {
-                return BadRequest("cliente ya tiene ese aposento");
+                return "ya existe aposento";
             }
 
             _context.Aposento.Add(aposento);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAposento", new { id = aposento.Id }, aposento);
+            return "aposento creado";
         }
 
 
@@ -182,18 +182,18 @@ namespace smarthometec_API.Controllers
 
         // DELETE: api/Aposento/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Aposento>> DeleteAposento(int id)
+        public async Task<string> DeleteAposento(int id)
         {
             var aposento = await _context.Aposento.FindAsync(id);
             if (aposento == null)
             {
-                return NotFound();
+                return "aposnto no encontrado";
             }
 
             _context.Aposento.Remove(aposento);
             await _context.SaveChangesAsync();
 
-            return aposento;
+            return "dispositivo eliminado";
         }
 
         private bool AposentoExists(int id)

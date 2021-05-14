@@ -164,11 +164,11 @@ namespace smarthometec_API.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDispositivoAdquirido(int id, DispositivoAdquirido dispositivoAdquirido)
+        public async Task<string> PutDispositivoAdquirido(int id, DispositivoAdquirido dispositivoAdquirido)
         {
             if (id != dispositivoAdquirido.NSerie)
             {
-                return BadRequest();
+                return "dispositivo incorrecto";
             }
 
             _context.Entry(dispositivoAdquirido).State = EntityState.Modified;
@@ -181,15 +181,15 @@ namespace smarthometec_API.Controllers
             {
                 if (!DispositivoAdquiridoExists(id))
                 {
-                    return NotFound();
+                    return "dispositivo no existe";
                 }
                 else
                 {
-                    throw;
+                    return "datos invalidos";
                 }
             }
 
-            return NoContent();
+            return "dispositivocambiado";
         }
 
         // POST: api/DispositivoAdquirido
