@@ -91,6 +91,50 @@ namespace smarthometec_API.Controllers
             return CreatedAtAction("GetClienteHaUsado", new { id = clienteHaUsado.NSerieDispositivo }, clienteHaUsado);
         }
 
+
+
+
+        [HttpPost("agregardispositivo/{idcliente}")]
+        public async Task<string> agregardispostiivosusuario(int idcliente,dynamic datos)
+        {
+
+            string descripcion=datos.descripcion;
+            string tipo=datos.tipo;
+            string marca=datos.marca;
+            int nserie=datos.n_serie;
+            int consumo=datos.consumo;
+            int idaposento=datos.aposento;
+
+
+            if (_context.DispositivoAdquirido.Any(d => d.NSerie == nserie)) {
+                return "dispositivo no existe";
+                
+            }
+            else if (_context.ClienteHaUsado.Any(c=> c.NSerieDispositivo==nserie)) {
+                return "dispositivo ya ha sido registrado";
+            }
+
+            var dispositivo = _context.DispositivoAdquirido.Where(d => d.NSerie == nserie).Join(_context.DispositivoModelo,da=>da.Modelo,dm=>dm.Modelo,(da,dm)=>  
+                new { da, dm }).First();
+
+            if (_context.Tipo.Any(t => t.Descripcion == descripcion & t.Nombre == tipo & t.Nombre == dispositivo.dm.Tipo) & dispositivo.dm.ConsumoElectrico == consumo & dispositivo.dm.Marca == marca)
+            {
+                ClienteHaUsado cliente = new ClienteHaUsado();
+                cliente.IdCliente = idcliente;
+                cliente.NSerieDispositivo = nserie;
+                _context.ClienteHaUsado.Add(cliente);
+                dispositivo.da.IdAposento = idaposento;
+                _context.Entry(dispositivo.da).State= EntityState.Modified;
+                 await _context.SaveChangesAsync();
+                return "dispositivo registrado con exito";
+            }
+            else {
+                return "datos invalidos";
+            }
+        }
+
+
+
         // DELETE: api/ClienteHaUsado/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<ClienteHaUsado>> DeleteClienteHaUsado(int id)
