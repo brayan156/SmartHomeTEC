@@ -155,30 +155,14 @@ export class DbServiceService {
         })
       })
 
-      let certificadosEntrantes: CertificadoDeGarantia[] = data.certificados;
-      certificadosEntrantes.forEach(entro => {
-        this.database.executeSql('insert into  Certificado_garantia (n_factura, mes_fin_garantia, ano_fin_garantia) VALUES (?,?,?)',
-          [entro.nFactura, entro.mesFinGarantia, entro.anoFinGarantia]).then(data2 => {
-            this.garantiaService.loadGarantias(this.database, this.garantias);
-
+      let tiposEntran: tipo[] = data.tipos;
+      tiposEntran .forEach(entro => {
+        this.database.executeSql('insert into Tipo (nombre, tiempo_de_garantia, imagen, descripcion) VALUES (?,?,?,?)',
+          [entro.nombre, entro.tiempoDeGarantia, entro.imagen, entro.descripcion]).then(data2 => {
+            this.tiposService.loadtipos(this.database, this.tipos);
         })
       })
 
-      let clientesHanUsadoEntran: ClienteHaUsado[] = data.clientesHanUsado;
-      clientesHanUsadoEntran.forEach(entro => {
-        this.database.executeSql('insert into Cliente_ha_usado (n_serie_dispositivo, id_cliente,propietario_actual) VALUES (?,?,?)',
-          [entro.nSerieDispositivo, entro.idCliente, entro.propietarioActual]).then(data2 => {
-            this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
-        })
-      })
-
-      let dipositivoAdquiridosEntran: DispositivoAdquirido[] = data.dipositivoAdquiridos;
-      dipositivoAdquiridosEntran.forEach(entro => {
-        this.database.executeSql('insert into Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento) VALUES (?,?,?,?,?)',
-          [entro.nSerie, entro.prendido, entro.fechaprendido, entro.modelo, entro.idAposento]).then(data2 => {
-            this.dispositivoService.loadDispositivosAdquiridos(this.database, this.dispositivosAdquiridos);
-        })
-      })
 
       let dispositivoModelosEntran: Dispositivomodelo[] = data.dispositivoModelos;
       dispositivoModelosEntran.forEach(entro => {
@@ -190,14 +174,22 @@ export class DbServiceService {
         })
       })
 
-      let facturasEntran: Factura[] = data.facturas;
-      facturasEntran.forEach(entro => {
-        this.database.executeSql('insert into Factura (n_factura, dia, mes, ano) values (?,?,?,?)',
-          [entro.nFactura, entro.dia, entro.mes, entro.ano]).then(data2 => {
-            this.facturaService.loadFacturas(this.database, this.facturas);
+      let dipositivoAdquiridosEntran: DispositivoAdquirido[] = data.dipositivoAdquiridos;
+      dipositivoAdquiridosEntran.forEach(entro => {
+        this.database.executeSql('insert into Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento) VALUES (?,?,?,?,?)',
+          [entro.nSerie, entro.prendido, entro.fechaprendido, entro.modelo, entro.idAposento]).then(data2 => {
+            this.dispositivoService.loadDispositivosAdquiridos(this.database, this.dispositivosAdquiridos);
         })
       })
 
+
+      let clientesHanUsadoEntran: ClienteHaUsado[] = data.clientesHanUsado;
+      clientesHanUsadoEntran.forEach(entro => {
+        this.database.executeSql('insert into Cliente_ha_usado (n_serie_dispositivo, id_cliente,propietario_actual) VALUES (?,?,?)',
+          [entro.nSerieDispositivo, entro.idCliente, entro.propietarioActual]).then(data2 => {
+            this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
+        })
+      })
 
       let historialesEntran: Historial[] = data.historiales;
       historialesEntran.forEach(entro => {
@@ -207,12 +199,21 @@ export class DbServiceService {
         })
       })
 
-
+      
       let pedidosEntran: Pedido[] = data.pedidos;
       pedidosEntran.forEach(entro => {
         this.database.executeSql('insert into Pedido (id, monto, id_cliente, n_serie_dispositivo) VALUES  (?,?,?,?)',
           [entro.Id, entro.Monto, entro.idCliente, entro.nSerieDispositivo]).then(data2 => {
             this.pedidoService.loadPedidos(this.database, this.pedidos);
+        })
+      })
+
+      
+      let facturasEntran: Factura[] = data.facturas;
+      facturasEntran.forEach(entro => {
+        this.database.executeSql('insert into Factura (n_factura, dia, mes, ano) values (?,?,?,?)',
+          [entro.nFactura, entro.dia, entro.mes, entro.ano]).then(data2 => {
+            this.facturaService.loadFacturas(this.database, this.facturas);
         })
       })
 
@@ -224,14 +225,14 @@ export class DbServiceService {
         })
       })
 
-      let tiposEntran: tipo[] = data.tipos;
-      tiposEntran .forEach(entro => {
-        this.database.executeSql('insert into Tipo (nombre, tiempo_de_garantia, imagen, descripcion) VALUES (?,?,?,?)',
-          [entro.nombre, entro.tiempoDeGarantia, entro.imagen, entro.descripcion]).then(data2 => {
-            this.tiposService.loadtipos(this.database, this.tipos);
+      let certificadosEntrantes: CertificadoDeGarantia[] = data.certificados;
+      certificadosEntrantes.forEach(entro => {
+        this.database.executeSql('insert into  Certificado_garantia (n_factura, mes_fin_garantia, ano_fin_garantia) VALUES (?,?,?)',
+          [entro.nFactura, entro.mesFinGarantia, entro.anoFinGarantia]).then(data2 => {
+            this.garantiaService.loadGarantias(this.database, this.garantias);
+
         })
       })
-
       
     })
   }
