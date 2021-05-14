@@ -223,6 +223,11 @@ export class ServiciosService {
     return this.http.put(this.Url + 'Tipo/' + id , tipo , { responseType: 'text' });
   }
 
+  // tslint:disable-next-line:typedef
+  public editarDispostivoSeVende(dispositivoSeVende: DispositivoSeVendeEn){
+    return this.http.put(this.Url + 'DispositivoSeVendeEn', dispositivoSeVende);
+  }
+
   /**
    * Eliminar un tipo de dispositivo especifico en la base de datos la cual lo eliminara por medio del id
    * @param id id con la cual la base da datos sabra cual dispositivo eliminar
@@ -408,7 +413,7 @@ export class ServiciosService {
    * @param datos datos del excel
    */
   public guardardatosexcel(datos: DispositivoSeVendeEn[]) {
-    return this.http.post(this.Url + 'DispositivoSeVendeEn/excel', datos );
+    return this.http.post(this.Url + 'DispositivoSeVendeEn/excel', datos , { responseType: 'text' } );
   }
 
   /**

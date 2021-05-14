@@ -83,7 +83,7 @@ export class GestionDeTiposDisComponent implements OnInit {
     this.service.eliminarTipoDispositivo(this.tipoActual.nombre).subscribe(respuesta => {
       console.log(respuesta);
       if (respuesta === 'tipo tiene registrado un dispositivo comprado') {
-        alert('No puede eliminar este tipo de dispositivo puesto tiene algun dispositivo');
+        alert('No puede eliminar este tipo de dispositivo puesto tiene algun dispositivo que ya ha sido comprado por algun usuario');
       } else {
         this.ngOnInit();
       }

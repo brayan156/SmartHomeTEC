@@ -81,9 +81,10 @@ export class TiendaEnLineaUsuarioComponent implements OnInit {
    */
   // tslint:disable-next-line:typedef
   public comprar() {
-    this.dispositivoSeVende.cantidad -= 1;
     this.service.comprar(this.dispositivoactual.dispositivoSeVendeEn, this.cliente.id).subscribe(c => {
       console.log(c);
+      this.dispositivoactual.dispositivoSeVendeEn.cantidad -= 1;
+      this.service.editarDispostivoSeVende(this.dispositivoactual.dispositivoSeVendeEn).subscribe(a => console.log(a));
       // tslint:disable-next-line:max-line-length
       alert('Compra realizada, ' + ' Numero consecutivo: ' + c.pedido.id + ' Fecha: ' + c.factura.dia + '/' + c.factura.mes + '/' + c.factura.ano + ' Hora: ' +
         // tslint:disable-next-line:max-line-length

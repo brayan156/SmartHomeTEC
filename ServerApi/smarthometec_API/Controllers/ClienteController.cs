@@ -124,11 +124,27 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
-
+        [HttpGet("desincronizar")]
+        public  dynamic desincronizar() {
+            return new
+            {
+                aposentos = _context.Aposento.ToList(),
+                certificados = _context.CertificadoGarantia.ToList(),
+                clientes = _context.Cliente.ToList(),
+                clientesHanUsado = _context.ClienteHaUsado.ToList(),
+                dipositivoAdquiridos = _context.DispositivoAdquirido.ToList(),
+                dispositivoModelos = _context.DispositivoModelo.ToList(),
+                facturas = _context.Factura.ToList(),
+                historiales = _context.Historial.ToList(),
+                pedidos = _context.Pedido.ToList(),
+                pedidosFacturas = _context.PedidoFactura.ToList(),
+                tipos = _context.Tipo.ToList()
+            };
+        }
 
 
         [HttpPost("sincronizar/{idcliente}")]
-        public string PostCliente(Dictionary<string, dynamic> clase, int idcliente)
+        public string sincronizar(Dictionary<string, dynamic> clase, int idcliente)
         {
 
             List<Historial> historiales = clase["historiales"];
