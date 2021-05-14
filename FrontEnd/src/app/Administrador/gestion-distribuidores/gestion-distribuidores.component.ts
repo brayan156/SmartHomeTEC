@@ -43,8 +43,14 @@ export class GestionDistribuidoresComponent implements OnInit {
    * @param distribuidor el objeto que se crea el crear un nuevo distribuidor
    */
   public crearDistribuidor(distribuidor: Distribuidor): void{
-    this.service.crearDistribuidord(distribuidor).subscribe(a => {console.log(a);
-                                                                  this.ngOnInit();
+    this.service.crearDistribuidord(distribuidor).subscribe(a => {
+      console.log(a);
+      if (a === 'distribuidor existente'){
+        alert('Ya existe un distribuidor con esta cedula juridica');
+      }
+      else{
+        this.ngOnInit();
+      }
     });
   }
 

@@ -67,10 +67,15 @@ export class TiendaEnLineaComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   public guardardatos() {
-    this.service.guardardatosexcel(this.ListadispositivosSeVendenEn).subscribe(r => {
-      console.log(r);
-      this.ngOnInit();
-    });
+    try {
+      this.service.guardardatosexcel(this.ListadispositivosSeVendenEn).subscribe(r => {
+        console.log(r);
+        this.ngOnInit();
+      });
+    } catch (e){
+      alert('Error en datos ingresados');
+    }
+
   }
 
   public itemActual(itemActual: DispositivoSeVendeEn): void{

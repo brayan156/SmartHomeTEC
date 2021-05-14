@@ -13,7 +13,8 @@ export class GestionDeTiposDisComponent implements OnInit {
    * Constructor para la gestion de tipos en los dispositivos
    * @param service aca se encuntrar todas las funciones de servicios para la comunicacion de la base de datos
    */
-  constructor(private service: ServiciosService) { }
+  constructor(private service: ServiciosService) {
+  }
 
   // tslint:disable-next-line:new-parens
   tipo: Tipo = new Tipo;
@@ -36,8 +37,9 @@ export class GestionDeTiposDisComponent implements OnInit {
       this.listaDeTipos = lista;
       console.log(this.listaDeTipos);
     });
-    this.service.obtenerDispositivosModelo().subscribe(lista => {this.listaDeModelos = lista;
-                                                                 this.dispositivosSinTipo();
+    this.service.obtenerDispositivosModelo().subscribe(lista => {
+      this.listaDeModelos = lista;
+      this.dispositivosSinTipo();
     });
   }
 
@@ -46,10 +48,15 @@ export class GestionDeTiposDisComponent implements OnInit {
    * muestre el nuevo tipo de dato creado
    * @param tipo obejto que se envia a la base de datos para crear un nuevo tipo de dato
    */
-  public crearTipoDipositivo(tipo: Tipo): void{
+  public crearTipoDipositivo(tipo: Tipo): void {
     console.log(tipo);
-    this.service.crearTipoDispositivo(tipo).subscribe(a => {console.log(a);
-                                                            this.ngOnInit();
+    this.service.crearTipoDispositivo(tipo).subscribe(respuesta => {
+      console.log(respuesta);
+      if (respuesta === 'tipo ya existe') {
+        alert('Ya existe un tipo de dispositivo con este nombre');
+      } else {
+        this.ngOnInit();
+      }
     });
   }
 
@@ -58,18 +65,28 @@ export class GestionDeTiposDisComponent implements OnInit {
    * muestre el nuevo tipo de dato creado
    * @param tipo edita el tipo de dato en la base de datos
    */
-  public editarTipoDipositivo(tipo: Tipo): void{
-    this.service.editarTipoDispositivo(tipo.nombre, tipo).subscribe(a => {console.log(a);
-                                                                          this.ngOnInit();
+  public editarTipoDipositivo(tipo: Tipo): void {
+    this.service.editarTipoDispositivo(tipo.nombre, tipo).subscribe(a => {
+      console.log(a);
+      if (a === 'tipo tiene registrado un dispositivo comprado') {
+        alert('Error, ya contiene un dipositivo comprado')
+      } else {
+        this.ngOnInit();
+      }
     });
   }
 
   /**
    * Elimina el un tipo de dispositivo enviado por dispositivo actual
    */
-  public eliminarTipoDispositivo(): void{
-    this.service.eliminarTipoDispositivo(this.tipoActual.nombre).subscribe(a => {console.log(a);
-                                                                                 this.ngOnInit();
+  public eliminarTipoDispositivo(): void {
+    this.service.eliminarTipoDispositivo(this.tipoActual.nombre).subscribe(respuesta => {
+      console.log(respuesta);
+      if (respuesta === 'tipo tiene registrado un dispositivo comprado') {
+        alert('No puede eliminar este tipo de dispositivo puesto tiene algun dispositivo');
+      } else {
+        this.ngOnInit();
+      }
     });
   }
 
@@ -77,7 +94,7 @@ export class GestionDeTiposDisComponent implements OnInit {
    * Toma el dispositivo actual entro del ngFor
    * @param tipo es el dato actual dentro del ng que se utiliza en otrar funciones
    */
-  public tipoActualF(tipo: Tipo): void{
+  public tipoActualF(tipo: Tipo): void {
     this.tipoActual = tipo;
     this.dispositivosModeloConTipo(tipo);
   }
@@ -86,26 +103,31 @@ export class GestionDeTiposDisComponent implements OnInit {
    * Obitne inftomacion del dispositivo modelo acutal
    * @param dipositivo dispositivo modelo dentro del ngFor
    */
-  public obtenerInformacionItem(dipositivo: DispositivoModelo): void{
+  public obtenerInformacionItem(dipositivo: DispositivoModelo): void {
     this.oldDispositivocreado = dipositivo;
   }
 
   /**
-   *
+   * Edita un un dispositivo para asociar algun tipo
    * @param dispositivoModelo
    */
-  public editarDispositivo(dispositivoModelo: DispositivoModelo): void{
+  public editarDispositivo(dispositivoModelo: DispositivoModelo): void {
     console.log(dispositivoModelo);
-    this.service.editarDipositivoModelo(dispositivoModelo.modelo, dispositivoModelo).subscribe(a => {console.log(a);
-                                                                                                     this.ngOnInit();
+    this.service.editarDipositivoModelo(dispositivoModelo.modelo, dispositivoModelo).subscribe(respuesta => {
+      if (respuesta === 'el dispositivo ya ha sido comprado') {
+        alert('No se puede editar este dispositivo puesto que ya ha sido comprado');
+      } else {
+        this.ngOnInit();
+      }
     });
   }
+
 
   /**
    * Separa las lista de dispositivos en una nueva lista de todos los dispositivos que no tiene tipo
    */
   public dispositivosSinTipo(): void{
-    this.listaDeModelosSinTipo =[];
+    this.listaDeModelosSinTipo = [];
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.listaDeModelos.length; i++){
       if (this.listaDeModelos[i].tipo === null ){
@@ -136,9 +158,12 @@ export class GestionDeTiposDisComponent implements OnInit {
    */
   public desasociarDispositivo(dispositivoModelo: DispositivoModelo): void{
     dispositivoModelo.tipo = null;
-    this.service.editarDipositivoModelo(dispositivoModelo.modelo, dispositivoModelo).subscribe(a => {
-      console.log(a);
-      this.ngOnInit();
+    this.service.editarDipositivoModelo(dispositivoModelo.modelo, dispositivoModelo).subscribe(respuesta => {
+      if (respuesta === 'el dispositivo ya ha sido comprado') {
+        alert('No se puede editar este dispositivo puesto que ya ha sido comprado');
+      } else {
+        this.ngOnInit();
+      }
     });
   }
 }
