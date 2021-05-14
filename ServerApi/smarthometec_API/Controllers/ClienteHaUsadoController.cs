@@ -103,9 +103,9 @@ namespace smarthometec_API.Controllers
 
 
             ClienteHaUsado clienteusadoactual = new ClienteHaUsado();
-            clienteusado.IdCliente = idnuevo;
-            clienteusado.NSerieDispositivo = nserie;
-            clienteusado.PropietarioActual = true;
+            clienteusadoactual.IdCliente = idactual;
+            clienteusadoactual.NSerieDispositivo = nserie;
+            clienteusadoactual.PropietarioActual = false;
 
             if (!_context.Cliente.Any(c => c.Id == idnuevo))
             {
