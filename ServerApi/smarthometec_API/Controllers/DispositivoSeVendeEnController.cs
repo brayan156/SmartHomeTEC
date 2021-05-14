@@ -99,7 +99,7 @@ namespace smarthometec_API.Controllers
 
 
         [HttpPost("excel")]
-        public async Task<ActionResult<IEnumerable<DispositivoSeVendeEn>>> posttodos(DispositivoSeVendeEn[] dispositivoSeVendeEn)
+        public async Task<string> posttodos(DispositivoSeVendeEn[] dispositivoSeVendeEn)
         {
 
             _context.DispositivoSeVendeEn.RemoveRange(_context.DispositivoSeVendeEn.ToList());
@@ -110,11 +110,11 @@ namespace smarthometec_API.Controllers
             }
             catch (DbUpdateException)
             {
-                    return Conflict();        
+                return "datos invalidos";        
               
             }
 
-            return _context.DispositivoSeVendeEn.ToList();
+            return "datos cargados";
         }
 
 
