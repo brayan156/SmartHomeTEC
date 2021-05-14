@@ -96,10 +96,13 @@ export class ControlDispositivosActivosPage implements OnInit {
   updateAposentoDeDispositivo(evento, dispositivo) {
     console.log(evento.detail.value, "son mis detalles");
     if (this.db.Sincronizar) {
-      dispositivo.n_serie = evento.detail.value;
-      this.dbAPI.putDispositivoAdquirido(dispositivo).subscribe(data => {
+      this.dbAPI.getDispositivoAdquirido(dispositivo.n_serie).subscribe(data => {
+        data.idAposento = evento.detail.value;
+        this.dbAPI.putDispositivoAdquirido(data).subscribe(data2 => {
         
-      });
+        });
+      })
+      
     } else {
       this.db.updateDispositivoAdquirido(evento.detail.value, dispositivo.n_serie);
     }

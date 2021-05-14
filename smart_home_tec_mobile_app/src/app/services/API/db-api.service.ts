@@ -33,8 +33,8 @@ export class DbAPIService {
   }
 
 
-  putDispositivoAdquirido(dispositivoAdquirido: DispositivoAdquirido) {
-    return this.http.put(this.Url + "Cliente/DispositivoAdquirido/"  + this.Usuario.id, dispositivoAdquirido);
+  putDispositivoAdquirido(dispositivoAdquirido:DispositivoAdquirido) {
+    return this.http.put(this.Url + "DispositivoAdquirido/"  + dispositivoAdquirido.nSerie, dispositivoAdquirido);
   }
 
   addAposento(nuevoNombre:string) {
@@ -74,6 +74,14 @@ export class DbAPIService {
 
   putAposento(aposento: Aposento) {
     return this.http.put(this.Url + "Aposento/" + aposento.id, aposento);
+  }
+
+  getMisDispositivosPorAposento(aposentoID: number) {
+    return this.http.get<[]>(this.Url + "Aposento/dispositivos/" + aposentoID);
+  }
+
+  getDispositivoAdquirido(n_serie: number) {
+    return this.http.get<DispositivoAdquirido>(this.Url + "DispositivoAdquirido/" + n_serie);
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { DbAPIService } from '../services/API/db-api.service';
 import { DbServiceService } from '../services/db/db-service.service';
@@ -22,16 +23,17 @@ export class GestionAposentosPage implements OnInit {
   //     modelo: "Lamp3000"
   //   }
   // ];
-  misDispositivosPorAposentos = [];
-  misAposentos: Aposento[] = [];
-  @Input() aposento: Aposento;
+  misDispositivosPorAposentos;
+  misAposentos: Aposento[];
+  @Input() aposento: Aposento = new Aposento();
 
   constructor(public modalController: ModalController,
     public actionSheetController: ActionSheetController,
     public alertController: AlertController,
     private db: DbServiceService,
-  private dbAPI:DbAPIService) {
-    this.updateContenido();
+    private dbAPI: DbAPIService,
+  private router: Router) {
+
   }
 
   ngOnInit() {
@@ -44,6 +46,7 @@ export class GestionAposentosPage implements OnInit {
   }
 
   updateContenido() {
+    this.misDispositivosPorAposentos = [];
 
     if (this.db.Sincronizar) {
       this.dbAPI.getMisDispositivosPorAposento(this.aposento.id).subscribe(dispositivos => {
@@ -75,16 +78,22 @@ export class GestionAposentosPage implements OnInit {
   }
 
   updateAposentoDeDispositivo(evento, n_serie: number, dispositivo) {
-    console.log(evento.detail.value, "son mis detalles");
+    console.log(evento.detail, "son mis detalles");
     if (this.db.Sincronizar) {
-      let dispositivoAdquirido = new DispositivoAdquirido();
-      dispositivoAdquirido.idAposento = evento.detail.value;
-      dispositivoAdquirido.modelo = dispositivo.modelo;
-      dispositivoAdquirido.nSerie = n_serie;
-      dispositivoAdquirido.prendido = false;
-      this.dbAPI.putDispositivoAdquirido(dispositivoAdquirido).subscribe(data => {
+      // let dispositivoAdquirido = new DispositivoAdquirido();
+      // dispositivoAdquirido.idAposento = evento.detail.value;
+      // dispositivoAdquirido.modelo = dispositivo.modelo;
+      // dispositivoAdquirido.nSerie = n_serie;
+      // dispositivoAdquirido.prendido = false;
+      this.dbAPI.getDispositivoAdquirido(n_serie).subscribe(data => {
+        data.idAposento = evento.detail.value;
+        this.dbAPI.putDispositivoAdquirido(data).subscribe(data2 => {
+          this.updateContenido();
+        });
+      })
+      // this.dbAPI.putDispositivoAdquirido(dispositivoAdquirido).subscribe(data => {
         
-      });
+      // });
     } else {
       this.db.updateDispositivoAdquirido(evento.detail.value, n_serie);
       this.updateContenido();
@@ -128,13 +137,17 @@ export class GestionAposentosPage implements OnInit {
   deleteAposento() {
     if (this.misDispositivosPorAposentos.length == 0) {
       if (this.db.Sincronizar) {
-        this.dbAPI.deleteAposento(this.aposento.id);
+        this.dbAPI.deleteAposento(this.aposento.id).subscribe(data => {
+
+        });
       } else {
         this.db.deleteAposento(this.aposento.id);
       }
+      this.router.navigateByUrl('control-dispositivos-activos');
     } else {
-      this.presentAlert("Lo siento, tienes dispositivos asociados a este aposento :(")
+      this.presentAlert("Lo siento, tienes dispositivos asociados a este aposento :(");
     }
+    
     
   }
 
@@ -175,7 +188,7 @@ export class GestionAposentosPage implements OnInit {
       this.aposento.nombreCuarto = nuevoNombre;
       this.dbAPI.putAposento(this.aposento);
     } else {
-      this.db.updatenombreAposento(this.aposento.id, nuevonombre);
+      this.db.updatenombreAposento(this.aposento.id, nuevoNombre);
     }
   }
 
