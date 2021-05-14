@@ -33,35 +33,37 @@ export class LoginComponent implements OnInit {
   cliente: Cliente = new Cliente;
 
   listaClientes: Cliente[] = [];
-  listaDeRegiones: Regiones[] = [] ;
+  listaDeRegiones: Regiones[] = [];
+
   ngOnInit(): void {
-    this.service.getRegiones().subscribe(lista =>
-    {this.listaDeRegiones = lista;
-     console.log(lista);
-     this.service.getListaCliente().subscribe(clienteLista => this.listaClientes = clienteLista);
+    this.service.getRegiones().subscribe(lista => {
+      this.listaDeRegiones = lista;
+      console.log(lista);
+      this.service.getListaCliente().subscribe(clienteLista => this.listaClientes = clienteLista);
     });
   }
 
   /**
    * Funcio para cambiar en el HTML a vista admin
    */
-  chageAdmin(): void{
+  chageAdmin(): void {
     this.typeLogin = 0;
   }
+
   /**
    * Funcio para cambiar en el HTML a vista usuario
    */
-  chageUser(): void{
+  chageUser(): void {
     this.typeLogin = 1;
   }
+
   /**
    * Funcio para saber que tipo de login es
    */
-  loginType(): boolean{
-    if (this.typeLogin === 0){
+  loginType(): boolean {
+    if (this.typeLogin === 0) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
@@ -69,26 +71,23 @@ export class LoginComponent implements OnInit {
   /**
    * En dicha funcion el usuario o administrador se postean en caso de que sus datos sean correctos podran navegar en sus respectivas vistas
    */
-  navegation(): void{
+  navegation(): void {
     if (this.typeLogin === 0) {
       this.service.ValidarLogin(this.administrador.correo, this.administrador.contrasena).subscribe(lista => {
         // tslint:disable-next-line:triple-equals
         if (lista.length == 0) {
-          console.log('datos incorrectos');
-          // mensaje administrador invalido
+          alert('Favor revisar su correo electronico o contraseña');
         } else {
           console.log('datos correctos');
           this.service.administrador = lista[0];
           this.router.navigate(['/administrador']);
         }
       });
-    }
-    else {
+    } else {
       this.service.validarLogin2(this.cliente.email, this.cliente.contrasena).subscribe(lista => {
         // tslint:disable-next-line:triple-equals
         if (lista.length == 0) {
-          console.log('datos incorrectos');
-          // mensaje administrador invalido
+          alert('Favor revisar su correo electronico o contraseña');
         } else {
           console.log('datos correctos');
           this.service.cliente = lista[0];
@@ -108,8 +107,15 @@ export class LoginComponent implements OnInit {
   crearCliente(cliente: Cliente) {
     // tslint:disable-next-line:prefer-for-of
     this.service.crearCliente(this.cliente).subscribe(c => {
-      console.log(c);
-      this.service.habilitarAposentos(cliente.id).subscribe(c => console.log(c));
-      });
-    }
+      if (c === 'cliente existente') {
+        alert('Este numero de cedula pertenece a un cliente');
+      } else {
+        // tslint:disable-next-line:no-shadowed-variable
+        this.service.habilitarAposentos(cliente.id).subscribe(c => {
+          console.log(c);
+        });
+      }
+    });
+  }
 }
+

@@ -49,11 +49,9 @@ export class TiendaEnLineaUsuarioComponent implements OnInit {
     });
   }
   public filtroDeLista(): void{
-    console.log('Entro');
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.dispositivos.length; i ++) {
       if (this.dispositivos[i].dispositivoModelo.tipo != null && this.dispositivos[i].dispositivoSeVendeEn.cantidad > 0) {
-        console.log('Entro');
         this.listaDispositivosComprables.push(this.dispositivos[i]);
       }
     }

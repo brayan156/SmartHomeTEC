@@ -103,7 +103,8 @@ export class ServiciosService {
    */
   // tslint:disable-next-line:typedef
   public crearCliente(cliente: Cliente){
-    return this.http.post(this.Url + 'Cliente', cliente);
+    // tslint:disable-next-line:ban-types
+    return this.http.post<String>(this.Url + 'Cliente', cliente);
   }
 
   /**
