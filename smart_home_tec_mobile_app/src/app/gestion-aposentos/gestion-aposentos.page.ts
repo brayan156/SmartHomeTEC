@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'node:constants';
 import { DbAPIService } from '../services/API/db-api.service';
 import { DbServiceService } from '../services/db/db-service.service';
 import { Aposento } from '../tablas-y-relaciones/aposento';
@@ -47,7 +46,7 @@ export class GestionAposentosPage implements OnInit {
   updateContenido() {
 
     if (this.db.Sincronizar) {
-      this.dbAPI.getMisDispositivos().subscribe(dispositivos => {
+      this.dbAPI.getMisDispositivosPorAposento(this.aposento.id).subscribe(dispositivos => {
         if (dispositivos.length != 0) {
           this.misDispositivosPorAposentos = dispositivos;
           console.log(dispositivos, "son mis dispositivos");
@@ -102,7 +101,7 @@ export class GestionAposentosPage implements OnInit {
         icon: 'trash',
         handler: () => {
           console.log('Delete clicked');
-          this.db.deleteAposento(this.aposento.id);
+          this.deleteAposento();
         }
       }, {
         text: 'Cambiar nombre',
@@ -124,6 +123,19 @@ export class GestionAposentosPage implements OnInit {
 
     const { role } = await actionSheet.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
+  }
+
+  deleteAposento() {
+    if (this.misDispositivosPorAposentos.length == 0) {
+      if (this.db.Sincronizar) {
+        this.dbAPI.deleteAposento(this.aposento.id);
+      } else {
+        this.db.deleteAposento(this.aposento.id);
+      }
+    } else {
+      this.presentAlert("Lo siento, tienes dispositivos asociados a este aposento :(")
+    }
+    
   }
 
   async presentAlertPrompt() {
@@ -149,13 +161,22 @@ export class GestionAposentosPage implements OnInit {
           text: 'Listo',
           handler: data => {
             console.log(data);
-            this.db.updatenombreAposento(this.aposento.id, data.nuevonombre);
+            this.updateNombreAposento( data.nuevonombre);
           }
         }
       ]
     });
 
     await alert.present();
+  }
+
+  updateNombreAposento(nuevoNombre: string) {
+    if (this.db.Sincronizar) {
+      this.aposento.nombreCuarto = nuevoNombre;
+      this.dbAPI.putAposento(this.aposento);
+    } else {
+      this.db.updatenombreAposento(this.aposento.id, nuevonombre);
+    }
   }
 
   async presentAlert(message: string) {

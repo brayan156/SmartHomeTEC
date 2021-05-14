@@ -302,29 +302,41 @@ export class ControlDispositivosActivosPage implements OnInit {
     }
   }
 
+  // getMisDispositivosPorAposento(aposento: Aposento) {
+  //   if (this.db.Sincronizar) {
+  //     this.dbAPI.getMisDispositivosPorAposento(aposento.id).subscribe(data => {
+  //       this.misDispositivosPorAposentos = data;
+  //     })
+  //   } else {
+  //     this.getMisDispositivosPorAposentoLocal(aposento);
+  //   }
+  // }
+
+  // getMisDispositivosPorAposentoLocal(aposento: Aposento) {
+  //   let tmp;
+  //   this.db.getMisDispositivosPorAposento(aposento.id);
+
+  //   setTimeout(async () => {
+  //     this.misDispositivosPorAposentos = this.db.tmpQuery.value;
+  //     console.log(this.misDispositivosPorAposentos.length, " es la longitud de la lista");
+  //     tmp = (this.misDispositivosPorAposentos.length != 0) ? true : false;
+  //   // let tmp = true;
+  //   if (tmp) {
+  //     this.presentModal(aposento)
+  //   } else {
+  //     this.noHayContenidoAlert();
+  //   }
+  //   }, 300)
+  // }
 
   async presentModal(aposento: Aposento) {
-    let tmp;
-    this.db.getMisDispositivosPorAposento(aposento.id);
-
-    setTimeout(async () => {
-      this.misDispositivosPorAposentos = this.db.tmpQuery.value;
-      console.log(this.misDispositivosPorAposentos.length, " es la longitud de la lista");
-      tmp = (this.misDispositivosPorAposentos.length != 0) ? true : false;
-    // let tmp = true;
-    if (tmp) {
-      const modal = await this.modalController.create({
-        component: GestionAposentosPage,
-        componentProps: {
-          aposento: aposento,
-        }
-      });
-      return await modal.present();
-    } else {
-      this.noHayContenidoAlert();
-    }
-    }, 300)
-
+    const modal = await this.modalController.create({
+      component: GestionAposentosPage,
+      componentProps: {
+        aposento: aposento,
+      }
+    });
+    return await modal.present();
   }
 
 }

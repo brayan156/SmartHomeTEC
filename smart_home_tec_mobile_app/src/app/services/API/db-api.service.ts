@@ -32,6 +32,7 @@ export class DbAPIService {
     return this.http.get<[]>(this.Url + "Cliente/dispositivosDueno/"  + this.Usuario.id);
   }
 
+
   putDispositivoAdquirido(dispositivoAdquirido: DispositivoAdquirido) {
     return this.http.put(this.Url + "Cliente/DispositivoAdquirido/"  + this.Usuario.id, dispositivoAdquirido);
   }
@@ -52,7 +53,7 @@ export class DbAPIService {
   }
 
   asociarDispositivoANuevoCliente(n_serie:number, idNuevoCliente: number) {
-    
+    return this.http.get(this.Url + "ClienteHaUsado/transferir/" + this.Usuario.id + "/" + idNuevoCliente + "/" + n_serie);
   }
 
   getDispositivosModelo() {
@@ -65,6 +66,14 @@ export class DbAPIService {
 
   nuevoDispositivo(objeto: object) {
     return this.http.post(this.Url + 'ClienteHaUsado/agregardispositivo/' + this.Usuario.id, objeto);
+  }
+
+  deleteAposento(idAposento: number) {
+    return this.http.delete(this.Url + 'Aposento/' + idAposento);
+  }
+
+  putAposento(aposento: Aposento) {
+    return this.http.put(this.Url + "Aposento/" + aposento.id, aposento);
   }
 
 }
