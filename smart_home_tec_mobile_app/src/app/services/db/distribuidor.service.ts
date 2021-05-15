@@ -11,6 +11,12 @@ export class DistribuidorService {
 
   constructor() { }
 
+  /**
+   * Carga los distruibuidores
+   * @param database 
+   * @param conexion 
+   * @returns 
+   */
   loadDistribuidores(database: SQLiteObject, conexion: BehaviorSubject<any[]>) {
     return database.executeSql('SELECT * FROM Distribuidor', []).then(data => {
 
