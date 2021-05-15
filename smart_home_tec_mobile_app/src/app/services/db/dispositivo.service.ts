@@ -266,7 +266,17 @@ export class DispositivoService {
             });
           }
         }
+        console.log("mi fecha prendido es...", tmpQuery.value[0]);
         tmpQuery.next(tmpList);
       });
+  }
+
+  prenderDispositivo(database: SQLiteObject, conexion: BehaviorSubject<any[]>, N_serie: number) {
+    let today = new Date();
+    console.log(today.toDateString());
+    return database.executeSql('update Dispositivo_adquirido set fecha_prendido = ?, prendido=1 where n_serie= ?', [today, N_serie]).then(data => {
+      this.loadDispositivosAdquiridos(database, conexion);
+
+    });
   }
 }

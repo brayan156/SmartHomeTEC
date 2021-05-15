@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
     this.db.resetUsuario();
    
     this.db.Sincronizar = true;
-    this.db.SincronizarTodo();
+    // this.db.SincronizarTodo();
     
     this.validarCliente();
     

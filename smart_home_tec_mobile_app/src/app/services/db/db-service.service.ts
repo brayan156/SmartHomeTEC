@@ -121,11 +121,24 @@ export class DbServiceService {
   }
 
   SincronizarTodo() {
+    this.historialService.loadHistoriales(this.database, this.historiales);
+    this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
+    this.dispositivoService.loadDispositivosAdquiridos(this.database, this.dispositivosAdquiridos);
+    this.aposentosService.loadAposentos(this.database, this.aposentos);
+    this.clientesHanUsado.value.forEach(saliente => {
+      if (saliente.propietarioActual ==1 ) { saliente.propietarioActual = true; }
+        else { saliente.propietarioActual = false; }
+    })
+
+    this.dispositivosAdquiridos.value.forEach(saliente => {
+      if (saliente.prendido ==1 ) { saliente.prendido = true; }
+        else { saliente.prendido = false; }
+    })
     let objeto = {
-      historiales: JSON.stringify(this.historiales.value),
-      clienteHaUsado: JSON.stringify(this.clientesHanUsado.value),
-      dispositivos: JSON.stringify(this.dispositivosAdquiridos.value),
-      aposentos: JSON.stringify(this.aposentos.value)
+      historiales: this.historiales.value,
+      clienteHaUsado: this.clientesHanUsado.value,
+      dispositivos: this.dispositivosAdquiridos.value,
+      aposentos: this.aposentos.value
     }
     return this.http.post(this.dbAPI.Url + "Cliente/sincronizar/" + this.dbAPI.Usuario.id, objeto);
   }
@@ -177,6 +190,8 @@ export class DbServiceService {
 
       let dipositivoAdquiridosEntran: DispositivoAdquirido[] = data.dipositivoAdquiridos;
       dipositivoAdquiridosEntran.forEach(entro => {
+        if (entro.prendido) { entro.prendido = 1; }
+        else { entro.prendido = 0; }
         this.database.executeSql('insert into Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento) VALUES (?,?,?,?,?)',
           [entro.nSerie, entro.prendido, entro.fechaprendido, entro.modelo, entro.idAposento]).then(data2 => {
             this.dispositivoService.loadDispositivosAdquiridos(this.database, this.dispositivosAdquiridos);
@@ -186,6 +201,8 @@ export class DbServiceService {
 
       let clientesHanUsadoEntran: ClienteHaUsado[] = data.clientesHanUsado;
       clientesHanUsadoEntran.forEach(entro => {
+        if (entro.propietarioActual) { entro.propietarioActual = 1; }
+        else { entro.propietarioActual = 0; }
         this.database.executeSql('insert into Cliente_ha_usado (n_serie_dispositivo, id_cliente,propietario_actual) VALUES (?,?,?)',
           [entro.nSerieDispositivo, entro.idCliente, entro.propietarioActual]).then(data2 => {
             this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
@@ -314,7 +331,7 @@ export class DbServiceService {
 
     this.dispositivoService.getFechaprendido(this.database, this.fechaprendido, N_serie);
 
-    let fechaprendido = this.fechaprendido.value[0].Fechaprendido;
+    let fechaprendido = this.fechaprendido.value[0].fechaprendido;
     let day = new Date(fechaprendido);
     this.historialService.apagarDispositivo(this.database, this.historiales, N_serie, day);
 
@@ -330,7 +347,7 @@ export class DbServiceService {
   }
 
   prenderDispositivo(N_serie: number) {
-    this.historialService.prenderDispositivo(this.database, this.historiales, N_serie);
+    this.dispositivoService.prenderDispositivo(this.database,  this.dispositivosAdquiridos, N_serie);
   }
 
   getMisDispositivosPorAposento(idAposento: number) {

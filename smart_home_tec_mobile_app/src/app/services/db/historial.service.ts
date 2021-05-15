@@ -35,7 +35,7 @@ export class HistorialService {
 
 
   insertHistorial(database: SQLiteObject, conexion: BehaviorSubject<any[]>, data: any[]) {
-    return database.executeSql('insert into Historial ( n_serie, dia, mes, ano, hora, minutos_de_uso) values (?,?,?,?,?,?)', data).then(data => {
+    return database.executeSql('insert into Historial (n_historial, n_serie, dia, mes, ano, hora, minutos_de_uso) values (?,?,?,?,?,?,?)', data).then(data => {
       this.loadHistoriales(database, conexion);
 
     });
@@ -49,13 +49,7 @@ export class HistorialService {
     });
   }
 
-  prenderDispositivo(database: SQLiteObject, conexion: BehaviorSubject<any[]>, N_serie: number) {
-    let today = new Date();
-    return database.executeSql('update Dispositivo_adquirido set fecha_prendido = ?, prendido=1 where n_serie= ?', [today, N_serie]).then(data => {
-      this.loadHistoriales(database, conexion);
 
-    });
-  }
 
   apagarDispostivoAux(database: SQLiteObject, conexion: BehaviorSubject<any[]>, N_serie: number) {
     return database.executeSql('update Dispositivo_adquirido set prendido=0 where n_serie= ?', [ N_serie]).then(data => {
@@ -111,7 +105,7 @@ export class HistorialService {
       }
 
       // agregar historial a historiales
-      let data = [historial.nSerie, historial.dia, historial.mes, historial.ano, historial.hora, historial.minutosDeUso];
+      let data = [historiales.value.length ,historial.nSerie, historial.dia, historial.mes, historial.ano, historial.hora, historial.minutosDeUso];
       this.insertHistorial(database, historiales, data);
 
     }
@@ -143,7 +137,7 @@ export class HistorialService {
           h.minutosDeUso = 60;
         }
         // Agregar a historiales h
-        let data = [h.nSerie, h.dia, h.mes, h.ano, h.hora, h.minutosDeUso];
+        let data = [historiales.value.length, h.nSerie, h.dia, h.mes, h.ano, h.hora, h.minutosDeUso];
         this.insertHistorial(database, historiales, data);
         // setTimeout(() => {
         //   console.log("estoy esperando 300ms...")
