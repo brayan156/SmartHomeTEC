@@ -69,6 +69,10 @@ export class TiendaEnLineaComponent implements OnInit {
   public guardardatos() {
     this.service.guardardatosexcel(this.ListadispositivosSeVendenEn).subscribe(r => {
       console.log(r);
+      if (r === 'datos invalidos'){
+        alert('Esta intendanto cargar datos invalidos Cedula Juridica o Nombre del dispositivo no existen dentro de la base' +
+          'de datos');
+      }
       this.ngOnInit();
     });
   }

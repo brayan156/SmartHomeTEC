@@ -70,7 +70,7 @@ export class DispositivoService {
             prendido: data.rows.item(i).prendido,
             modelo: data.rows.item(i).modelo,
             idAposento: data.rows.item(i).id_aposento,
-            fechaprendido: data.rows.item(i).fecha_prendido,
+            fechaPrendido: data.rows.item(i).fecha_prendido,
           });
         }
       }
@@ -255,14 +255,41 @@ export class DispositivoService {
     });
   }
 
+  prenderDispositivo(database: SQLiteObject, conexion: BehaviorSubject<any[]>, N_serie: number) {
+    let today = new Date();
+    let year = today.getFullYear();
+    let monts = today.getMonth() + 1;
+    let days = today.getDate();
+    let hours = today.getHours();
+    let mins = today.getMinutes();
+    let secs = today.getSeconds();
+    let format = year + "-" + monts + "-" + days + " " + hours + ":" + mins + ":" + secs;
+
+    return database.executeSql('update Dispositivo_adquirido set fecha_prendido = ?, prendido=1 where n_serie= ?', [format, N_serie]).then(data => {
+      this.loadDispositivosAdquiridos(database, conexion);
+
+    });
+  }
+
+  apagarDispostivoAux(database: SQLiteObject, conexion: BehaviorSubject<any[]>, N_serie: number) {
+    return database.executeSql('update Dispositivo_adquirido set prendido=0 where n_serie= ?', [N_serie]).then(data => {
+      this.loadDispositivosAdquiridos(database, conexion);
+
+    });
+  }
+
   getFechaprendido(database: SQLiteObject, tmpQuery: BehaviorSubject<any[]>, N_serie: number) {
     return database.executeSql('select fecha_prendido from Dispositivo_adquirido where n_serie=? and prendido=1',
       [N_serie]).then(data => {
+        
         let tmpList = [];
         if (data.rows.length > 0) {
           for (var i = 0; i < data.rows.length; i++) {
+            console.log(data.rows.item(i))
+            console.log(data.rows.item(i).fecha_prendido)
+            console.log("fechas?")
             tmpList.push({
-              fechaprendido: data.rows.item(i).fecha_prendido,
+              fechaPrendido: data.rows.item(i).fecha_prendido,
             });
           }
         }

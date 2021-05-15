@@ -125,15 +125,21 @@ export class DbServiceService {
     this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
     this.dispositivoService.loadDispositivosAdquiridos(this.database, this.dispositivosAdquiridos);
     this.aposentosService.loadAposentos(this.database, this.aposentos);
+
     this.clientesHanUsado.value.forEach(saliente => {
-      if (saliente.propietarioActual ==1 ) { saliente.propietarioActual = true; }
-        else { saliente.propietarioActual = false; }
+      if (saliente.propietarioActual == 1) { saliente.propietarioActual = true; }
+      else { saliente.propietarioActual = false; }
     })
 
     this.dispositivosAdquiridos.value.forEach(saliente => {
-      if (saliente.prendido ==1 ) { saliente.prendido = true; }
-        else { saliente.prendido = false; }
+      if (saliente.prendido == 1) { saliente.prendido = true; }
+      else { saliente.prendido = false; }
     })
+
+    console.log(JSON.stringify(this.dispositivosAdquiridos))
+
+
+
     let objeto = {
       historiales: this.historiales.value,
       clienteHaUsado: this.clientesHanUsado.value,
@@ -190,10 +196,11 @@ export class DbServiceService {
 
       let dipositivoAdquiridosEntran: DispositivoAdquirido[] = data.dipositivoAdquiridos;
       dipositivoAdquiridosEntran.forEach(entro => {
-        if (entro.prendido) { entro.prendido = 1; }
-        else { entro.prendido = 0; }
+        
+        if (entro.prendido == true) entro.prendido = 1;
+        else entro.prendido = 0;
         this.database.executeSql('insert into Dispositivo_adquirido (n_serie, prendido, fecha_prendido, modelo, id_aposento) VALUES (?,?,?,?,?)',
-          [entro.nSerie, entro.prendido, entro.fechaprendido, entro.modelo, entro.idAposento]).then(data2 => {
+          [entro.nSerie, entro.prendido, entro.fechaPrendido, entro.modelo, entro.idAposento]).then(data2 => {
             this.dispositivoService.loadDispositivosAdquiridos(this.database, this.dispositivosAdquiridos);
         })
       })
@@ -201,8 +208,8 @@ export class DbServiceService {
 
       let clientesHanUsadoEntran: ClienteHaUsado[] = data.clientesHanUsado;
       clientesHanUsadoEntran.forEach(entro => {
-        if (entro.propietarioActual) { entro.propietarioActual = 1; }
-        else { entro.propietarioActual = 0; }
+        if (entro.propietarioActual == true) entro.propietarioActual = 1;
+        else entro.propietarioActual = 0;
         this.database.executeSql('insert into Cliente_ha_usado (n_serie_dispositivo, id_cliente,propietario_actual) VALUES (?,?,?)',
           [entro.nSerieDispositivo, entro.idCliente, entro.propietarioActual]).then(data2 => {
             this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
@@ -328,12 +335,18 @@ export class DbServiceService {
   }
 
   apagarDispositivo(N_serie: number) {
+    console.log(N_serie)
+    console.log("el numero de serie arriba")
+    this.dispositivoService.getFechaprendido(this.database, this.fechaPrendido, N_serie).then(() => {
+      console.log(this.fechaPrendido.value[0]);
+      console.log("un camino")
+      let fechaPrendido = this.fechaPrendido.value[0].fechaPrendido;
+      console.log(fechaPrendido);
+      let day = new Date(fechaPrendido);
+      this.historialService.apagarDispositivo(this.database, this.historiales, N_serie, day);
+      this.dispositivoService.apagarDispostivoAux(this.database, this.dispositivosAdquiridos, N_serie);
 
-    this.dispositivoService.getFechaprendido(this.database, this.fechaprendido, N_serie);
-
-    let fechaprendido = this.fechaprendido.value[0].fechaprendido;
-    let day = new Date(fechaprendido);
-    this.historialService.apagarDispositivo(this.database, this.historiales, N_serie, day);
+    });
 
 
   }
@@ -347,7 +360,7 @@ export class DbServiceService {
   }
 
   prenderDispositivo(N_serie: number) {
-    this.dispositivoService.prenderDispositivo(this.database,  this.dispositivosAdquiridos, N_serie);
+    this.dispositivoService.prenderDispositivo(this.database, this.dispositivosAdquiridos, N_serie);
   }
 
   getMisDispositivosPorAposento(idAposento: number) {

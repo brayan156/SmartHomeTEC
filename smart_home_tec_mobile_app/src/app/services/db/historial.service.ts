@@ -35,7 +35,7 @@ export class HistorialService {
 
 
   insertHistorial(database: SQLiteObject, conexion: BehaviorSubject<any[]>, data: any[]) {
-    return database.executeSql('insert into Historial (n_historial, n_serie, dia, mes, ano, hora, minutos_de_uso) values (?,?,?,?,?,?,?)', data).then(data => {
+    return database.executeSql('insert into Historial (n_historial ,n_serie, dia, mes, ano, hora, minutos_de_uso) values (?,?,?,?,?,?,?)', data).then(data => {
       this.loadHistoriales(database, conexion);
 
     });
@@ -51,14 +51,7 @@ export class HistorialService {
 
 
 
-  apagarDispostivoAux(database: SQLiteObject, conexion: BehaviorSubject<any[]>, N_serie: number) {
-    return database.executeSql('update Dispositivo_adquirido set prendido=0 where n_serie= ?', [ N_serie]).then(data => {
-      this.loadHistoriales(database, conexion);
-
-    });
-  }
-
-  apagarDispositivo(database: SQLiteObject, historiales: BehaviorSubject<any[]>, N_serie: number, fechaprendido: Date) {
+  apagarDispositivo(database: SQLiteObject, historiales: BehaviorSubject<any[]>, N_serie: number, fechaPrendido: Date) {
     let today = new Date();
 
     let historial = new Historial();
@@ -69,10 +62,10 @@ export class HistorialService {
     console.log(total_minutos + " mins");
     console.log(total_dias + " days");
 
-    historial.ano = fechaprendido.getFullYear();
-    historial.mes = fechaprendido.getMonth() + 1;
-    historial.dia = fechaprendido.getDate();
-    historial.hora = fechaprendido.getHours();
+    historial.ano = fechaPrendido.getFullYear();
+    historial.mes = fechaPrendido.getMonth() + 1;
+    historial.dia = fechaPrendido.getDate();
+    historial.hora = fechaPrendido.getHours();
     historial.nSerie = N_serie;
 
 
@@ -87,10 +80,10 @@ export class HistorialService {
         hist.nSerie == historial.nSerie && hist.ano == historial.ano && hist.mes == historial.mes &&
         hist.dia == historial.dia && hist.hora == historial.hora);
 
-      if (total_minutos + fechaprendido.getMinutes() <= 60) {
+      if (total_minutos + fechaPrendido.getMinutes() <= 60) {
         histo.minutosDeUso += total_minutos;
       } else {
-        histo.minutosDeUso += 60 - fechaprendido.getMinutes();
+        histo.minutosDeUso += 60 - fechaPrendido.getMinutes();
 
       }
       // Actualizar histo dentro historiales
@@ -98,21 +91,21 @@ export class HistorialService {
 
 
     } else {
-      if (fechaprendido.getHours() == today.getHours()) {
+      if (fechaPrendido.getHours() == today.getHours()) {
         historial.minutosDeUso = total_minutos;
       } else {
-        historial.minutosDeUso = 60 - fechaprendido.getMinutes();
+        historial.minutosDeUso = 60 - fechaPrendido.getMinutes();
       }
 
       // agregar historial a historiales
-      let data = [historiales.value.length ,historial.nSerie, historial.dia, historial.mes, historial.ano, historial.hora, historial.minutosDeUso];
+      let data = [historiales.value.length, historial.nSerie, historial.dia, historial.mes, historial.ano, historial.hora, historial.minutosDeUso];
       this.insertHistorial(database, historiales, data);
 
     }
 
 
-    var hora_dia = fechaprendido.getHours() + 1;
-    if (fechaprendido.toDateString() == today.toDateString() && hora_dia > today.getHours()) {
+    var hora_dia = fechaPrendido.getHours() + 1;
+    if (fechaPrendido.toDateString() == today.toDateString() && hora_dia > today.getHours()) {
       hora_dia = 24;
     }
     
@@ -121,15 +114,15 @@ export class HistorialService {
       while (hora_dia < 24) {
         let h = new Historial();
 
-        h.dia = fechaprendido.getDate();
-        h.mes = fechaprendido.getMonth() + 1;
-        h.ano = fechaprendido.getFullYear();;
+        h.dia = fechaPrendido.getDate();
+        h.mes = fechaPrendido.getMonth() + 1;
+        h.ano = fechaPrendido.getFullYear();;
         h.hora = hora_dia;
 
         h.nSerie = N_serie;
 
 
-        if (fechaprendido.toDateString() == today.toDateString() && hora_dia == today.getHours()) {
+        if (fechaPrendido.toDateString() == today.toDateString() && hora_dia == today.getHours()) {
           h.minutosDeUso = today.getMinutes();
           hora_dia = 24;
         }
@@ -149,7 +142,7 @@ export class HistorialService {
     }
 
     // Update prendido de dispositivo a off
-    this.apagarDispostivoAux(database, historiales, N_serie);
+    
 
 
   }

@@ -4,9 +4,10 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\Administrador",
-    "\\src\\app\\Administrador\\gestion-de-tipos-dis",
     "\\src\\app\\Administrador\\tienda-en-linea",
-    "\\src\\app\\Comunicacion",
+    "\\src\\app\\Cliente",
+    "\\src\\app\\Cliente\\rep-men-dis",
+    "\\src\\app\\login",
     "\\src\\assets",
     "\\src\\environments"
   ],

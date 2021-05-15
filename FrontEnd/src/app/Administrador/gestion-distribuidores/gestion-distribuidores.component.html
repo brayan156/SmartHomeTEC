@@ -99,7 +99,11 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h4>Esta seguro que desea eliminar el Distribuidor,{{distribuidor.nombre}},{{distribuidor.cedulaJuridica}}</h4>
+        <div class="row">
+          <h4>Esta seguro que desea eliminar: </h4>
+          <h4>Distribuidor,{{distribuidor.nombre}}</h4>
+          <h4>Cedula Juridica:{{distribuidor.cedulaJuridica}}</h4>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="eliminarDistribuidor(distribuidor)">ACEPTAR</button>

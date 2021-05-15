@@ -75,7 +75,7 @@ export class ServiciosService {
    */
   // tslint:disable-next-line:typedef
   public crearDispositivoModelo(disposivoModelo: DispositivoModelo){
-    return this.http.post(this.Url + 'DispositivoModelo/crear', disposivoModelo);
+    return this.http.post(this.Url + 'DispositivoModelo/crear', disposivoModelo, { responseType: 'text' });
   }
 
   /**
@@ -84,7 +84,7 @@ export class ServiciosService {
    */
   // tslint:disable-next-line:typedef
   public eliminarDispositivosModelo(id: string){
-    return this.http.delete(this.Url + 'DispositivoModelo/' + id);
+    return this.http.delete(this.Url + 'DispositivoModelo/' + id, { responseType: 'text' });
   }
 
   /**
@@ -94,7 +94,7 @@ export class ServiciosService {
    */
   // tslint:disable-next-line:typedef
   public editarDipositivoModelo(id: string, dispositivoModelo: DispositivoModelo){
-    return this.http.put(this.Url + 'DispositivoModelo/' + id, dispositivoModelo);
+    return this.http.put(this.Url + 'DispositivoModelo/' + id, dispositivoModelo , { responseType: 'text' });
   }
 
   /**
@@ -166,7 +166,7 @@ export class ServiciosService {
    */
   // tslint:disable-next-line:typedef
   public editarDistribuidores(id: number , distribudor: Distribuidor){
-    return this.http.put(this.Url + 'Distribuidor/' + id, distribudor);
+    return this.http.put(this.Url + 'Distribuidor/' + id, distribudor , { responseType: 'text' });
   }
 
   /**
@@ -175,7 +175,7 @@ export class ServiciosService {
    */
   // tslint:disable-next-line:typedef
   public crearDistribuidord(distribudor: Distribuidor){
-    return this.http.post(this.Url + 'Distribuidor', distribudor);
+    return this.http.post(this.Url + 'Distribuidor', distribudor , { responseType: 'text' });
   }
 
   /**
@@ -184,7 +184,7 @@ export class ServiciosService {
    */
   // tslint:disable-next-line:typedef
   public eliminarDistribuidor(id: number){
-    return this.http.delete(this.Url + 'Distribuidor/' + id);
+    return this.http.delete(this.Url + 'Distribuidor/' + id , { responseType: 'text' });
   }
 
   /**
@@ -201,7 +201,7 @@ export class ServiciosService {
    */
   // tslint:disable-next-line:typedef
   public getTiposDispositivos(){
-    return this.http.get<Tipo[]>(this.Url + 'Tipo');
+    return this.http.get<Tipo[]>(this.Url + 'Tipo', );
   }
 
   /**
@@ -210,7 +210,7 @@ export class ServiciosService {
    */
   // tslint:disable-next-line:typedef
   public crearTipoDispositivo(tipo: Tipo){
-    return this.http.post(this.Url + 'Tipo', tipo);
+    return this.http.post(this.Url + 'Tipo', tipo , { responseType: 'text' });
   }
 
   /**
@@ -220,7 +220,12 @@ export class ServiciosService {
    */
   // tslint:disable-next-line:typedef
   public editarTipoDispositivo(id: string, tipo: Tipo){
-    return this.http.put(this.Url + 'Tipo/' + id , tipo);
+    return this.http.put(this.Url + 'Tipo/' + id , tipo , { responseType: 'text' });
+  }
+
+  // tslint:disable-next-line:typedef
+  public editarDispostivoSeVende(dispositivoSeVende: DispositivoSeVendeEn){
+    return this.http.put(this.Url + 'DispositivoSeVendeEn', dispositivoSeVende);
   }
 
   /**
@@ -229,7 +234,7 @@ export class ServiciosService {
    */
   // tslint:disable-next-line:typedef
   public eliminarTipoDispositivo(id: string){
-    return this.http.delete(this.Url + 'Tipo/' + id );
+    return this.http.delete(this.Url + 'Tipo/' + id , { responseType: 'text' });
   }
 
   /**
@@ -408,7 +413,7 @@ export class ServiciosService {
    * @param datos datos del excel
    */
   public guardardatosexcel(datos: DispositivoSeVendeEn[]) {
-    return this.http.post(this.Url + 'DispositivoSeVendeEn/excel', datos);
+    return this.http.post(this.Url + 'DispositivoSeVendeEn/excel', datos , { responseType: 'text' } );
   }
 
   /**

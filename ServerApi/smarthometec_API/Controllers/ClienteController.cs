@@ -144,27 +144,30 @@ namespace smarthometec_API.Controllers
 
 
         [HttpPost("sincronizar/{idcliente}")]
-        public string sincronizar(Dictionary<string, dynamic> clase, int idcliente)
+        public async Task<string> sincronizar(Dictionary<string, dynamic> clase, int idcliente)
         {
+            Console.WriteLine(clase["dispositivos"]);
+            List<Historial> historiales = clase["historiales"].ToObject<List<Historial>>();
+            List<ClienteHaUsado> clienteHaUsado = clase["clienteHaUsado"].ToObject<List<ClienteHaUsado>>();
+            List<DispositivoAdquirido> dispositivos = clase["dispositivos"].ToObject<List<DispositivoAdquirido>>();
+            List<Aposento> aposentos = clase["aposentos"].ToObject<List<Aposento>>();
+            Console.WriteLine(clienteHaUsado);
 
-            List<Historial> historiales = clase["historiales"];
-            List<ClienteHaUsado> clienteHaUsado = clase["clienteHaUsado"];
-            List<DispositivoAdquirido> dispositivos = clase["dispositivos"];
-            List<Aposento> aposentos = clase["aposentos"];
+                clienteHaUsado.ForEach(chu =>
+                {
+                    Console.WriteLine(chu.IdCliente);
+                    Console.WriteLine("hola");
+                    if (!_context.ClienteHaUsado.Any(clienteha => chu.IdCliente == clienteha.IdCliente & chu.IdCliente == idcliente & chu.NSerieDispositivo == clienteha.NSerieDispositivo))
+                    {
+                        _context.ClienteHaUsado.Add(chu);
+                    }
+                });
+                _context.SaveChanges();
 
-            clienteHaUsado.ForEach(chu => {
-                if (!_context.ClienteHaUsado.Any(clienteha => chu.IdCliente == clienteha.IdCliente & chu.IdCliente == idcliente & chu.NSerieDispositivo == clienteha.NSerieDispositivo)) {
-                    _context.ClienteHaUsado.Add(chu);
-                }
-            });
-            _context.SaveChanges();
 
-           
+
             var aposentosclientebase = _context.Aposento.Where(ap => ap.IdCliente == idcliente);
-
             var aposentoseditar = aposentos.Where(aposento => aposentosclientebase.Any(a => a.IdCliente == aposento.IdCliente & a.Id == aposento.Id)).ToList();
-            var aposentosagregar = aposentos.Where(aposento => aposentosclientebase.All(a => a.IdCliente == aposento.IdCliente & a.Id != aposento.Id));
-            var aposentoseliminar = aposentosclientebase.Where(aposento => aposentos.Where(a => a.IdCliente == idcliente).All(a => a.Id != aposento.Id));
 
             aposentoseditar.ForEach(aposento =>
             {
@@ -172,38 +175,61 @@ namespace smarthometec_API.Controllers
             });
             _context.SaveChanges();
 
-            aposentosagregar.ToList().ForEach(aposento =>
-            {
-                var apagregado = _context.Aposento.Add(aposento).Entity;
-                dispositivos.Where(dispositivo => aposento.Id == dispositivo.IdAposento).ToList().ForEach(dis=>{
-                    dis.IdAposento = apagregado.Id;
-                    _context.Entry(dis).State= EntityState.Modified;
-                });
-            });
-            _context.SaveChanges();
+            var aposentosagregar = aposentos.Where(aposento => aposentosclientebase.All(a => a.IdCliente == aposento.IdCliente & a.Id != aposento.Id));
+
+            
 
 
-            _context.ClienteHaUsado.Where(cu => cu.IdCliente == idcliente & cu.PropietarioActual == true).Join(dispositivos, cu => cu.NSerieDispositivo, da => da.NSerie, (cu, da) => da).ToList().ForEach(dis=> {
-                _context.Entry(dis).State = EntityState.Modified;
 
-            });
-            _context.SaveChanges();
 
-            _context.Aposento.RemoveRange(aposentoseliminar);
-            _context.SaveChanges();
-
-            var dispositivoscliente=_context.ClienteHaUsado.Where(cu => cu.IdCliente == idcliente & cu.PropietarioActual == true).Join(_context.DispositivoAdquirido, cu => cu.NSerieDispositivo, da => da.NSerie, (cu, da) => da);
-            historiales.Where(historial => dispositivoscliente.Any(d => d.NSerie == historial.NSerie)).ToList().ForEach(historial => {
-                if (_context.Historial.Any(hist => hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes & hist.Dia == historial.Dia & hist.Hora == historial.Hora))
+                aposentosagregar.ToList().ForEach(aposento =>
                 {
-                    _context.Entry(historial).State = EntityState.Modified;
-                }
-                else {
-                    _context.Historial.Add(historial);
-                }
-            });
-            _context.SaveChanges();
+                    var apagregado = _context.Aposento.Add(aposento).Entity;
+                    dispositivos.Where(dispositivo => aposento.Id == dispositivo.IdAposento).ToList().ForEach(dis =>
+                    {
+                        dis.IdAposento = apagregado.Id;
+                        _context.Entry(dis).State = EntityState.Modified;
+                    });
+                });
+            await _context.SaveChangesAsync();
+            var clientes = _context.ClienteHaUsado.Where(cu => cu.IdCliente == idcliente & cu.PropietarioActual.Value == true);
 
+                dispositivos.Where(da=> clientes.Any(c=> c.NSerieDispositivo==da.NSerie)).ToList().ForEach(dis =>
+                {
+                    _context.Entry(dis).State = EntityState.Modified;
+
+                });
+            await _context.SaveChangesAsync();
+
+            List<Aposento> aposentoseliminar=new List<Aposento>();
+
+            foreach (var aposento in aposentosclientebase) {
+                if (!aposentos.Any(a => a.IdCliente == idcliente & a.Id == aposento.Id)) {
+                    aposentoseliminar.Add(aposento);
+                }
+            }
+            
+             _context.Aposento.RemoveRange(aposentoseliminar);
+                await _context.SaveChangesAsync();
+
+            var dispositivoscliente = _context.ClienteHaUsado.Where(cu => cu.IdCliente == idcliente & cu.PropietarioActual == true).Join(_context.DispositivoAdquirido, cu => cu.NSerieDispositivo, da => da.NSerie, (cu, da) => da);
+
+                historiales.Where(historial => dispositivoscliente.Any(d => d.NSerie == historial.NSerie)).ToList().ForEach(historial =>
+                {
+                    if (_context.Historial.Any(hist => hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes & hist.Dia == historial.Dia & hist.Hora == historial.Hora))
+                    {
+                        _context.Entry(historial).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        _context.Historial.Add(historial);
+                    }
+                });
+                _context.SaveChanges();
+
+                
+
+        
             return "sincronizado wapo";
         }
 
