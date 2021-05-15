@@ -20,14 +20,23 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
-        // GET: api/Regiones
+        /**
+       * Funcion Get de Regiones
+       * @returns una lista con todos los registros de Regiones
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Regiones>>> GetRegiones()
         {
             return await _context.Regiones.ToListAsync();
         }
 
-        // GET: api/Regiones/5
+
+        /**
+      * Funcion Get de Regiones con parametros de filtro
+      * @param id de Regiones
+        * @returns registro de Regiones que contengan el valor del
+       * atributo
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<Regiones>> GetRegiones(string id)
         {
@@ -41,9 +50,11 @@ namespace smarthometec_API.Controllers
             return regiones;
         }
 
-        // PUT: api/Regiones/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Put de Regiones
+      * @param id,Regiones
+        * @returns una accion del caso sucedido al editar
+*/
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRegiones(string id, Regiones regiones)
         {
@@ -73,9 +84,11 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Regiones
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Post para agregar un Regiones
+      * @param Region
+        * @returns una accion del caso sucedido al crear o el adminstrador creado
+*/
         [HttpPost]
         public async Task<ActionResult<Regiones>> PostRegiones(Regiones regiones)
         {
@@ -99,7 +112,11 @@ namespace smarthometec_API.Controllers
             return CreatedAtAction("GetRegiones", new { id = regiones.Pais }, regiones);
         }
 
-        // DELETE: api/Regiones/5
+        /**
+      * Funcion Delete para eliminar un Regiones
+      * @param pais de Regiones
+        * @returns una accion del caso sucedido al eliminar o el Regiones eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<ActionResult<Regiones>> DeleteRegiones(string id)
         {

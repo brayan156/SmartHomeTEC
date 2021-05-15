@@ -2,9 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
+
 
 namespace smarthometec_API.Modelos
 {
@@ -14,7 +12,13 @@ namespace smarthometec_API.Modelos
         {
         }
 
-        public resthometecdatabaseContext(DbContextOptions<resthometecdatabaseContext> options)
+
+            /**
+    * Clase de contexto de la base de datos;
+    * perminte el acceso a cada una de las tablas, a modificar, añadirle registros y elminarlo
+    * Guarda cada una de las restricciones y configuraciones de la base de datos
+    */ 
+            public resthometecdatabaseContext(DbContextOptions<resthometecdatabaseContext> options)
             : base(options)
         {
         }

@@ -20,14 +20,23 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
-        // GET: api/PedidoFactura
+        /**
+       * Funcion Get de PedidoFactura
+       * @returns una lista con todos los registros de PedidoFactura
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PedidoFactura>>> GetPedidoFactura()
         {
             return await _context.PedidoFactura.ToListAsync();
         }
 
-        // GET: api/PedidoFactura/5
+
+        /**
+      * Funcion Get de PedidoFactura con parametros de filtro
+      * @param id_carrito,n_compra
+        * @returns registro de PedidoFactura que contenga el valor del
+       * atributo
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<PedidoFactura>> GetPedidoFactura(int id)
         {
@@ -41,9 +50,11 @@ namespace smarthometec_API.Controllers
             return pedidoFactura;
         }
 
-        // PUT: api/PedidoFactura/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Put de PedidoFactura
+      * @param id,PedidoFactura
+        * @returns una accion del caso sucedido al editar
+*/
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPedidoFactura(int id, PedidoFactura pedidoFactura)
         {
@@ -73,9 +84,11 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
-        // POST: api/PedidoFactura
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Post para agregar un PedidoFactura
+      * @param PedidoFactura
+        * @returns una accion del caso sucedido al crear o el PedidoFactura creado
+*/
         [HttpPost]
         public async Task<ActionResult<PedidoFactura>> PostPedidoFactura(PedidoFactura pedidoFactura)
         {
@@ -99,7 +112,11 @@ namespace smarthometec_API.Controllers
             return CreatedAtAction("GetPedidoFactura", new { id = pedidoFactura.IdPedido }, pedidoFactura);
         }
 
-        // DELETE: api/PedidoFactura/5
+        /**
+      * Funcion Delete para eliminar un PedidoFactura
+      * @param id
+        * @returns una accion del caso sucedido al eliminar o el PedidoFactura eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<ActionResult<PedidoFactura>> DeletePedidoFactura(int id)
         {

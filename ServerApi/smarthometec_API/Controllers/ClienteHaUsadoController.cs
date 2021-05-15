@@ -21,14 +21,22 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
-        // GET: api/ClienteHaUsado
+        /**
+       * Funcion Get de Administrador
+       * @returns una lista con todos los registros de Administrador
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ClienteHaUsado>>> GetClienteHaUsado()
         {
             return await _context.ClienteHaUsado.ToListAsync();
         }
 
-        // GET: api/ClienteHaUsado/5
+        /**
+      * Funcion Get de ClienteHaUsado con parametros de filtro
+      * @param id
+        * @returns una lista con todos los registros de ClienteHaUsado que contengan el valor de los
+       * atributos de los parametros
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<ClienteHaUsado>> GetClienteHaUsado(int id)
         {
@@ -42,9 +50,11 @@ namespace smarthometec_API.Controllers
             return clienteHaUsado;
         }
 
-        // PUT: api/ClienteHaUsado/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Put de ClienteHaUsado
+      * @param ClienteHaUsado
+        * @returns una accion del caso sucedido al editar
+*/
         [HttpPut()]
         public async Task<IActionResult> PutClienteHaUsado( ClienteHaUsado clienteHaUsado)
         {
@@ -64,10 +74,11 @@ namespace smarthometec_API.Controllers
 
             return NoContent();
         }
-
-        // POST: api/ClienteHaUsado
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Post para agregar un ClienteHaUsado
+      * @param ClienteHaUsado
+        * @returns una accion del caso sucedido al crear o el ClienteHaUsado creado
+*/
         [HttpPost]
         public async Task<ActionResult<ClienteHaUsado>> PostClienteHaUsado(ClienteHaUsado clienteHaUsado)
         {
@@ -92,7 +103,11 @@ namespace smarthometec_API.Controllers
         }
 
 
-
+        /**
+* Funcion Get para transferir un dispositvo a otro cliente
+* @param idactual del cliente/idnuevo del cliente a transferir/nserie del dispositivo"
+* @returns una accion del caso sucedido de transferencia
+*/
         [HttpGet("transferir/{idactual}/{idnuevo}/{nserie}")]
         public async Task<string> transferir(int idactual, int idnuevo,int nserie)
         {
@@ -128,6 +143,11 @@ namespace smarthometec_API.Controllers
         }
 
 
+        /**
+* Funcion Post para agregar un dispositivo a un cliente
+* @param idcliente, datos del dispositivo 
+* @returns una accion del caso sucedido al intentar agregar el dispositivo
+*/
 
         [HttpPost("agregardispositivo/{idcliente}")]
         public async Task<string> agregardispostiivosusuario(int idcliente,dynamic datos)
@@ -170,7 +190,11 @@ namespace smarthometec_API.Controllers
 
 
 
-        // DELETE: api/ClienteHaUsado/5
+        /**
+      * Funcion Delete para eliminar un Administrador
+      * @param id
+        * @returns una accion del caso sucedido al editar o el adminstrador eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<ActionResult<ClienteHaUsado>> DeleteClienteHaUsado(int id)
         {

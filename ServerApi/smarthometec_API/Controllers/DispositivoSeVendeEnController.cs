@@ -30,14 +30,22 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
-        // GET: api/DispositivoSeVendeEn
+        /**
+       * Funcion Get de DispositivoSeVendeEn
+       * @returns una lista con todos los registros de DispositivoSeVendeEn
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DispositivoSeVendeEn>>> GetDispositivoSeVendeEn()
         {
             return await _context.DispositivoSeVendeEn.ToListAsync();
         }
 
-        // GET: api/DispositivoSeVendeEn/5
+        /**
+      * Funcion Get de DispositivoSeVendeEn con parametros de filtro
+      * @param id del DispositivoSeVendeEn
+        * @returns registro de DispositivoSeVendeEn que contengan el valor del
+       * atributo
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<DispositivoSeVendeEn>> GetDispositivoSeVendeEn(int id)
         {
@@ -51,11 +59,14 @@ namespace smarthometec_API.Controllers
             return dispositivoSeVendeEn;
         }
 
-        // PUT: api/DispositivoSeVendeEn/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+
+        /**
+      * Funcion Put de dispositivoSeVendeEn para editar
+      * @param dispositivoSeVendeEn
+        * @returns una accion del caso sucedido al editar
+*/
         [HttpPut()]
-        public async Task<IActionResult> PutDispositivoSeVendeEn( DispositivoSeVendeEn dispositivoSeVendeEn)
+        public async Task<IActionResult> PutDispositivoSeVendeEn(DispositivoSeVendeEn dispositivoSeVendeEn)
         {
 
             _context.Entry(dispositivoSeVendeEn).State = EntityState.Modified;
@@ -71,9 +82,11 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
-        // POST: api/DispositivoSeVendeEn
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Post para agregar un dispositivoSeVendeEn
+      * @param dispositivoSeVendeEn
+        * @returns una accion del caso sucedido al editar o el dispositivoSeVendeEn creado
+*/
         [HttpPost]
         public async Task<ActionResult<DispositivoSeVendeEn>> PostDispositivoSeVendeEn(DispositivoSeVendeEn dispositivoSeVendeEn)
         {
@@ -98,6 +111,12 @@ namespace smarthometec_API.Controllers
         }
 
 
+        /**
+* Funcion Post de DispositivoSeVendeEn que carga todos los datos del excel a la base de datos
+* @param lista del DispositivoSeVendeEn
+* @returns accion realizada al cargar la informacion
+*/
+
         [HttpPost("excel")]
         public async Task<string> posttodos(DispositivoSeVendeEn[] dispositivoSeVendeEn)
         {
@@ -120,8 +139,12 @@ namespace smarthometec_API.Controllers
 
 
 
-        static public List<Pdfs> pdfslista = new List<Pdfs>();
 
+        /**
+* Funcion Post de DispositivoSeVendeEn realiza la compra del usuario
+* @param id del cliente,  DispositivoSeVendeEn
+* @returns el pedido, la factira, y la garantia
+*/
         [HttpPost("comprar/{idcliente}")]
         public dynamic comprar(int idcliente, DispositivoSeVendeEn dispositivoSeVendeEn)
         {
@@ -155,25 +178,6 @@ namespace smarthometec_API.Controllers
             certificado = _context.CertificadoGarantia.Add(certificado).Entity;
             _context.SaveChanges();
 
-            try
-            {
-
-            }
-            catch (DbUpdateException)
-            {
-                if (DispositivoSeVendeEnExists(dispositivoSeVendeEn.CjDistribuidor))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-
-
-
 
             Dictionary<string, string> parametersFactura = new Dictionary<string, string>();
             parametersFactura.Add("fechacompra", factura.Dia + "/" + factura.Mes + "/" + factura.Ano);
@@ -183,12 +187,9 @@ namespace smarthometec_API.Controllers
             parametersFactura.Add("precio", dispositivoSeVendeEn.Precio + "");
 
 
-
-
             facturaset ds = new facturaset(); ;
             DataTable t = ds.Tables.Add("Items");
             DataRow r;
-
 
             t.Columns.Add("fechacompra", Type.GetType("System.String"));
             t.Columns.Add("nfactura", Type.GetType("System.String"));
@@ -210,7 +211,6 @@ namespace smarthometec_API.Controllers
 
 
 
-
             string nombrereportefactura = "Factura";
 
             var stringfactura = GenerateReportAsync(nombrereportefactura, t);
@@ -218,9 +218,6 @@ namespace smarthometec_API.Controllers
             // SendIt(stringfactura, nombrereportefactura);
 
             Cliente cliente = _context.Cliente.Find(idcliente);
-
-
-
 
             garantiaset dsg = new garantiaset(); ;
             DataTable t2 = dsg.Tables.Add("Items");
@@ -249,17 +246,12 @@ namespace smarthometec_API.Controllers
 
 
 
-
             string nombrereportegarantia = "Garantia";
 
             byte[] pdfcertificado = GenerateReportAsync(nombrereportegarantia, t2);
          //   var file = File(pdfcertificado, System.Net.Mime.MediaTypeNames.Application.Octet, nombrereportegarantia + ".pdf");
 
             enviaremail(stringfactura, pdfcertificado,cliente.Email);
-
-
-
-
 
 
             //Pdfs pdfs = new Pdfs();
@@ -271,7 +263,12 @@ namespace smarthometec_API.Controllers
             return new { pedido, factura, certificado };
         }
 
-            private void enviaremail(byte[] pdfFactura, byte[] pdfCertificado, string email)
+
+        /**
+* Funcion que genera  email con la factura y el certificado de garantia y lo envia
+* @param array de bytes del pdf de la factura y de la garantia, email del usuario a enviar 
+*/
+        private void enviaremail(byte[] pdfFactura, byte[] pdfCertificado, string email)
         {
 
 
@@ -304,7 +301,12 @@ namespace smarthometec_API.Controllers
         }
 
 
-        public  byte[] GenerateReportAsync(string reportName, DataTable t)
+        /**
+* Funcion que genera el pdf a enviar
+* @param nombre del reporte .rdlc, datos a cargar en el reporte 
+* @returns array de bytes del reporte en formato pdf
+*/
+        public byte[] GenerateReportAsync(string reportName, DataTable t)
         {
             string fileDirPath = Assembly.GetExecutingAssembly().Location.Replace("smarthometec_API.dll", string.Empty);
             string rdlcFilePath = string.Format("{0}reportes\\{1}.rdlc", fileDirPath, reportName);
@@ -320,7 +322,13 @@ namespace smarthometec_API.Controllers
             return result.MainStream;
         }
 
-            private RenderType GetRenderType(string reportType)
+
+        /**
+* Funcion para dar formato al archivo a enviar
+* @param tipo de formato
+* @returns formato del archivo
+*/
+        private RenderType GetRenderType(string reportType)
         {
             var renderType = RenderType.Pdf;
             switch (reportType.ToLower())
@@ -342,9 +350,11 @@ namespace smarthometec_API.Controllers
 
 
 
-
-
-        // DELETE: api/DispositivoSeVendeEn/5
+        /**
+      * Funcion Delete para eliminar un DispositivoSeVendeEn
+      * @param id de DispositivoSeVendeEn
+        * @returns una accion del caso sucedido al eliminar o el DispositivoSeVendeEn eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<ActionResult<DispositivoSeVendeEn>> DeleteDispositivoSeVendeEn(int id)
         {

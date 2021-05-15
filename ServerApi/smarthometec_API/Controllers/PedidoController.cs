@@ -20,14 +20,22 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
-        // GET: api/Pedido
+        /**
+       * Funcion Get de Pedido
+       * @returns una lista con todos los registros de Pedido
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pedido>>> GetPedido()
         {
             return await _context.Pedido.ToListAsync();
         }
 
-        // GET: api/Pedido/5
+        /**
+      * Funcion Get de Administrador con parametros de filtro
+      * @param id de Pedido
+        * @returns registro de Pedido que contengan el valor del
+       * atributo
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<Pedido>> GetPedido(int id)
         {
@@ -41,9 +49,12 @@ namespace smarthometec_API.Controllers
             return pedido;
         }
 
-        // PUT: api/Pedido/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Put de Pedido para editar
+      * @param id,Pedido
+        * @returns una accion del caso sucedido al editar
+*/
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPedido(int id, Pedido pedido)
         {
@@ -73,9 +84,12 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Pedido
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+
+        /**
+      * Funcion Post para agregar un Pedido
+      * @param Pedido
+        * @returns una accion del caso sucedido al crear o el Pedido creado
+*/
         [HttpPost]
         public async Task<ActionResult<Pedido>> PostPedido(Pedido pedido)
         {
@@ -84,8 +98,11 @@ namespace smarthometec_API.Controllers
 
             return CreatedAtAction("GetPedido", new { id = pedido.Id }, pedido);
         }
-
-        // DELETE: api/Pedido/5
+        /**
+      * Funcion Delete para eliminar un Pedido
+      * @param id
+        * @returns una accion del caso sucedido al eliminar o el Pedido eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<ActionResult<Pedido>> DeletePedido(int id)
         {

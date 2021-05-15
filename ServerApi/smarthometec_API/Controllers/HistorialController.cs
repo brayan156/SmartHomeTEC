@@ -20,14 +20,22 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
-        // GET: api/Historial
+        /**
+       * Funcion Get de Historial
+       * @returns una lista con todos los registros de AdmiHistorialnistrador
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Historial>>> GetHistorial()
         {
             return await _context.Historial.ToListAsync();
         }
 
-        // GET: api/Historial/5
+        /**
+      * Funcion Get de Administrador con parametros de filtro
+      * @param id_carrito,n_compra
+        * @returns registro de Administrador que contengan el valor del
+       * atributo
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<Historial>> GetHistorial(int id)
         {
@@ -41,9 +49,11 @@ namespace smarthometec_API.Controllers
             return historial;
         }
 
-        // PUT: api/Historial/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Put de Historial para editar
+      * @param id,Historial
+        * @returns una accion del caso sucedido al editar
+*/
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHistorial(int id, Historial historial)
         {
@@ -73,9 +83,11 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Historial
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Post para agregar un Historial
+      * @param Historial
+        * @returns una accion del caso sucedido al crear o el Historial creado
+*/
         [HttpPost]
         public async Task<ActionResult<Historial>> PostHistorial(Historial historial)
         {
@@ -85,7 +97,11 @@ namespace smarthometec_API.Controllers
             return CreatedAtAction("GetHistorial", new { id = historial.NHistorial }, historial);
         }
 
-        // DELETE: api/Historial/5
+        /**
+      * Funcion Delete para eliminar un Historial
+      * @param id
+        * @returns una accion del caso sucedido al eliminar o el Historial eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<ActionResult<Historial>> DeleteHistorial(int id)
         {

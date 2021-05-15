@@ -20,14 +20,22 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
-        // GET: api/Tipo
+        /**
+       * Funcion Get de Tipo
+       * @returns una lista con todos los registros de Administrador
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tipo>>> GetTipo()
         {
             return await _context.Tipo.ToListAsync();
         }
 
-        // GET: api/Tipo/5
+        /**
+      * Funcion Get de Tipo con parametros de filtro
+      * @param id de tipo 
+        * @returns registro de Tipo que contengan el valor del
+       * atributo
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<Tipo>> GetTipo(string id)
         {
@@ -41,9 +49,13 @@ namespace smarthometec_API.Controllers
             return tipo;
         }
 
-        // PUT: api/Tipo/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+
+        /**
+      * Funcion Put de Tipo para editar
+      * @param id,Tipo
+        * @returns una accion del caso sucedido al editar
+*/
+
         [HttpPut("{id}")]
         public async Task<string> PutTipo(string id, Tipo tipo)
         {
@@ -80,9 +92,11 @@ namespace smarthometec_API.Controllers
             return "dispositivo editado";
         }
 
-        // POST: api/Tipo
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Post para agregar un Tipo
+      * @param Tipo
+        * @returns una accion del caso sucedido al crear o el Tipo creado
+*/
         [HttpPost]
         public async Task<string> PostTipo(Tipo tipo)
         {
@@ -106,7 +120,11 @@ namespace smarthometec_API.Controllers
             return "tipo creado";
         }
 
-        // DELETE: api/Tipo/5
+        /**
+      * Funcion Delete para eliminar un Tipo
+      * @param id
+        * @returns una accion del caso sucedido al eliminar o el Tipo eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<string> DeleteTipo(string id)
         {

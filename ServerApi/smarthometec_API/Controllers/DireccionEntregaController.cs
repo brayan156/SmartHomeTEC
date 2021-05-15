@@ -20,14 +20,22 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
-        // GET: api/DireccionEntrega
+        /**
+       * Funcion Get de DireccionEntrega
+       * @returns una lista con todos los registros de DireccionEntrega
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DireccionEntrega>>> GetDireccionEntrega()
         {
             return await _context.DireccionEntrega.ToListAsync();
         }
 
-        // GET: api/DireccionEntrega/5
+        /**
+      * Funcion Get de Administrador con parametros de filtro
+      * @param id del cliente
+        * @returns una lista con todos los registros de Administrador que contengan el valor de los
+       * atributos de los parametros
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<DireccionEntrega>>> GetDireccionEntrega(int id)
         {
@@ -40,10 +48,11 @@ namespace smarthometec_API.Controllers
 
             return direccionEntrega;
         }
-
-        // PUT: api/DireccionEntrega/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Put de DireccionEntrega
+      * @param id,DireccionEntrega
+        * @returns una accion del caso sucedido al editar
+*/
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDireccionEntrega(string id, DireccionEntrega direccionEntrega)
         {
@@ -73,9 +82,11 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
-        // POST: api/DireccionEntrega
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Post para agregar un DireccionEntrega
+      * @param DireccionEntrega
+        * @returns una accion del caso sucedido al editar o el DireccionEntrega creado
+*/
         [HttpPost]
         public async Task<ActionResult<DireccionEntrega>> PostDireccionEntrega(DireccionEntrega direccionEntrega)
         {
@@ -99,7 +110,11 @@ namespace smarthometec_API.Controllers
             return CreatedAtAction("GetDireccionEntrega", new { id = direccionEntrega.DireccionEntrega1 }, direccionEntrega);
         }
 
-        // DELETE: api/DireccionEntrega/5
+        /**
+      * Funcion Delete para eliminar un DireccionEntrega
+      * @param id
+        * @returns una accion del caso sucedido al editar o el DireccionEntrega eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<ActionResult<DireccionEntrega>> DeleteDireccionEntrega(string id)
         {

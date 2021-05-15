@@ -20,15 +20,23 @@ namespace smarthometec_API.Controllers
         {
             _context = context;
         }
-
-        // GET: api/DispositivoAdquirido
+        /**
+       * Funcion Get de DispositivoAdquirido
+       * @returns una lista con todos los registros de DispositivoAdquirido
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DispositivoAdquirido>>> GetDispositivoAdquirido()
         {
             return await _context.DispositivoAdquirido.ToListAsync();
         }
 
-        // GET: api/DispositivoAdquirido/5
+
+        /**
+      * Funcion Get de DispositivoAdquirido con parametros de filtro
+      * @param id
+        * @returns una lista con todos los registros de DispositivoAdquirido que contengan el valor de los
+       * atributos de los parametros
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<DispositivoAdquirido>> GetDispositivoAdquirido(int id)
         {
@@ -42,11 +50,11 @@ namespace smarthometec_API.Controllers
             return dispositivoAdquirido;
         }
 
-
-
-
-
-
+        /**
+      * Funcion Get de DispositivoAdquirido que enciende un dispositivo
+      * @param id del dispositivo
+        * @returns accion del editar del dispositivo
+*/
         [HttpGet("encender/{id}")]
         public async Task<IActionResult> Encender(int id)
         {
@@ -79,6 +87,13 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
+
+
+        /**
+* Funcion Get de DispositivoAdquirido que apaga un dispositivo y crea el historial acorde al tiempo encendido
+* @param id del dispositivo
+* @returns accion del editar del dispositivo
+*/
         [HttpGet("apagar/{id}")]
         public async Task<IActionResult> Apagar(int id)
         {
@@ -171,9 +186,11 @@ namespace smarthometec_API.Controllers
 
 
 
-        // PUT: api/DispositivoAdquirido/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Put de DispositivoAdquirido
+      * @param id,DispositivoAdquirido
+        * @returns una accion del caso sucedido al editar
+*/
         [HttpPut("{id}")]
         public async Task<string> PutDispositivoAdquirido(int id, DispositivoAdquirido dispositivoAdquirido)
         {
@@ -202,10 +219,11 @@ namespace smarthometec_API.Controllers
 
             return "dispositivocambiado";
         }
-
-        // POST: api/DispositivoAdquirido
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Post para agregar un DispositivoAdquirido
+      * @param DispositivoAdquirido
+        * @returns una accion del caso sucedido al crear o el DispositivoAdquirido creado
+*/
         [HttpPost]
         public async Task<ActionResult<DispositivoAdquirido>> PostDispositivoAdquirido(DispositivoAdquirido dispositivoAdquirido)
         {
@@ -218,8 +236,11 @@ namespace smarthometec_API.Controllers
 
 
 
-
-        // DELETE: api/DispositivoAdquirido/5
+        /**
+      * Funcion Delete para eliminar un DispositivoAdquirido
+      * @param id del DispositivoAdquirido
+        * @returns una accion del caso sucedido al eliminar o el DispositivoAdquirido eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<ActionResult<DispositivoAdquirido>> DeleteDispositivoAdquirido(int id)
         {

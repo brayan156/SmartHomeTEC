@@ -20,14 +20,20 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
-        // GET: api/Distribuidor
+        /**
+       * Funcion Get de Distribuidor
+       * @returns una lista con todos los registros de Distribuidor
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Distribuidor>>> GetDistribuidor()
         {
             return await _context.Distribuidor.ToListAsync();
         }
-
-        // GET: api/Distribuidor/5
+        /**
+      * Funcion Get de Distribuidor con parametros de filtro
+      * @param id de Distribuidor
+        * @returns  registro de Distribuidor que contengan el valor del id
+        */
         [HttpGet("{id}")]
         public async Task<ActionResult<Distribuidor>> GetDistribuidor(int id)
         {
@@ -41,9 +47,11 @@ namespace smarthometec_API.Controllers
             return distribuidor;
         }
 
-        // PUT: api/Distribuidor/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Put de Distribuidor
+      * @param id,Distribuidor
+        * @returns una accion del caso sucedido al editar
+*/
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDistribuidor(int id, Distribuidor distribuidor)
         {
@@ -73,9 +81,12 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Distribuidor
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+
+        /**
+      * Funcion Post para agregar un Distribuidor
+      * @param Distribuidor
+        * @returns una accion del caso sucedido al crear el Distribuidor
+*/
         [HttpPost]
         public async Task<string> PostDistribuidor(Distribuidor distribuidor)
         {
@@ -99,7 +110,11 @@ namespace smarthometec_API.Controllers
             return "distribuidor creado";
         }
 
-        // DELETE: api/Distribuidor/5
+        /**
+      * Funcion Delete para eliminar un Distribuidor
+      * @param id de Distribuidor
+        * @returns una accion del caso sucedido al eliminar o el Distribuidor eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<string> DeleteDistribuidor(int id)
         {

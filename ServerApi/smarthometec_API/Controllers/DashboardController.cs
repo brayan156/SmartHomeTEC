@@ -24,6 +24,13 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
+
+
+
+        /**
+* Funcion de dashboard para obtener los dispositivos asociados
+* @return un número con la cantidad de dispositivos asociados a clientes
+*/
         [HttpGet("dispositivos_asociados")]
         public async Task<int> Getdispositvosasociados()
         {
@@ -39,6 +46,11 @@ namespace smarthometec_API.Controllers
             return dipositivos;
         }
 
+
+        /**
+* Funcion de dashboard para obtener los dispositivos por región
+* @returnuna lista con la cantidad de dispositivos asociados a clientes por region
+*/
         [HttpGet("dispositivos_region")]
         public async Task<ActionResult<IEnumerable<dynamic>>> Getdispositvosregion()
         {
@@ -56,6 +68,11 @@ namespace smarthometec_API.Controllers
 
         }
 
+
+        /**
+* Funcion de dashboard para obtener los dispositivos por usuario
+* @return un número con la cantidad de dispositivos promedio asociados a clientes
+*/
         [HttpGet("dispositivos_promedio")]
         public float Getdispositvospromedio()
         {
@@ -83,7 +100,13 @@ namespace smarthometec_API.Controllers
 
         }
 
-                [HttpGet("dispositivos")]
+
+        /**
+* Funcion de dashboard para obtener los asociados y no asociados y diferenciarlos
+* @return una lista con todos los dispositivos con su n_serie e indicado si estan asociados o no
+*/
+
+        [HttpGet("dispositivos")]
         public async Task<ActionResult<IEnumerable<dynamic>>> Getdispositvos()
         {
             var Usado =  _context.ClienteHaUsado.Where(cu => cu.PropietarioActual == true);

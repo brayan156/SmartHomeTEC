@@ -19,9 +19,13 @@ namespace smarthometec_API.Controllers
     public class PdfController : ControllerBase
     {
 
-        
 
-        // POST api/<PdfController>
+
+        /**
+* Funcion Post para crear y enviar el pdf del report de consumo por tipo
+* @param lista de datos del pdf, nombre , apellido1 y apellido2 del cliente
+ * @return pdf con los datos del reporte
+*/
         [HttpPost("consumo_tipo/{nombre}/{apellido1}/{apellido2}")]
         public FileContentResult consumoTipo(List<dynamic> datos, string nombre, string apellido1, string apellido2)
         {
@@ -53,7 +57,11 @@ namespace smarthometec_API.Controllers
 
         }
 
-
+        /**
+* Funcion Post para crear y enviar el pdf del report de consumo mensual de cada dispositivo usado
+* @param lista de datos del pdf, nombre , apellido1 y apellido2 del cliente
+* @return pdf con los datos del reporte
+*/
         [HttpPost("consumo_mensual/{nombre}/{apellido1}/{apellido2}")]
         public FileContentResult consumomes(List<dynamic> datos, string nombre, string apellido1, string apellido2)
         {
@@ -90,7 +98,11 @@ namespace smarthometec_API.Controllers
 
         }
 
-
+        /**
+* Funcion Post para crear y enviar el pdf del report de cantitad de uso por periodo del dia
+* @param lista de datos del pdf, nombre , apellido1 y apellido2 del cliente
+* @return pdf con los datos del reporte
+*/
         [HttpPost("consumo_periodo_dia/{nombre}/{apellido1}/{apellido2}")]
         public FileContentResult reporteperiodo(List<dynamic> datos, string nombre, string apellido1, string apellido2)
         {
@@ -125,6 +137,11 @@ namespace smarthometec_API.Controllers
 
 
 
+        /**
+* Funcion que genera el pdf a enviar
+* @param nombre del reporte .rdlc, datos a cargar en el reporte, nombre , apellido1 y apellido2 del cliente
+* @returns array de bytes del reporte en formato pdf
+*/
         public byte[] GenerateReportAsync(string reportName, DataTable datos, string nombre, string apellido1, string apellido2)
         {
             string fileDirPath = Assembly.GetExecutingAssembly().Location.Replace("smarthometec_API.dll", string.Empty);
@@ -143,6 +160,12 @@ namespace smarthometec_API.Controllers
             return result.MainStream;
         }
 
+
+        /**
+* Funcion para dar formato al archivo a enviar
+* @param tipo de formato
+* @returns formato del archivo
+*/
         private RenderType GetRenderType(string reportType)
         {
             var renderType = RenderType.Pdf;

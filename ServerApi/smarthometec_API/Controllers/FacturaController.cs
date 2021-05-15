@@ -20,14 +20,21 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
-        // GET: api/Factura
+        /**
+       * Funcion Get de Factura
+       * @returns una lista con todos los registros de Factura
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Factura>>> GetFactura()
         {
             return await _context.Factura.ToListAsync();
         }
-
-        // GET: api/Factura/5
+        /**
+      * Funcion Get de Factura con parametros de filtro
+      * @param id de Factura
+        * @returns registro de Administrador que contengan el valor del
+       * atributo
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<Factura>> GetFactura(int id)
         {
@@ -41,9 +48,12 @@ namespace smarthometec_API.Controllers
             return factura;
         }
 
-        // PUT: api/Factura/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Put de Factura para editar
+      * @param id,Factura
+        * @returns una accion del caso sucedido al editar
+*/
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFactura(int id, Factura factura)
         {
@@ -72,10 +82,11 @@ namespace smarthometec_API.Controllers
 
             return NoContent();
         }
-
-        // POST: api/Factura
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Post para agregar un Factura
+      * @param Factura
+        * @returns una accion del caso sucedido al crear o el Factura creado
+*/
         [HttpPost]
         public async Task<ActionResult<Factura>> PostFactura(Factura factura)
         {
@@ -84,8 +95,11 @@ namespace smarthometec_API.Controllers
 
             return CreatedAtAction("GetFactura", new { id = factura.NFactura }, factura);
         }
-
-        // DELETE: api/Factura/5
+        /**
+      * Funcion Delete para eliminar un Factura
+      * @param id
+        * @returns una accion del caso sucedido al eliminar o el Factura eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<ActionResult<Factura>> DeleteFactura(int id)
         {

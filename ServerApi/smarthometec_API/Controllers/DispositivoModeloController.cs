@@ -20,13 +20,21 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
-        // GET: api/DispositivoModelo
+        /**
+       * Funcion Get de DispositivoModelo
+       * @returns una lista con todos los registros de DispositivoModelo
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DispositivoModelo>>> GetDispositivoModelo()
         {
             return await _context.DispositivoModelo.ToListAsync();
         }
 
+
+        /**
+* Funcion Get de join DispositivoModelo con tipo
+* @returns una lista con todos los registros de DispositivoModelo y su join a tipo
+*/
         [HttpGet("join")]
         public async Task<ActionResult<IEnumerable<dynamic>>> getjoin()
         {
@@ -38,6 +46,14 @@ namespace smarthometec_API.Controllers
             //return await _context.Tipo.FromSqlRaw("SELECT tipo.nombre, tipo.tiempo_de_garantia, tipo.imagen, tipo.descripcion, dm.modelo, dm.marca, dm.consumo_electrico, dm.tipo from tipo inner join dispositivo_modelo dm on tipo.nombre = dm.tipo").ToListAsync();
         }
 
+
+
+        /**
+* Funcion Get de Administrador con parametros de filtro por region
+* @param pais
+* @returns una lista con todos los registros de DispositivoModelo que esten disponibles en el pais
+*/
+
         [HttpGet("region/{pais}")]
         public async Task<ActionResult<IEnumerable<dynamic>>> getbyregion(string pais)
         {
@@ -46,7 +62,14 @@ namespace smarthometec_API.Controllers
                 _context.DispositivoModelo, dd => dd.dispositivoSeVendeEn.ModeloDispotivo, dm => dm.Modelo, (dd, dm) => new { dispositivoSeVendeEn = dd.dispositivoSeVendeEn, dispositivoModelo = dm }).ToListAsync();
         }
 
-        // GET: api/DispositivoModelo/5
+
+
+        /**
+      * Funcion Get de DispositivoModelo con parametros de filtro
+      * @param modelo del dispositivo
+        * @returns una lista con todos los registros de DispositivoModelo que contengan el valor de los
+       * atributos de los parametros
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<DispositivoModelo>> GetDispositivoModelo(string id)
         {
@@ -60,9 +83,11 @@ namespace smarthometec_API.Controllers
             return dispositivoModelo;
         }
 
-        // PUT: api/DispositivoModelo/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Put de DispositivoModelo para editar
+      * @param id,DispositivoModelo
+        * @returns una accion del caso sucedido al editar
+*/
         [HttpPut("{id}")]
         public async Task<string> PutDispositivoModelo(string id, DispositivoModelo dispositivoModelo)
         {
@@ -95,10 +120,11 @@ namespace smarthometec_API.Controllers
 
             return "dispositivo editado";
         }
-
-        // POST: api/DispositivoModelo
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Post para agregar un DispositivoModelo
+      * @param DispositivoModelo
+        * @returns una accion del caso sucedido al crear  el DispositivoModelo
+*/
         [HttpPost("crear")]
         public async Task<string> PostDispositivoModelo(DispositivoModelo dispositivoModelo)
         {
@@ -122,7 +148,11 @@ namespace smarthometec_API.Controllers
             return "dispositivo creado";   
         }
 
-        // DELETE: api/DispositivoModelo/5
+        /**
+      * Funcion Delete para eliminar un DispositivoModelo
+      * @param id de DispositivoModelo
+        * @returns una accion del caso sucedido al eliminar o el DispositivoModelo eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<string> DeleteDispositivoModelo(string id)
         {

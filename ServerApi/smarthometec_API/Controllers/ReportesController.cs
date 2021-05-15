@@ -24,6 +24,11 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
+        /**
+      * Funcion Get la generacion de reporte de consumo mensual por dispositivo
+      * @param id del cliente, mes y año del mes a reportar
+        * @returns lista con los datos del reporte
+*/
         [HttpGet("consumo_mensual/{idcliente}/{ano}/{mes}")]
         public async Task<ActionResult<IEnumerable<dynamic>>> Getconsumomensual(int idcliente, int ano, int mes)
         {
@@ -50,6 +55,11 @@ namespace smarthometec_API.Controllers
         }
 
 
+        /**
+      * Funcion Get la generacion de reporte de consumo mensual por dispositivo
+      * @param id del cliente
+        * @returns lista con los datos del reporte
+*/
         [HttpGet("consumo_tipo/{idcliente}")]
         public async Task<ActionResult<IEnumerable<dynamic>>> Getdconsumotipo(int idcliente)
         {
@@ -63,14 +73,15 @@ namespace smarthometec_API.Controllers
                 return NotFound();
             }
 
-
-            
-            
-
-
             return mayor_uso;
         }
 
+
+        /**
+      * Funcion Get la generacion de reporte del uso por periodo del dia
+      * @param id del cliente, fecha inicial y fecha final
+        * @returns lista con los datos del reporte
+*/
         [HttpGet("consumo_periodo_dia/{idcliente}/{di}/{mi}/{ai}/{df}/{mf}/{af}")]
         public async Task<ActionResult<IEnumerable<dynamic>>> Getconsumoperiodo(int idcliente, int di, int mi, int ai, int df, int mf, int af)
         {
@@ -109,12 +120,6 @@ namespace smarthometec_API.Controllers
             }
             return uso;
         }
-
-
-
-
-        
-
 
     }
 }

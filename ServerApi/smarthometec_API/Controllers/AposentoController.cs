@@ -21,15 +21,22 @@ namespace smarthometec_API.Controllers
         {
             _context = context;
         }
-
-        // GET: api/Aposento
+        /**
+       * Funcion Get de Aposento
+       * @returns una lista con todos los registros de Aposento
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Aposento>>> GetAposento()
         {
             return await _context.Aposento.ToListAsync();
         }
 
-        // GET: api/Aposento/5
+        /**
+      * Funcion Get de Aposento con parametros de filtro
+      * @param id del aposento
+        * @returns una lista con todos los registros de Aposento que contengan el valor de los
+       * atributos de los parametros
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<Aposento>> GetAposento(int id)
         {
@@ -44,6 +51,11 @@ namespace smarthometec_API.Controllers
         }
 
 
+        /**
+      * Funcion para obtener el tiempo restante de garantía
+      * @param nserie del dispositivo
+        * @returns numero enteros con los meses restantes para que se acabe la garantia
+*/
         public int gettiempo(int nserie)
         {
             var pedido = _context.Pedido.First(p => p.NSerieDispositivo == nserie);
@@ -61,6 +73,15 @@ namespace smarthometec_API.Controllers
             return mesesrestantes;
         }
 
+
+
+
+
+        /**
+* Funcion Get que obtienes los dispositivos de un aposento
+* @param id del aposento
+* @returns una lista con todos los dispositivos del aposento con el tiempo restante de garantia y otras caracteristicas
+*/
 
         [HttpGet("dispositivos/{id}")]
         public async Task<ActionResult<IEnumerable<dynamic>>> Getdispositivos(int id)
@@ -87,7 +108,12 @@ namespace smarthometec_API.Controllers
             return lista;
         }
 
-
+        /**
+* Funcion Get de Aposento con parametros de filtro
+* @param id del cliente
+* @returns una lista con todos los registros de Aposento que contengan el valor de los
+* atributos de los parametros
+*/
         [HttpGet("aposentoscliente/{idcliente}")]
         public async Task<ActionResult<IEnumerable<Aposento>>> GetAposentocliente(int idcliente)
         {
@@ -101,10 +127,11 @@ namespace smarthometec_API.Controllers
             return aposento;
         }
 
-
-        // PUT: api/Aposento/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+* Funcion Put de Aposento
+* @param id,Aposento
+* @returns una accion del caso sucedido al editar
+*/
         [HttpPut("{id}")]
         public async Task<string> PutAposento(int id, Aposento aposento)
         {
@@ -140,10 +167,11 @@ namespace smarthometec_API.Controllers
         }
 
 
-
-        // POST: api/Aposento
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Post para agregar un Aposento
+      * @param Aposento
+        * @returns una accion del caso sucedido al editar o el Aposento 
+*/
         [HttpPost]
         public async Task<string> PostAposento(Aposento aposento)
         {
@@ -159,7 +187,11 @@ namespace smarthometec_API.Controllers
             return "aposento creado";
         }
 
-
+        /**
+* Funcion Post para agregar los aposentos por default del cliente
+* @param id del cliente
+* @returns una accion del caso sucedido al crear el Aposento 
+*/
         [HttpGet("Default/{idCliente}")]
         public async Task<IActionResult> PostAposento(int idCliente)
         {
@@ -180,7 +212,11 @@ namespace smarthometec_API.Controllers
         }
 
 
-        // DELETE: api/Aposento/5
+        /**
+      * Funcion Delete para eliminar un Aposento
+      * @param id del cliente y del aposento
+        * @returns una accion del caso sucedido al eliminar o el adminstrador eliminado
+*/
         [HttpDelete("{id}/{idcliente}")]
         public async Task<string> DeleteAposento(int id,int idcliente)
         {

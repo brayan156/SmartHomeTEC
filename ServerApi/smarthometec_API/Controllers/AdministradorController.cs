@@ -15,25 +15,40 @@ namespace smarthometec_API.Controllers
     {
         private readonly resthometecdatabaseContext _context;
 
+
+
         public AdministradorController(resthometecdatabaseContext context)
         {
             _context = context;
         }
 
-        // GET: api/Administrador
+ /**
+* Funcion Get de Administrador
+* @returns una lista con todos los registros de Administrador
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Administrador>>> GetAdministrador()
         {
             return await _context.Administrador.ToListAsync();
         }
 
+        /**
+* Funcion Get de login Administrador
+* @param correo, contraseña
+* @returns una lista con el Administrador si es validado
+*/
         [HttpGet("validar/{contrasena}/{correo}")]
         public async Task<ActionResult<List<Administrador>>> Getcontrasena(string contrasena,string correo)
         {
             return await _context.Administrador.Where(d => d.Contrasena == contrasena & d.Email==correo).ToListAsync();
         }
 
-        // GET: api/Administrador/5
+        /**
+      * Funcion Get de Administrador con parametros de filtro
+      * @param id de Administrador
+        * @returns  registro de Administrador que contenga el valor del
+       * atributo
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<Administrador>> GetAdministrador(int id)
         {
@@ -47,9 +62,12 @@ namespace smarthometec_API.Controllers
             return administrador;
         }
 
-        // PUT: api/Administrador/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Put de Administrador
+      * @param id,administrador
+        * @returns una accion del caso sucedido al editar
+*/
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAdministrador(int id, Administrador administrador)
         {
@@ -79,9 +97,11 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Administrador
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Post para agregar un Administrador
+      * @param administrador
+        * @returns una accion del caso sucedido al crear o el adminstrador creado
+*/
         [HttpPost]
         public async Task<ActionResult<Administrador>> PostAdministrador(Administrador administrador)
         {
@@ -105,7 +125,11 @@ namespace smarthometec_API.Controllers
             return CreatedAtAction("GetAdministrador", new { id = administrador.Id }, administrador);
         }
 
-        // DELETE: api/Administrador/5
+        /**
+      * Funcion Delete para eliminar un Administrador
+      * @param id
+        * @returns una accion del caso sucedido al eliminar o el adminstrador eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<ActionResult<Administrador>> DeleteAdministrador(int id)
         {

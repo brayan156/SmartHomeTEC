@@ -19,28 +19,23 @@ namespace smarthometec_API.Controllers
         {
             _context = context;
         }
-
-        // GET: api/CertificadoGarantia
+        /**
+       * Funcion Get de GetCertificadoGarantia
+       * @returns una lista con todos los registros de CertificadoGarantia
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CertificadoGarantia>>> GetCertificadoGarantia()
         {
             return await _context.CertificadoGarantia.ToListAsync();
         }
 
-        // GET: api/CertificadoGarantia/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CertificadoGarantia>> GetCertificadoGarantia(int id)
-        {
-            var certificadoGarantia = await _context.CertificadoGarantia.FindAsync(id);
 
-            if (certificadoGarantia == null)
-            {
-                return NotFound();
-            }
 
-            return certificadoGarantia;
-        }
-
+        /**
+      * Funcion para obtener el tiempo restante de garantía
+      * @param nserie del dispositivo
+        * @returns numero enteros con los meses restantes para que se acabe la garantia
+*/
         [HttpGet("tiempo_restante/{nserie}")]
         public   int gettiempo(int nserie)
         {
@@ -60,9 +55,12 @@ namespace smarthometec_API.Controllers
         }
 
 
-        // PUT: api/CertificadoGarantia/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Put de CertificadoGarantia
+      * @param id,CertificadoGarantia
+        * @returns una accion del caso sucedido al editar
+*/
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCertificadoGarantia(int id, CertificadoGarantia certificadoGarantia)
         {
@@ -92,9 +90,11 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
-        // POST: api/CertificadoGarantia
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+       * Funcion Post para agregar un CertificadoGarantia
+       * @param CertificadoGarantia
+         * @returns una accion del caso sucedido al crear o el CertificadoGarantia creado
+*/
         [HttpPost]
         public async Task<ActionResult<CertificadoGarantia>> PostCertificadoGarantia(CertificadoGarantia certificadoGarantia)
         {
@@ -118,7 +118,11 @@ namespace smarthometec_API.Controllers
             return CreatedAtAction("GetCertificadoGarantia", new { id = certificadoGarantia.NFactura }, certificadoGarantia);
         }
 
-        // DELETE: api/CertificadoGarantia/5
+        /**
+      * Funcion Delete para eliminar un CertificadoGarantia
+      * @param id
+        * @returns una accion del caso sucedido al eliminar o el CertificadoGarantia eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<ActionResult<CertificadoGarantia>> DeleteCertificadoGarantia(int id)
         {

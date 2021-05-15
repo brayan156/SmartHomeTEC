@@ -21,20 +21,33 @@ namespace smarthometec_API.Controllers
             _context = context;
         }
 
-        // GET: api/Cliente
+        /**
+       * Funcion Get de Cliente
+       * @returns una lista con todos los registros de Cliente
+*/
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetCliente()
         {
             return await _context.Cliente.ToListAsync();
         }
 
+
+        /**
+* Funcion Get de login Cliente
+* @param correo, contraseña
+* @returns una lista con el Cliente si es validado
+*/
         [HttpGet("Cliente/{contrasena}/{correo}")]
         public async Task<ActionResult<List<Cliente>>> Getcontrasena(string contrasena, string correo)
         {
             return await _context.Cliente.Where(d => d.Contrasena == contrasena & d.Email == correo).ToListAsync();
         }
-
-        // GET: api/Cliente/5
+        /**
+      * Funcion Get de Cliente con parametros de filtro
+      * @param id_cliente
+        * @returns una lista con todos los registros de Cliente que contengan el valor de los
+       * atributos de los parametros
+*/
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(int id)
         {
@@ -48,7 +61,13 @@ namespace smarthometec_API.Controllers
             return cliente;
         }
 
-        public  int gettiempo(int nserie)
+        /**
+      * Funcion para obtener el tiempo restante de garantía
+      * @param nserie del dispositivo
+        * @returns numero enteros con los meses restantes para que se acabe la garantia
+*/
+
+        public int gettiempo(int nserie)
         {
             var pedido = _context.Pedido.First(p => p.NSerieDispositivo == nserie);
             var pfactura = _context.PedidoFactura.First(pf => pf.IdPedido == pedido.Id);
@@ -65,7 +84,11 @@ namespace smarthometec_API.Controllers
             return mesesrestantes;
         }
 
-
+        /**
+* Funcion Get de dispositivos con parametros de filtro por dueño
+* @param id_cliente
+* @returns una lista con todos los registros de dispositivos del usuario
+*/
         [HttpGet("dispositivosDueno/{id}")]
         public async Task<ActionResult<IEnumerable<dynamic>>> Getdispositvos(int id)
         {
@@ -92,9 +115,12 @@ namespace smarthometec_API.Controllers
         }
 
 
-        // PUT: api/Cliente/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Put de Cliente
+      * @param id,Cliente
+        * @returns una accion del caso sucedido al editar
+*/
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCliente(int id, Cliente cliente)
         {
@@ -124,6 +150,12 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
+
+            /**
+    * Funcion Get de Cliente que envia los datos necesarios para el funcionamiento offline del movil
+    * @returns una lista con todos los datos requeridos por sqllite para funcionar bien sin uso del postgres
+    */
+
         [HttpGet("desincronizar")]
         public  dynamic desincronizar() {
             return new
@@ -143,6 +175,10 @@ namespace smarthometec_API.Controllers
         }
 
 
+            /**
+    * Funcion Post de Cliente que resincroniza los datos recopilados por el usuario mientras estuvo offline con la base principal
+    * @return un alerta de que se ha sincronizado exitosamente
+    */
         [HttpPost("sincronizar/{idcliente}")]
         public async Task<string> sincronizar(Dictionary<string, dynamic> clase, int idcliente)
         {
@@ -164,8 +200,6 @@ namespace smarthometec_API.Controllers
                 });
                 _context.SaveChanges();
 
-
-
             var aposentosclientebase = _context.Aposento.Where(ap => ap.IdCliente == idcliente);
             var aposentoseditar = aposentos.Where(aposento => aposentosclientebase.Any(a => a.IdCliente == aposento.IdCliente & a.Id == aposento.Id)).ToList();
 
@@ -176,11 +210,6 @@ namespace smarthometec_API.Controllers
             _context.SaveChanges();
 
             var aposentosagregar = aposentos.Where(aposento => aposentosclientebase.All(a => a.IdCliente == aposento.IdCliente & a.Id != aposento.Id));
-
-            
-
-
-
 
                 aposentosagregar.ToList().ForEach(aposento =>
                 {
@@ -225,20 +254,17 @@ namespace smarthometec_API.Controllers
                         _context.Historial.Add(historial);
                     }
                 });
-                _context.SaveChanges();
 
-                
-
-        
             return "sincronizado wapo";
         }
 
 
 
-
-        // POST: api/Cliente
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /**
+      * Funcion Post para agregar un Cliente
+      * @param Cliente
+        * @returns una accion del caso sucedido al crear el cliente
+*/
         [HttpPost]
         public async Task<ActionResult<string>> PostCliente(Cliente cliente)
         {
@@ -262,7 +288,11 @@ namespace smarthometec_API.Controllers
             return "creado";
         }
 
-        // DELETE: api/Cliente/5
+        /**
+      * Funcion Delete para eliminar un Cliente
+      * @param id
+        * @returns una accion del caso sucedido al eliminar o el Cliente eliminado
+*/
         [HttpDelete("{id}")]
         public async Task<ActionResult<Cliente>> DeleteCliente(int id)
         {
