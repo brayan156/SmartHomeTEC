@@ -79,6 +79,9 @@ export class DbServiceService {
     
   }
 
+  /**
+   * Inicializa la base de datos de SQLite
+   */
   initSQLite() {
     this.plt.ready().then(() => {
       this.sqlite.create({
@@ -92,6 +95,9 @@ export class DbServiceService {
     }); 
   }
 
+  /**
+   * Carga el DDL de SQLite
+   */
   seedDatabase() {
     this.http.get('assets/seed.sql', { responseType: 'text' })
       .subscribe(sql => {
@@ -120,6 +126,11 @@ export class DbServiceService {
       });
   }
 
+  /**
+   * Esta es la funcion que se encarga de subir las tablas 
+   * a PostGreSQL
+   * @returns 
+   */
   SincronizarTodo() {
     this.historialService.loadHistoriales(this.database, this.historiales);
     this.dispositivoService.loadClienteHaUsado(this.database, this.clientesHanUsado);
@@ -149,10 +160,17 @@ export class DbServiceService {
     return this.http.post(this.dbAPI.Url + "Cliente/sincronizar/" + this.dbAPI.Usuario.id, objeto);
   }
 
+  /**
+   * Conecta con el API el proceso de sincronizacion
+   * @returns 
+   */
   SincronizarConApi() {
     return this.http.get<any>(this.dbAPI.Url + "Cliente/desincronizar");
   }
 
+  /**
+   * Recibe toda la informacion proveniente del API
+   */
   SincronizarTodoConApi() {
     this.Usuario.value[0] = this.dbAPI.Usuario;
     this.SincronizarConApi().subscribe(data => {
@@ -262,36 +280,73 @@ export class DbServiceService {
     })
   }
 
+  /**
+   * Resetea el cliente local
+   */
   resetMyId() {
     this.myID = new Cliente();
   }
 
+  /**
+   * Retorna el estado de la base de datos
+   * @returns 
+   */
   getDatabaseState() {
     return this.dbReady.asObservable();
   }
 
+  /**
+   * Retorna los clientes locales
+   * @returns 
+   */
   getClientes(): Observable<Cliente[]> {
     return this.clientes.asObservable();
   }
 
+  /**
+   * Retorna los productos locales
+   * @returns 
+   */
   getProductos(): Observable<any[]> {
     return this.productos.asObservable();
   }
 
+  /**
+   * Retorna el ID local
+   * @returns 
+   */
   getMyID() {
     return this.myID.id;
   }
 
+  /**
+   * Responde a la pregunta si existe un dispositivo segun el numero de serie
+   * @param N_serie 
+   * @returns 
+   */
   existeDispositivo(N_serie: number) {
     this.dispositivoService.existeDispositivo(this.database, this.tmpQuery, N_serie);
     return (this.tmpQuery.value[0] != null) ? true : false;
   }
 
+  /**
+   * Pregunta si el dispositivo ha sido usado
+   * @param N_serie 
+   * @returns 
+   */
   fueUsadoDispositivo(N_serie: number) {
     this.dispositivoService.fueUsadoDispositivo(this.database, this.tmpQuery, N_serie);
     return (this.tmpQuery.value[0] != null) ? true : false;
   }
 
+  /**
+   * Pregunta si coincide la informacion entre si
+   * @param N_serie 
+   * @param marca 
+   * @param descripcion 
+   * @param tipo 
+   * @returns 
+   */
   coincideInformacion(N_serie: number, marca: string, descripcion: string, tipo: string) {
     this.dispositivoService.coincideInformacion(this.database, this.tmpQuery, N_serie);
     let tmp = this.tmpQuery.value;
@@ -304,6 +359,10 @@ export class DbServiceService {
     return result;
   }
 
+  /**
+   * Agrega un ClienteHaUsado
+   * @param n_serie_dispositivo 
+   */
   addClienteHaUsado(n_serie_dispositivo: number) {
     let data: ClienteHaUsado = new ClienteHaUsado();
     data.idCliente = this.Usuario.value[0].id;
@@ -314,26 +373,51 @@ export class DbServiceService {
   }
 
 
+  /**
+   * Actualiza el id del aposento al cual se asocia un dispositivo
+   * @param idAposento 
+   * @param n_serie 
+   */
   updateDispositivoAdquirido(idAposento: number, n_serie: number) {
     this.dispositivoService.updateDispositivoAdquirido(this.database, this.dispositivosAdquiridos, idAposento, n_serie);
   }
 
+  /**
+   * agrega un aposento
+   * @param nuevonombre 
+   */
   addAposento(nuevonombre: string) {
     this.aposentosService.addAposento(this.database, this.aposentos, this.Usuario.value[0], nuevonombre);
   }
 
+  /**
+   * Valida el cliente en el login
+   * @param email 
+   * @param contrasena 
+   */
   validarCliente(email: string, contrasena: string) {
     this.clientService.validateCliente(this.database, this.Usuario, email, contrasena);
   }
 
+  /**
+   * Retorna el usuario local
+   * @returns 
+   */
   getUsuario() {
     return this.Usuario.value;
   }
 
+  /**
+   * Resetea el usuario
+   */
   resetUsuario() {
     this.Usuario = new BehaviorSubject([]);
   }
 
+  /**
+   * Apaga el dispositivo de la base de datos
+   * @param N_serie 
+   */
   apagarDispositivo(N_serie: number) {
     console.log(N_serie)
     console.log("el numero de serie arriba")
@@ -351,22 +435,43 @@ export class DbServiceService {
 
   }
 
+  /**
+   * Borrrar un aposento
+   * @param aposentoId 
+   */
   deleteAposento(aposentoId: number) {
     this.aposentosService.deleteAposento(this.database, this.aposentos, aposentoId);
   }
 
+  /**
+   * Actualiza el nombre de un aposento
+   * @param aposentoId 
+   * @param nuevonombre 
+   */
   updatenombreAposento(aposentoId: number, nuevonombre: string) {
     this.aposentosService.updatenombre(this.database, this.aposentos, aposentoId, nuevonombre);
   }
 
+  /**
+   * Prender un dispositivo en la base de datos
+   * @param N_serie 
+   */
   prenderDispositivo(N_serie: number) {
     this.dispositivoService.prenderDispositivo(this.database, this.dispositivosAdquiridos, N_serie);
   }
 
+  /**
+   * Retorna los dispositivos en un aposento
+   * @param idAposento 
+   */
   getMisDispositivosPorAposento(idAposento: number) {
     this.dispositivoService.getMisDispositivosPorAposento(this.database, this.tmpQuery, this.Usuario.value[0], idAposento);
   }
 
+  /**
+   * Retorna los dispositivos modelo
+   * @returns 
+   */
   getMisDispositivosmodelo() {
     this.dispositivoService.getMisDispositivosmodelo(this.database, this.misDispostivosmodelo, this.Usuario.value[0]);
     console.log("los dispositivos modelo son: ", this.misDispostivosmodelo.value);
@@ -374,6 +479,11 @@ export class DbServiceService {
 
   }
 
+  /**
+   * Asocia un dispositivo a un nuevo cliente
+   * @param N_serie 
+   * @param data 
+   */
   asociarDispositivoANuevoCliente(N_serie: number, data: number) {
     this.dispositivoService.disociarDispositivoDePropietario(this.database, this.clientesHanUsado, N_serie);
     setTimeout(() => {
@@ -381,23 +491,37 @@ export class DbServiceService {
     }, 300)
   }
 
+  /**
+   * Retorna los aposentos de un usuario
+   * @returns 
+   */
   getAposentosPorUsuario() {
     this.aposentosService.loadAposentosPorUsuario(this.database, this.aposentosPorUsuario, this.Usuario.value[0]);
     return this.aposentosPorUsuario.value;
   }
 
-  // Cambiar estos gets para asociarlos al id del usuario ya que ahora estan retornando la informacion
-  // de todos los usuarios.
+  /**
+   * Retorna los aposentos
+   * @returns 
+   */
   getAposentos() {
     this.aposentosService.loadAposentos(this.database, this.aposentos);
     return this.aposentos.value;
   }
 
+  /**
+   * Retorna los tipos
+   * @returns 
+   */
   gettipos() {
     this.tiposService.loadtipos(this.database, this.tipos);
     return this.tipos.value;
   }
 
+  /**
+   * Retorna los dispositivos modelo
+   * @returns 
+   */
   getDispositivosmodelo() {
     this.dispositivoService.loadDispositivosmodelo(this.database, this.dispositivosmodelo);
     return this.dispositivosmodelo.value;

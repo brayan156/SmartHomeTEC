@@ -10,8 +10,15 @@ import { ClienteAPIService } from './cliente-api.service';
 @Injectable({
   providedIn: 'root'
 })
+  
+/**
+ * Esta clase se encarga de manejar la base de datos del server
+ */
 export class DbAPIService {
 
+  /**
+   * URL del server
+   */
   Url = 'https://192.168.1.2:45455/api/';
   Usuario: Cliente;
 
@@ -20,23 +27,48 @@ export class DbAPIService {
     this.Usuario = new Cliente();
   }
 
+  /**
+   * Valida el cliente en el server
+   * @param correo 
+   * @param password 
+   * @returns 
+   */
   validarCliente(correo:string, password:string) {
     return this.http.get<Cliente[]>(this.Url + "Cliente/Cliente/"  + password  + "/"+ correo);
   }
 
+  /**
+   * Retorna los aposentos del API
+   * @returns 
+   */
   getMisAposentos() {
     return this.http.get<Aposento[]>(this.Url + "Aposento/aposentoscliente/"  + this.Usuario.id);
   }
 
+  /**
+   * Retorna los dispositivos del API segun el usuario
+   * @returns 
+   */
   getMisDispositivos() {
     return this.http.get<[]>(this.Url + "Cliente/dispositivosDueno/"  + this.Usuario.id);
   }
 
 
+  /**
+   * Actualiza un dispositivoAdquirido
+   * @param dispositivoAdquirido 
+   * @returns 
+   */
   putDispositivoAdquirido(dispositivoAdquirido:DispositivoAdquirido) {
     return this.http.put(this.Url + "DispositivoAdquirido/"  + dispositivoAdquirido.nSerie, dispositivoAdquirido, {responseType: "text"});
   }
 
+
+  /**
+   * Agrega un aposento al API
+   * @param nuevoNombre 
+   * @returns 
+   */
   addAposento(nuevoNombre: string) {
     console.log("el nuevoNombre ", nuevoNombre);
     let aposento = new Aposento();
@@ -45,42 +77,91 @@ export class DbAPIService {
     return this.http.post(this.Url + "Aposento", aposento, {responseType: "text"});
   }
 
+  /**
+   * Prende un dispositivo en el API
+   * @param n_serie 
+   * @returns 
+   */
   prenderDispositivo(n_serie: number) {
     return this.http.get(this.Url + "DispositivoAdquirido/encender/" + n_serie);
   }
 
+  /**
+   * Apaga un dispositivo en el API
+   * @param n_serie 
+   * @returns 
+   */
   apagarDispositivo(n_serie) {
     return this.http.get(this.Url + "DispositivoAdquirido/apagar/" + n_serie);
   }
 
+  /**
+   * Asocia un dispositivo a un nuevo cliente en el API
+   * @param n_serie 
+   * @param idNuevoCliente 
+   * @returns 
+   */
   asociarDispositivoANuevoCliente(n_serie:number, idNuevoCliente: number) {
     return this.http.get(this.Url + "ClienteHaUsado/transferir/" + this.Usuario.id + "/" + idNuevoCliente + "/" + n_serie, {responseType:"text"});
   }
 
+  /**
+   * Retorna los dispositivos modelo del API
+   * @returns 
+   */
   getDispositivosModelo() {
     return this.http.get<Dispositivomodelo[]>(this.Url + "DispositivoModelo");
   }
 
+  /**
+   * Retorna los tipos del API
+   * @returns 
+   */
   getTipos() {
     return this.http.get<tipo[]>(this.Url + "Tipo");
   }
 
+  /**
+   * Crea un dispositivo en el API
+   * @param objeto 
+   * @returns 
+   */
   nuevoDispositivo(objeto: object) {
     return this.http.post(this.Url + 'ClienteHaUsado/agregardispositivo/' + this.Usuario.id, objeto, {responseType: "text"});
   }
 
+  /**
+   * Elimina un dispositivo en el API
+   * @param idAposento 
+   * @returns 
+   */
   deleteAposento(idAposento: number) {
     return this.http.delete(this.Url + 'Aposento/' + idAposento + "/" + this.Usuario.id, {responseType:"text"});
   }
 
+  /**
+   * Actualiza un aposento en el API
+   * @param aposento 
+   * @returns 
+   */
   putAposento(aposento: Aposento) {
     return this.http.put(this.Url + "Aposento/" + aposento.id, aposento);
   }
 
+  /**
+   * Retorna los dispositivos en un aposento segun el API
+   * @param aposentoID 
+   * @returns 
+   */
   getMisDispositivosPorAposento(aposentoID: number) {
     return this.http.get<[]>(this.Url + "Aposento/dispositivos/" + aposentoID);
   }
 
+  /**
+   * Retorna el dispositivoAdquirido segun el numero de serie
+   * @param n_serie 
+   * @returns 
+   */
   getDispositivoAdquirido(n_serie: number) {
     return this.http.get<DispositivoAdquirido>(this.Url + "DispositivoAdquirido/" + n_serie);
   }

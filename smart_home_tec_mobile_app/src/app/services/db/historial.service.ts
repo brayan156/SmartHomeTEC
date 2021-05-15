@@ -11,6 +11,12 @@ export class HistorialService {
 
   constructor() { }
 
+  /**
+   * Carga los historiales de la BD local
+   * @param database 
+   * @param conexion 
+   * @returns 
+   */
   loadHistoriales(database: SQLiteObject, conexion: BehaviorSubject<any[]>) {
     return database.executeSql('SELECT * FROM Historial', []).then(data => {
 
@@ -34,13 +40,26 @@ export class HistorialService {
   }
 
 
+  /**
+   * Inserta un historial de la BD local
+   * @param database 
+   * @param conexion 
+   * @param data 
+   * @returns 
+   */
   insertHistorial(database: SQLiteObject, conexion: BehaviorSubject<any[]>, data: any[]) {
     return database.executeSql('insert into Historial (n_historial ,n_serie, dia, mes, ano, hora, minutos_de_uso) values (?,?,?,?,?,?,?)', data).then(data => {
       this.loadHistoriales(database, conexion);
 
     });
   }
-
+/**
+ * Actualiza el total de minutos usados de un dispositivo
+ * @param database 
+ * @param conexion 
+ * @param historial 
+ * @returns 
+ */
   updateTotalMins(database: SQLiteObject, conexion: BehaviorSubject<any[]>, historial: Historial) {
    let data = [historial.minutosDeUso, historial.nSerie, historial.dia, historial.mes, historial.ano, historial.hora];
     return database.executeSql('update Historial set minutos_de_uso = ? where n_serie = ? and dia = ? and mes = ? and ano = ? and hora = ?', data).then(data => {
@@ -51,6 +70,13 @@ export class HistorialService {
 
 
 
+  /**
+   * Apaga un dispositivo en la base de datos local
+   * @param database 
+   * @param historiales 
+   * @param N_serie 
+   * @param fechaPrendido 
+   */
   apagarDispositivo(database: SQLiteObject, historiales: BehaviorSubject<any[]>, N_serie: number, fechaPrendido: Date) {
     let today = new Date();
 

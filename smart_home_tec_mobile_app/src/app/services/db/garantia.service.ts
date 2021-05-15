@@ -11,6 +11,12 @@ export class GarantiaService {
 
   constructor() { }
 
+  /**
+   * Carga las garantias
+   * @param database 
+   * @param garantias 
+   * @returns 
+   */
   loadGarantias(database: SQLiteObject, garantias: BehaviorSubject<any[]>) {
     return database.executeSql('SELECT * FROM Certificado_garantia', []).then(data => {
 

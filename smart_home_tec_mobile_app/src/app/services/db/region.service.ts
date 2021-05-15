@@ -11,6 +11,12 @@ export class RegionService {
 
   constructor() { }
 
+  /**
+   * Carga las regiones a la base de datos local
+   * @param database 
+   * @param conexion 
+   * @returns 
+   */
   loadRegiones(database: SQLiteObject, conexion: BehaviorSubject<any[]>) {
     return database.executeSql('SELECT * FROM Regiones', []).then(data => {
 

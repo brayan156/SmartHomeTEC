@@ -12,6 +12,12 @@ export class PedidoService {
 
   constructor() { }
 
+  /**
+   * Carga los pedidos en la BD local
+   * @param database 
+   * @param conexion 
+   * @returns 
+   */
   loadPedidos(database: SQLiteObject, conexion: BehaviorSubject<any[]>) {
     return database.executeSql('SELECT * FROM Pedido', []).then(data => {
 
@@ -31,6 +37,12 @@ export class PedidoService {
     });
   }
 
+  /**
+   * Carga pedidosFactura en la base de datos local
+   * @param database 
+   * @param conexion 
+   * @returns 
+   */
   loadPedidosFactura(database: SQLiteObject, conexion: BehaviorSubject<any[]>) {
     return database.executeSql('SELECT * FROM Pedido_Factura', []).then(data => {
 

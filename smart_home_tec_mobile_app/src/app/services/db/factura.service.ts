@@ -11,6 +11,12 @@ export class FacturaService {
 
   constructor() { }
 
+  /**
+   * Carga las facturas
+   * @param database 
+   * @param conexion 
+   * @returns 
+   */
   loadFacturas(database: SQLiteObject, conexion: BehaviorSubject<any[]>) {
     return database.executeSql('SELECT * FROM Factura', []).then(data => {
 

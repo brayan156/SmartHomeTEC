@@ -10,6 +10,12 @@ export class DireccionEntregaService {
 
   constructor() { }
 
+  /**
+   * Carga las direcciones en la BD local
+   * @param database 
+   * @param conexion 
+   * @returns 
+   */
   loadDirecciones(database: SQLiteObject, conexion: BehaviorSubject<any[]>) {
     return database.executeSql('SELECT * FROM direccion_entrega', []).then(data => {
 

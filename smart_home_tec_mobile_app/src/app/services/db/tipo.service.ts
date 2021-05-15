@@ -11,6 +11,12 @@ export class tipoService {
 
   constructor() { }
 
+  /**
+   * Carga los tipos a la base de datos local
+   * @param database 
+   * @param conexion 
+   * @returns 
+   */
   loadtipos(database: SQLiteObject, conexion: BehaviorSubject<any[]>) {
     return database.executeSql('SELECT * FROM tipo', []).then(data => {
 

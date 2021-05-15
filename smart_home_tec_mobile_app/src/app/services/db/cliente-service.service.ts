@@ -17,6 +17,12 @@ export class ClienteServiceService {
 
   }
 
+  /**
+   * Carga los clientes en la BD local
+   * @param database 
+   * @param clientes 
+   * @returns 
+   */
   loadClientes(database: SQLiteObject, clientes: BehaviorSubject<any[]>) {
     return database.executeSql('SELECT * FROM Cliente', []).then(data => {
 
@@ -39,7 +45,14 @@ export class ClienteServiceService {
     });
   }
 
-  
+  /**
+   * Valida el cliente en la base de datos local
+   * @param database 
+   * @param usuario 
+   * @param email 
+   * @param contrasena 
+   * @returns 
+   */
 
   validateCliente(database: SQLiteObject, usuario: BehaviorSubject<any[]>, email: string, contrasena: string) {
     return database.executeSql('SELECT * FROM Cliente WHERE email = ? AND contrasena = ?', [email, contrasena]).then(data => {
@@ -63,10 +76,17 @@ export class ClienteServiceService {
     });
   }
 
+  /**
+   * Limpia el objeto que se usa para hacer queries genericas
+   */
   cleanTmpQuery() {
     this.tmpQuery = new BehaviorSubject([]);
   }
   
+  /**
+   * Retorna el query temporal
+   * @returns 
+   */
   getTmpQuery() {
     return this.tmpQuery.asObservable();
   }
