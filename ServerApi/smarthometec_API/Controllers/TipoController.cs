@@ -45,19 +45,19 @@ namespace smarthometec_API.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTipo(string id, Tipo tipo)
+        public async Task<string> PutTipo(string id, Tipo tipo)
         {
             if (id != tipo.Nombre)
             {
-                return BadRequest();
+                return "tipo incorrecto";
             }
 
-            // if (_context.Tipo.Join(_context.DispositivoModelo, tp => tp.Nombre, dm => dm.Tipo,
-            //     (tp, dm) => new {tp, dm}).Join(_context.DispositivoAdquirido, td => td.dm.Modelo, da => da.Modelo,
-            //     (td, dm) => new { td, dm }).Any())
-            // {
-            //     return BadRequest("Comprado");
-            // }
+            if (_context.Tipo.Where(t => t.Nombre == id).Join(_context.DispositivoModelo, tp => tp.Nombre, dm => dm.Tipo,
+                (tp, dm) => new { tp, dm }).Join(_context.DispositivoAdquirido, td => td.dm.Modelo, da => da.Modelo,
+                (td, dm) => new { td, dm }).Any())
+            {
+                return "tipo tiene registrado un dispositivo comprado";
+            }
 
             _context.Entry(tipo).State = EntityState.Modified;
 
@@ -69,22 +69,22 @@ namespace smarthometec_API.Controllers
             {
                 if (!TipoExists(id))
                 {
-                    return NotFound();
+                    return "tipo no encontrado";
                 }
                 else
                 {
-                    throw;
+                    return "datos invalidos";
                 }
             }
 
-            return NoContent();
+            return "dispositivo editado";
         }
 
         // POST: api/Tipo
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Tipo>> PostTipo(Tipo tipo)
+        public async Task<string> PostTipo(Tipo tipo)
         {
             _context.Tipo.Add(tipo);
             try
@@ -95,7 +95,7 @@ namespace smarthometec_API.Controllers
             {
                 if (TipoExists(tipo.Nombre))
                 {
-                    return Conflict();
+                    return "tipo ya existe";
                 }
                 else
                 {
@@ -103,29 +103,29 @@ namespace smarthometec_API.Controllers
                 }
             }
 
-            return CreatedAtAction("GetTipo", new { id = tipo.Nombre }, tipo);
+            return "tipo creado";
         }
 
         // DELETE: api/Tipo/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Tipo>> DeleteTipo(string id)
+        public async Task<string> DeleteTipo(string id)
         {
             var tipo = await _context.Tipo.FindAsync(id);
             if (tipo == null)
             {
-                return NotFound();
+                return "tipo incorrecto";
             }
 
-            if (_context.Tipo.Join(_context.DispositivoModelo, tp => tp.Nombre, dm => dm.Tipo,
+            if (_context.Tipo.Where(t=>t.Nombre==id).Join(_context.DispositivoModelo, tp => tp.Nombre, dm => dm.Tipo,
                 (tp, dm) => new { tp, dm }).Any())
             {
-                return BadRequest("Usado");
+                return "tipo tiene registrado un dispositivo comprado";
             }
 
             _context.Tipo.Remove(tipo);
             await _context.SaveChangesAsync();
 
-            return tipo;
+            return "tipo eliminado";
         }
 
         private bool TipoExists(string id)

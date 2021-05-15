@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\login",
+    "\\src\\app\\samples-de-tablas",
+    "\\src\\app\\services",
+    "\\src\\app\\services\\API",
+    "\\src\\app\\services\\db",
+    "\\src\\app\\tablas-y-relaciones",
+    "\\src\\assets"
+  ],
+  "SelectedNode": "\\src\\app\\services\\db\\dispositivo.service.ts",
+  "PreviewInSolutionExplorer": false
+}

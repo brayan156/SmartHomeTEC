@@ -11,14 +11,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using smarthometec_API.Modelos;
+using System.Diagnostics;
+using smarthometec_API.Controllers;
 
 namespace smarthometec_API
 {
     public class Startup
     {
+
+        private readonly resthometecdatabaseContext _context;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+
         }
 
         public IConfiguration Configuration { get; }
@@ -32,6 +38,7 @@ namespace smarthometec_API
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,9 +1,12 @@
+/**
+ * Clase para modelar al cliente
+ */
 export class Cliente {
-  ID: string;
+  id: number;
   email: string;
-  password: string;
+  contrasena: string;
+  nombre: string;
   primerApellido: string;
   segundoApellido: string;
-  continente: string;
-  pais;
+  pais: string;
 }

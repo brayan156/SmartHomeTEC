@@ -1,6 +1,9 @@
+/**
+ * Clase para modelar del distribuidor de la base de datos
+ */
 export class Distribuidor {
-  cedulaJuridica: string;
+  cedulaJuridica: number;
   nombre: string;
-  continente: string;
   pais: string;
+  imagen: string;
 }

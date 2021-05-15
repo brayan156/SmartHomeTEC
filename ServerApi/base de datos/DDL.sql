@@ -1,38 +1,38 @@
 create table Regiones(
-    pais varchar (20) unique not null,
-    continente varchar(15) not null,
+    pais varchar (60) unique not null,
+    continente varchar(30) not null,
     primary key (pais)
 );
 
 create table Tipo(
-  nombre varchar(15) unique not null,
+  nombre varchar(50) unique not null,
   tiempo_de_garantia int not null,
-  imagen varchar(200),
-  descripcion varchar (50),
+  imagen varchar,
+  descripcion varchar (400),
   PRIMARY KEY (nombre)
 );
 create table Dispositivo_modelo(
-  modelo varchar(15) unique not null,
-  marca varchar(15),
-  imagen varchar(200),
+  modelo varchar(50) unique not null,
+  marca varchar(50),
+  imagen varchar,
   consumo_electrico int not null,
-  tipo varchar(15),
+  tipo varchar(50),
   PRIMARY KEY (modelo),
   foreign key (tipo) references Tipo(nombre)
 );
 
 create table Distribuidor(
   cedula_juridica int unique not null,
-  pais varchar(20) not null,
-  nombre varchar(15) not null,
-  imagen varchar(200) not null,
+  pais varchar(60) not null,
+  nombre varchar(50) not null,
+  imagen varchar not null,
   PRIMARY KEY (cedula_juridica),
   foreign key (pais) references Regiones (pais)
 );
 
 create table Dispositivo_se_vende_en (
     cj_distribuidor int not null,
-    modelo_dispotivo varchar(15) not null,
+    modelo_dispotivo varchar(50) not null,
     precio int not null,
     cantidad int not null,
     primary key (cj_distribuidor,modelo_dispotivo),
@@ -42,12 +42,12 @@ create table Dispositivo_se_vende_en (
 
 create table Cliente(
     id int unique not null,
-    email varchar(20) not null,
-    contrasena varchar(15) not null,
-    primer_apellido varchar (15),
-    segundo_apellido varchar(15),
-    nombre varchar(15) not null ,
-    pais varchar(20) not null,
+    email varchar(100) not null,
+    contrasena varchar(20) not null,
+    primer_apellido varchar (50),
+    segundo_apellido varchar(50),
+    nombre varchar(50) not null ,
+    pais varchar(60) not null,
     PRIMARY KEY (id),
     foreign key (pais) references Regiones (pais)
 );
@@ -55,18 +55,18 @@ create table Cliente(
 
 
 create table Aposento(
-  id serial not null,
-  nombre_cuarto varchar(20) not null,
+  id serial unique,
+  nombre_cuarto varchar(50) not null,
   id_cliente int not null,
-  primary key (id),
+  primary key (id,id_cliente),
   foreign key (id_cliente) references Cliente (id)
 );
 
 create table Dispositivo_adquirido (
-    n_serie serial unique not null,
+    n_serie serial unique,
     prendido boolean  default false,
     fecha_prendido timestamp,
-    modelo varchar(15) not null,
+    modelo varchar(50) not null,
     id_aposento int,
     primary key (n_serie),
     foreign key (modelo) references Dispositivo_modelo(modelo),
@@ -83,7 +83,7 @@ create table Cliente_ha_usado(
 );
 
 create table Historial(
-  n_historial serial not null,
+  n_historial serial,
   n_serie int not null,
   dia int default extract( day from current_date ),
   mes int default extract( month from current_date ),
@@ -96,8 +96,8 @@ create table Historial(
 
 create table Administrador(
   id int unique not null,
-  contrasena varchar(15) not null,
-  email varchar(20) unique not null ,
+  contrasena varchar(20) not null,
+  email varchar(50) unique not null ,
   PRIMARY KEY (id)
 );
 
@@ -106,7 +106,7 @@ create table Administrador(
 
 
 create table direccion_entrega (
-    direccion_entrega varchar(20) not null,
+    direccion_entrega varchar(500) not null,
     id_cliente int not null,
     primary key (direccion_entrega,id_cliente),
     foreign key (id_cliente) references Cliente(id)

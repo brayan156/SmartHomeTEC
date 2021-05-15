@@ -1,6 +1,10 @@
+/**
+ * Clase para modelar DispositivoAdquirido de la base de datos
+ */
 export class DispositivoAdquirido {
-  numSerieDisp: number;
+  nSerie: number;
   prendido: boolean;
+  fechaPrendido: Date;
   modelo: string;
-  IDAposento: string;
+  idAposento: number;
 }

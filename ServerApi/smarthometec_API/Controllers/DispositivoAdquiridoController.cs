@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -46,13 +47,10 @@ namespace smarthometec_API.Controllers
 
 
 
-        [HttpPut("encender/{id}")]
-        public async Task<IActionResult> Encender(int id, DispositivoAdquirido dispositivoAdquirido)
+        [HttpGet("encender/{id}")]
+        public async Task<IActionResult> Encender(int id)
         {
-            if (id != dispositivoAdquirido.NSerie)
-            {
-                return BadRequest();
-            }
+            var dispositivoAdquirido = _context.DispositivoAdquirido.First(d => d.NSerie == id);
 
             if (dispositivoAdquirido.Prendido != true)
             {
@@ -81,57 +79,74 @@ namespace smarthometec_API.Controllers
             return NoContent();
         }
 
-        [HttpPut("apagar/{id}")]
-        public async Task<IActionResult> Apagar(int id, DispositivoAdquirido dispositivoAdquirido)
+        [HttpGet("apagar/{id}")]
+        public async Task<IActionResult> Apagar(int id)
         {
-            if (id != dispositivoAdquirido.NSerie)
-            {
-                return BadRequest();
-            }
+            var dispositivoAdquirido = _context.DispositivoAdquirido.First(d=> d.NSerie==id);
 
             if (dispositivoAdquirido.Prendido == true)
             {
                 int total_dias = (DateTime.Now - dispositivoAdquirido.FechaPrendido.Value).Days;
                 int total_minutos = (DateTime.Now - dispositivoAdquirido.FechaPrendido.Value).Minutes;
+                Debug.WriteLine(total_dias);
                 Historial historial = new Historial();
                 historial.Ano = dispositivoAdquirido.FechaPrendido.Value.Year;
                 historial.Mes = dispositivoAdquirido.FechaPrendido.Value.Month;
                 historial.Dia = dispositivoAdquirido.FechaPrendido.Value.Day;
+                historial.Hora = dispositivoAdquirido.FechaPrendido.Value.Hour;
                 historial.NSerie = dispositivoAdquirido.NSerie;
-                if (_context.Historial.Any(hist => hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes & hist.Dia == historial.Dia))
+                Debug.WriteLine("llego a crear historial");
+                if (_context.Historial.Any(hist => hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes & hist.Dia == historial.Dia & hist.Hora == historial.Hora))
                 {
+                    Debug.WriteLine("existe historial primera hora");
                     Historial histo = _context.Historial.First(hist =>
                         hist.NSerie == historial.NSerie & hist.Ano == historial.Ano & hist.Mes == historial.Mes &
-                        hist.Dia == historial.Dia);
-                    if (dispositivoAdquirido.FechaPrendido.Value.Date == DateTime.Today) histo.MinutosDeUso += total_minutos;
-                    else histo.MinutosDeUso += 24 * 60 - dispositivoAdquirido.FechaPrendido.Value.TimeOfDay.Minutes;
+                        hist.Dia == historial.Dia & hist.Hora == historial.Hora);
+                    if (total_minutos+dispositivoAdquirido.FechaPrendido.Value.Minute <= 60 ) histo.MinutosDeUso += total_minutos;
+                    else histo.MinutosDeUso += 60-dispositivoAdquirido.FechaPrendido.Value.Minute;
                     _context.Entry(histo).State = EntityState.Modified;
                 }
                 else
                 {
-                    if (dispositivoAdquirido.FechaPrendido.Value.Date == DateTime.Today) historial.MinutosDeUso = total_minutos;
-                    else historial.MinutosDeUso = 24 * 60 - dispositivoAdquirido.FechaPrendido.Value.TimeOfDay.Minutes;
+                    if (dispositivoAdquirido.FechaPrendido.Value.Hour == DateTime.Now.Hour) historial.MinutosDeUso = total_minutos;
+                    else historial.MinutosDeUso = 60 - dispositivoAdquirido.FechaPrendido.Value.Minute;
+                    Debug.WriteLine("hago historial de la hora en la que estoy");
                     _context.Historial.Add(historial);
 
 
                 }
 
                 DateTime time = dispositivoAdquirido.FechaPrendido.Value;
-                time = time.AddDays(1);
+                var hora_dia = dispositivoAdquirido.FechaPrendido.Value.Hour+1;
+                if (time.Date == DateTime.Today & hora_dia > DateTime.Now.Hour) hora_dia = 24;
 
-                for (int i = total_dias; i > 0; i--)
+                for (int i = total_dias; i >= 0; i--)
                 {
-                    Historial h = new Historial();
-                    h.Dia = time.Day;
-                    h.Mes = time.Month;
-                    h.Ano = time.Year;
-                    if (time.Date == DateTime.Today) h.MinutosDeUso = (DateTime.Now - time).Minutes;
-                    else h.MinutosDeUso = 24 * 60;
+                    while (hora_dia < 24)
+                    {
+                        Debug.WriteLine(hora_dia);
+                        Historial h = new Historial();
+                        h.Dia = time.Day;
+                        h.Mes = time.Month;
+                        h.Ano = time.Year;
+                        h.Hora = hora_dia;
+                        h.NSerie = dispositivoAdquirido.NSerie;
+                        if (time.Date == DateTime.Today & hora_dia == DateTime.Now.Hour)
+                        {
+                            Debug.WriteLine(DateTime.Now);
+                            h.MinutosDeUso = DateTime.Now.Minute;
+                            hora_dia = 24;
+                        }
+                        else h.MinutosDeUso = 60;
+                        _context.Historial.Add(h);
+                        hora_dia++;
+                    } 
                     time = time.AddDays(1);
-                    _context.Historial.Add(h);
+                    hora_dia = 0;
                 }
                 dispositivoAdquirido.Prendido = false;
             }
+            await _context.SaveChangesAsync();
 
             _context.Entry(dispositivoAdquirido).State = EntityState.Modified;
 
@@ -160,11 +175,11 @@ namespace smarthometec_API.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDispositivoAdquirido(int id, DispositivoAdquirido dispositivoAdquirido)
+        public async Task<string> PutDispositivoAdquirido(int id, DispositivoAdquirido dispositivoAdquirido)
         {
             if (id != dispositivoAdquirido.NSerie)
             {
-                return BadRequest();
+                return "dispositivo incorrecto";
             }
 
             _context.Entry(dispositivoAdquirido).State = EntityState.Modified;
@@ -177,15 +192,15 @@ namespace smarthometec_API.Controllers
             {
                 if (!DispositivoAdquiridoExists(id))
                 {
-                    return NotFound();
+                    return "dispositivo no existe";
                 }
                 else
                 {
-                    throw;
+                    return "datos invalidos";
                 }
             }
 
-            return NoContent();
+            return "dispositivocambiado";
         }
 
         // POST: api/DispositivoAdquirido

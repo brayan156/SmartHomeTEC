@@ -8,36 +8,41 @@
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" id='ourForm' (ngSubmit)="nuevoDispositivo(form)">
-    <ion-item>
-      <ion-label>Nombre</ion-label>
-      <ion-input></ion-input>
-    </ion-item>
+  <form #form="ngForm" id="form" (ngSubmit)="nuevoDispositivo()">
+
+
     <ion-item>
       <ion-label>Descripción</ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="this.descripcion" [ngModelOptions]="{standalone: true}" id='descripcion'></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Tipo</ion-label>
-      <ion-select  interface="action-sheet"></ion-select>
+      <ion-select  [(ngModel)]="this.tipo" [ngModelOptions]="{standalone: true}" id='tipo'  interface="action-sheet">
+      <ion-select-option *ngFor="let tipo of tipos">{{tipo.nombre}}</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Marca</ion-label>
-      <ion-select  interface="action-sheet"></ion-select>
+      <ion-select  [(ngModel)]="this.marca" [ngModelOptions]="{standalone: true}" id='marca' interface="action-sheet">
+        <ion-select-option  *ngFor="let dispositivo of dispositivosmodelo">{{dispositivo.marca}}</ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Número de serie</ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="this.N_serie" type="number" [ngModelOptions]="{standalone: true}" id='N_serie'></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Consumo</ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="this.Consumo" type="number" [ngModelOptions]="{standalone: true}" id='Consumo'></ion-input>
       <ion-label> mW</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>Aposento</ion-label>
-      <ion-select  interface="action-sheet"></ion-select>
+      <ion-select  [(ngModel)]="this.Aposento" [ngModelOptions]="{standalone: true}" id='Aposento' interface="action-sheet">
+        <ion-select-option *ngFor="let aposento of aposentos">{{aposento.nombreCuarto}}</ion-select-option>
+      </ion-select>
+
     </ion-item>
-      <ion-button shape='round' size='full'type="submit" [disabled]="form.invalid" >Agregar</ion-button>
+      <ion-button shape='round' id='round' size='full'type="submit" [disabled]="form.invalid" >Agregar</ion-button>
   </form>
 </ion-content>

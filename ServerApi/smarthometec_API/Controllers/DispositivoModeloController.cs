@@ -64,15 +64,15 @@ namespace smarthometec_API.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDispositivoModelo(string id, DispositivoModelo dispositivoModelo)
+        public async Task<string> PutDispositivoModelo(string id, DispositivoModelo dispositivoModelo)
         {
             if (id != dispositivoModelo.Modelo)
             {
-                return BadRequest();
+                return "modelo invalido";
             }
-            if (_context.DispositivoModelo.Join(_context.DispositivoAdquirido, dmodel => dmodel.Modelo, dadquirido => dadquirido.Modelo, (dmodel, dadquirido) => new { dmodel, dadquirido }).Any())
+            if (_context.DispositivoModelo.Where(t => t.Modelo == id).Join(_context.DispositivoAdquirido, dmodel => dmodel.Modelo, dadquirido => dadquirido.Modelo, (dmodel, dadquirido) => new { dmodel, dadquirido }).Any())
             {
-                return BadRequest("Comprado");
+                return "el dispositivo ya ha sido comprado";
             }
 
             _context.Entry(dispositivoModelo).State = EntityState.Modified;
@@ -85,22 +85,22 @@ namespace smarthometec_API.Controllers
             {
                 if (!DispositivoModeloExists(id))
                 {
-                    return NotFound();
+                    return "modelo no existente";
                 }
                 else
                 {
-                    throw;
+                    return "datos invalidos";
                 }
             }
 
-            return NoContent();
+            return "dispositivo editado";
         }
 
         // POST: api/DispositivoModelo
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost("crear")]
-        public async Task<ActionResult<DispositivoModelo>> PostDispositivoModelo(DispositivoModelo dispositivoModelo)
+        public async Task<string> PostDispositivoModelo(DispositivoModelo dispositivoModelo)
         {
             _context.DispositivoModelo.Add(dispositivoModelo);
             try
@@ -111,35 +111,35 @@ namespace smarthometec_API.Controllers
             {
                 if (DispositivoModeloExists(dispositivoModelo.Modelo))
                 {
-                    return Conflict();
+                    return "Modelo existente";
                 }
                 else
                 {
-                    throw;
+                    return "datos invalidos";
                 }
             }
 
-            return CreatedAtAction("GetDispositivoModelo", new { id = dispositivoModelo.Modelo }, dispositivoModelo);
+            return "dispositivo creado";   
         }
 
         // DELETE: api/DispositivoModelo/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<DispositivoModelo>> DeleteDispositivoModelo(string id)
+        public async Task<string> DeleteDispositivoModelo(string id)
         {
             var dispositivoModelo = await _context.DispositivoModelo.FindAsync(id);
             if (dispositivoModelo == null)
             {
-                return NotFound();
+                return "dispositivo no encontrado";
             }
-            if (_context.DispositivoModelo.Join(_context.DispositivoAdquirido, dmodel => dmodel.Modelo, dadquirido => dadquirido.Modelo, (dmodel, dadquirido) => new { dmodel, dadquirido }).Any())
+            if (_context.DispositivoModelo.Where(t => t.Modelo == id).Join(_context.DispositivoAdquirido, dmodel => dmodel.Modelo, dadquirido => dadquirido.Modelo, (dmodel, dadquirido) => new { dmodel, dadquirido }).Any())
             {
-                return BadRequest("Comprado");
+                return "dispositivo ya comprado";
             }
 
             _context.DispositivoModelo.Remove(dispositivoModelo);
             await _context.SaveChangesAsync();
 
-            return dispositivoModelo;
+            return "dispositivo eliminado";
         }
 
         private bool DispositivoModeloExists(string id)

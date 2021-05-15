@@ -77,7 +77,7 @@ namespace smarthometec_API.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Distribuidor>> PostDistribuidor(Distribuidor distribuidor)
+        public async Task<string> PostDistribuidor(Distribuidor distribuidor)
         {
             _context.Distribuidor.Add(distribuidor);
             try
@@ -88,31 +88,34 @@ namespace smarthometec_API.Controllers
             {
                 if (DistribuidorExists(distribuidor.CedulaJuridica))
                 {
-                    return Conflict();
+                    return "distribuidor existente";
                 }
                 else
                 {
-                    throw;
+                    return "datos invalidos";
                 }
             }
 
-            return CreatedAtAction("GetDistribuidor", new { id = distribuidor.CedulaJuridica }, distribuidor);
+            return "distribuidor creado";
         }
 
         // DELETE: api/Distribuidor/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Distribuidor>> DeleteDistribuidor(int id)
+        public async Task<string> DeleteDistribuidor(int id)
         {
             var distribuidor = await _context.Distribuidor.FindAsync(id);
             if (distribuidor == null)
             {
-                return NotFound();
+                return "no existe distribuidor";
+            }
+            if (_context.DispositivoSeVendeEn.Any(d => d.CjDistribuidor == distribuidor.CedulaJuridica)) {
+                return "distribuidor tiene dispositivos asociados";
             }
 
             _context.Distribuidor.Remove(distribuidor);
             await _context.SaveChangesAsync();
 
-            return distribuidor;
+            return "distribuidor eliminado";
         }
 
         private bool DistribuidorExists(int id)

@@ -29,9 +29,9 @@ namespace smarthometec_API.Controllers
 
         // GET: api/DireccionEntrega/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<DireccionEntrega>> GetDireccionEntrega(string id)
+        public async Task<ActionResult<IEnumerable<DireccionEntrega>>> GetDireccionEntrega(int id)
         {
-            var direccionEntrega = await _context.DireccionEntrega.FindAsync(id);
+            var direccionEntrega = await _context.DireccionEntrega.Where(direccion=> direccion.IdCliente==id).ToListAsync();
 
             if (direccionEntrega == null)
             {

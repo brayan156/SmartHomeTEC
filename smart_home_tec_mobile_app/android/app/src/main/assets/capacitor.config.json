@@ -1,0 +1,13 @@
+{
+  "appId": "io.SmartHomeTEC",
+  "appName": "Smart Home TEC",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

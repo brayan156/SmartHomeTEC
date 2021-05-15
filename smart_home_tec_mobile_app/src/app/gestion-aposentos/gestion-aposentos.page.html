@@ -5,26 +5,35 @@
         <ion-icon name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>X habitación</ion-title>
+    <ion-title>Administrar {{this.aposento.nombreCuarto}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Jala para refrescar"
+      refreshingSpinner="circles"
+      refreshingText="Refrescando...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)=presentActionSheet()>
-    <ion-fab-button>
+    <ion-fab-button color = 'tertiary'>
       <ion-icon name="create"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-card *ngFor="let card of [0,1,2,3,4,5,6]">
-    <img src='https://cdn.shopify.com/s/files/1/2393/8647/products/5AT1S3-WEN0.jpg?v=1606809887'>
+  <ion-card *ngFor="let dispositivo of this.misDispositivosPorAposentos">
+    <img src={{dispositivo.imagen}}>
     <ion-card-content>
-      <p class='name'>Bombillo</p>
-      <p class='spec'>20mW</p>
-      <p class='spec'>#Serie 2129312</p>
+      <p class='name'>{{dispositivo.modelo}}</p>
+      <p class='spec'>#Serie: {{dispositivo.n_serie}}</p>
+      <p class='spec'>meses restantes de garantía: {{dispositivo.mes_fin_garantia}}</p>
+      <p class='spec'>Años restantes de garantía: {{dispositivo.ano_fin_garantia}}</p>
       <ion-item>
         <ion-label>Habitación</ion-label>
-        <ion-select interface="action-sheet" placeholder='Tu habitación' okText="Listo" cancelText="Me arrepentí">
-          <ion-select-option *ngFor="let card of [0,1,2,3,4,5,6]" value={{card}}>Sala {{card}}</ion-select-option>
+        <ion-select interface="action-sheet"  (ionChange)="(updateAposentoDeDispositivo($event,dispositivo.n_serie, dispositivo))" placeholder='Tu habitación' okText="Listo" cancelText="Me arrepentí">
+          <ion-select-option *ngFor="let aposento of this.misAposentos"   value={{aposento.id}}>{{aposento.nombreCuarto}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-card-content>

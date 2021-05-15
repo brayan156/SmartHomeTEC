@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a class="nav-link btn h2" (click)="chageAdmin()">Administrador</a>
-            <a class="nav-link btn h2"  (click)="chageUser()">Usuario</a>
+            <a class="nav-link btn h2" (click)="chageUser()">Usuario</a>
           </div>
         </div>
       </div>
@@ -19,13 +19,13 @@
     <form>
       <div class="row">
         <label>Correo Electronico:</label>
-        <input type="email" name="email" class="email_From tamano" id="InputEmail1" #Correo="ngModel" [(ngModel)]="administrador.correo" placeholder="Correo Electronico"
-               aria-label="CorreoElectronico">
+        <input type="email" name="email" class="email_From tamano" id="InputEmail1" #Correo="ngModel"
+               [(ngModel)]="administrador.correo" placeholder="Correo Electronico" aria-label="CorreoElectronico">
       </div>
       <label>Password:</label>
       <div class="row">
-        <input type="password" name="password" class="pasword_Emanil tamano" id="InputPassword" #contrasena="ngModel" [(ngModel)]="administrador.contrasena" placeholder="Contraseña"
-               aria-label="contraseña">
+        <input type="password" name="password" class="pasword_Emanil tamano" id="InputPassword" #contrasena="ngModel"
+               [(ngModel)]="administrador.contrasena" placeholder="Contraseña" aria-label="contraseña">
       </div>
       <div class="row" class="button">
         <button type="submit" class="btn btn-primary" (click)="navegation()">Ingresar</button>
@@ -38,12 +38,12 @@
       <div class="row">
         <label>Correo Electronico:</label>
         <input type="email" name="email" class="email_From tamano" id="InputEmail1Usuario" placeholder="Correo Electronico"
-               aria-label="CorreoElectronico" required="">
+               #Correo="ngModel" [(ngModel)]="cliente.email" aria-label="CorreoElectronico" required="">
       </div>
       <label>Password:</label>
       <div class="row">
         <input type="password" name="password" class="pasword_Emanil tamano" id="InputPasswordUsuario" placeholder="Contraseña"
-               aria-label="contraseña" required="">
+               #contrasena="ngModel" [(ngModel)]="cliente.contrasena" aria-label="contraseña" required="">
       </div>
       <div class="row" class="button">
         <button type="submit" class="btn btn-primary" (click)="navegation()">Ingresar</button>
@@ -59,63 +59,58 @@
 <!-- Modal -->
 
 <div class="fade modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Registrarse:</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form class="row">
-
-          <div class="tamano3">
-            <label>Correo electronico:</label>
-            <input type="email" class="form-control" required="">
-          </div>
-
-          <div class="tamano3">
-            <label>Password</label>
-            <input type="password" class="form-control" required="">
-          </div>
-
-          <div class="tamano2">
-            <label>Nombre:</label>
-            <input type="text" class="form-control" required="">
-          </div>
-
-          <div class="tamano4">
-            <label>Primer Apellido:</label>
-            <input type="text" class="form-control" required="">
-          </div>
-          <div class="tamano4">
-            <label>Segundo Apellido:</label>
-            <input type="text" class="form-control" required="">
-          </div>
-
-          <div class="tamano3">
-            <label>Continente</label>
-            <select class="form-select" id="validationCustom04" required>
-              <optgroup label="América">
-                <option>Costa Rica</option>
-                <option>Panamá</option>
-                <option>Colombia</option>
-                <option>Argentina</option>
-              </optgroup>
-              <optgroup label="Europa">
-                <option>España</option>
-                <option>Italia</option>
-              </optgroup>
-            </select>
-          </div>
-
-          <div class="tamano3">
-            <label>Dirrecion</label>
-            <input type="text" class="form-control" required="">
-          </div>
-
-        </form>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
-        </div>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registrarse:</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <form class="row">
+
+        <div class="tamano3">
+          <label>Correo electronico:</label>
+          <input type="email" class="form-control" name="1" id="1" required="" #correo="ngModel" [(ngModel)]="cliente.email">
+        </div>
+
+        <div class="tamano3">
+          <label>Password</label>
+          <input type="password" class="form-control"  name="2" id="2" required="" #password="ngModel" [(ngModel)]="cliente.contrasena">
+        </div>
+
+        <div class="tamano2">
+          <label>Nombre:</label>
+          <input type="text" class="form-control" name="3"  id="3" required="" #nombre="ngModel" [(ngModel)]="cliente.nombre">
+        </div>
+
+        <div class="tamano4">
+          <label>Primer Apellido:</label>
+          <input type="text" class="form-control" name="4" id="4"
+                 required="" #primerApellido="ngModel" [(ngModel)]="cliente.primerApellido">
+        </div>
+        <div class="tamano4">
+          <label>Segundo Apellido:</label>
+          <input type="text" class="form-control" name="5" required="" #segundoApellido="ngModel" [(ngModel)]="cliente.segundoApellido">
+        </div>
+
+        <div class="tamano3">
+          <label>Cedula:</label>
+          <input type="number" class="form-control" name="8"  required="" #cedula="ngModel" [(ngModel)]="cliente.id">
+        </div>
+
+        <div class="tamano3">
+          <label>Pais</label>
+          <select class="form-select" id="validationCustom04" name="6" required="" #pais="ngModel" [(ngModel)]="cliente.pais">
+            <optgroup label="">
+              <option *ngFor="let item of listaDeRegiones">{{item.pais}}</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" name="7" (click)="crearCliente(cliente)">Aceptar</button>
+        </div>
+      </form>
+
     </div>
+  </div>
 </div>

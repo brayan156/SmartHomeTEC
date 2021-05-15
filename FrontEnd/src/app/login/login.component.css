@@ -3,6 +3,7 @@
 }
 .container{
   margin-top: 10%;
+  border-collapse: collapse;
 }
 .centrar{
   margin-left: 10%;
@@ -46,4 +47,11 @@
   margin-left: 5%;
   width: 35%;
   margin-top: 10px;
+}
+
+.modal-footer{
+  margin-top: 10px;
+  margin-left: 10%;
+  width: 80%;
+  background: white;
 }

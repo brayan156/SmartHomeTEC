@@ -1,15 +1,25 @@
 .contenedor{
   margin-right: 20%;
   margin-left: 20%;
-}
 
+}
+label{
+  margin-left: 5%;
+}
+.color{
+  color: white;
+ }
 .fecha{
-  width: 60%;
+  width: 20%;
+  margin-top: 20px;
+  margin-left: 2%;
 }
 
 .boton{
   margin-left: 5%;
-  width: 30%;
+  width: 15%;
+  margin-top: 5px;
+
 }
 
 .margenes{

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace smarthometec_API
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+            Debug.WriteLine("primero program");
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,5 +24,7 @@ namespace smarthometec_API
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        
     }
 }

@@ -21,6 +21,7 @@ import { NavUComponent } from './Cliente/nav-u/nav-u.component';
 import { TiendaEnLineaUsuarioComponent } from './Cliente/tienda-en-linea-usuario/tienda-en-linea-usuario.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -49,9 +50,8 @@ import { FormsModule } from '@angular/forms';
     RouterModule.forRoot(rutas),
     HttpClientModule,
     FormsModule,
-    
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

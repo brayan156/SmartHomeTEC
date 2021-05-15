@@ -1,6 +1,6 @@
 
 export class ClienteEntregaEn {
-  N_direccion: number;
-  direccion: string;
+  idCliente : number;
+  direccionEntrega1 : string;
   
 }

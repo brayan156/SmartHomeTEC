@@ -1,7 +1,10 @@
+/**
+ * Clase para modelar el dispositivo modelo de la base de datos
+ */
 export class DispositivoModelo {
-  modeloDispositivo: string;
+  modelo: string;
   imagen: string;
   marca: string;
   consumoElectrico: string;
-  tipoDisp: string;
+  tipo: string;
 }

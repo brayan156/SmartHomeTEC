@@ -1,4 +1,7 @@
+/**
+ * Clase para modelar la funcion de cliente entrega
+ */
 export class ClienteEntregaEn {
-  IDCliente: string;
-  DirrecionEntrega: string;
+  idCliente: number;
+  direccionEntrega1: string;
 }
