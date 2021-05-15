@@ -244,3 +244,16 @@ insert into regiones (pais, continente) values ('Afghanistan', 'Asia'),
                                                ('Yemen', 'Asia'),
                                                ('Zambia', 'Africa'),
                                                ('Zimbabwe', 'Africa');
+
+insert into distribuidor (cedula_juridica, pais, nombre, imagen) values
+                                                                        (1,'Costa Rica','Gollo','https://th.bing.com/th/id/OIP.QKqN-BAhvYQORu-s_vVvWgAAAA?w=226&h=176&c=7&o=5&pid=1.7'),
+                                                                        (2, 'Mexico', 'Walmart','https://th.bing.com/th/id/OIP.lpngwfzoC_26QxUFgiemYwHaEZ?w=309&h=183&c=7&o=5&pid=1.7');
+
+insert into tipo (nombre, tiempo_de_garantia, imagen, descripcion) values
+('Bombillo',5, 'Bombillo,5,https://th.bing.com/th/id/OIP.rFL3bsR0dhG0-ahBSYy3jwHaEK?w=286&h=180&c=7&o=5&pid=1.7','iluminan tu casa'),
+('Cafetera', 10, 'https://th.bing.com/th/id/OIP.NBYLGAS-XgF0DvkJ0332LgHaCq?w=331&h=125&c=7&o=5&pid=1.7', 'hacen cafe');
+
+insert into dispositivo_modelo (modelo, marca, imagen, consumo_electrico, tipo) values
+('Bw','Lumek','https://th.bing.com/th/id/OIP.UHbrvnadmZU4pX1ehrSGvQHaHa?w=188&h=188&c=7&o=5&pid=1.7',100,'Bombillo'),
+('cafe2500','LG','https://th.bing.com/th/id/OIP.A8PgUv3JPxU1L9ZNGGZMVQHaEK?w=313&h=180&c=7&o=5&pid=1.7',500,'Cafetera'),
+('electrobombillo','Electros','https://th.bing.com/th/id/OIP.5Y950HTuprbrjepNWbT7GgHaHa?w=201&h=201&c=7&o=5&pid=1.7',1000,'Bombillo');
